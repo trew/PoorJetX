@@ -110,9 +110,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SceneObject\Airplane.cs" />
     <Compile Include="GameComponents\FpsCounter.cs" />
     <Compile Include="GameComponents\GameScreen.cs" />
     <Compile Include="GameComponents\Input.cs" />
+    <Compile Include="GameScreens\GamePlayScreen.cs" />
     <Compile Include="Managers\SceneGraphManager.cs" />
     <Compile Include="SceneObject\PoorSceneObject.cs" />
     <Compile Include="SceneObject\SceneGraph\Node.cs" />

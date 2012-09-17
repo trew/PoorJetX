@@ -8,7 +8,7 @@ using PoorEngine.SceneObject;
 
 namespace PoorEngine.Managers
 {
-    public class SceneGraphManager : DrawableGameComponent
+    public class SceneGraphManager : GameComponent
     {
         private static Node _root;
         /// <summary>
@@ -33,23 +33,20 @@ namespace PoorEngine.Managers
         /// Draw objects
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Draw(GameTime gameTime)
+        public static void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
 
             _root.Draw(gameTime);
         }
 
-        protected override void LoadContent()
+        public static void LoadContent()
         {
-            base.LoadContent();
 
             _root.LoadContent();
         }
 
-        protected override void UnloadContent()
+        public static void UnloadContent()
         {
-            base.UnloadContent();
 
             _root.UnloadContent();
         }

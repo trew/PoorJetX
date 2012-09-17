@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using PoorEngine.Managers;
+using PoorEngine.GameScreens;
+using PoorEngine.GameComponents;
 
 namespace PoorJetX.GameScreens
 {
@@ -34,6 +36,13 @@ namespace PoorJetX.GameScreens
         /// </summary>
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
+            foreach (GameScreen screen in ScreenManager.GetScreens())
+            {
+                screen.ExitScreen();
+            }
+
+            ScreenManager.AddScreen(new GamePlayScreen());
+            
             //LoadingScreen.Load(ScreenManager, true, new GameplayScreen());
         }
 

@@ -57,13 +57,13 @@ namespace PoorEngine.SceneObject
         /// Draw the object
         /// </summary>
         /// <param name="gameTime">Gametime</param>
-        public void Draw(GameTime gameTime)
+        /*public void Draw(GameTime gameTime)
         {
             if (this is IPoorDrawable)
             {
                 // Draw
             }
-        }
+        }*/
 
 
     }

@@ -52,8 +52,8 @@ namespace PoorEngine.Managers
         {
             get { return _font; }
         }
- 
-        bool _traceEnabled = true;
+
+        bool _traceEnabled = false;
         /// <summary>
         /// If true, the manager prints out a list of all the screens
         /// each time it is updated. This can be useful for making sure

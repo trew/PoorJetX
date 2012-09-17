@@ -112,12 +112,12 @@ namespace PoorEngine
 
             ApplyResolutionChange();
 
-            _graphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
+            //_graphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
 
             // Demand to update as fast as possible, do not use fixed time steps.
             // The whole game is designed this way, if you remove this line
             // the game will not behave normal any longer!
-            this.IsFixedTimeStep = false;
+            //this.IsFixedTimeStep = false;
 
             // Init the FpsCounter
             _fpsCounter = new FpsCounter(this);

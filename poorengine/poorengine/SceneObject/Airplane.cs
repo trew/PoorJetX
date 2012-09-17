@@ -38,7 +38,7 @@ namespace PoorEngine.SceneObject
             thrust = 0;
             lift = 0;
             orientation = 90;
-            airSpeed = 0;
+            airSpeed = 5;
             gravity = 3;
             linearVelocity = 0;
             airDensity = 1.0;

@@ -23,12 +23,12 @@ namespace PoorEngine.SceneObject.SceneGraph
             _nodes.Add(newNode);
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             _nodes.ForEach(
                 delegate(Node node)
                 {
-                    node.Update();
+                    node.Update(gameTime);
                 }
             );
         }
