@@ -60,7 +60,6 @@ namespace PoorEngine.Textures
 
         public void UnloadContent()
         {
-            _baseTexture.Dispose();
         }
     }
 }
