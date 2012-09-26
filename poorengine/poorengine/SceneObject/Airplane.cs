@@ -126,11 +126,11 @@ namespace PoorEngine.SceneObject
             // Adds 'acceleration'
             if (airSpeed < thrust)
             {
-                airSpeed += 0.025;
+                airSpeed += 0.025 / angleSpeedModifier;
             }
             else if (airSpeed > thrust)
             {
-                airSpeed -= 0.025;
+                airSpeed -= 0.025 / angleSpeedModifier;
             }
             else // not needed?
             {

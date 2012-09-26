@@ -15,6 +15,7 @@ namespace PoorEngine.GameScreens
     {
         const string airplaneTexture = "apTex1";
         Airplane player1;
+        Camera cam;
 
         public GamePlayScreen()
         {
@@ -25,9 +26,9 @@ namespace PoorEngine.GameScreens
         {
             base.LoadContent();
             player1 = new Airplane();
+            cam = new Camera(new Vector2(0,0));
             SceneGraphManager.AddObject(player1);
             SceneGraphManager.LoadContent();
-
         }
 
         public override void UnloadContent()
@@ -44,7 +45,8 @@ namespace PoorEngine.GameScreens
         public override void  Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
  	         base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-             player1.Update(gameTime);
+             SceneGraphManager.Update(gameTime);
+             //player1.Update(gameTime);
         }
          
         /// <summary>
