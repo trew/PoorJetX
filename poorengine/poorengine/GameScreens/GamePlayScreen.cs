@@ -16,6 +16,7 @@ namespace PoorEngine.GameScreens
     {
         const string airplaneTexture = "apTex1";
         Airplane player1;
+        Background backgroundLayer1;
 
         Instrument throttleMeter;
         Instrument airspeedMeter;
@@ -45,6 +46,9 @@ namespace PoorEngine.GameScreens
             base.LoadContent();
 
             player1 = new Airplane();
+            backgroundLayer1 = new Background("layer-1", 1.0f);
+
+            SceneGraphManager.AddObject(backgroundLayer1);
             SceneGraphManager.AddObject(player1);
             
 

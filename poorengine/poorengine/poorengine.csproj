@@ -110,7 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameComponents\Background.cs" />
+    <Compile Include="SceneObject\Background.cs" />
     <Compile Include="GameComponents\Camera.cs" />
     <Compile Include="SceneObject\Airplane.cs" />
     <Compile Include="GameComponents\FpsCounter.cs" />
