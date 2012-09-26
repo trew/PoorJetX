@@ -119,6 +119,7 @@
     <Compile Include="GameComponents\Input.cs" />
     <Compile Include="GameScreens\GamePlayScreen.cs" />
     <Compile Include="Managers\SceneGraphManager.cs" />
+    <Compile Include="SceneObject\Instrument.cs" />
     <Compile Include="SceneObject\PoorSceneObject.cs" />
     <Compile Include="SceneObject\SceneGraph\Node.cs" />
     <Compile Include="SceneObject\SceneGraph\NodeList.cs" />
