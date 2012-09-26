@@ -9,6 +9,9 @@ using PoorEngine.Textures;
 using PoorEngine.SceneObject.SceneGraph;
 using PoorEngine.SceneObject;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using PoorEngine.GameScreens;
+using PoorJetX.GameScreens;
 
 namespace PoorEngine.GameScreens
 {
@@ -37,6 +40,7 @@ namespace PoorEngine.GameScreens
         public override void UnloadContent()
         {
             base.UnloadContent();
+            SceneGraphManager.Root.Nodes.Clear();
         }
  
 
@@ -62,9 +66,17 @@ namespace PoorEngine.GameScreens
             base.HandleInput(input);
 
             player1.HandleInput(input);
-            
+
+            if (input.IsNewKeyPress(Keys.Escape))
+            {
+                ExitScreen();
+                UnloadContent();
+
+                ScreenManager.AddScreen(new BackgroundScreen());
+                ScreenManager.AddScreen(new MainMenuScreen());
+            }
         }
- 
+
         /// <summary>
         /// This is called when the screen should draw itself.
         /// </summary>
