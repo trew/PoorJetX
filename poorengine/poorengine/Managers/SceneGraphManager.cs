@@ -39,6 +39,11 @@ namespace PoorEngine.Managers
             _root.Draw(gameTime);
         }
 
+        public static void Update(GameTime gameTime)
+        {
+            _root.Update(gameTime);
+        }
+
         public static void LoadContent()
         {
 

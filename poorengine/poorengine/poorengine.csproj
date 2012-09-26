@@ -110,6 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameComponents\Camera.cs" />
     <Compile Include="SceneObject\Airplane.cs" />
     <Compile Include="GameComponents\FpsCounter.cs" />
     <Compile Include="GameComponents\GameScreen.cs" />
