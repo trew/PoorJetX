@@ -27,10 +27,10 @@ namespace PoorEngine.GameScreens
         {
             base.LoadContent();
             player1 = new Airplane();
-            backgroundLayer1 = new Background();
+            backgroundLayer1 = new Background("layer-1", 1.0f);
 
-            SceneGraphManager.AddObject(player1);
             SceneGraphManager.AddObject(backgroundLayer1);
+            SceneGraphManager.AddObject(player1);
             SceneGraphManager.LoadContent();
         }
 

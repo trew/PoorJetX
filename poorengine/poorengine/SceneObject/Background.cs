@@ -13,20 +13,34 @@ namespace PoorEngine.SceneObject
     public class Background : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
 
-        private const string backgroundLayer1 = "layer-1";
+        private string backgroundName;
 
-        public Background()
+        private float moveRatio;
+
+        /// <summary>
+        /// Background texture
+        /// </summary>
+        /// <param name="backgroundName">Name of the texture</param>
+        /// <param name="moveRatio">Ratio of which the background is moving compared to player</param>
+        public Background(String backgroundName, float moveRatio)
         {
-            Position = new Vector2(0, 0);
+            this.backgroundName = backgroundName;
+            this.moveRatio = moveRatio;
         }
 
         public void Draw(GameTime gameTime) 
         {
-            Texture2D texture = TextureManager.GetTexture(backgroundLayer1).BaseTexture as Texture2D;
-            Position = new Vector2(0, EngineManager.Device.Viewport.Height - texture.Height);
+            Texture2D texture = TextureManager.GetTexture(backgroundName).BaseTexture as Texture2D;
 
             ScreenManager.SpriteBatch.Begin();
-            ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
+
+                // Draw the background enough times to make one at the left of the viewport and one to the right
+                for (int i = -1; i <= (int)(EngineManager.Device.Viewport.Width / texture.Width) + 1; i++)
+                {
+                    Position = new Vector2(i * texture.Width - (int)EngineManager.cam.Pos.X % (texture.Width * moveRatio) / moveRatio,
+                                           EngineManager.Device.Viewport.Height - texture.Height);
+                    ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
+                }
             ScreenManager.SpriteBatch.End();
         }
 
@@ -36,30 +50,12 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/layer-1"), backgroundLayer1);
+            TextureManager.AddTexture(new PoorTexture("Textures/" + backgroundName), backgroundName);
         }
 
         public void UnloadContent()
         {
-            TextureManager.RemoveTexture(backgroundLayer1);
+            TextureManager.RemoveTexture(backgroundName);
         }
-
-        /*
-         * 
-         * private void DrawBG(SpriteBatch sb, Texture2D texture,float yPos, float moveRatio)
-        {
-            sb.Draw(texture,
-                        new Vector2(-texture.Width - (((int)camera1.Pos.X % (texture.Width * moveRatio)) / moveRatio), yPos),
-                        Color.AliceBlue);
-
-            for (int i = 0; i <= (int)(screenWidth / texture.Width) + 1; i++)
-            {
-                sb.Draw(texture, 
-                        new Vector2(i*texture.Width-(((int)camera1.Pos.X % (texture.Width * moveRatio)) / moveRatio), yPos), 
-                        Color.AliceBlue);
-            }
-        }
-         * 
-         */
     }
 }
