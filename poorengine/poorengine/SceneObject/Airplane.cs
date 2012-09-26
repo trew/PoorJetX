@@ -16,7 +16,6 @@ namespace PoorEngine.SceneObject
     public class Airplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
         const string airplaneTexture = "apTex1";
-
         private double thrust;
         private double airSpeed;
         private Vector2 oldPos;
@@ -56,6 +55,11 @@ namespace PoorEngine.SceneObject
         public double getThrottle()
         {
             return thrust;
+        }
+
+        public Vector2 getPosition()
+        {
+            return Position;
         }
     
         public void Draw(GameTime gameTime)
