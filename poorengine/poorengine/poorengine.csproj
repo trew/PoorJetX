@@ -110,7 +110,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameComponents\Level.cs" />
     <Compile Include="GameScreens\ScoreScreen.cs" />
+    <Compile Include="Managers\LevelManager.cs" />
     <Compile Include="SceneObject\Background.cs" />
     <Compile Include="GameComponents\Camera.cs" />
     <Compile Include="SceneObject\Airplane.cs" />

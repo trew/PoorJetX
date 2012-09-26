@@ -57,6 +57,7 @@ namespace PoorEngine
         private static ScreenManager _screenManagers = null;
         private static TextureManager _textureManagers = null;
         private static SceneGraphManager _sceneGraphManagers = null;
+        private static LevelManager _levelManagers = null;
         private static bool _checkedGraphicsOptions = false;
         private static bool _applyDeviceChanges = false;
         public static Camera cam;
@@ -95,6 +96,10 @@ namespace PoorEngine
             // Init scene graph managers
             _sceneGraphManagers = new SceneGraphManager(this);
             Components.Add(_sceneGraphManagers);
+
+            // Init the level managers
+            _levelManagers = new LevelManager(this);
+            Components.Add(_levelManagers);
 
             Content.RootDirectory = "Content";
         }

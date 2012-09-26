@@ -49,11 +49,10 @@ namespace PoorEngine.GameScreens
             base.LoadContent();
 
             player1 = new Airplane();
-            backgroundLayer1 = new Background("layer-1", 1.0f);
 
-            SceneGraphManager.AddObject(backgroundLayer1);
+            LevelManager.CurrentLevel.LoadBackgrounds();
+
             SceneGraphManager.AddObject(player1);
-            
 
             throttleMeter = new Instrument("instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
             SceneGraphManager.AddObject(throttleMeter);
