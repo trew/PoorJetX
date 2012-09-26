@@ -39,7 +39,7 @@ namespace PoorEngine.Managers
 
             // If the file is empty, just create a new file with the default
             // settings.
-            if (file.Length == 0)
+            if (file == null || file.Length == 0)
             {
                 throw new Exception("Not yet finished.");
             }
