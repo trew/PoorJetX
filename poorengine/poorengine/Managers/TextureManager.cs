@@ -52,6 +52,7 @@ namespace PoorEngine.Managers
             if (textureName != null && !_textures.ContainsKey(textureName))
             {
                 _textures.Add(textureName, newTexture);
+                _texturesLoaded++;
                 if (_initialized)
                 {
                     newTexture.LoadContent();

@@ -49,9 +49,10 @@ namespace PoorEngine.GameScreens
         /// Unlike HandleInput, this method is called regardless of whether the screen
         /// is active, hidden, or in the middle of a transition.
         /// </summary>
-        public override void  Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
  	        base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            if (ScreenState != ScreenState.Active) { return; }
             updateCamera();
             SceneGraphManager.Update(gameTime);
         }
@@ -70,10 +71,7 @@ namespace PoorEngine.GameScreens
             if (input.IsNewKeyPress(Keys.Escape))
             {
                 ExitScreen();
-                UnloadContent();
-
-                ScreenManager.AddScreen(new BackgroundScreen());
-                ScreenManager.AddScreen(new MainMenuScreen());
+                ScreenManager.AddScreen(new ScoreScreen(1));
             }
         }
 
@@ -84,8 +82,9 @@ namespace PoorEngine.GameScreens
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            SceneGraphManager.Draw(gameTime);
+            EngineManager.Device.Clear(Color.LightBlue);
         }
+
         /// <summary>
         /// This is called when the screen should draw after the UI has drawn.
         /// </summary>
@@ -93,7 +92,9 @@ namespace PoorEngine.GameScreens
         public override void PostUIDraw(GameTime gameTime)
         {
             base.PostUIDraw(gameTime);
+            SceneGraphManager.Draw(gameTime);
         }
+
         private void updateCamera()
         {
             float screenWidth = EngineManager.Device.Viewport.Width;
