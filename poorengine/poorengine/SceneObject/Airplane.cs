@@ -32,7 +32,7 @@ namespace PoorEngine.SceneObject
         private double weight;
         private double angleOfAttack;
         private double angleSpeedModifier;
-        
+                
         public Airplane()
         {
             thrust = 0;
@@ -45,21 +45,29 @@ namespace PoorEngine.SceneObject
             velocityAngle = 90;
             weight = 1;
             Position = new Vector2(200,200);
+            
         }
 
+        public double getLinearVelocity()
+        {
+            return linearVelocity;
+        }
+
+        public double getThrottle()
+        {
+            return thrust;
+        }
+    
         public void Draw(GameTime gameTime)
         {
             Texture2D texture = TextureManager.GetTexture(airplaneTexture).BaseTexture as Texture2D;
-            Vector2 origin;
-            origin.X = texture.Width / 2;
-            origin.Y = texture.Height / 2;
+            Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
-                                           Position - EngineManager.cam.Pos, null, Color.AliceBlue, 
-                                           (float)DegreeToRadian(orientation-90),
+                                           Position - EngineManager.cam.Pos, null, Color.AliceBlue,
+                                           (float)DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
-
             ScreenManager.SpriteBatch.End();
         }
 
@@ -111,8 +119,8 @@ namespace PoorEngine.SceneObject
             oldPos = Position;
 
             // Calculate lift and drag
-            lift = (double)Math.Min(3, Math.Pow(Math.Sqrt(Math.Abs(velocity.X)), 1.45));
-            lift = Math.Min(lift, 0.8);
+            lift = (double)Math.Min(3, Math.Pow(Math.Sqrt(Math.Abs(velocity.X)), 1.5));
+            lift = Math.Max(lift, 0.8);
 
             double drag = Math.Sqrt(Math.Abs(angleOfAttack) / 90);
 
@@ -121,6 +129,7 @@ namespace PoorEngine.SceneObject
             angleSpeedModifier = Math.Abs(180 - velocityAngle);
             angleSpeedModifier = Math.Sqrt(angleSpeedModifier / 90);
 
+            angleSpeedModifier = 1;
 
             // Adds 'acceleration'
             if (airSpeed < thrust)
@@ -148,7 +157,6 @@ namespace PoorEngine.SceneObject
             linearVelocity = Math.Sqrt(
                 Math.Pow((Math.Max(Position.X, oldPos.X) - Math.Min(Position.X, oldPos.X)), 2) +
                 Math.Pow((Math.Max(Position.Y, oldPos.Y) - Math.Min(Position.Y, oldPos.Y)), 2));
-
         }
 
         public void LoadContent()
@@ -188,11 +196,15 @@ namespace PoorEngine.SceneObject
 
         public void HandleInput(Input input)
         {
-            double force = linearVelocity;
-            double forceIncreaseAmount = force / 20;
+            double forceIncreaseAmount = linearVelocity / 20;
             double maxThrust = 7;
-            double maxForce = force / 2.7;
+            double maxForce = linearVelocity / 2.7;
             double forceResetAmount = 0.085;
+
+            if(input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift)) {
+                forceIncreaseAmount /= 2;
+                maxForce /= 3;
+            }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Left))
             {
@@ -265,8 +277,6 @@ namespace PoorEngine.SceneObject
         }
 
         
-
-
         /*
          *  Div functions
          */

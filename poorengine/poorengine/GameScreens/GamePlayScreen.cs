@@ -17,16 +17,44 @@ namespace PoorEngine.GameScreens
         const string airplaneTexture = "apTex1";
         Airplane player1;
 
+        Instrument throttleMeter;
+        Instrument airspeedMeter;
+
         public GamePlayScreen()
         {
             
         }
 
+        public int ScreenWidth
+        {
+            get { return EngineManager.Device.Viewport.Width; }
+        }
+
+        public int ScreenHeight
+        {
+            get { return EngineManager.Device.Viewport.Height; }
+        }
+
+        public Airplane Airplane
+        {
+            get { return player1; }
+        }
+
         public override void LoadContent()
         {
             base.LoadContent();
+
             player1 = new Airplane();
             SceneGraphManager.AddObject(player1);
+            
+
+            throttleMeter = new Instrument("instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
+            SceneGraphManager.AddObject(throttleMeter);
+
+            airspeedMeter = new Instrument("instrument", new Vector2(800, ScreenHeight), 0f, 10f, 0.5f, "linearvelocity", this);
+            SceneGraphManager.AddObject(airspeedMeter);
+
+
             SceneGraphManager.LoadContent();
         }
 
