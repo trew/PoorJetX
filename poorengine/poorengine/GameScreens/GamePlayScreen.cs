@@ -8,6 +8,7 @@ using PoorEngine.GameComponents;
 using PoorEngine.Textures;
 using PoorEngine.SceneObject.SceneGraph;
 using PoorEngine.SceneObject;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace PoorEngine.GameScreens
 {
@@ -16,7 +17,6 @@ namespace PoorEngine.GameScreens
         const string airplaneTexture = "apTex1";
         Airplane player1;
         Background backgroundLayer1;
-        Camera cam;
 
         public GamePlayScreen()
         {
@@ -28,7 +28,7 @@ namespace PoorEngine.GameScreens
             base.LoadContent();
             player1 = new Airplane();
             backgroundLayer1 = new Background();
-            cam = new Camera(new Vector2(0,0));
+
             SceneGraphManager.AddObject(player1);
             SceneGraphManager.AddObject(backgroundLayer1);
             SceneGraphManager.LoadContent();
@@ -47,9 +47,9 @@ namespace PoorEngine.GameScreens
         /// </summary>
         public override void  Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
- 	         base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-             SceneGraphManager.Update(gameTime);
-             //player1.Update(gameTime);
+ 	        base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            updateCamera();
+            SceneGraphManager.Update(gameTime);
         }
          
         /// <summary>
@@ -81,6 +81,23 @@ namespace PoorEngine.GameScreens
         public override void PostUIDraw(GameTime gameTime)
         {
             base.PostUIDraw(gameTime);
+        }
+        private void updateCamera()
+        {
+            float screenWidth = EngineManager.Device.Viewport.Width;
+            int borderSize = 200;
+            float xchange = borderSize - (player1.Position.X - EngineManager.cam.Pos.X);
+
+            if (player1.Position.X < (EngineManager.cam.Pos.X + borderSize))
+            {
+                EngineManager.cam.changePos(new Vector2(-xchange, 0f));
+            }
+            else if (player1.Position.X > EngineManager.cam.Pos.X + (screenWidth - borderSize))
+            {
+                Vector2 changeModifier = new Vector2(player1.Position.X - (EngineManager.cam.Pos.X + screenWidth - borderSize), 0f);
+                EngineManager.cam.changePos(changeModifier);
+            }
+   
         }
     }
 }

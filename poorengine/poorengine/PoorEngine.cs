@@ -99,6 +99,13 @@ namespace PoorEngine
 
         private static bool _checkedGraphicsOptions = false;
         private static bool _applyDeviceChanges = false;
+        private static Camera Cam;
+        public static Camera cam
+        {
+            get { return Cam; }
+            set { Cam = value; }
+        }
+
 
         /// <summary>
         /// Create Poor Engine
@@ -187,6 +194,7 @@ namespace PoorEngine
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             FpsFont = Content.Load<SpriteFont>("Fonts/fpsfont");
+            cam = new Camera(new Vector2(0, 0));
         }
 
 
