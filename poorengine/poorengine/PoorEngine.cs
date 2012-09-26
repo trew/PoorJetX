@@ -97,15 +97,10 @@ namespace PoorEngine
 
         private static SceneGraphManager _sceneGraphManagers = null;
 
+        private static CameraManager _cameraManager = null;
+
         private static bool _checkedGraphicsOptions = false;
         private static bool _applyDeviceChanges = false;
-        private static Camera Cam;
-        public static Camera cam
-        {
-            get { return Cam; }
-            set { Cam = value; }
-        }
-
 
         /// <summary>
         /// Create Poor Engine
@@ -145,6 +140,10 @@ namespace PoorEngine
             // Init scene graph managers
             _sceneGraphManagers = new SceneGraphManager(this);
             Components.Add(_sceneGraphManagers);
+
+            // Init camera manager
+            _cameraManager = new CameraManager(this);
+            Components.Add(_cameraManager);
 
             Content.RootDirectory = "Content";
         }
@@ -194,7 +193,6 @@ namespace PoorEngine
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             FpsFont = Content.Load<SpriteFont>("Fonts/fpsfont");
-            cam = new Camera(new Vector2(0, 0));
         }
 
 

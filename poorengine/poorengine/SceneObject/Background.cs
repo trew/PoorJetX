@@ -37,7 +37,7 @@ namespace PoorEngine.SceneObject
                 // Draw the background enough times to make one at the left of the viewport and one to the right
                 for (int i = -1; i <= (int)(EngineManager.Device.Viewport.Width / texture.Width) + 1; i++)
                 {
-                    Position = new Vector2(i * texture.Width - (int)EngineManager.cam.Pos.X % (texture.Width * moveRatio) / moveRatio,
+                    Position = new Vector2(i * texture.Width - (int)CameraManager.Camera.Pos.X % (texture.Width * moveRatio) / moveRatio,
                                            EngineManager.Device.Viewport.Height - texture.Height);
                     ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
                 }

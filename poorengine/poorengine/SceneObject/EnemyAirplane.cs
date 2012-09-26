@@ -13,7 +13,7 @@ using PoorEngine.GameComponents;
 
 namespace PoorEngine.SceneObject
 {
-    public class Airplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
+    public class EnemyAirplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
         const string airplaneTexture = "apTex1";
         private double thrust;
@@ -30,19 +30,26 @@ namespace PoorEngine.SceneObject
         private double weight;
         private double angleOfAttack;
         private double angleSpeedModifier;
+        private Vector2 targetPos;
                 
-        public Airplane()
+        public EnemyAirplane()
         {
-            thrust = 4;
+            thrust = 2;
             lift = 0;
-            orientation = 90;
-            airSpeed = 4;
-            gravity = 3;
+            orientation = -90;
+            airSpeed = 2;
+            gravity = 1;
             linearVelocity = 0;
-            velocityAngle = 90;
+            velocityAngle = -90;
             weight = 1;
-            Position = new Vector2(200,600);
+            Position = new Vector2(1100,200);
+            targetPos = new Vector2(0, 500);
             
+        }
+
+        public void setTargetPos(Vector2 tp)
+        {
+            targetPos = tp;
         }
 
         public double getLinearVelocity()
@@ -81,6 +88,49 @@ namespace PoorEngine.SceneObject
             double velocityAngleRotationSpeed = Math.Max(airSpeed, gravity) / (weight * 3);
             double diff = orientation - velocityAngle + 180;
             double posDiff = Math.Abs(diff - 180);
+
+            double deltax = Position.X - targetPos.X;
+            double deltay = Position.Y - targetPos.Y;
+
+            double angle_rad = Math.Atan2(deltay, deltax);
+            double angleToPlayer = angle_rad*180.0/Math.PI;
+
+            Console.WriteLine(angleToPlayer + ", " + (orientation-270.0));
+
+            if (angleToPlayer > orientation-270)
+            {
+                orientation += 1.05;
+                /*
+                if (orientation > 320)
+                {
+                    orientation = 320;
+                }*/
+            }
+            else
+            {
+                orientation -= 1.05;
+                /*
+                if (orientation < 220)
+                {
+                    orientation = 220;
+                }*/
+            }
+
+
+            /* Set orientation towards direction of player1
+            if (angleToPlayer < velocityAngleRotationSpeed)
+            {
+                velocityAngle = angleToPlayer;
+            }
+            else if (angleToPlayer >= 0 && angleToPlayer < 180 || angleToPlayer > 359)
+            {
+                orientation -= velocityAngleRotationSpeed;
+            }
+            else if (angleToPlayer >= 180 || angleToPlayer < 0)
+            {
+                orientation += velocityAngleRotationSpeed;
+            }*/
+
 
             /*
              * Adjust velocityAngle towards the airplane orientation 
@@ -168,7 +218,6 @@ namespace PoorEngine.SceneObject
             {
                 airSpeed -= 0.010 / angleSpeedModifier;
             }
-
 
             if (airSpeed > 8)
             {

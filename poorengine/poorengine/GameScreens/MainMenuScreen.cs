@@ -41,7 +41,7 @@ namespace PoorJetX.GameScreens
                 screen.ExitScreen();
             }
 
-            ScreenManager.AddScreen(new GamePlayScreen());
+            ScreenManager.AddScreen(new GamePlayScreen(1));
             
             //LoadingScreen.Load(ScreenManager, true, new GameplayScreen());
         }

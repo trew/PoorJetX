@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameScreens\ScoreScreen.cs" />
+    <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="SceneObject\Background.cs" />
     <Compile Include="GameComponents\Camera.cs" />
     <Compile Include="SceneObject\Airplane.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="GameComponents\Input.cs" />
     <Compile Include="GameScreens\GamePlayScreen.cs" />
     <Compile Include="Managers\SceneGraphManager.cs" />
+    <Compile Include="SceneObject\EnemyAirplane.cs" />
     <Compile Include="SceneObject\Instrument.cs" />
     <Compile Include="SceneObject\PoorSceneObject.cs" />
     <Compile Include="SceneObject\SceneGraph\Node.cs" />
@@ -145,7 +147,6 @@
     <Compile Include="PoorEngine.cs" />
     <Compile Include="Settings\GameSettings.cs" />
     <Compile Include="Shaders\basicEffect.cs" />
-    <Compile Include="Textures\ColorTexture.cs" />
     <Compile Include="Textures\PoorTexture.cs" />
   </ItemGroup>
   <ItemGroup>

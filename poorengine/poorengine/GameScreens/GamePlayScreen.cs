@@ -19,14 +19,16 @@ namespace PoorEngine.GameScreens
     {
         const string airplaneTexture = "apTex1";
         Airplane player1;
+        EnemyAirplane enemy1;
+
         Background backgroundLayer1;
 
         Instrument throttleMeter;
         Instrument airspeedMeter;
 
-        public GamePlayScreen()
+        public GamePlayScreen(int level)
         {
-            
+            CameraManager.Reset();
         }
 
         public int ScreenWidth
@@ -51,14 +53,16 @@ namespace PoorEngine.GameScreens
             player1 = new Airplane();
             backgroundLayer1 = new Background("layer-1", 1.0f);
 
+            enemy1 = new EnemyAirplane();
+            SceneGraphManager.AddObject(enemy1);
+
             SceneGraphManager.AddObject(backgroundLayer1);
             SceneGraphManager.AddObject(player1);
             
-
             throttleMeter = new Instrument("instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
             SceneGraphManager.AddObject(throttleMeter);
 
-            airspeedMeter = new Instrument("instrument", new Vector2(800, ScreenHeight), 0f, 10f, 0.5f, "linearvelocity", this);
+            airspeedMeter = new Instrument("instrument", new Vector2(800, ScreenHeight), 0f, 13f, 0.5f, "linearvelocity", this);
             SceneGraphManager.AddObject(airspeedMeter);
 
 
@@ -94,6 +98,9 @@ namespace PoorEngine.GameScreens
         {
             base.HandleInput(input);
 
+            
+            enemy1.setTargetPos(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
+            //player1.Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
             player1.HandleInput(input);
 
             if (input.IsNewKeyPress(Keys.Escape))
@@ -127,16 +134,16 @@ namespace PoorEngine.GameScreens
         {
             float screenWidth = EngineManager.Device.Viewport.Width;
             int borderSize = 200;
-            float xchange = borderSize - (player1.Position.X - EngineManager.cam.Pos.X);
+            float xchange = borderSize - (player1.Position.X - CameraManager.Camera.Pos.X);
 
-            if (player1.Position.X < (EngineManager.cam.Pos.X + borderSize))
+            if (player1.Position.X < (CameraManager.Camera.Pos.X + borderSize))
             {
-                EngineManager.cam.changePos(new Vector2(-xchange, 0f));
+                CameraManager.Camera.changePos(new Vector2(-xchange, 0f));
             }
-            else if (player1.Position.X > EngineManager.cam.Pos.X + (screenWidth - borderSize))
+            else if (player1.Position.X > CameraManager.Camera.Pos.X + (screenWidth - borderSize))
             {
-                Vector2 changeModifier = new Vector2(player1.Position.X - (EngineManager.cam.Pos.X + screenWidth - borderSize), 0f);
-                EngineManager.cam.changePos(changeModifier);
+                Vector2 changeModifier = new Vector2(player1.Position.X - (CameraManager.Camera.Pos.X + screenWidth - borderSize), 0f);
+                CameraManager.Camera.changePos(changeModifier);
             }
    
         }
