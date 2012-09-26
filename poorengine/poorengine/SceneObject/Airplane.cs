@@ -153,7 +153,7 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/flygplan"), airplaneTexture);
+            TextureManager.AddTexture(new PoorTexture("Textures/airplane"), airplaneTexture);
         }
 
         public void UnloadContent()
