@@ -17,35 +17,34 @@ namespace PoorEngine.SceneObject
     {
         const string airplaneTexture = "apTex1";
 
-        public double thrust;
-        public double airSpeed;
-        public Vector2 oldPos;
-        public double orientation;
-        public double lforce;
-        public double rforce;
-        public double lift;
-        public double gravity;
-        public Vector2 velocity;
-        public double velocityAngle;
-        public double linearVelocity;
-        public double airDensity;
-        public double weight;
-        public double angleOfAttack;
-        public double angleSpeedModifier;
+        private double thrust;
+        private double airSpeed;
+        private Vector2 oldPos;
+        private double orientation;
+        private double lforce;
+        private double rforce;
+        private double lift;
+        private double gravity;
+        private Vector2 velocity;
+        private double velocityAngle;
+        private double linearVelocity;
+        private double airDensity;
+        private double weight;
+        private double angleOfAttack;
+        private double angleSpeedModifier;
         
         public Airplane()
         {
             thrust = 0;
             lift = 0;
             orientation = 90;
-            airSpeed = 5;
+            airSpeed = 0;
             gravity = 3;
             linearVelocity = 0;
             airDensity = 1.0;
             velocityAngle = 90;
             weight = 1;
             Position = new Vector2(200,200);
-
         }
 
         public void Draw(GameTime gameTime)
