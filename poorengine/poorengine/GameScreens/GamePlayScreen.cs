@@ -15,6 +15,7 @@ namespace PoorEngine.GameScreens
     {
         const string airplaneTexture = "apTex1";
         Airplane player1;
+        Background backgroundLayer1;
         Camera cam;
 
         public GamePlayScreen()
@@ -26,8 +27,10 @@ namespace PoorEngine.GameScreens
         {
             base.LoadContent();
             player1 = new Airplane();
+            backgroundLayer1 = new Background();
             cam = new Camera(new Vector2(0,0));
             SceneGraphManager.AddObject(player1);
+            SceneGraphManager.AddObject(backgroundLayer1);
             SceneGraphManager.LoadContent();
         }
 

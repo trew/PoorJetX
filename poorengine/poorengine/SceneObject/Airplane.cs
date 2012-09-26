@@ -56,7 +56,7 @@ namespace PoorEngine.SceneObject
 
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
-                                           Position, null, Color.AliceBlue, 
+                                           Position /* - cameraPos*/, null, Color.AliceBlue,
                                            (float)DegreeToRadian(orientation-90),
                                            origin, Scale, SpriteEffects.None, 0f);
 
