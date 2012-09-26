@@ -19,32 +19,6 @@ namespace PoorEngine
     /// </summary>
     public partial class PoorEngine : Game
     {
-        protected static int width, height;
-        /// <summary>
-        /// Width
-        /// </summary>
-        public static int Width
-        {
-            get { return width; }
-        }
-        /// <summary>
-        /// Height
-        /// </summary>
-        public static int Height
-        {
-            get { return Height; }
-        }
-        
-        protected static Color _backgroundColor = Color.LightGreen;
-        /// <summary>
-        /// Background Color
-        /// </summary>
-        public static Color BackgroundColor
-        {
-            get { return _backgroundColor; }
-            set { _backgroundColor = value; }
-        }
-
         protected static GraphicsDeviceManager _graphicsDeviceManager = null;
         /// <summary>
         /// Graphics Device
@@ -64,15 +38,6 @@ namespace PoorEngine
             set { _isAppActive = value; }
         }
 
-        protected static FpsCounter _fpsCounter = null;
-        /// <summary>
-        /// The frames per secound counter
-        /// </summary>
-        public static FpsCounter FpsCounter
-        {
-            get { return _fpsCounter; }
-        }
-
         protected SpriteBatch _spriteBatch = null;
         public SpriteBatch SpriteBatch
         {
@@ -90,22 +55,11 @@ namespace PoorEngine
         }
 
         private static ScreenManager _screenManagers = null;
-
-        private SpriteFont FpsFont = null;
-
         private static TextureManager _textureManagers = null;
-
         private static SceneGraphManager _sceneGraphManagers = null;
-
         private static bool _checkedGraphicsOptions = false;
         private static bool _applyDeviceChanges = false;
-        private static Camera Cam;
-        public static Camera cam
-        {
-            get { return Cam; }
-            set { Cam = value; }
-        }
-
+        public static Camera cam;
 
         /// <summary>
         /// Create Poor Engine
@@ -125,10 +79,6 @@ namespace PoorEngine
             // The whole game is designed this way, if you remove this line
             // the game will not behave normal any longer!
             //this.IsFixedTimeStep = false;
-
-            // Init the FpsCounter
-            _fpsCounter = new FpsCounter(this);
-            Components.Add(_fpsCounter);
 
             // Init texture managers
             _textureManagers = new TextureManager(this);
@@ -193,7 +143,6 @@ namespace PoorEngine
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-            FpsFont = Content.Load<SpriteFont>("Fonts/fpsfont");
             cam = new Camera(new Vector2(0, 0));
         }
 
