@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace PoorEngine.GameComponents
 {
-    class Camera
+    public class Camera
     {
         private Vector2 _pos;
 
