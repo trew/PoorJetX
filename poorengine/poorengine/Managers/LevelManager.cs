@@ -86,14 +86,6 @@ namespace PoorEngine.Managers
         {
             base.Update(gameTime);
 
-            // Spawn new enemy?
-            EnemyAirplane enemy = null;
-            float x = CameraManager.Camera.Pos.X;
-            do {
-                enemy = CurrentLevel.GetNextEnemy();
-                if (enemy != null && enemy.Position.X <= x)
-                    enemy = CurrentLevel.SpawnEnemy();
-            } while (enemy != null && enemy.Position.X <= x);
         }
     }
 }
