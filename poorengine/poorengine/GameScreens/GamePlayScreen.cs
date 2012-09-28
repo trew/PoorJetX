@@ -22,6 +22,8 @@ namespace PoorEngine.GameScreens
         EnemyAirplane enemy1;
 
         Background backgroundLayer1;
+        Background backgroundLayer2;
+        Background backgroundLayer3;
 
         Instrument throttleMeter;
         Instrument airspeedMeter;
@@ -52,11 +54,11 @@ namespace PoorEngine.GameScreens
 
             LevelManager.CurrentLevel.LoadBackgrounds();
 
+
             player1 = new Airplane();
             enemy1 = new EnemyAirplane();
             SceneGraphManager.AddObject(enemy1);
             SceneGraphManager.AddObject(player1);     
-
 
             throttleMeter = new Instrument("instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
             SceneGraphManager.AddObject(throttleMeter);
@@ -132,18 +134,23 @@ namespace PoorEngine.GameScreens
         private void updateCamera()
         {
             float screenWidth = EngineManager.Device.Viewport.Width;
-            int borderSize = 200;
-            float xchange = borderSize - (player1.Position.X - CameraManager.Camera.Pos.X);
+            int borderSize = (int)(0.156 * screenWidth);
+            
+            if (player1.Position.X < (CameraManager.Camera.Pos.X + borderSize) && !player1.headingRight())
+            {
+                CameraManager.Camera.MoveLeft(player1);
+            }
 
-            if (player1.Position.X < (CameraManager.Camera.Pos.X + borderSize))
+            else if (player1.Position.X > CameraManager.Camera.Pos.X + (screenWidth - borderSize * 4f) && player1.headingRight())
             {
-                CameraManager.Camera.changePos(new Vector2(-xchange, 0f));
+                CameraManager.Camera.MoveRight(player1);
             }
-            else if (player1.Position.X > CameraManager.Camera.Pos.X + (screenWidth - borderSize))
+            else
             {
-                Vector2 changeModifier = new Vector2(player1.Position.X - (CameraManager.Camera.Pos.X + screenWidth - borderSize), 0f);
-                CameraManager.Camera.changePos(changeModifier);
+                CameraManager.Camera.SlowDown(player1);
             }
+
+
    
         }
     }

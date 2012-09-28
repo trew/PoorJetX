@@ -59,6 +59,12 @@ namespace PoorEngine.SceneObject
         {
             return Position;
         }
+
+
+        public Vector2 getVelocity()
+        {
+            return velocity;
+        }
     
         public void Draw(GameTime gameTime)
         {
@@ -127,7 +133,6 @@ namespace PoorEngine.SceneObject
             double drag = Math.Sqrt(Math.Abs(angleOfAttack) / 90);
 
             // Change rotationspeed of the airplane depending on Angle of Attack
-            // WTF NOT USED?
             angleSpeedModifier = Math.Abs(180 - velocityAngle);
             angleSpeedModifier = Math.Sqrt(angleSpeedModifier / 90);
 
@@ -142,38 +147,31 @@ namespace PoorEngine.SceneObject
             {
                 airSpeed -= 0.010 / angleSpeedModifier;
             }
-            else // not needed?
-            {
-                airSpeed = thrust;
-            }
-
 
             double movementMultiplier = airSpeed - drag;
             
-            float xshit = (float)(newX * movementMultiplier );
-            float yshit = (float)(((newY * movementMultiplier)) + gravity - lift);
+            float xmod = (float)(newX * movementMultiplier );
+            float ymod = (float)(((newY * movementMultiplier)) + gravity - lift);
 
-            Position += new Vector2(xshit, yshit);
+            Position += new Vector2(xmod, ymod);
             velocity = Position - oldPos;
 
             linearVelocity = Math.Sqrt(
                 Math.Pow((Math.Max(Position.X, oldPos.X) - Math.Min(Position.X, oldPos.X)), 2) +
                 Math.Pow((Math.Max(Position.Y, oldPos.Y) - Math.Min(Position.Y, oldPos.Y)), 2));
 
-            if (airSpeed < linearVelocity)
+            if (airSpeed + 0.1 < linearVelocity)
             {
                 airSpeed += 0.025 / angleSpeedModifier;
             }
+            /*
             else if (airSpeed > linearVelocity)
             {
-                airSpeed -= 0.010 / angleSpeedModifier;
+                airSpeed -= 0.015 / angleSpeedModifier;
             }
+            */
+            airSpeed = Math.Min(airSpeed, 8);
 
-
-            if (airSpeed > 8)
-            {
-                airSpeed = 8;
-            }
         }
 
         public void LoadContent()
@@ -209,6 +207,11 @@ namespace PoorEngine.SceneObject
         public void killEngine()
         {
 
+        }
+
+        public bool headingRight()
+        {
+            return orientation < 180;
         }
 
         public void HandleInput(Input input)

@@ -9,7 +9,7 @@ namespace PoorEngine.Managers
 {
     public class CameraManager : GameComponent
     {
-        public static Camera _camera;
+        private static Camera _camera;
 
         public CameraManager(Game game)
             : base(game)

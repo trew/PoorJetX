@@ -31,20 +31,20 @@ namespace PoorEngine.SceneObject
         private double angleOfAttack;
         private double angleSpeedModifier;
         private Vector2 targetPos;
-                
+        private double targetX;        
+
         public EnemyAirplane()
         {
-            thrust = 2;
+            thrust = 3;
             lift = 0;
-            orientation = -90;
-            airSpeed = 2;
-            gravity = 1;
+            orientation = 90;
+            airSpeed = 3;
+            gravity = 3;
             linearVelocity = 0;
-            velocityAngle = -90;
+            velocityAngle = 90;
             weight = 1;
             Position = new Vector2(1100,200);
-            targetPos = new Vector2(0, 500);
-            
+
         }
 
         public void setTargetPos(Vector2 tp)
@@ -89,49 +89,18 @@ namespace PoorEngine.SceneObject
             double diff = orientation - velocityAngle + 180;
             double posDiff = Math.Abs(diff - 180);
 
-            double deltax = Position.X - targetPos.X;
-            double deltay = Position.Y - targetPos.Y;
+            targetX = CameraManager.Camera.Pos.X + (EngineManager.Device.Viewport.Width * 0.8);
 
-            double angle_rad = Math.Atan2(deltay, deltax);
-            double angleToPlayer = angle_rad*180.0/Math.PI;
-
-            Console.WriteLine(angleToPlayer + ", " + (orientation-270.0));
-
-            if (angleToPlayer > orientation-270)
+            if (Position.X > targetX)
             {
-                orientation += 1.05;
-                /*
-                if (orientation > 320)
-                {
-                    orientation = 320;
-                }*/
+                thrust -= 0.01;
             }
-            else
+            else if (Position.X < targetX)
             {
-                orientation -= 1.05;
-                /*
-                if (orientation < 220)
-                {
-                    orientation = 220;
-                }*/
+                thrust = Math.Min(thrust + 0.01, 7.5);
             }
 
-
-            /* Set orientation towards direction of player1
-            if (angleToPlayer < velocityAngleRotationSpeed)
-            {
-                velocityAngle = angleToPlayer;
-            }
-            else if (angleToPlayer >= 0 && angleToPlayer < 180 || angleToPlayer > 359)
-            {
-                orientation -= velocityAngleRotationSpeed;
-            }
-            else if (angleToPlayer >= 180 || angleToPlayer < 0)
-            {
-                orientation += velocityAngleRotationSpeed;
-            }*/
-
-
+            
             /*
              * Adjust velocityAngle towards the airplane orientation 
              */
@@ -171,13 +140,12 @@ namespace PoorEngine.SceneObject
             oldPos = Position;
 
             // Calculate lift and drag
-            lift = (double)Math.Min(3, Math.Pow(Math.Sqrt(Math.Abs(velocity.X)), 1.5));
-            lift = Math.Max(lift, 0.8);
+            //lift = (double)Math.Min(3, Math.Pow(Math.Sqrt(Math.Abs(velocity.X)), 1.5));
+            //lift = Math.Max(lift, 0.8);
 
             double drag = Math.Sqrt(Math.Abs(angleOfAttack) / 90);
 
             // Change rotationspeed of the airplane depending on Angle of Attack
-            // WTF NOT USED?
             angleSpeedModifier = Math.Abs(180 - velocityAngle);
             angleSpeedModifier = Math.Sqrt(angleSpeedModifier / 90);
 
@@ -186,43 +154,25 @@ namespace PoorEngine.SceneObject
             // Adds 'acceleration'
             if (airSpeed < thrust)
             {
-                airSpeed += 0.025 / angleSpeedModifier;
+                airSpeed += 0.255 / angleSpeedModifier;
             }
             else if (airSpeed > thrust)
             {
-                airSpeed -= 0.010 / angleSpeedModifier;
+                airSpeed -= 0.250 / angleSpeedModifier;
             }
-            else // not needed?
-            {
-                airSpeed = thrust;
-            }
-
 
             double movementMultiplier = airSpeed - drag;
             
-            float xshit = (float)(newX * movementMultiplier );
-            float yshit = (float)(((newY * movementMultiplier)) + gravity - lift);
+            float xmod = (float)(newX * movementMultiplier );
+            float ymod = (float)(newY * movementMultiplier);
 
-            Position += new Vector2(xshit, yshit);
+            Position += new Vector2(xmod, ymod);
             velocity = Position - oldPos;
 
             linearVelocity = Math.Sqrt(
                 Math.Pow((Math.Max(Position.X, oldPos.X) - Math.Min(Position.X, oldPos.X)), 2) +
                 Math.Pow((Math.Max(Position.Y, oldPos.Y) - Math.Min(Position.Y, oldPos.Y)), 2));
 
-            if (airSpeed < linearVelocity)
-            {
-                airSpeed += 0.025 / angleSpeedModifier;
-            }
-            else if (airSpeed > linearVelocity)
-            {
-                airSpeed -= 0.010 / angleSpeedModifier;
-            }
-
-            if (airSpeed > 8)
-            {
-                airSpeed = 8;
-            }
         }
 
         public void LoadContent()
@@ -360,6 +310,16 @@ namespace PoorEngine.SceneObject
                 newAngle += 360;
 
             return newAngle;
+        }
+
+
+        private double getAngle(Vector2 a, Vector2 b)
+        {
+            double deltax = a.X - b.X;
+            double deltay = a.Y - b.Y;
+
+            double angle_rad = Math.Atan2(deltay, deltax);
+            return angle_rad * 180.0 / Math.PI;
         }
     }
 }
