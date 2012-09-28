@@ -109,20 +109,25 @@ namespace PoorEngine.GameComponents
         }
 
         /// <summary>
-        /// Spawns a new enemy if the camera has reached the x
-        /// point for that enemy.
+        /// Get the next enemy in queue
         /// </summary>
-        /// <returns>An enemy, or null if no enemy is to be spawned</returns>
-        public EnemyAirplane SpawnEnemy(float x)
+        /// <returns></returns>
+        public EnemyAirplane GetNextEnemy()
+        {
+            if (_enemies == null || _enemies.Count <= 0) return null;
+            return _enemies.First();
+        }
+
+        /// <summary>
+        /// Spawns a new enemy
+        /// </summary>
+        /// <returns>An enemy, or null if no enemies is in queue</returns>
+        public EnemyAirplane SpawnEnemy()
         {
             if (_enemies == null || _enemies.Count <= 0) return null;
 
-            if (_enemies.First().Position.X <= x)
-            {
-                SceneGraphManager.AddObject(_enemies.First());
-                return _enemies.Dequeue();
-            }
-            return null;
+            SceneGraphManager.AddObject(_enemies.First());
+            return _enemies.Dequeue();
         }
         #endregion
 
