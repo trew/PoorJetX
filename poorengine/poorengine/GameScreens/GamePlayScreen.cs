@@ -53,7 +53,7 @@ namespace PoorEngine.GameScreens
             base.LoadContent();
 
             LevelManager.CurrentLevel.LoadBackgrounds();
-
+            LevelManager.CurrentLevel.QueueEnemies();
 
             player1 = new Airplane();
             enemy1 = new EnemyAirplane();
@@ -65,7 +65,6 @@ namespace PoorEngine.GameScreens
 
             airspeedMeter = new Instrument("instrument", new Vector2(800, ScreenHeight), 0f, 13f, 0.5f, "linearvelocity", this);
             SceneGraphManager.AddObject(airspeedMeter);
-
 
             SceneGraphManager.LoadContent();
         }

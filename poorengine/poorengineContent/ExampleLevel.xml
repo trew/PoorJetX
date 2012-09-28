@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Backgrounds>
     <LevelBackground>
       <fileName>layer2</fileName>
@@ -10,4 +10,16 @@
       <moveRatio>1</moveRatio>
     </LevelBackground>
   </Backgrounds>
-</Level>
+  <Enemies>
+    <LevelEnemy>
+      <XAppear>500</XAppear>
+      <Y>50</Y>
+      <type>1</type>
+    </LevelEnemy>
+    <LevelEnemy>
+      <XAppear>500</XAppear>
+      <Y>100</Y>
+      <type>1</type>
+    </LevelEnemy>
+  </Enemies>
+</LevelData>

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using PoorEngine.Helpers;
 using System.IO;
 using System.Xml.Serialization;
+using PoorEngine.SceneObject;
 
 namespace PoorEngine.Managers
 {
@@ -47,12 +48,20 @@ namespace PoorEngine.Managers
             {
                 // Load everything into this class with the help of
                 // the xmlserializer
-                Level loadedLevel =
-                    (Level)new XmlSerializer(typeof(Level)).Deserialize(file);
-                file.Close();
+                LevelData loadedLevelData = null;
+                loadedLevelData =
+                    (LevelData)new XmlSerializer(typeof(LevelData)).Deserialize(file);
 
-                if (loadedLevel != null)
+                if (loadedLevelData != null)
+                {
+                    Level loadedLevel = new Level(loadedLevelData);
                     _currentLevel = loadedLevel;
+                }
+                else
+                {
+                    // Can this even happen if exceptions
+                    // are handled?
+                }
             }
         }
         #endregion
@@ -76,6 +85,12 @@ namespace PoorEngine.Managers
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            // Spawn new enemy?
+            EnemyAirplane enemy = null;
+            do {
+                enemy = CurrentLevel.SpawnEnemy(CameraManager.Camera.Pos.X);
+            } while (enemy != null);
         }
     }
 }
