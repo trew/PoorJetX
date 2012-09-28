@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Backgrounds>
+    <LevelBackground>
+      <fileName>layer2</fileName>
+      <moveRatio>3.0</moveRatio>
+    </LevelBackground>
+    <LevelBackground>
+      <fileName>layer-1</fileName>
+      <moveRatio>1</moveRatio>
+    </LevelBackground>
+  </Backgrounds>
+</Level>

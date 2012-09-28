@@ -19,32 +19,6 @@ namespace PoorEngine
     /// </summary>
     public partial class PoorEngine : Game
     {
-        protected static int width, height;
-        /// <summary>
-        /// Width
-        /// </summary>
-        public static int Width
-        {
-            get { return width; }
-        }
-        /// <summary>
-        /// Height
-        /// </summary>
-        public static int Height
-        {
-            get { return Height; }
-        }
-        
-        protected static Color _backgroundColor = Color.LightGreen;
-        /// <summary>
-        /// Background Color
-        /// </summary>
-        public static Color BackgroundColor
-        {
-            get { return _backgroundColor; }
-            set { _backgroundColor = value; }
-        }
-
         protected static GraphicsDeviceManager _graphicsDeviceManager = null;
         /// <summary>
         /// Graphics Device
@@ -64,15 +38,6 @@ namespace PoorEngine
             set { _isAppActive = value; }
         }
 
-        protected static FpsCounter _fpsCounter = null;
-        /// <summary>
-        /// The frames per secound counter
-        /// </summary>
-        public static FpsCounter FpsCounter
-        {
-            get { return _fpsCounter; }
-        }
-
         protected SpriteBatch _spriteBatch = null;
         public SpriteBatch SpriteBatch
         {
@@ -90,15 +55,11 @@ namespace PoorEngine
         }
 
         private static ScreenManager _screenManagers = null;
-
-        private SpriteFont FpsFont = null;
-
         private static TextureManager _textureManagers = null;
-
         private static SceneGraphManager _sceneGraphManagers = null;
 
         private static CameraManager _cameraManager = null;
-
+        private static LevelManager _levelManagers = null;
         private static bool _checkedGraphicsOptions = false;
         private static bool _applyDeviceChanges = false;
 
@@ -121,10 +82,6 @@ namespace PoorEngine
             // the game will not behave normal any longer!
             //this.IsFixedTimeStep = false;
 
-            // Init the FpsCounter
-            _fpsCounter = new FpsCounter(this);
-            Components.Add(_fpsCounter);
-
             // Init texture managers
             _textureManagers = new TextureManager(this);
             Components.Add(_textureManagers);
@@ -144,6 +101,10 @@ namespace PoorEngine
             // Init camera manager
             _cameraManager = new CameraManager(this);
             Components.Add(_cameraManager);
+
+            // Init the level managers
+            _levelManagers = new LevelManager(this);
+            Components.Add(_levelManagers);
 
             Content.RootDirectory = "Content";
         }
@@ -192,7 +153,6 @@ namespace PoorEngine
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-            FpsFont = Content.Load<SpriteFont>("Fonts/fpsfont");
         }
 
 
