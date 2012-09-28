@@ -136,22 +136,39 @@ namespace PoorEngine.GameScreens
             float screenWidth = EngineManager.Device.Viewport.Width;
             int borderSize = (int)(0.156 * screenWidth);
             
+            // Guinness World Record If-statement
             if (player1.Position.X < (CameraManager.Camera.Pos.X + borderSize) && !player1.headingRight())
             {
                 CameraManager.Camera.MoveLeft(player1);
             }
 
-            else if (player1.Position.X > CameraManager.Camera.Pos.X + (screenWidth - borderSize * 4f) && player1.headingRight())
-            {
-                CameraManager.Camera.MoveRight(player1);
-            }
-            else
+            else if (player1.Position.X < (CameraManager.Camera.Pos.X + borderSize) && player1.headingRight())
             {
                 CameraManager.Camera.SlowDown(player1);
             }
 
+            else if (player1.Position.X > CameraManager.Camera.Pos.X + (screenWidth - borderSize * 0.25f) && player1.headingRight())
+            {
+                CameraManager.Camera.MoveRightMegaMax(player1);
+            }
 
-   
+            else if (player1.Position.X > CameraManager.Camera.Pos.X + (screenWidth - borderSize * 2f) && player1.headingRight())
+            {
+                CameraManager.Camera.MoveRightMax(player1);
+            }
+
+            else if (player1.Position.X > CameraManager.Camera.Pos.X + (screenWidth - borderSize * 5f) && player1.headingRight())
+            {
+                CameraManager.Camera.MoveRight(player1);
+            }
+
+            else
+            {
+                CameraManager.Camera.AdjustMovespeed(player1);
+                CameraManager.Camera.KeepGoing();
+            }
+
+
         }
     }
 }

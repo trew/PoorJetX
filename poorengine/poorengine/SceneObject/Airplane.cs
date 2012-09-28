@@ -221,6 +221,12 @@ namespace PoorEngine.SceneObject
             double maxForce = linearVelocity / 2.7;
             double forceResetAmount = 0.085;
 
+            // At high speeds, reduce maneuverability
+            if (linearVelocity > 5.5)
+            {
+                maxForce /= (Math.Min(linearVelocity - 4.5f, 2));
+            }
+
             if(input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift)) {
                 forceIncreaseAmount /= 2;
                 maxForce /= 3;
