@@ -50,12 +50,13 @@ namespace PoorEngine.GameScreens
         {
             base.LoadContent();
 
+            LevelManager.CurrentLevel.LoadBackgrounds();
+
             player1 = new Airplane();
             enemy1 = new EnemyAirplane();
             SceneGraphManager.AddObject(enemy1);
             SceneGraphManager.AddObject(player1);     
 
-            LevelManager.CurrentLevel.LoadBackgrounds();
 
             throttleMeter = new Instrument("instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
             SceneGraphManager.AddObject(throttleMeter);
