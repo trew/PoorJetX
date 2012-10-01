@@ -110,10 +110,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameComponents\DebugPanel.cs" />
     <Compile Include="GameComponents\Level.cs" />
     <Compile Include="GameScreens\ScoreScreen.cs" />
     <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\LevelManager.cs" />
+    <Compile Include="SceneObject\AmmoController.cs" />
     <Compile Include="SceneObject\Background.cs" />
     <Compile Include="GameComponents\Camera.cs" />
     <Compile Include="SceneObject\Airplane.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="SceneObject\EnemyAirplane.cs" />
     <Compile Include="SceneObject\Instrument.cs" />
     <Compile Include="SceneObject\PoorSceneObject.cs" />
+    <Compile Include="SceneObject\Projectile.cs" />
     <Compile Include="SceneObject\SceneGraph\Node.cs" />
     <Compile Include="SceneObject\SceneGraph\NodeList.cs" />
     <Compile Include="SceneObject\SceneGraph\SceneObjectNode.cs" />

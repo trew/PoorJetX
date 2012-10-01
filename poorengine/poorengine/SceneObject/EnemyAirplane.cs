@@ -91,14 +91,9 @@ namespace PoorEngine.SceneObject
 
             targetX = CameraManager.Camera.Pos.X + (EngineManager.Device.Viewport.Width * 0.8);
 
-            if (Position.X > targetX)
-            {
-                thrust -= 0.01;
-            }
-            else if (Position.X < targetX)
-            {
-                thrust = Math.Min(thrust + 0.01, 7.5);
-            }
+            double xdiff = Position.X - targetX;
+
+            thrust = 5 - xdiff / 300;
 
             
             /*

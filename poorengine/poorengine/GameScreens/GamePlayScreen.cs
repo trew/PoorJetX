@@ -23,6 +23,8 @@ namespace PoorEngine.GameScreens
         Instrument throttleMeter;
         Instrument airspeedMeter;
 
+        AmmoController ammoController;
+
         public GamePlayScreen(int level)
         {
             CameraManager.Reset();
@@ -46,9 +48,13 @@ namespace PoorEngine.GameScreens
         public override void LoadContent()
         {
             base.LoadContent();
+            TextureManager.AddTexture(new PoorTexture("Textures/bomb"), "bomb");
+            TextureManager.AddTexture(new PoorTexture("Textures/bullet"), "bullet");
 
             LevelManager.CurrentLevel.LoadBackgrounds();
             LevelManager.CurrentLevel.QueueEnemies();
+
+            ammoController = new AmmoController();
 
             player1 = new Airplane();
             SceneGraphManager.AddObject(player1);     
@@ -92,6 +98,22 @@ namespace PoorEngine.GameScreens
             base.HandleInput(input);
             
             player1.HandleInput(input);
+
+            if (input.IsNewKeyPress(Keys.Space))
+            {
+                if (ammoController.dropBomb())
+                {
+                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), "bomb"));
+                }
+            }
+
+            if (input.LastKeyboardState.IsKeyDown(Keys.LeftControl))
+            {
+                if (ammoController.fireBullet())
+                {
+                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
+                }
+            }
 
             if (input.IsNewKeyPress(Keys.Escape))
             {

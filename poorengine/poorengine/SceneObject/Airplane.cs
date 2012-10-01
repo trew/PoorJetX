@@ -42,7 +42,6 @@ namespace PoorEngine.SceneObject
             velocityAngle = 90;
             weight = 1;
             Position = new Vector2(200, 600);
-
         }
 
         public double getLinearVelocity()
@@ -53,6 +52,11 @@ namespace PoorEngine.SceneObject
         public double getThrottle()
         {
             return thrust;
+        }
+
+        public float getOrientation()
+        {
+            return (float)orientation;
         }
 
         public Vector2 getPosition()
@@ -123,6 +127,7 @@ namespace PoorEngine.SceneObject
             double newX = Math.Sin(DegreeToRadian(velocityAngle));
             double newY = -Math.Cos(DegreeToRadian(velocityAngle));
 
+
             // Save old pos, used for speedcalculations
             oldPos = Position;
 
@@ -152,6 +157,7 @@ namespace PoorEngine.SceneObject
 
             float xmod = (float)(newX * movementMultiplier);
             float ymod = (float)(((newY * movementMultiplier)) + gravity - lift);
+            ymod += (float)(9.8 * gameTime.ElapsedGameTime.TotalSeconds);
 
             Position += new Vector2(xmod, ymod);
             velocity = Position - oldPos;
