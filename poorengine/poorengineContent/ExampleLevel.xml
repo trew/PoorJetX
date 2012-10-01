@@ -2,12 +2,40 @@
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Backgrounds>
     <LevelBackground>
-      <fileName>layer2</fileName>
-      <moveRatio>3.0</moveRatio>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>0</RepeatMargin>
+      <X>0</X>
+      <Y>0</Y>
+      <AlignToBottom>1</AlignToBottom>
+      <fileName>layer3</fileName>
+      <moveRatio>8.0</moveRatio>
     </LevelBackground>
     <LevelBackground>
-      <fileName>layer-1</fileName>
-      <moveRatio>1</moveRatio>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>0</RepeatMargin>
+      <X>0</X>
+      <Y>0</Y>
+      <fileName>layer2</fileName>
+      <moveRatio>4.0</moveRatio>
+      <AlignToBottom>1</AlignToBottom>
+    </LevelBackground>
+    <LevelBackground>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>0</RepeatMargin>
+      <X>500</X>
+      <Y>0</Y>
+      <fileName>layer1</fileName>
+      <moveRatio>1.0</moveRatio>
+      <AlignToBottom>1</AlignToBottom>
+    </LevelBackground>
+    <LevelBackground>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>1000</RepeatMargin>
+      <X>500</X>
+      <Y>200</Y>
+      <AlignToBottom>0</AlignToBottom>
+      <fileName>layer1</fileName>
+      <moveRatio>2.0</moveRatio>
     </LevelBackground>
   </Backgrounds>
   <Enemies>
