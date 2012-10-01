@@ -21,12 +21,10 @@ namespace PoorEngine.GameScreens
         Airplane player1;
         EnemyAirplane enemy1;
 
-        Background backgroundLayer1;
-        Background backgroundLayer2;
-        Background backgroundLayer3;
-
         Instrument throttleMeter;
         Instrument airspeedMeter;
+
+        AmmoController ammoController;
 
         public GamePlayScreen(int level)
         {
@@ -51,9 +49,13 @@ namespace PoorEngine.GameScreens
         public override void LoadContent()
         {
             base.LoadContent();
+            TextureManager.AddTexture(new PoorTexture("Textures/bomb"), "bomb");
+            TextureManager.AddTexture(new PoorTexture("Textures/bullet"), "bullet");
 
             LevelManager.CurrentLevel.LoadBackgrounds();
             LevelManager.CurrentLevel.QueueEnemies();
+
+            ammoController = new AmmoController();
 
             player1 = new Airplane();
             enemy1 = new EnemyAirplane();
@@ -97,11 +99,24 @@ namespace PoorEngine.GameScreens
         public override void HandleInput(Input input)
         {
             base.HandleInput(input);
-
             
-            enemy1.setTargetPos(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
-            //player1.Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
             player1.HandleInput(input);
+
+            if (input.IsNewKeyPress(Keys.Space))
+            {
+                if (ammoController.dropBomb())
+                {
+                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), "bomb"));
+                }
+            }
+
+            if (input.LastKeyboardState.IsKeyDown(Keys.LeftControl))
+            {
+                if (ammoController.fireBullet())
+                {
+                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
+                }
+            }
 
             if (input.IsNewKeyPress(Keys.Escape))
             {
