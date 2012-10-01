@@ -214,6 +214,11 @@ namespace PoorEngine.SceneObject
             return orientation < 180;
         }
 
+        public bool headingDown()
+        {
+            return orientation > 90 && orientation < 270;
+        }
+
         public void HandleInput(Input input)
         {
             double forceIncreaseAmount = linearVelocity / 20;

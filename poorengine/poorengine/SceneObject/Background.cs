@@ -38,7 +38,7 @@ namespace PoorEngine.SceneObject
                 for (int i = -1; i <= (int)(EngineManager.Device.Viewport.Width / texture.Width) + 1; i++)
                 {
                     Position = new Vector2(i * texture.Width - (int)CameraManager.Camera.Pos.X % (texture.Width * moveRatio) / moveRatio,
-                                           EngineManager.Device.Viewport.Height - texture.Height);
+                                           EngineManager.Device.Viewport.Height - texture.Height - (CameraManager.Camera.Pos.Y / moveRatio));
                     ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
                 }
             ScreenManager.SpriteBatch.End();
