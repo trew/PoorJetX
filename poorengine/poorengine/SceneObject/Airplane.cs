@@ -162,6 +162,9 @@ namespace PoorEngine.SceneObject
             Position += new Vector2(xmod, ymod);
             velocity = Position - oldPos;
 
+            EngineManager.Debug.Print("Velocity: " + velocity);
+            EngineManager.Debug.Print("Position:" + Position);
+
             linearVelocity = Math.Sqrt(
                 Math.Pow((Math.Max(Position.X, oldPos.X) - Math.Min(Position.X, oldPos.X)), 2) +
                 Math.Pow((Math.Max(Position.Y, oldPos.Y) - Math.Min(Position.Y, oldPos.Y)), 2));
@@ -217,12 +220,12 @@ namespace PoorEngine.SceneObject
 
         public bool headingRight()
         {
-            return orientation < 180;
+            return velocity.X > 0;
         }
 
         public bool headingDown()
         {
-            return orientation > 90 && orientation < 270;
+            return velocity.Y > 0;
         }
 
         public void HandleInput(Input input)
