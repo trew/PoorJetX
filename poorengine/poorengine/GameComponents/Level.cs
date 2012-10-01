@@ -126,6 +126,7 @@ namespace PoorEngine.GameComponents
         {
             if (_enemies == null || _enemies.Count <= 0) return null;
 
+            _enemies.First().Position += new Vector2(EngineManager.Device.Viewport.Width + 100, 0);
             SceneGraphManager.AddObject(_enemies.First());
             return _enemies.Dequeue();
         }

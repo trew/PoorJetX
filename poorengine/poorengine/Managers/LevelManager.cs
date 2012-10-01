@@ -88,7 +88,10 @@ namespace PoorEngine.Managers
 
             // Spawn new enemy?
             EnemyAirplane enemy = null;
+            // get the right-most side of the camera + an additional 100px
+            // which we use.
             float x = CameraManager.Camera.Pos.X;
+
             do {
                 enemy = CurrentLevel.GetNextEnemy();
                 if (enemy != null && enemy.Position.X <= x)
