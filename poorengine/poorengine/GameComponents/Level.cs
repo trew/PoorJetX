@@ -13,8 +13,13 @@ namespace PoorEngine.GameComponents
     [Serializable]
     public class LevelBackground
     {
+        public bool Repeatable;
+        public int RepeatMargin;
+        public int X;
+        public int Y;
         public string fileName;
         public float moveRatio;
+        public bool AlignToBottom;
     }
 
     [Serializable]
@@ -83,7 +88,7 @@ namespace PoorEngine.GameComponents
         {
             foreach (LevelBackground bg in _data.Backgrounds)
             {
-                Background layer = new Background(bg.fileName, bg.moveRatio);
+                Background layer = new Background(bg.fileName, bg.moveRatio, bg.Repeatable, bg.RepeatMargin, new Vector2(bg.X, bg.Y), bg.AlignToBottom);
                 SceneGraphManager.AddObject(layer);
             }
         }
