@@ -19,7 +19,6 @@ namespace PoorEngine.GameScreens
     {
         const string airplaneTexture = "apTex1";
         Airplane player1;
-        EnemyAirplane enemy1;
 
         Instrument throttleMeter;
         Instrument airspeedMeter;
@@ -58,8 +57,6 @@ namespace PoorEngine.GameScreens
             ammoController = new AmmoController();
 
             player1 = new Airplane();
-            enemy1 = new EnemyAirplane();
-            SceneGraphManager.AddObject(enemy1);
             SceneGraphManager.AddObject(player1);     
 
             throttleMeter = new Instrument("instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
