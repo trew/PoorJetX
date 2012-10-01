@@ -63,6 +63,8 @@ namespace PoorEngine
         private static bool _checkedGraphicsOptions = false;
         private static bool _applyDeviceChanges = false;
 
+        public static DebugPanel Debug = null;
+
         /// <summary>
         /// Create Poor Engine
         /// </summary>
@@ -105,6 +107,9 @@ namespace PoorEngine
             // Init the level managers
             _levelManagers = new LevelManager(this);
             Components.Add(_levelManagers);
+
+            Debug = new DebugPanel(this);
+            Components.Add(Debug);
 
             Content.RootDirectory = "Content";
         }

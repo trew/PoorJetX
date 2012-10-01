@@ -110,6 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameComponents\DebugPanel.cs" />
     <Compile Include="GameComponents\Level.cs" />
     <Compile Include="GameScreens\ScoreScreen.cs" />
     <Compile Include="Managers\CameraManager.cs" />

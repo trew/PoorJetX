@@ -119,13 +119,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExampleLevel.xml">
-      <Name>ExampleLevel</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\background.png">
       <Name>background</Name>
       <Importer>TextureImporter</Importer>
@@ -144,6 +137,11 @@
       <Name>bullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Fonts\debug.spritefont">
+      <Name>debug</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
