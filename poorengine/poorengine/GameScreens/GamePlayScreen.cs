@@ -19,11 +19,6 @@ namespace PoorEngine.GameScreens
     {
         const string airplaneTexture = "apTex1";
         Airplane player1;
-        EnemyAirplane enemy1;
-
-        Background backgroundLayer1;
-        Background backgroundLayer2;
-        Background backgroundLayer3;
 
         Instrument throttleMeter;
         Instrument airspeedMeter;
@@ -56,8 +51,6 @@ namespace PoorEngine.GameScreens
             LevelManager.CurrentLevel.QueueEnemies();
 
             player1 = new Airplane();
-            enemy1 = new EnemyAirplane();
-            SceneGraphManager.AddObject(enemy1);
             SceneGraphManager.AddObject(player1);     
 
             throttleMeter = new Instrument("instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
@@ -97,10 +90,7 @@ namespace PoorEngine.GameScreens
         public override void HandleInput(Input input)
         {
             base.HandleInput(input);
-
             
-            enemy1.setTargetPos(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
-            //player1.Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
             player1.HandleInput(input);
 
             if (input.IsNewKeyPress(Keys.Escape))
