@@ -30,7 +30,7 @@ namespace PoorEngine.SceneObject
         private double weight;
         private double angleOfAttack;
         private double angleSpeedModifier;
-                
+
         public Airplane()
         {
             thrust = 4;
@@ -41,8 +41,8 @@ namespace PoorEngine.SceneObject
             linearVelocity = 0;
             velocityAngle = 90;
             weight = 1;
-            Position = new Vector2(200,600);
-            
+            Position = new Vector2(200, 600);
+
         }
 
         public double getLinearVelocity()
@@ -65,11 +65,11 @@ namespace PoorEngine.SceneObject
         {
             return velocity;
         }
-    
+
         public void Draw(GameTime gameTime)
         {
             Texture2D texture = TextureManager.GetTexture(airplaneTexture).BaseTexture as Texture2D;
-            Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
+            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
@@ -149,8 +149,8 @@ namespace PoorEngine.SceneObject
             }
 
             double movementMultiplier = airSpeed - drag;
-            
-            float xmod = (float)(newX * movementMultiplier );
+
+            float xmod = (float)(newX * movementMultiplier);
             float ymod = (float)(((newY * movementMultiplier)) + gravity - lift);
 
             Position += new Vector2(xmod, ymod);
@@ -176,7 +176,7 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/airplane"), airplaneTexture);
+            TextureManager.AddTexture(new PoorTexture("Textures/flygplan"), airplaneTexture);
         }
 
         public void UnloadContent()
@@ -232,7 +232,8 @@ namespace PoorEngine.SceneObject
                 maxForce /= (Math.Min(linearVelocity - 4.5f, 2));
             }
 
-            if(input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift)) {
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift))
+            {
                 forceIncreaseAmount /= 2;
                 maxForce /= 3;
             }
@@ -307,7 +308,7 @@ namespace PoorEngine.SceneObject
 
         }
 
-        
+
         /*
          *  Div functions
          */

@@ -83,7 +83,7 @@ namespace PoorEngine.GameComponents
             {
                 MoveUp(player1);
             }
-            else if (player1.Position.Y > Pos.Y + (screenHeight - borderSize*1.5f))
+            else if (player1.Position.Y > Pos.Y + (screenHeight - borderSize * 1.5f))
             {
                 MoveDown(player1);
             }
@@ -182,7 +182,7 @@ namespace PoorEngine.GameComponents
 
         public void MoveRight(Airplane p1)
         {
-            
+
             if (p1.getVelocity().X > moveSpeed.X)
             {
                 moveSpeed.X += 0.07f;
