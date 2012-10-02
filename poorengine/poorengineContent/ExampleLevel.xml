@@ -1,53 +1,56 @@
 <?xml version="1.0"?>
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Visuals>
+    <LevelVisual>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>50</RepeatMargin>
+      <X>0</X>
+      <Y>400</Y>
+      <FileName>clouds1</FileName>
+      <Z>2.5</Z>
+      <ConstantSpeed>-5</ConstantSpeed>
+    </LevelVisual>
+
+    <LevelVisual>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>100</RepeatMargin>
+      <X>300</X>
+      <Y>100</Y>
+      <FileName>clouds2</FileName>
+      <Z>5.0</Z>
+      <ConstantSpeed>-5</ConstantSpeed>
+    </LevelVisual>
+  </Visuals>
+  
   <Backgrounds>
     <LevelBackground>
-      <Repeatable>1</Repeatable>
-      <RepeatMargin>0</RepeatMargin>
-      <X>0</X>
-      <Y>0</Y>
-      <AlignToBottom>1</AlignToBottom>
-      <fileName>layer3</fileName>
-      <moveRatio>8.0</moveRatio>
+      <FileName>layer3</FileName>
+      <Z>8.0</Z>
     </LevelBackground>
+    
     <LevelBackground>
-      <Repeatable>1</Repeatable>
-      <RepeatMargin>0</RepeatMargin>
-      <X>0</X>
-      <Y>0</Y>
-      <fileName>layer2</fileName>
-      <moveRatio>4.0</moveRatio>
-      <AlignToBottom>1</AlignToBottom>
+      <FileName>layer2</FileName>
+      <Z>4.0</Z>
     </LevelBackground>
+    
     <LevelBackground>
-      <Repeatable>1</Repeatable>
-      <RepeatMargin>0</RepeatMargin>
-      <X>500</X>
-      <Y>0</Y>
-      <fileName>layer1</fileName>
-      <moveRatio>1.0</moveRatio>
-      <AlignToBottom>1</AlignToBottom>
-    </LevelBackground>
-    <LevelBackground>
-      <Repeatable>1</Repeatable>
-      <RepeatMargin>1000</RepeatMargin>
-      <X>500</X>
-      <Y>200</Y>
-      <AlignToBottom>0</AlignToBottom>
-      <fileName>layer1</fileName>
-      <moveRatio>2.0</moveRatio>
+      <FileName>layer1</FileName>
+      <Z>1.0</Z>
     </LevelBackground>
   </Backgrounds>
+  
   <Enemies>
     <LevelEnemy>
       <XAppear>500</XAppear>
       <Y>50</Y>
       <type>1</type>
     </LevelEnemy>
+    
     <LevelEnemy>
       <XAppear>500</XAppear>
       <Y>100</Y>
       <type>1</type>
     </LevelEnemy>
   </Enemies>
+  
 </LevelData>

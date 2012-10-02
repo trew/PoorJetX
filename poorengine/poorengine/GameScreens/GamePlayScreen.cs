@@ -50,8 +50,10 @@ namespace PoorEngine.GameScreens
             base.LoadContent();
             TextureManager.AddTexture(new PoorTexture("Textures/bomb"), "bomb");
             TextureManager.AddTexture(new PoorTexture("Textures/bullet"), "bullet");
+            TextureManager.AddTexture(new PoorTexture("Textures/clouds1"), "clouds1");
+            TextureManager.AddTexture(new PoorTexture("Textures/clouds2"), "clouds2");
 
-            LevelManager.CurrentLevel.LoadBackgrounds();
+            LevelManager.CurrentLevel.LoadVisuals();
             LevelManager.CurrentLevel.QueueEnemies();
 
             ammoController = new AmmoController();

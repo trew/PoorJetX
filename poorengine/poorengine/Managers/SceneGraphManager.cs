@@ -35,7 +35,6 @@ namespace PoorEngine.Managers
         /// <param name="gameTime"></param>
         public static void Draw(GameTime gameTime)
         {
-
             _root.Draw(gameTime);
         }
 
@@ -56,10 +55,19 @@ namespace PoorEngine.Managers
             _root.UnloadContent();
         }
 
+        private static int comp(Node x1, Node x2)
+        {
+            SceneObjectNode node1 = (SceneObjectNode)x1;
+            SceneObjectNode node2 = (SceneObjectNode)x2;
+            if (node1.SceneObject.Z == node2.SceneObject.Z) return 0;
+            return node1.SceneObject.Z > node2.SceneObject.Z ? -1 : 1;
+        }
+
         public static void AddObject(PoorSceneObject newObject)
         {
             SceneObjectNode node = new SceneObjectNode(newObject);
             _root.AddNode(node);
+            _root.Nodes.Sort(comp);
         }
 
     }

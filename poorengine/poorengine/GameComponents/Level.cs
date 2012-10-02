@@ -11,15 +11,23 @@ using Microsoft.Xna.Framework;
 namespace PoorEngine.GameComponents
 {
     [Serializable]
-    public class LevelBackground
+    public class LevelVisual
     {
         public bool Repeatable;
         public int RepeatMargin;
         public int X;
         public int Y;
-        public string fileName;
-        public float moveRatio;
         public bool AlignToBottom;
+        public string FileName;
+        public float Z;
+        public float ConstantSpeed;
+    }
+
+    [Serializable]
+    public class LevelBackground
+    {
+        public string FileName;
+        public float Z;
     }
 
     [Serializable]
@@ -44,6 +52,17 @@ namespace PoorEngine.GameComponents
     {
 
         #region LevelData
+        private List<LevelVisual> _visuals;
+        /// <summary>
+        /// A list of visual objects where the String is the filename
+        /// and float is the moveRatio
+        /// </summary>
+        public List<LevelVisual> Visuals
+        {
+            get { return _visuals; }
+            set { _visuals = value; }
+        }
+
         private List<LevelBackground> _backgrounds;
         /// <summary>
         /// A list of backgrounds where the String is the filename
@@ -84,12 +103,18 @@ namespace PoorEngine.GameComponents
         /// Load all backgrounds for this level and add them
         /// to the Scene using SceneGraphManager.
         /// </summary>
-        public void LoadBackgrounds()
+        public void LoadVisuals()
         {
             foreach (LevelBackground bg in _data.Backgrounds)
             {
-                Background layer = new Background(bg.fileName, bg.moveRatio, bg.Repeatable, bg.RepeatMargin, new Vector2(bg.X, bg.Y), bg.AlignToBottom);
+                Background layer = new Background(bg.FileName, bg.Z);
                 SceneGraphManager.AddObject(layer);
+            }
+
+            foreach (LevelVisual vs in _data.Visuals)
+            {
+                Visual visualObject = new Visual(vs.FileName, vs.Z, vs.ConstantSpeed, vs.Repeatable, vs.RepeatMargin, new Vector2(vs.X, vs.Y));
+                SceneGraphManager.AddObject(visualObject);
             }
         }
 
