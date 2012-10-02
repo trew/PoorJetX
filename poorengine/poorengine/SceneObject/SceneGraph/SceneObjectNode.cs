@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using PoorEngine.Interfaces;
+using PoorEngine.Managers;
 
 namespace PoorEngine.SceneObject.SceneGraph
 {
@@ -26,6 +27,8 @@ namespace PoorEngine.SceneObject.SceneGraph
             if (SceneObject is IPoorUpdateable)
             {
                 ((IPoorUpdateable)SceneObject).Update(gameTime);
+                EngineManager.Debug.Print("Z: " + SceneObject.Z);
+
             }
         }
         public override void LoadContent()

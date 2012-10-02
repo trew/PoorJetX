@@ -35,6 +35,17 @@ namespace PoorEngine.SceneObject
             get { return _position; }
             set { _position = value; }
         }
+
+        private float _Z = 1;
+        /// <summary>
+        /// The Z-position of this object in 3D space.
+        /// </summary>
+        public float Z
+        {
+            get { return _Z; }
+            set { if (value > 0) { _Z = value; } }
+        }
+
         private Vector2 _scale = Vector2.One;
         /// <summary>
         /// Scale of the object.

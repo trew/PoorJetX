@@ -42,6 +42,7 @@ namespace PoorEngine.SceneObject
             velocityAngle = 90;
             weight = 1;
             Position = new Vector2(200, 600);
+            Z = 0.5f;
         }
 
         public double getLinearVelocity()

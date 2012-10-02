@@ -38,6 +38,7 @@ namespace PoorEngine.SceneObject
             scale = scaleVal;
             needleTexture = new Texture2D(EngineManager.Device, 1, 1, false, SurfaceFormat.Color);
             needleTexture.SetData(new[] { Color.White });
+            Z = 0.1f;
         }
 
         private double DegreeToRadian(double angle)

@@ -12,35 +12,34 @@ namespace PoorEngine.SceneObject
 {
     public class Background : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
-
         private string backgroundName;
-
-        private float moveRatio;
 
         /// <summary>
         /// Background texture
         /// </summary>
         /// <param name="backgroundName">Name of the texture</param>
-        /// <param name="moveRatio">Ratio of which the background is moving compared to player</param>
-        public Background(String backgroundName, float moveRatio)
+        /// <param name="Z">Ratio of which the background is moving compared to player</param>
+        public Background(String backgroundName, float Z)
         {
             this.backgroundName = backgroundName;
-            this.moveRatio = moveRatio;
+            this.Z = Z;
         }
 
         public void Draw(GameTime gameTime) 
         {
+            //if (CameraManager.Camera.Pos.X < appear.X) return;
             Texture2D texture = TextureManager.GetTexture(backgroundName).BaseTexture as Texture2D;
 
             ScreenManager.SpriteBatch.Begin();
 
-                // Draw the background enough times to make one at the left of the viewport and one to the right
-                for (int i = -1; i <= (int)(EngineManager.Device.Viewport.Width / texture.Width) + 1; i++)
-                {
-                    Position = new Vector2(i * texture.Width - (int)CameraManager.Camera.Pos.X % (texture.Width * moveRatio) / moveRatio,
-                                           EngineManager.Device.Viewport.Height - texture.Height - (CameraManager.Camera.Pos.Y / moveRatio));
-                    ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
-                }
+            // Draw the background enough times to make one at the left of the viewport and one to the right
+            for (int i = -1; i <= (int)(EngineManager.Device.Viewport.Width / texture.Width) + 1; i++)
+            {
+                Position = new Vector2(i * texture.Width - (int)CameraManager.Camera.Pos.X % (texture.Width * Z) / Z, 
+                    EngineManager.Device.Viewport.Height - texture.Height - (CameraManager.Camera.Pos.Y / Z));
+                ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
+            }
+            
             ScreenManager.SpriteBatch.End();
         }
 

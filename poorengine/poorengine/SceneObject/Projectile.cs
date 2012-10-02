@@ -26,32 +26,28 @@ namespace PoorEngine.SceneObject
             _orientation = 0f;
             _texture = texture;
             _spread = 0.0;
-
+            Z = 1.5f;
         }
 
         public Projectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, string texture)
         {
             rnd = new Random(Guid.NewGuid().GetHashCode());
-
             _spread = (rnd.NextDouble() * spreadDegrees) / 2.0;
 
             if (rnd.NextDouble() > 0.5)
             {
                 _spread = -_spread;
             }
-
             _orientation = orientation + (float)_spread;
 
             Position = pos;
             float xFactor = (float)Math.Sin(DegreeToRadian(_orientation));
             float yFactor = (float)-Math.Cos(DegreeToRadian(_orientation));
             Vector2 boostFactor = new Vector2(xFactor * velocityBoost, yFactor * velocityBoost);
-            
+
             _velocity = velocity + boostFactor;
-
-
-            Console.WriteLine(_spread);
             _texture = texture;
+            Z = 1.5f;
         }
 
 

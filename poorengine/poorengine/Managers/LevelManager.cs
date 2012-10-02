@@ -35,8 +35,7 @@ namespace PoorEngine.Managers
         public static void Load(int level)
         {
             String filename = _levelPathPrefix + level.ToString() + ".xml";
-            FileStream file = FileHelper.LoadGameContentFile(
-                filename);
+            FileStream file = FileHelper.LoadGameContentFile(filename);
 
             // If the file is empty, just create a new file with the default
             // settings.
