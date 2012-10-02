@@ -20,6 +20,7 @@ namespace PoorEngine.GameComponents
         public bool AlignToBottom;
         public string FileName;
         public float Z;
+        public float Scale;
         public float ConstantSpeed;
     }
 
@@ -113,7 +114,7 @@ namespace PoorEngine.GameComponents
 
             foreach (LevelVisual vs in _data.Visuals)
             {
-                Visual visualObject = new Visual(vs.FileName, vs.Z, vs.ConstantSpeed, vs.Repeatable, vs.RepeatMargin, new Vector2(vs.X, vs.Y));
+                Visual visualObject = new Visual(vs.FileName, vs.Scale, vs.Z, vs.ConstantSpeed, vs.Repeatable, vs.RepeatMargin, new Vector2(vs.X, vs.Y));
                 SceneGraphManager.AddObject(visualObject);
             }
         }

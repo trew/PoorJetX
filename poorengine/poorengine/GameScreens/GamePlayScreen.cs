@@ -50,9 +50,16 @@ namespace PoorEngine.GameScreens
             base.LoadContent();
             TextureManager.AddTexture(new PoorTexture("Textures/bomb"), "bomb");
             TextureManager.AddTexture(new PoorTexture("Textures/bullet"), "bullet");
-            TextureManager.AddTexture(new PoorTexture("Textures/clouds1"), "clouds1");
-            TextureManager.AddTexture(new PoorTexture("Textures/clouds2"), "clouds2");
-            //TextureManager.AddTexture(new PoorTexture("Textures/skygradient"), "skygradient");
+
+            TextureManager.AddTexture(new PoorTexture("Textures/cloud1"), "cloud1");
+            TextureManager.AddTexture(new PoorTexture("Textures/cloud2"), "cloud2");
+            TextureManager.AddTexture(new PoorTexture("Textures/cloud3"), "cloud3");
+            TextureManager.AddTexture(new PoorTexture("Textures/cloud4"), "cloud4");
+            TextureManager.AddTexture(new PoorTexture("Textures/cloud5"), "cloud5");
+            TextureManager.AddTexture(new PoorTexture("Textures/cloud6"), "cloud6");
+
+            TextureManager.AddTexture(new PoorTexture("Textures/hill1"), "hill1");
+            TextureManager.AddTexture(new PoorTexture("Textures/hill2"), "hill2");
 
             LevelManager.CurrentLevel.LoadVisuals();
             LevelManager.CurrentLevel.QueueEnemies();
