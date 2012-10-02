@@ -52,11 +52,15 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/bullet"), "bullet");
             TextureManager.AddTexture(new PoorTexture("Textures/clouds1"), "clouds1");
             TextureManager.AddTexture(new PoorTexture("Textures/clouds2"), "clouds2");
+            //TextureManager.AddTexture(new PoorTexture("Textures/skygradient"), "skygradient");
 
             LevelManager.CurrentLevel.LoadVisuals();
             LevelManager.CurrentLevel.QueueEnemies();
 
             ammoController = new AmmoController();
+
+            SkyGradient skyGradient = new SkyGradient("skygradient");
+            SceneGraphManager.AddObject(skyGradient);
 
             player1 = new Airplane();
             SceneGraphManager.AddObject(player1);     
