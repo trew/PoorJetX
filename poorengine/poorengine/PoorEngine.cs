@@ -134,6 +134,7 @@ namespace PoorEngine
 
             _graphicsDeviceManager.PreferredBackBufferWidth = resolutionWidth;
             _graphicsDeviceManager.PreferredBackBufferHeight = resolutionHeight;
+            _graphicsDeviceManager.IsFullScreen = GameSettings.Default.FullScreen;
 
             _applyDeviceChanges = true;
         }

@@ -27,8 +27,6 @@ namespace PoorEngine.SceneObject.SceneGraph
             if (SceneObject is IPoorUpdateable)
             {
                 ((IPoorUpdateable)SceneObject).Update(gameTime);
-                EngineManager.Debug.Print("Z: " + SceneObject.Z);
-
             }
         }
         public override void LoadContent()
