@@ -82,7 +82,7 @@ namespace PoorEngine.GameComponents
 
             // if player is on top of the screen and not facing upwards
 
-            if (player1.getPosition().Y < Pos.Y + borderSize)
+            if (player1.getPosition().Y <= Pos.Y + borderSize)
             {
                 MoveUp(player1);
             }
