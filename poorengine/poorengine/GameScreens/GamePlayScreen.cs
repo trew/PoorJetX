@@ -61,6 +61,8 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/hill1"), "hill1");
             TextureManager.AddTexture(new PoorTexture("Textures/hill2"), "hill2");
 
+            TextureManager.AddTexture(new PoorTexture("Textures/emptyshell"), "emptyshell");
+
             LevelManager.CurrentLevel.LoadVisuals();
             LevelManager.CurrentLevel.QueueEnemies();
 
@@ -125,6 +127,7 @@ namespace PoorEngine.GameScreens
                 if (ammoController.fireBullet())
                 {
                     SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
+                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 1f, Airplane.getOrientation()+130, 10f, "emptyshell"));
                 }
             }
 
