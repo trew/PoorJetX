@@ -63,6 +63,7 @@ namespace PoorEngine.GameScreens
 
             TextureManager.AddTexture(new PoorTexture("Textures/emptyshell"), "emptyshell");
 
+
             LevelManager.CurrentLevel.LoadVisuals();
             LevelManager.CurrentLevel.QueueEnemies();
 
