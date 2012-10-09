@@ -123,7 +123,7 @@ namespace PoorEngine.SceneObject
 
         public void Update(GameTime gameTime)
         {
-            healthMeterRect.Width = 38 * (health / maxHealth);
+            healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
 
             orientation = formatAngle(orientation);
             velocityAngle = formatAngle(velocityAngle);
