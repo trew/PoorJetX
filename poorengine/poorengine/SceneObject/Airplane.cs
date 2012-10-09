@@ -15,7 +15,6 @@ namespace PoorEngine.SceneObject
 {
     public class Airplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
-        const string airplaneTexture = "apTex1";
         private double thrust;
         private double airSpeed;
         private Vector2 oldPos;
@@ -32,7 +31,7 @@ namespace PoorEngine.SceneObject
         private double angleSpeedModifier;
 
         public Airplane():
-            base("apText1")
+            base("apTex1")
         {
             thrust = 4;
             lift = 0;
@@ -44,6 +43,7 @@ namespace PoorEngine.SceneObject
             weight = 1;
             Position = new Vector2(200, 600);
             Z = 0.5f;
+            UsedInBoundingBoxCheck = true;
         }
 
         public double getLinearVelocity()
@@ -74,7 +74,8 @@ namespace PoorEngine.SceneObject
 
         public void Draw(GameTime gameTime)
         {
-            Texture2D texture = TextureManager.GetTexture(airplaneTexture).BaseTexture as Texture2D;
+            EngineManager.Debug.Print("Airplane Boundingbox: " + BoundingBox.ToString());
+            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 
             ScreenManager.SpriteBatch.Begin();
@@ -164,8 +165,8 @@ namespace PoorEngine.SceneObject
             Position += new Vector2(xmod, ymod);
             velocity = Position - oldPos;
 
-            EngineManager.Debug.Print("Velocity: " + velocity);
-            EngineManager.Debug.Print("Position:" + Position);
+            EngineManager.Debug.Print("Airplane Velocity: " + velocity);
+            EngineManager.Debug.Print("Airplane Position:" + Position);
 
             linearVelocity = Math.Sqrt(
                 Math.Pow((Math.Max(Position.X, oldPos.X) - Math.Min(Position.X, oldPos.X)), 2) +
@@ -187,12 +188,12 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/flygplan"), airplaneTexture);
+            TextureManager.AddTexture(new PoorTexture("Textures/flygplan"), TextureName);
         }
 
         public void UnloadContent()
         {
-            TextureManager.RemoveTexture(airplaneTexture);
+            TextureManager.RemoveTexture(TextureName);
         }
 
         /*

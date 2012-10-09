@@ -30,9 +30,12 @@ namespace PoorEngine.SceneObject
         private double angleOfAttack;
         private double angleSpeedModifier;
         private Vector2 targetPos;
-        private double targetX;        
+        private double targetX;
 
-        public EnemyAirplane():
+        private int maxHealth;
+        private int health;
+
+        public EnemyAirplane(int startHealth):
             base("apTex1")
         {
             thrust = 3;
@@ -44,7 +47,9 @@ namespace PoorEngine.SceneObject
             velocityAngle = 90;
             weight = 1;
             Position = new Vector2(1100,200);
+            UsedInBoundingBoxCheck = true;
 
+            health = maxHealth = startHealth;
         }
 
         public void setTargetPos(Vector2 tp)
@@ -69,6 +74,8 @@ namespace PoorEngine.SceneObject
     
         public void Draw(GameTime gameTime)
         {
+            EngineManager.Debug.Print("Enemy boundingbox: " + BoundingBox.ToString());
+            Console.WriteLine(health);
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 

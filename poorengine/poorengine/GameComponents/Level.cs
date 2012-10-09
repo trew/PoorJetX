@@ -46,6 +46,8 @@ namespace PoorEngine.GameComponents
         public int Y;
 
         public int type;
+
+        public int health;
     }
 
     [Serializable]
@@ -133,7 +135,7 @@ namespace PoorEngine.GameComponents
             _enemies = new Queue<EnemyAirplane>();
             foreach (LevelEnemy le in _data.Enemies)
             {
-                EnemyAirplane e = new EnemyAirplane();
+                EnemyAirplane e = new EnemyAirplane(le.health);
                 e.Position = new Vector2(le.XAppear, le.Y);
                 _enemies.Enqueue(e);
             }
