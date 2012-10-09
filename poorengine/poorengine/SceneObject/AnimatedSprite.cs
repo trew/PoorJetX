@@ -24,10 +24,10 @@ namespace PoorEngine.SceneObject
         private TimeSpan NextUpdate;
 
 
-        public AnimatedSprite(string texName, Point frameSize, Point sheetSize,Vector2 position, Vector2 scale, int framesPerSecond, bool repeat)
+        public AnimatedSprite(string texName, Point frameSize, Point sheetSize,Vector2 position, Vector2 scale, int framesPerSecond, bool repeat, float Z)
             :base(texName)
         {
-            
+            this.Z = Z;
             this.frameSize = frameSize;
             this.sheetSize = sheetSize;
             this.Scale = scale;
