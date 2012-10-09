@@ -16,18 +16,23 @@ namespace PoorEngine.SceneObject
         float _orientation;
         Random rnd;
         double _spread;
+        public int Damage;
 
         public double SpawnTime { get; set; }
 
         public Projectile(Vector2 pos, Vector2 velocity, string texture):
             base(texture)
         {
+            /*
+             *    THIS IS THE MOTHERFUCKING BOOOOMBS!
+             */
             rnd = new Random(); // remove?
             Position = pos;
             _velocity = velocity;
             _orientation = 0f;
             _spread = 0.0;
             Z = 1.5f;
+            Damage = 200;
             SpawnTime = 0.0;
             UsedInBoundingBoxCheck = true;
         }
@@ -35,6 +40,10 @@ namespace PoorEngine.SceneObject
         public Projectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, string texture):
             base(texture)
         {
+            /*
+             *    THIS IS THE MOTHERFUCKING SHOTS!
+             */
+            Damage = 100;
             rnd = new Random(Guid.NewGuid().GetHashCode());
             _spread = (rnd.NextDouble() * spreadDegrees) / 2.0;
 
@@ -97,11 +106,12 @@ namespace PoorEngine.SceneObject
 
         public override void Collide(PoorSceneObject collidingWith)
         {
-            if (collidingWith.GetType() == typeof(Airplane) ||
-                collidingWith.GetType() == typeof(EnemyAirplane))
+            if (collidingWith.GetType() == typeof(Airplane)) {
+            } 
+            else if (collidingWith.GetType() == typeof(EnemyAirplane))
             {
-                SceneGraphManager.RemoveObject(this);
             }
+            SceneGraphManager.RemoveObject(this);
         }
 
         private double DegreeToRadian(double angle)
