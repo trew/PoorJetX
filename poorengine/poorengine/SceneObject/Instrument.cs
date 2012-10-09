@@ -69,10 +69,15 @@ namespace PoorEngine.SceneObject
             {
                 currentValue = (float)currentScreen.Airplane.getLinearVelocity();
             }
+            if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
+            {
+                ReadyToRender = !ReadyToRender;
+            }
         }
 
         public void Draw(GameTime gameTime)
         {
+            if (!ReadyToRender) return;
             // Standardize input, calculate positions
             float max_sd = maxValue - minValue;
             float curr_sd = currentValue - minValue;
@@ -98,11 +103,13 @@ namespace PoorEngine.SceneObject
 
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             texHeight = texture.Height;
+            ReadyToRender = true;
         }
 
         public void UnloadContent()
         {
             TextureManager.RemoveTexture(TextureName);
+            ReadyToRender = false;
         }
     }
 }
