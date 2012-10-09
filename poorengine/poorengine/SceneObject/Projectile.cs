@@ -26,6 +26,7 @@ namespace PoorEngine.SceneObject
             _orientation = 0f;
             _spread = 0.0;
             Z = 1.5f;
+            UsedInBoundingBoxCheck = true;
         }
 
         public Projectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, string texture):
@@ -47,6 +48,7 @@ namespace PoorEngine.SceneObject
 
             _velocity = velocity + boostFactor;
             Z = 1.5f;
+            UsedInBoundingBoxCheck = true;
         }
 
 

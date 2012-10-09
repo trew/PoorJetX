@@ -44,6 +44,7 @@ namespace PoorEngine.SceneObject
             velocityAngle = 90;
             weight = 1;
             Position = new Vector2(1100,200);
+            UsedInBoundingBoxCheck = true;
 
         }
 
@@ -69,6 +70,8 @@ namespace PoorEngine.SceneObject
     
         public void Draw(GameTime gameTime)
         {
+            EngineManager.Debug.Print(BoundingBox.ToString());
+
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 
