@@ -72,6 +72,14 @@ namespace PoorEngine.SceneObject
             return velocity;
         }
 
+        public override void Collide(PoorSceneObject collidingWith)
+        {
+            if (collidingWith.GetType() == typeof(Projectile))
+            {
+                Projectile proj = (Projectile)collidingWith;
+            }
+        }
+
         public void Draw(GameTime gameTime)
         {
             EngineManager.Debug.Print("Airplane Boundingbox: " + BoundingBox.ToString());

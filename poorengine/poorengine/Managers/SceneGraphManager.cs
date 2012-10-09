@@ -19,6 +19,8 @@ namespace PoorEngine.Managers
             get { return _root; }
         }
 
+        public static Queue<Node> removeQueue { get; set; }
+
         /// <summary>
         /// Create the scenegraph Managers.
         /// </summary>
@@ -27,6 +29,7 @@ namespace PoorEngine.Managers
             : base(game)
         {
             _root = new Node();
+            removeQueue = new Queue<Node>();
         }
 
         /// <summary>
@@ -53,8 +56,29 @@ namespace PoorEngine.Managers
                     if (first == second) continue;
                     if (!second.UsedInBoundingBoxCheck) continue;
                     if (first.BoundingBox.Intersects(second.BoundingBox))
-                    { }
+                    {
+                        if (first.GetType() == typeof(Airplane) && second.GetType() == typeof(Projectile) ||
+                            first.GetType() == typeof(Projectile) && second.GetType() == typeof(Airplane))
+                        {
+                            Projectile p = (Projectile)(first.GetType() == typeof(Projectile) ? first : second);
+                            if (p.CanCollideWithPlayer(gameTime))
+                            {
+                                first.Collide(second);
+                                second.Collide(first);
+                            }
+                        }
+                        else
+                        {
+                            first.Collide(second);
+                            second.Collide(first);
+                        }
+                    }
                 }
+            }
+
+            // Remove all queued nodes
+            while (removeQueue.Count > 0) {
+                _root.Nodes.Remove(removeQueue.Dequeue());
             }
 
         }
@@ -86,5 +110,16 @@ namespace PoorEngine.Managers
             _root.Nodes.Sort(comp);
         }
 
+        public static void RemoveObject(PoorSceneObject oldObject)
+        {
+            foreach (SceneObjectNode node in _root.Nodes)
+            {
+                if (node.SceneObject == oldObject)
+                {
+                    removeQueue.Enqueue(node);
+                    return;
+                }
+            }
+        }
     }
 }

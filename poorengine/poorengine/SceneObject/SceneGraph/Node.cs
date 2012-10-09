@@ -21,11 +21,6 @@ namespace PoorEngine.SceneObject.SceneGraph
         public virtual void AddNode(Node newNode)
         {
             _nodes.Add(newNode);
-
-            /*
-            _nodes.Sort((Node x1, Node x2) =>
-                ((PoorSceneObject)x1).Z < (PoorSceneObject)x2.Z ? -1 : 1);
-             */
         }
 
         public virtual void Update(GameTime gameTime)
