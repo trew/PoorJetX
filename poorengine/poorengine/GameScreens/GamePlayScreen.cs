@@ -141,7 +141,7 @@ namespace PoorEngine.GameScreens
             if (input.IsNewKeyPress(Keys.Escape))
             {
                 ExitScreen();
-                ScreenManager.AddScreen(new ScoreScreen(1));
+                ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
             }
         }
 

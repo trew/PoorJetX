@@ -65,6 +65,20 @@ namespace PoorEngine.SceneObject
             texGreen.SetData(new Color[] { Color.Green });
         }
 
+        public override Rectangle BoundingBox
+        {
+            get
+            {
+                Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+                return new Rectangle(
+                        (int)Position.X - texture.Width / 2,
+                        (int)Position.Y - texture.Height / 2,
+                        texture.Width,
+                        texture.Height
+                    );
+            }
+        }
+
         public void setTargetPos(Vector2 tp)
         {
             targetPos = tp;
@@ -198,6 +212,28 @@ namespace PoorEngine.SceneObject
                 Math.Pow((Math.Max(Position.Y, oldPos.Y) - Math.Min(Position.Y, oldPos.Y)), 2));
 
         }
+
+        public override void Collide(PoorSceneObject collidingWith)
+        {
+            if (health <= 0)
+            {
+                SceneGraphManager.RemoveObject(this);
+                return;
+            }
+
+            if (collidingWith.GetType() == typeof(Projectile))
+            {
+                Projectile p = (Projectile)collidingWith;
+                health -= p.Damage;
+                if (health <= 0)
+                {
+                    health = 0;
+                    EngineManager.Score += 1;
+                    SceneGraphManager.RemoveObject(this);
+                }
+            }
+        }
+
 
         public void LoadContent()
         {

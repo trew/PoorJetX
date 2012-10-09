@@ -41,7 +41,7 @@ namespace PoorEngine.SceneObject
         /// <summary>
         /// The bounding box of this object, used for culling.
         /// </summary>
-        public Rectangle BoundingBox
+        public virtual Rectangle BoundingBox
         {
             get
             {

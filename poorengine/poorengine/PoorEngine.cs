@@ -65,6 +65,8 @@ namespace PoorEngine
 
         public static DebugPanel Debug = null;
 
+        public static int Score = 0;
+        
         /// <summary>
         /// Create Poor Engine
         /// </summary>

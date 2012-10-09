@@ -116,6 +116,8 @@ namespace PoorEngine.Managers
             {
                 if (node.SceneObject == oldObject)
                 {
+                    if (removeQueue.Contains(node))
+                        return;
                     removeQueue.Enqueue(node);
                     return;
                 }
