@@ -32,6 +32,11 @@ namespace PoorEngine.SceneObject
         private Vector2 targetPos;
         private double targetX;
 
+        private Texture2D texBlack;
+        private Texture2D texGreen;
+        private Rectangle hpRectOutline;
+        private Rectangle healthMeterRect;
+
         private int maxHealth;
         private int health;
 
@@ -50,6 +55,14 @@ namespace PoorEngine.SceneObject
             UsedInBoundingBoxCheck = true;
 
             health = maxHealth = startHealth;
+            hpRectOutline = new Rectangle(9999,9999, 40, 5);
+            healthMeterRect = new Rectangle(9999, 9999, 38, 3);
+
+            texBlack = new Texture2D(EngineManager.Device, 1, 1);
+            texBlack.SetData(new Color[] { Color.Black });
+
+            texGreen = new Texture2D(EngineManager.Device, 1, 1);
+            texGreen.SetData(new Color[] { Color.Green });
         }
 
         public void setTargetPos(Vector2 tp)
@@ -75,7 +88,7 @@ namespace PoorEngine.SceneObject
         public void Draw(GameTime gameTime)
         {
             EngineManager.Debug.Print("Enemy boundingbox: " + BoundingBox.ToString());
-            Console.WriteLine(health);
+
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 
@@ -84,11 +97,20 @@ namespace PoorEngine.SceneObject
                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
                                            (float)DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
+
+
+
+            ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0,0), 1f, SpriteEffects.None, 0f);
+            ScreenManager.SpriteBatch.Draw(texGreen, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+
+
             ScreenManager.SpriteBatch.End();
         }
 
         public void Update(GameTime gameTime)
         {
+            healthMeterRect.Width = 38 * (health / maxHealth);
+
             orientation = formatAngle(orientation);
             velocityAngle = formatAngle(velocityAngle);
 
@@ -179,6 +201,8 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
+            
+
             TextureManager.AddTexture(new PoorTexture("Textures/airplane"), TextureName);
         }
 
