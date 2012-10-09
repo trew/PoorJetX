@@ -37,10 +37,13 @@ namespace PoorEngine.SceneObject
         private Rectangle hpRectOutline;
         private Rectangle healthMeterRect;
 
+        private int smokeTimer;
+        private int smokeTimerStartVal;
+
         private int maxHealth;
         private int health;
 
-        private bool iCantTakeThisShitAnymoreSoImGonnCrash;
+        private bool ItsCrashTime;
 
         public EnemyAirplane(int startHealth):
             base("apTex1")
@@ -56,8 +59,11 @@ namespace PoorEngine.SceneObject
             Position = new Vector2(1100,200);
             UsedInBoundingBoxCheck = true;
 
+            smokeTimer = 1;
+            smokeTimerStartVal = 20;
+
             health = maxHealth = startHealth;
-            iCantTakeThisShitAnymoreSoImGonnCrash = false; 
+            ItsCrashTime = false; 
 
             hpRectOutline = new Rectangle(9999,9999, 40, 5);
             healthMeterRect = new Rectangle(9999, 9999, 38, 3);
@@ -132,7 +138,19 @@ namespace PoorEngine.SceneObject
             int green = (int)(255 * hpPercent);
             texHealth.SetData(new Color[] { new Color(red*3, green*2, 0) });
 
-            if (iCantTakeThisShitAnymoreSoImGonnCrash)
+            if (hpPercent < 0.7)
+            {
+                smokeTimerStartVal = Math.Max(1, (int)(50 * hpPercent));
+
+                smokeTimer--;
+                if (smokeTimer <= 0)
+                {
+                    smokeTimer = smokeTimerStartVal;
+                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(0.5f, 0.5f), 15, false));
+                }
+            }
+
+            if (ItsCrashTime)
             {
                 orientation = Math.Min(150, orientation + 0.3);
                 Console.WriteLine(orientation);
@@ -230,7 +248,7 @@ namespace PoorEngine.SceneObject
         {
             if (health <= 0)
             {
-                iCantTakeThisShitAnymoreSoImGonnCrash = true;
+                ItsCrashTime = true;
                 
                 //SceneGraphManager.RemoveObject(this);
                 return;
@@ -252,8 +270,6 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            
-
             TextureManager.AddTexture(new PoorTexture("Textures/airplane"), TextureName);
         }
 

@@ -82,6 +82,11 @@ namespace PoorEngine.GameScreens
             airspeedMeter = new Instrument("instrument", new Vector2(800, ScreenHeight), 0f, 13f, 0.5f, "linearvelocity", this);
             SceneGraphManager.AddObject(airspeedMeter);
 
+
+            // DEBUG =======================
+            //SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1",new Point(100,100), new Point(10,1), Airplane.getPosition(), new Vector2(1,1), 20, false));
+            // =============================
+
             SceneGraphManager.LoadContent();
         }
 
@@ -121,6 +126,7 @@ namespace PoorEngine.GameScreens
                 if (ammoController.dropBomb())
                 {
                     SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), "bomb"));
+                    
 
                     //Vector2 bpos = ammoController.getLastBombPos();
                     //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, Airplane.getVelocity().X), 0f, 220, 10f, "bomb"));
@@ -132,7 +138,7 @@ namespace PoorEngine.GameScreens
                 if (ammoController.fireBullet())
                 {
                     SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
-
+                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Airplane.getPosition(), new Vector2(1, 1), 15, false));
                     //Vector2 bpos = ammoController.getLastBulletPos();
                     //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, 10), 0f, 180, 10f, "bullet"));
                 }
