@@ -139,7 +139,7 @@ namespace PoorEngine.GameScreens
                 if (ammoController.fireBullet())
                 {
                     SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
-                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Airplane.getPosition(), new Vector2(1, 1), 15, false, 0.9f));
+                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Airplane.getPosition(), new Vector2(0.3f, 0.3f), 250, 15, false, 0.9f));
 
                     //Vector2 bpos = ammoController.getLastBulletPos();
                     //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, 10), 0f, 180, 10f, "bullet"));

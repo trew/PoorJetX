@@ -24,7 +24,7 @@ namespace PoorEngine.SceneObject
             base(texture)
         {
             /*
-             *    THIS IS THE MOTHERFUCKING BOOOOMBS!
+             *    THIS IS THE MOTHERFUCKING BOOOOMBS! edit: can also be used as airplane-urine
              */
             rnd = new Random(); // remove?
             Position = pos;
@@ -91,7 +91,10 @@ namespace PoorEngine.SceneObject
                 SpawnTime = (float)gameTime.TotalGameTime.TotalSeconds;
 
             if (Position.Y > EngineManager.Device.Viewport.Height)
+            {
+                SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position - new Vector2(0, 15), new Vector2(0.2f, 0.2f), 200, 50, false, 0.9f));
                 SceneGraphManager.RemoveObject(this);
+            }
         }
 
 

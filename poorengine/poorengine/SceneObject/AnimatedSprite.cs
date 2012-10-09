@@ -22,11 +22,13 @@ namespace PoorEngine.SceneObject
 
         private TimeSpan FrameTime;
         private TimeSpan NextUpdate;
+        private int alpha;
 
 
-        public AnimatedSprite(string texName, Point frameSize, Point sheetSize,Vector2 position, Vector2 scale, int framesPerSecond, bool repeat, float Z)
+        public AnimatedSprite(string texName, Point frameSize, Point sheetSize,Vector2 position, Vector2 scale, int alpha, int framesPerSecond, bool repeat, float Z)
             :base(texName)
         {
+            this.alpha = alpha;
             this.Z = Z;
             this.frameSize = frameSize;
             this.sheetSize = sheetSize;
