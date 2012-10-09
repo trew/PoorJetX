@@ -40,6 +40,8 @@ namespace PoorEngine.SceneObject
         private int maxHealth;
         private int health;
 
+        private bool iCantTakeThisShitAnymoreSoImGonnCrash;
+
         public EnemyAirplane(int startHealth):
             base("apTex1")
         {
@@ -55,6 +57,8 @@ namespace PoorEngine.SceneObject
             UsedInBoundingBoxCheck = true;
 
             health = maxHealth = startHealth;
+            iCantTakeThisShitAnymoreSoImGonnCrash = false; 
+
             hpRectOutline = new Rectangle(9999,9999, 40, 5);
             healthMeterRect = new Rectangle(9999, 9999, 38, 3);
 
@@ -121,17 +125,19 @@ namespace PoorEngine.SceneObject
 
         public void Update(GameTime gameTime)
         {
+            // Update Healthbar draw-settings.
             healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
             float hpPercent = ((float)health / maxHealth);
-            int hpVal = (int)(hpPercent * 255f);
-
             int red = (int)(255 - 255 * hpPercent);
             int green = (int)(255 * hpPercent);
-
-
-
             texHealth.SetData(new Color[] { new Color(red*3, green*2, 0) });
-        
+
+            if (iCantTakeThisShitAnymoreSoImGonnCrash)
+            {
+                orientation = Math.Min(150, orientation + 0.3);
+                Console.WriteLine(orientation);
+                airSpeed *= 1.04;
+            }
 
             orientation = formatAngle(orientation);
             velocityAngle = formatAngle(velocityAngle);
@@ -140,10 +146,9 @@ namespace PoorEngine.SceneObject
             double diff = orientation - velocityAngle + 180;
             double posDiff = Math.Abs(diff - 180);
 
+            // Trying to make the enemy stick to a fixed position..
             targetX = CameraManager.Camera.Pos.X + (EngineManager.Device.Viewport.Width * 0.8);
-
             double xdiff = Position.X - targetX;
-
             thrust = 5 - xdiff / 300;
 
             
@@ -225,7 +230,9 @@ namespace PoorEngine.SceneObject
         {
             if (health <= 0)
             {
-                SceneGraphManager.RemoveObject(this);
+                iCantTakeThisShitAnymoreSoImGonnCrash = true;
+                
+                //SceneGraphManager.RemoveObject(this);
                 return;
             }
 
@@ -237,7 +244,7 @@ namespace PoorEngine.SceneObject
                 {
                     health = 0;
                     EngineManager.Score += 1;
-                    SceneGraphManager.RemoveObject(this);
+                    //SceneGraphManager.RemoveObject(this);
                 }
             }
         }
