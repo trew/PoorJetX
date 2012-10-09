@@ -15,7 +15,6 @@ namespace PoorEngine.SceneObject
 {
     public class EnemyAirplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
-        const string airplaneTexture = "apTex1";
         private double thrust;
         private double airSpeed;
         private Vector2 oldPos;
@@ -33,7 +32,8 @@ namespace PoorEngine.SceneObject
         private Vector2 targetPos;
         private double targetX;        
 
-        public EnemyAirplane()
+        public EnemyAirplane():
+            base("apTex1")
         {
             thrust = 3;
             lift = 0;
@@ -69,7 +69,7 @@ namespace PoorEngine.SceneObject
     
         public void Draw(GameTime gameTime)
         {
-            Texture2D texture = TextureManager.GetTexture(airplaneTexture).BaseTexture as Texture2D;
+            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 
             ScreenManager.SpriteBatch.Begin();
@@ -172,12 +172,12 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/airplane"), airplaneTexture);
+            TextureManager.AddTexture(new PoorTexture("Textures/airplane"), TextureName);
         }
 
         public void UnloadContent()
         {
-            TextureManager.RemoveTexture(airplaneTexture);
+            TextureManager.RemoveTexture(TextureName);
         }
 
         /*

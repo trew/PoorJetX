@@ -19,7 +19,6 @@ namespace PoorEngine.SceneObject
         float maxValue;
         Vector2 pos;
         float scale;
-        string textureName;
         Texture2D needleTexture;
         float texHeight;
         private string _sourceName;
@@ -27,9 +26,9 @@ namespace PoorEngine.SceneObject
 
         public Instrument(string texName, Vector2 position, 
             float minVal, float maxVal, float scaleVal, 
-            string sourceName, GamePlayScreen gameScreen)
+            string sourceName, GamePlayScreen gameScreen):
+            base(texName)
         {
-            textureName = texName;
             minValue = minVal;
             maxValue = maxVal;
             currentScreen = gameScreen;
@@ -80,7 +79,7 @@ namespace PoorEngine.SceneObject
             float offset180multiplier = max_sd / 180;
             float curr_real = curr_sd / offset180multiplier;
          
-            Texture2D tex = TextureManager.GetTexture(textureName).BaseTexture as Texture2D;
+            Texture2D tex = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
 
             Vector2 scaledPos = pos - new Vector2(0, tex.Height*scale);
             Vector2 needle_origin = scaledPos + new Vector2(tex.Width * scale / 2, tex.Height * scale);
@@ -95,15 +94,15 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/instrument"), textureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/instrument"), TextureName);
 
-            Texture2D texture = TextureManager.GetTexture(textureName).BaseTexture as Texture2D;
+            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             texHeight = texture.Height;
         }
 
         public void UnloadContent()
         {
-            TextureManager.RemoveTexture(textureName);
+            TextureManager.RemoveTexture(TextureName);
         }
     }
 }

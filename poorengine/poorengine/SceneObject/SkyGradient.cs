@@ -12,19 +12,16 @@ namespace PoorEngine.SceneObject
 {
     public class SkyGradient : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
-        private string textureName;
-
-        public SkyGradient(string textureName)
+        public SkyGradient(string textureName):
+            base(textureName)
         {
-            this.textureName = textureName;
-
             Position = new Vector2(0, EngineManager.Device.Viewport.Height - 2048);
             Z = 50;
         }
 
         public void Draw(GameTime gameTime)
         {
-            Texture2D texture = TextureManager.GetTexture(textureName).BaseTexture as Texture2D;
+            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Rectangle rect = new Rectangle(0, 0, EngineManager.Device.Viewport.Width, 2048);
 
             float y = Position.Y - (CameraManager.Camera.Pos.Y / (Z / 7) );
@@ -41,12 +38,12 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/" + textureName), textureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/" + TextureName), TextureName);
         }
 
         public void UnloadContent()
         {
-            TextureManager.RemoveTexture(textureName);
+            TextureManager.RemoveTexture(TextureName);
         }
 
     }

@@ -22,7 +22,8 @@ namespace PoorEngine.SceneObject
         private int bombs;
         Stopwatch reloadTimer;
 
-        public AmmoController()
+        public AmmoController():
+            base("")
         {
             bullets = MAXBULLETS;
             bombs = MAXBOMBS;

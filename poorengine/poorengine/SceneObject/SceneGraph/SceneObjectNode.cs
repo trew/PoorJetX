@@ -20,6 +20,7 @@ namespace PoorEngine.SceneObject.SceneGraph
         public SceneObjectNode(PoorSceneObject newObject)
         {
             _sceneObject = newObject;
+            _sceneObject.UsedInBoundingBoxCheck = true;
         }
 
         public override void Update(GameTime gameTime)

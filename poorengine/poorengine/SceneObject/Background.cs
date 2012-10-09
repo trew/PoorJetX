@@ -12,23 +12,21 @@ namespace PoorEngine.SceneObject
 {
     public class Background : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
-        private string backgroundName;
-
         /// <summary>
         /// Background texture
         /// </summary>
         /// <param name="backgroundName">Name of the texture</param>
         /// <param name="Z">Ratio of which the background is moving compared to player</param>
-        public Background(String backgroundName, float Z)
+        public Background(String backgroundName, float Z):
+            base(backgroundName)
         {
-            this.backgroundName = backgroundName;
             this.Z = Z;
         }
 
         public void Draw(GameTime gameTime) 
         {
             //if (CameraManager.Camera.Pos.X < appear.X) return;
-            Texture2D texture = TextureManager.GetTexture(backgroundName).BaseTexture as Texture2D;
+            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
 
             ScreenManager.SpriteBatch.Begin();
 
@@ -49,12 +47,12 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/" + backgroundName), backgroundName);
+            TextureManager.AddTexture(new PoorTexture("Textures/" + TextureName), TextureName);
         }
 
         public void UnloadContent()
         {
-            TextureManager.RemoveTexture(backgroundName);
+            TextureManager.RemoveTexture(TextureName);
         }
     }
 }

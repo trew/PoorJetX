@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Interfaces;
+using PoorEngine.Managers;
+using PoorEngine.Textures;
 
 namespace PoorEngine.SceneObject
 {
     public class PoorSceneObject : IPoorSceneObject
     {
+        public PoorSceneObject(String textureName)
+        {
+            TextureName = textureName;
+        }
+
+        public String TextureName { get; set; }
+
         private bool _readyToRender = false;
         /// <summary>
         /// Is this object ready to render?
@@ -17,14 +27,37 @@ namespace PoorEngine.SceneObject
             get { return _readyToRender; }
             set { _readyToRender = value; }
         }
-        private BoundingBox _boundingBox;
+
+        private bool _usedInBoundingBoxCheck;
+        public bool UsedInBoundingBoxCheck
+        {
+            get { return _usedInBoundingBoxCheck; }
+            set { _usedInBoundingBoxCheck = value; }
+        }
+
         /// <summary>
         /// The bounding box of this object, used for culling.
         /// </summary>
-        public BoundingBox BoundingBox
+        public Rectangle BoundingBox
         {
-            get { return _boundingBox; }
-            set { _boundingBox = value; }
+            get
+            {
+                IPoorTexture tex = TextureManager.GetTexture(TextureName);
+                if (tex == null)
+                {
+                    return new Rectangle(0, 0, 0, 0);
+                }
+                else
+                {
+                    Texture2D texture = tex.BaseTexture as Texture2D;
+                    return new Rectangle(
+                            (int)Position.X,
+                            (int)Position.Y,
+                            texture.Width,
+                            texture.Height
+                        );
+                }
+            }
         }
         private Vector2 _position = Vector2.Zero;
         /// <summary>
@@ -75,7 +108,5 @@ namespace PoorEngine.SceneObject
                 // Draw
             }
         }*/
-
-
     }
 }

@@ -14,22 +14,22 @@ namespace PoorEngine.SceneObject
     {
         Vector2 _velocity;
         float _orientation;
-        string _texture;
         Random rnd;
         double _spread;
 
-        public Projectile(Vector2 pos, Vector2 velocity, string texture)
+        public Projectile(Vector2 pos, Vector2 velocity, string texture):
+            base(texture)
         {
             rnd = new Random(); // remove?
             Position = pos;
             _velocity = velocity;
             _orientation = 0f;
-            _texture = texture;
             _spread = 0.0;
             Z = 1.5f;
         }
 
-        public Projectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, string texture)
+        public Projectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, string texture):
+            base(texture)
         {
             rnd = new Random(Guid.NewGuid().GetHashCode());
             _spread = (rnd.NextDouble() * spreadDegrees) / 2.0;
@@ -46,14 +46,13 @@ namespace PoorEngine.SceneObject
             Vector2 boostFactor = new Vector2(xFactor * velocityBoost, yFactor * velocityBoost);
 
             _velocity = velocity + boostFactor;
-            _texture = texture;
             Z = 1.5f;
         }
 
 
         public void Draw(GameTime gameTime)
         {
-            Texture2D texture = TextureManager.GetTexture(_texture).BaseTexture as Texture2D;
+            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Vector2 _origin = new Vector2(texture.Width / 2, texture.Height / 2);
 
             ScreenManager.SpriteBatch.Begin();
@@ -82,7 +81,7 @@ namespace PoorEngine.SceneObject
 
         public void UnloadContent()
         {
-            TextureManager.RemoveTexture(_texture);
+            TextureManager.RemoveTexture(TextureName);
         }
 
 

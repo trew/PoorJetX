@@ -38,9 +38,25 @@ namespace PoorEngine.Managers
             _root.Draw(gameTime);
         }
 
-        public static void Update(GameTime gameTime)
+        public static new void Update(GameTime gameTime)
         {
             _root.Update(gameTime);
+
+            foreach (SceneObjectNode firstNode in _root.Nodes)
+            {
+                PoorSceneObject first = firstNode.SceneObject;
+                if (!first.UsedInBoundingBoxCheck) continue;
+
+                foreach (SceneObjectNode secondNode in _root.Nodes)
+                {
+                    PoorSceneObject second = secondNode.SceneObject;
+                    if (first == second) continue;
+                    if (!second.UsedInBoundingBoxCheck) continue;
+                    if (first.BoundingBox.Intersects(second.BoundingBox))
+                        Console.WriteLine("TEST");
+                }
+            }
+
         }
 
         public static void LoadContent()

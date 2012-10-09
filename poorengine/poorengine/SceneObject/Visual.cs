@@ -12,7 +12,6 @@ namespace PoorEngine.SceneObject
 {
     public class Visual : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
-        private string textureName;
         private float constantSpeed;
         private bool repeatable;
         private int repeatMargin;
@@ -26,9 +25,9 @@ namespace PoorEngine.SceneObject
         /// </summary>
         /// <param name="textureName">Name of the texture</param>
         /// <param name="Z">Depth of the visual object.</param>
-        public Visual(String textureName, float scale, float Z, float constantSpeed, bool repeatable, int repeatMargin, Vector2 appear)
+        public Visual(String textureName, float scale, float Z, float constantSpeed, bool repeatable, int repeatMargin, Vector2 appear):
+            base(textureName)
         {
-            this.textureName = textureName;
             this.Z = Z;
             this.constantSpeed = constantSpeed;
             this.repeatable = repeatable;
@@ -41,7 +40,7 @@ namespace PoorEngine.SceneObject
         public void Draw(GameTime gameTime)
         {
             //if (CameraManager.Camera.Pos.X < appear.X) return;
-            Texture2D texture = TextureManager.GetTexture(textureName).BaseTexture as Texture2D;
+            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             ScreenManager.SpriteBatch.Begin();
 
             int scaleCompensation = texture.Height - (int)(texture.Height * scale);
@@ -73,12 +72,12 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/" + textureName), textureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/" + TextureName), TextureName);
         }
 
         public void UnloadContent()
         {
-            TextureManager.RemoveTexture(textureName);
+            TextureManager.RemoveTexture(TextureName);
         }
     }
 }

@@ -31,7 +31,8 @@ namespace PoorEngine.SceneObject
         private double angleOfAttack;
         private double angleSpeedModifier;
 
-        public Airplane()
+        public Airplane():
+            base("apText1")
         {
             thrust = 4;
             lift = 0;
