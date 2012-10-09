@@ -128,7 +128,6 @@ namespace PoorEngine.GameScreens
                 if (ammoController.fireBullet())
                 {
                     SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
-                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 1f, Airplane.getOrientation()+130, 10f, "emptyshell"));
                 }
             }
 

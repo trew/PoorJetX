@@ -18,6 +18,9 @@ namespace PoorEngine.SceneObject
 
         public String TextureName { get; set; }
 
+        public virtual void Collide(PoorSceneObject collidingWith) {
+        }
+
         private bool _readyToRender = false;
         /// <summary>
         /// Is this object ready to render?

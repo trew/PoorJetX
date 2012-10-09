@@ -17,6 +17,8 @@ namespace PoorEngine.SceneObject
         Random rnd;
         double _spread;
 
+        public double SpawnTime { get; set; }
+
         public Projectile(Vector2 pos, Vector2 velocity, string texture):
             base(texture)
         {
@@ -26,6 +28,7 @@ namespace PoorEngine.SceneObject
             _orientation = 0f;
             _spread = 0.0;
             Z = 1.5f;
+            SpawnTime = 0.0;
             UsedInBoundingBoxCheck = true;
         }
 
@@ -48,6 +51,7 @@ namespace PoorEngine.SceneObject
 
             _velocity = velocity + boostFactor;
             Z = 1.5f;
+            SpawnTime = 0.0f;
             UsedInBoundingBoxCheck = true;
         }
 
@@ -74,6 +78,11 @@ namespace PoorEngine.SceneObject
 
             _orientation = (float)getAngleAsRadian(Position, Position + _velocity);
             Position += _velocity;
+            if (SpawnTime <= 0.0)
+                SpawnTime = (float)gameTime.TotalGameTime.TotalSeconds;
+
+            if (Position.Y > EngineManager.Device.Viewport.Height)
+                SceneGraphManager.RemoveObject(this);
         }
 
 
@@ -86,6 +95,14 @@ namespace PoorEngine.SceneObject
             TextureManager.RemoveTexture(TextureName);
         }
 
+        public override void Collide(PoorSceneObject collidingWith)
+        {
+            if (collidingWith.GetType() == typeof(Airplane) ||
+                collidingWith.GetType() == typeof(EnemyAirplane))
+            {
+                SceneGraphManager.RemoveObject(this);
+            }
+        }
 
         private double DegreeToRadian(double angle)
         {
@@ -98,6 +115,12 @@ namespace PoorEngine.SceneObject
             double deltay = a.Y - b.Y;
 
             return Math.Atan2(deltay, deltax);
+        }
+
+        public bool CanCollideWithPlayer(GameTime gameTime)
+        {
+
+            return (gameTime.TotalGameTime.TotalSeconds > SpawnTime + 1.0);
         }
    
     }
