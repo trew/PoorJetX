@@ -62,9 +62,9 @@ namespace PoorEngine.SceneObject
             texBlack.SetData(new Color[] { Color.Black });
 
             texHealth = new Texture2D(EngineManager.Device, 1, 1);
-            texHealth.SetData(new Color[] { new Color(0,255,0) });
+            //texHealth.SetData(new Color[] { new Color(0f,100f,0f) });
         }
-
+        
         public override Rectangle BoundingBox
         {
             get
@@ -123,14 +123,15 @@ namespace PoorEngine.SceneObject
         {
             healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
             float hpPercent = ((float)health / maxHealth);
-            Console.WriteLine(hpPercent);
+            int hpVal = (int)(hpPercent * 255f);
 
-            float red = 255 - 255 * hpPercent;
-            float green = 255 * hpPercent;
+            int red = (int)(255 - 255 * hpPercent);
+            int green = (int)(255 * hpPercent);
 
-            EngineManager.Debug.Print(red + " " + green);
 
-            texHealth.SetData(new Color[] { new Color(255 - 255 * hpPercent, 255 * hpPercent, 0f, 255f) });
+
+            texHealth.SetData(new Color[] { new Color(red*3, green*2, 0) });
+        
 
             orientation = formatAngle(orientation);
             velocityAngle = formatAngle(velocityAngle);
