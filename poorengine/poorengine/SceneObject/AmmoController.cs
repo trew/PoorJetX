@@ -18,15 +18,18 @@ namespace PoorEngine.SceneObject
         const int MAXBOMBS = 15;
         const int BULLETSPERSECOND = 30;
 
-        private int bullets;
-        private int bombs;
+        private int bulletCount;
+        private int bombCount;
         Stopwatch reloadTimer;
+        Vector2 lastBulletPos;
+        Vector2 lastBombPos;
 
         public AmmoController():
             base("")
         {
-            bullets = MAXBULLETS;
-            bombs = MAXBOMBS;
+            Position = new Vector2(10, 10);
+            bulletCount = MAXBULLETS;
+            bombCount = MAXBOMBS;
             reloadTimer = new Stopwatch();
             reloadTimer.Start();
         }
@@ -36,9 +39,9 @@ namespace PoorEngine.SceneObject
         {
             if(reloadTimer.ElapsedMilliseconds > 1000/BULLETSPERSECOND)
             {
-                if (bullets > 0)
+                if (bulletCount > 0)
                 {
-                    bullets = Math.Max(bullets - 1, 0);
+                    bulletCount = Math.Max(bulletCount - 1, 0);
                     reloadTimer.Restart();
                     //reloadTimer.Start();
                     return true;
@@ -50,9 +53,9 @@ namespace PoorEngine.SceneObject
 
         public bool dropBomb()
         {
-            if (bombs > 0)
+            if (bombCount > 0)
             {
-                bombs = Math.Max(bombs - 1, 0);
+                bombCount = Math.Max(bombCount - 1, 0);
                 return true;
             }
             else
@@ -63,12 +66,22 @@ namespace PoorEngine.SceneObject
 
         public void addBombs(int x)
         {
-            bombs = Math.Min(bombs + x, MAXBOMBS);
+            bombCount = Math.Min(bombCount + x, MAXBOMBS);
         }
 
         public void addBullets(int x)
         {
-            bullets = Math.Min(bullets + x, MAXBOMBS);
+            bulletCount = Math.Min(bulletCount + x, MAXBOMBS);
+        }
+
+        public Vector2 getLastBombPos() 
+        {
+            return lastBombPos;
+        }
+
+        public Vector2 getLastBulletPos() 
+        {
+            return lastBulletPos;
         }
 
         public void Update(GameTime gameTime)
@@ -76,9 +89,36 @@ namespace PoorEngine.SceneObject
         }
 
         public void Draw(GameTime gameTime)
-        {
+        { 
+            Texture2D bulletTex = TextureManager.GetTexture("bullet").BaseTexture as Texture2D;
+            Texture2D bombTex = TextureManager.GetTexture("bomb").BaseTexture as Texture2D;
+            
             ScreenManager.SpriteBatch.Begin();
-           
+
+            // Set position for bullet-ammo-draw
+            Vector2 drawPos = new Vector2(10,10);
+            for (int i = 0; i < bulletCount; i++)
+            {
+                drawPos.Y += 3;
+                if (i % 100 == 0)
+                {
+                    drawPos.X += 5;
+                    drawPos.Y = 10;
+                }
+                ScreenManager.SpriteBatch.Draw(bulletTex, drawPos, Color.White);
+            }
+            lastBulletPos = drawPos;
+
+
+            // Set position for bomb-draw
+            drawPos.X = 30;
+            drawPos.Y = 10;
+            for (int i = 0; i < bombCount; i++)
+            {
+                ScreenManager.SpriteBatch.Draw(bombTex, drawPos, Color.White);
+                drawPos.Y += 10;
+            }
+            lastBombPos = drawPos;
 
             ScreenManager.SpriteBatch.End();
         }

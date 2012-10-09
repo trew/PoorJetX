@@ -68,6 +68,7 @@ namespace PoorEngine.GameScreens
             LevelManager.CurrentLevel.QueueEnemies();
 
             ammoController = new AmmoController();
+            SceneGraphManager.AddObject(ammoController);
 
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
@@ -120,6 +121,9 @@ namespace PoorEngine.GameScreens
                 if (ammoController.dropBomb())
                 {
                     SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), "bomb"));
+
+                    //Vector2 bpos = ammoController.getLastBombPos();
+                    //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, Airplane.getVelocity().X), 0f, 220, 10f, "bomb"));
                 }
             }
 
@@ -128,7 +132,9 @@ namespace PoorEngine.GameScreens
                 if (ammoController.fireBullet())
                 {
                     SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
-                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 1f, Airplane.getOrientation()+130, 10f, "emptyshell"));
+
+                    //Vector2 bpos = ammoController.getLastBulletPos();
+                    //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, 10), 0f, 180, 10f, "bullet"));
                 }
             }
 

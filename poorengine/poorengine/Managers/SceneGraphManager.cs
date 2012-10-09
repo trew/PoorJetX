@@ -53,7 +53,7 @@ namespace PoorEngine.Managers
                     if (first == second) continue;
                     if (!second.UsedInBoundingBoxCheck) continue;
                     if (first.BoundingBox.Intersects(second.BoundingBox))
-                        Console.WriteLine("TEST");
+                    { }
                 }
             }
 
