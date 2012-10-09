@@ -106,6 +106,10 @@ namespace PoorEngine.GameScreens
         {
  	        base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             if (ScreenState != ScreenState.Active) { return; }
+
+            int apa = SceneGraphManager.Root.Nodes.Count;
+            EngineManager.Debug.Print("COUUUUUUUUUUUNT" + apa);
+
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
         }
@@ -139,6 +143,7 @@ namespace PoorEngine.GameScreens
                 {
                     SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
                     SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Airplane.getPosition(), new Vector2(1, 1), 15, false));
+
                     //Vector2 bpos = ammoController.getLastBulletPos();
                     //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, 10), 0f, 180, 10f, "bullet"));
                 }

@@ -48,6 +48,7 @@ namespace PoorEngine.SceneObject
         public EnemyAirplane(int startHealth):
             base("apTex1")
         {
+            Z = 1;
             thrust = 3;
             lift = 0;
             orientation = 90;
@@ -72,7 +73,6 @@ namespace PoorEngine.SceneObject
             texBlack.SetData(new Color[] { Color.Black });
 
             texHealth = new Texture2D(EngineManager.Device, 1, 1);
-            //texHealth.SetData(new Color[] { new Color(0f,100f,0f) });
         }
         
         public override Rectangle BoundingBox
@@ -121,11 +121,14 @@ namespace PoorEngine.SceneObject
                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
                                            (float)DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
-
-            ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0,0), 1f, SpriteEffects.None, 0f);
-            ScreenManager.SpriteBatch.Draw(texHealth, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-
-
+            
+            // Draw health-bar, if plane still alive
+            if (!ItsCrashTime)
+            {
+                ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                ScreenManager.SpriteBatch.Draw(texHealth, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            }
+            
             ScreenManager.SpriteBatch.End();
         }
 
@@ -138,6 +141,7 @@ namespace PoorEngine.SceneObject
             int green = (int)(255 * hpPercent);
             texHealth.SetData(new Color[] { new Color(red*3, green*2, 0) });
 
+            
             if (hpPercent < 0.7)
             {
                 smokeTimerStartVal = Math.Max(1, (int)(50 * hpPercent));
@@ -153,7 +157,6 @@ namespace PoorEngine.SceneObject
             if (ItsCrashTime)
             {
                 orientation = Math.Min(150, orientation + 0.3);
-                Console.WriteLine(orientation);
                 airSpeed *= 1.04;
             }
 
@@ -261,6 +264,7 @@ namespace PoorEngine.SceneObject
                 if (health <= 0)
                 {
                     health = 0;
+                    ItsCrashTime = true;
                     EngineManager.Score += 1;
                     //SceneGraphManager.RemoveObject(this);
                 }

@@ -27,7 +27,7 @@ namespace PoorEngine.SceneObject
         public AnimatedSprite(string texName, Point frameSize, Point sheetSize,Vector2 position, Vector2 scale, int framesPerSecond, bool repeat)
             :base(texName)
         {
-
+            
             this.frameSize = frameSize;
             this.sheetSize = sheetSize;
             this.Scale = scale;
@@ -35,7 +35,7 @@ namespace PoorEngine.SceneObject
             this.Position = position;
             this.framesPerSecond = framesPerSecond;
             this.repeat = repeat;
-            Z = 0;
+            Z = 1;
 
             FrameTime = new TimeSpan(0, 0, 0, 0, 1000 / framesPerSecond);
             NextUpdate = new TimeSpan(0, 0, 0, 0, FrameTime.Milliseconds);

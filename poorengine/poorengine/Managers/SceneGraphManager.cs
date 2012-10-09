@@ -44,7 +44,7 @@ namespace PoorEngine.Managers
         public static new void Update(GameTime gameTime)
         {
             _root.Update(gameTime);
-
+            
             foreach (SceneObjectNode firstNode in _root.Nodes)
             {
                 PoorSceneObject first = firstNode.SceneObject;
@@ -99,6 +99,7 @@ namespace PoorEngine.Managers
         {
             SceneObjectNode node1 = (SceneObjectNode)x1;
             SceneObjectNode node2 = (SceneObjectNode)x2;
+
             if (node1.SceneObject.Z == node2.SceneObject.Z) return 0;
             return node1.SceneObject.Z > node2.SceneObject.Z ? -1 : 1;
         }
