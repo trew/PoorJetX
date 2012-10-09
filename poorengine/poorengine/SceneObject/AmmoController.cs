@@ -86,10 +86,15 @@ namespace PoorEngine.SceneObject
 
         public void Update(GameTime gameTime)
         {
+            if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
+            {
+                ReadyToRender = !ReadyToRender;
+            }
         }
 
         public void Draw(GameTime gameTime)
-        { 
+        {
+            if (!ReadyToRender) return;
             Texture2D bulletTex = TextureManager.GetTexture("bullet").BaseTexture as Texture2D;
             Texture2D bombTex = TextureManager.GetTexture("bomb").BaseTexture as Texture2D;
             
@@ -125,6 +130,7 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
+            ReadyToRender = true;
         }
 
         public void UnloadContent()
