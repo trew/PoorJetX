@@ -33,7 +33,7 @@ namespace PoorEngine.SceneObject
         private double targetX;
 
         private Texture2D texBlack;
-        private Texture2D texGreen;
+        private Texture2D texHealth;
         private Rectangle hpRectOutline;
         private Rectangle healthMeterRect;
 
@@ -61,8 +61,8 @@ namespace PoorEngine.SceneObject
             texBlack = new Texture2D(EngineManager.Device, 1, 1);
             texBlack.SetData(new Color[] { Color.Black });
 
-            texGreen = new Texture2D(EngineManager.Device, 1, 1);
-            texGreen.SetData(new Color[] { Color.Green });
+            texHealth = new Texture2D(EngineManager.Device, 1, 1);
+            texHealth.SetData(new Color[] { new Color(0,255,0) });
         }
 
         public override Rectangle BoundingBox
@@ -112,10 +112,8 @@ namespace PoorEngine.SceneObject
                                            (float)DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
 
-
-
             ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0,0), 1f, SpriteEffects.None, 0f);
-            ScreenManager.SpriteBatch.Draw(texGreen, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            ScreenManager.SpriteBatch.Draw(texHealth, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
 
 
             ScreenManager.SpriteBatch.End();
@@ -124,6 +122,15 @@ namespace PoorEngine.SceneObject
         public void Update(GameTime gameTime)
         {
             healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
+            float hpPercent = ((float)health / maxHealth);
+            Console.WriteLine(hpPercent);
+
+            float red = 255 - 255 * hpPercent;
+            float green = 255 * hpPercent;
+
+            EngineManager.Debug.Print(red + " " + green);
+
+            texHealth.SetData(new Color[] { new Color(255 - 255 * hpPercent, 255 * hpPercent, 0f, 255f) });
 
             orientation = formatAngle(orientation);
             velocityAngle = formatAngle(velocityAngle);
