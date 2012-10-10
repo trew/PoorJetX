@@ -29,7 +29,18 @@ namespace PoorEngine.SceneObject
         private double weight;
         private double angleOfAttack;
         private double angleSpeedModifier;
-        public bool IsDead = false;
+        public bool IsDead { get; set; }
+        private int health;
+        private int maxHealth;
+        public bool IsCrashing { get; set; }
+
+        private Texture2D texBlack;
+        private Texture2D texHealth;
+        private Rectangle hpRectOutline;
+        private Rectangle healthMeterRect;
+
+        private int smokeTimer;
+        private int smokeTimerStartVal;
 
         public Airplane():
             base("apTex1")
@@ -45,7 +56,37 @@ namespace PoorEngine.SceneObject
             Position = new Vector2(200, 500);
             Z = 0.5f;
             UsedInBoundingBoxCheck = true;
+            IsDead = false;
+            IsCrashing = false;
+            health = maxHealth = 2000;
+
+            hpRectOutline = new Rectangle(9999, 9999, 40, 5);
+            healthMeterRect = new Rectangle(9999, 9999, 38, 3);
+
+            texBlack = new Texture2D(EngineManager.Device, 1, 1);
+            texBlack.SetData(new Color[] { Color.Black });
+
+            texHealth = new Texture2D(EngineManager.Device, 1, 1);
+
+            smokeTimer = 1;
+            smokeTimerStartVal = 20;
+
         }
+
+        public override Rectangle BoundingBox
+        {
+            get
+            {
+                Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+                return new Rectangle(
+                        (int)Position.X - texture.Width / 2,
+                        (int)Position.Y - texture.Height / 2,
+                        texture.Width,
+                        texture.Height
+                    );
+            }
+        }
+
 
         public double getLinearVelocity()
         {
@@ -73,11 +114,44 @@ namespace PoorEngine.SceneObject
             return velocity;
         }
 
+        public void HandleDebugInput(Input input)
+        {
+            if (input.IsNewKeyPress(Keys.Y))
+            {
+                TakeDamage(200);
+            }
+
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.A))
+            {
+                orientation -= 4;
+            }
+
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.S))
+            {
+                thrust = 0;
+            }
+
+
+        }
+
+        public void TakeDamage(int dmg)
+        {
+            health -= dmg;
+            if (health <= 0)
+            {
+                IsCrashing = true;
+                health = 0;
+            }
+        }
+
         public override void Collide(PoorSceneObject collidingWith)
         {
+            if (IsCrashing) return;
+
             if (collidingWith.GetType() == typeof(Projectile))
             {
                 Projectile proj = (Projectile)collidingWith;
+                TakeDamage(proj.Damage);
             }
         }
 
@@ -92,11 +166,43 @@ namespace PoorEngine.SceneObject
                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
                                            (float)DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
+            // Draw health-bar, if plane still alive
+            if (!IsCrashing)
+            {
+                ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                ScreenManager.SpriteBatch.Draw(texHealth, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            }
+            
+
             ScreenManager.SpriteBatch.End();
         }
 
         public void Update(GameTime gameTime)
         {
+            // Update Healthbar draw-settings.
+            healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
+            float hpPercent = ((float)health / maxHealth);
+            int red = (int)(255 - 255 * hpPercent);
+            int green = (int)(255 * hpPercent);
+            texHealth.SetData(new Color[] { new Color(red * 3, green * 2, 0) });
+
+            if (hpPercent < 0.7)
+            {
+                smokeTimerStartVal = Math.Max(5, (int)(50 * hpPercent));
+
+                smokeTimer--;
+                if (smokeTimer <= 0)
+                {
+                    smokeTimer = smokeTimerStartVal;
+                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(0.5f, 0.5f), 200, 15, false, 0.9f));
+                }
+            }
+
+            if (IsCrashing)
+            {
+                orientation = Math.Min(150, orientation + 0.3);
+            }
+
             orientation = formatAngle(orientation);
             velocityAngle = formatAngle(velocityAngle);
 
@@ -191,7 +297,10 @@ namespace PoorEngine.SceneObject
                 airSpeed -= 0.015 / angleSpeedModifier;
             }
             */
-            airSpeed = Math.Min(airSpeed, 8);
+            if (!IsCrashing)
+                airSpeed = Math.Min(airSpeed, 8);
+            else
+                airSpeed = Math.Min(airSpeed, 20);
 
         }
 
@@ -242,6 +351,10 @@ namespace PoorEngine.SceneObject
 
         public void HandleInput(Input input)
         {
+            HandleDebugInput(input);
+
+            if (IsCrashing) return;
+
             double forceIncreaseAmount = linearVelocity / 20;
             double maxThrust = 7;
             double maxForce = linearVelocity / 2.7;
@@ -301,16 +414,6 @@ namespace PoorEngine.SceneObject
                 }
             }
 
-            if (input.CurrentKeyboardState.IsKeyDown(Keys.A))
-            {
-                orientation -= 4;
-            }
-
-            if (input.CurrentKeyboardState.IsKeyDown(Keys.S))
-            {
-                thrust = 0;
-            }
-
             if (input.CurrentKeyboardState.IsKeyDown(Keys.X))
             {
                 if (thrust < maxThrust)
@@ -326,7 +429,6 @@ namespace PoorEngine.SceneObject
                     thrust -= 0.05;
                 }
             }
-
         }
 
 

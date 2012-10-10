@@ -111,6 +111,11 @@ namespace PoorEngine.GameScreens
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
 
+            if (player1.IsCrashing)
+            {
+                ammoController.ReadyToRender = false;
+            }
+
             if (player1.IsDead)
             {
                 ExitScreen();

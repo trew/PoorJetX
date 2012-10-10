@@ -73,6 +73,10 @@ namespace PoorEngine.SceneObject
             {
                 ReadyToRender = !ReadyToRender;
             }
+            if (currentScreen.Airplane.IsCrashing)
+            {
+                ReadyToRender = false;
+            }
         }
 
         public void Draw(GameTime gameTime)

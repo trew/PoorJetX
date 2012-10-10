@@ -110,11 +110,12 @@ namespace PoorEngine.SceneObject
         public override void Collide(PoorSceneObject collidingWith)
         {
             if (collidingWith.GetType() == typeof(Airplane)) {
+                SceneGraphManager.RemoveObject(this);
             } 
             else if (collidingWith.GetType() == typeof(EnemyAirplane))
             {
+                SceneGraphManager.RemoveObject(this);
             }
-            SceneGraphManager.RemoveObject(this);
         }
 
         private double DegreeToRadian(double angle)
