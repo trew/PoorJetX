@@ -131,7 +131,6 @@ namespace PoorEngine.SceneObject
                 thrust = 0;
             }
 
-
         }
 
         public void TakeDamage(int dmg)

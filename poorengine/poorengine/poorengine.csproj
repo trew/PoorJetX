@@ -116,6 +116,8 @@
     <Compile Include="Helpers\CalcHelper.cs" />
     <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\LevelManager.cs" />
+    <Compile Include="Managers\SoundFxLibrary.cs" />
+    <Compile Include="Managers\SoundFxManager.cs" />
     <Compile Include="SceneObject\AmmoController.cs" />
     <Compile Include="SceneObject\AnimatedSprite.cs" />
     <Compile Include="SceneObject\Background.cs" />
