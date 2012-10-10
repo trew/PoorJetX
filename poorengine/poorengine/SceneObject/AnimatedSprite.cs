@@ -22,10 +22,10 @@ namespace PoorEngine.SceneObject
 
         private TimeSpan FrameTime;
         private TimeSpan NextUpdate;
-        private int alpha;
+        private float alpha;
         private float rotation;
 
-        public AnimatedSprite(string texName, Point frameSize, Point sheetSize,Vector2 position, float rotation, Vector2 scale, int alpha, int framesPerSecond, bool repeat, float Z)
+        public AnimatedSprite(string texName, Point frameSize, Point sheetSize,Vector2 position, float rotation, Vector2 scale, float alpha, int framesPerSecond, bool repeat, float Z)
             :base(texName)
         {
             this.alpha = alpha;
@@ -75,7 +75,7 @@ namespace PoorEngine.SceneObject
                                 frameSize.Y * currentFrame.Y,
                                 frameSize.X,
                                 frameSize.Y),
-                                Color.White, rotation, textureOrigin, Scale, SpriteEffects.None, 0f);
+                                Color.White * alpha, rotation, textureOrigin, Scale, SpriteEffects.None, 0f);
             ScreenManager.SpriteBatch.End();
         }
     }

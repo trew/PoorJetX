@@ -135,8 +135,6 @@ namespace PoorEngine.SceneObject
             {
                 EngineManager.Explosion.AddParticles(CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2,EngineManager.Device.Viewport.Height / 2));
             }
-
-
         }
 
         public void TakeDamage(int dmg)

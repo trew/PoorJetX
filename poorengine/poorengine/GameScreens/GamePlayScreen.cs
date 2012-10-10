@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Input;
 using PoorEngine.GameScreens;
 using PoorJetX.GameScreens;
 using PoorEngine.Particles;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.GameScreens
 {
@@ -142,9 +143,9 @@ namespace PoorEngine.GameScreens
             {
                 if (ammoController.dropBomb())
                 {
-                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), "bomb"));
+                    SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Airplane.getPosition(), Airplane.getOrientation()+90, 10f), Airplane.getVelocity(), "bomb"));
                     
-
+                    // For drawing shells dropping down when ammo is removed from ammocontroller
                     //Vector2 bpos = ammoController.getLastBombPos();
                     //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, Airplane.getVelocity().X), 0f, 220, 10f, "bomb"));
                 }
@@ -154,9 +155,9 @@ namespace PoorEngine.GameScreens
             {
                 if (ammoController.fireBullet())
                 {
-                    SceneGraphManager.AddObject(new Projectile(Airplane.getPosition(), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
-                    
+                    SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Airplane.getPosition(), Airplane.getOrientation(), 30f), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
 
+                    // For drawing shells dropping down when ammo is removed from ammocontroller
                     //Vector2 bpos = ammoController.getLastBulletPos();
                     //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, 10), 0f, 180, 10f, "bullet"));
                 }
