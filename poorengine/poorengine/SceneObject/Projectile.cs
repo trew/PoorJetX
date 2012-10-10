@@ -80,7 +80,7 @@ namespace PoorEngine.SceneObject
 
         public void Update(GameTime gameTime)
         {
-            if (true)
+            if (true) // Can add condition for when projectile should get affected by gravity
             {
                 _velocity += new Vector2(0f, (float)(5.8 * gameTime.ElapsedGameTime.TotalSeconds));
             }

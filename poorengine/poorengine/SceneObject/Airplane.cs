@@ -368,5 +368,6 @@ namespace PoorEngine.SceneObject
             SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(0, -4), (float)DegreeToRadian(orientation), new Vector2(0.1f, 0.8f), 250, 5, false, 0.9f));
             SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(2, 10), (float)DegreeToRadian(orientation), new Vector2(0.1f, 0.8f), 250, 5, false, 0.9f));
         }
+
     }
 }
