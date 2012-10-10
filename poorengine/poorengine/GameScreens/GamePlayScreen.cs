@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PoorEngine.GameScreens;
 using PoorJetX.GameScreens;
+using PoorEngine.Particles;
 
 namespace PoorEngine.GameScreens
 {
@@ -74,8 +75,8 @@ namespace PoorEngine.GameScreens
             ammoController = new AmmoController();
             SceneGraphManager.AddObject(ammoController);
 
-            SkyGradient skyGradient = new SkyGradient("skygradient");
-            SceneGraphManager.AddObject(skyGradient);
+//            SkyGradient skyGradient = new SkyGradient("skygradient");
+//            SceneGraphManager.AddObject(skyGradient);
 
             player1 = new Airplane();
             SceneGraphManager.AddObject(player1);     

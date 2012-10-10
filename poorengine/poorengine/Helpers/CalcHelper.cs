@@ -8,6 +8,14 @@ namespace PoorEngine.Helpers
 {
     public static class CalcHelper
     {
+        private static Random random = new Random();
+        public static Random Random { get { return random; } }
+
+        public static float RandomBetween(float min, float max)
+        {
+            return min + (float)random.NextDouble() * (max - min);
+        }
+
         public static Vector2 calculatePoint(Vector2 currentPos, float direction, float distance)
         {
             float newX = (float)Math.Sin(DegreeToRadian(direction)) * distance;

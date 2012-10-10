@@ -131,6 +131,11 @@ namespace PoorEngine.SceneObject
                 thrust = 0;
             }
 
+            if (input.IsNewKeyPress(Keys.O))
+            {
+                EngineManager.Explosion.AddParticles(CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2,EngineManager.Device.Viewport.Height / 2));
+            }
+
 
         }
 
