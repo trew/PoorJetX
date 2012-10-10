@@ -48,7 +48,7 @@ namespace PoorEngine.SceneObject
         public EnemyAirplane(int startHealth):
             base("apTex1")
         {
-            Z = 1;
+            Z = 0.999f;
             thrust = 3;
             lift = 0;
             orientation = 90;
@@ -132,6 +132,13 @@ namespace PoorEngine.SceneObject
 
         public void Update(GameTime gameTime)
         {
+            if (Position.Y > EngineManager.Device.Viewport.Height - 10)
+            {
+                SceneGraphManager.AddObject(new AnimatedSprite("anim_explosion1", new Point(64, 64), new Point(32, 1), Position, new Vector2(2f, 2f), 255, 30, false, 0.9f));
+                SceneGraphManager.RemoveObject(this);
+                return;
+            }
+
             // Update Healthbar draw-settings.
             healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
             float hpPercent = ((float)health / maxHealth);
@@ -250,26 +257,8 @@ namespace PoorEngine.SceneObject
             SceneGraphManager.RemoveObject(this);
             UsedInBoundingBoxCheck = false;
 
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2.5f, 2.5f), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_explosion1", new Point(64, 64), new Point(32, 1), Position, new Vector2(1.5f, 1.5f), 255, 35, false, 0.5f));
         }
 
         public override void Collide(PoorSceneObject collidingWith)

@@ -62,7 +62,10 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/hill2"), "hill2");
 
             TextureManager.AddTexture(new PoorTexture("Textures/emptyshell"), "emptyshell");
+
+            // Animations
             TextureManager.AddTexture(new PoorTexture("Textures/anim_smoke1"), "anim_smoke1");
+            TextureManager.AddTexture(new PoorTexture("Textures/anim_explosion1"), "anim_explosion1");
 
 
             LevelManager.CurrentLevel.LoadVisuals();
