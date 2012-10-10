@@ -39,8 +39,6 @@ namespace PoorEngine.GameComponents
             changePos(moveSpeed);
             if (Pos.Y > 0)
                 Pos = new Vector2(Pos.X, 0);
-
-            EngineManager.Debug.Print("CameraSpeed: " + moveSpeed);
         }
 
         public void UpdateX(Airplane player1)

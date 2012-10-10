@@ -157,7 +157,6 @@ namespace PoorEngine.SceneObject
 
         public void Draw(GameTime gameTime)
         {
-            EngineManager.Debug.Print("Airplane Boundingbox: " + BoundingBox.ToString());
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 
@@ -279,9 +278,6 @@ namespace PoorEngine.SceneObject
 
             Position += new Vector2(xmod, ymod);
             velocity = Position - oldPos;
-
-            EngineManager.Debug.Print("Airplane Velocity: " + velocity);
-            EngineManager.Debug.Print("Airplane Position:" + Position);
 
             linearVelocity = Math.Sqrt(
                 Math.Pow((Math.Max(Position.X, oldPos.X) - Math.Min(Position.X, oldPos.X)), 2) +
