@@ -150,7 +150,7 @@ namespace PoorEngine.SceneObject
                 if (smokeTimer <= 0)
                 {
                     smokeTimer = smokeTimerStartVal;
-                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(0.5f, 0.5f), 200 , 15, false, 0.9f));
+                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(0.5f, 0.5f), 200, 15, false, 0.9f));
                 }
             }
 

@@ -92,7 +92,7 @@ namespace PoorEngine.SceneObject
 
             if (Position.Y > EngineManager.Device.Viewport.Height)
             {
-                SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position - new Vector2(0, 15), new Vector2(0.2f, 0.2f), 200, 50, false, 0.9f));
+                SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position - new Vector2(0, 15), 0f, new Vector2(0.2f, 0.2f), 200, 50, false, 0.9f));
                 SceneGraphManager.RemoveObject(this);
             }
         }
