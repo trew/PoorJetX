@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Interfaces;
 using PoorEngine.GameComponents;
 using PoorEngine.GameScreens;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
@@ -40,10 +41,7 @@ namespace PoorEngine.SceneObject
             Z = 0.1f;
         }
 
-        private double DegreeToRadian(double angle)
-        {
-            return Math.PI * angle / 180.0;
-        }
+
 
         void DrawLine(SpriteBatch batch, Texture2D texture,
              float width, float length, float angle, Color color, Vector2 startPoint)
@@ -52,7 +50,7 @@ namespace PoorEngine.SceneObject
                 startPoint,
                 null,
                 color,
-                (float)DegreeToRadian(angle - 90),
+                (float)CalcHelper.DegreeToRadian(angle - 90),
                 Vector2.Zero,
                 new Vector2(length, width),
                 SpriteEffects.None, 0);

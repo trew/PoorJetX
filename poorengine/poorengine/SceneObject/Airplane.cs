@@ -469,11 +469,7 @@ namespace PoorEngine.SceneObject
         }
 
 
-        private Vector2 calculatePoint(Vector2 currentPos, float direction, float distance)
-        {
 
-            return Vector2.Zero;
-        }
 
     }
 }

@@ -10,6 +10,7 @@ using PoorEngine.Interfaces;
 using PoorEngine.Managers;
 using PoorEngine.Textures;
 using PoorEngine.GameComponents;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
@@ -117,7 +118,7 @@ namespace PoorEngine.SceneObject
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
-                                           (float)DegreeToRadian(orientation - 90),
+                                           (float)CalcHelper.DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
             
             // Draw health-bar, if plane still alive
@@ -158,8 +159,8 @@ namespace PoorEngine.SceneObject
                 airSpeed *= 1.04;
             }
 
-            orientation = formatAngle(orientation);
-            velocityAngle = formatAngle(velocityAngle);
+            orientation = CalcHelper.formatAngle(orientation);
+            velocityAngle = CalcHelper.formatAngle(velocityAngle);
 
             double velocityAngleRotationSpeed = Math.Max(airSpeed, gravity) / (weight * 3);
             double diff = orientation - velocityAngle + 180;
@@ -203,8 +204,8 @@ namespace PoorEngine.SceneObject
             /*
              *  Calculate movement-direction (X/Y-movement-ratio)
              */
-            double newX = Math.Sin(DegreeToRadian(velocityAngle));
-            double newY = -Math.Cos(DegreeToRadian(velocityAngle));
+            double newX = Math.Sin(CalcHelper.DegreeToRadian(velocityAngle));
+            double newY = -Math.Cos(CalcHelper.DegreeToRadian(velocityAngle));
 
             // Save old pos, used for speedcalculations
             oldPos = Position;
@@ -250,26 +251,26 @@ namespace PoorEngine.SceneObject
             SceneGraphManager.RemoveObject(this);
             UsedInBoundingBoxCheck = false;
 
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2, 3), 255, 10, false, 0.5f));
         }
 
         public override void Collide(PoorSceneObject collidingWith)
@@ -341,7 +342,8 @@ namespace PoorEngine.SceneObject
             double maxForce = linearVelocity / 2.7;
             double forceResetAmount = 0.085;
 
-            if(input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift)) {
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift))
+            {
                 forceIncreaseAmount /= 2;
                 maxForce /= 3;
             }
@@ -413,37 +415,6 @@ namespace PoorEngine.SceneObject
                     thrust -= 0.05;
                 }
             }
-
-        }
-
-        
-        /*
-         *  Div functions
-         */
-        private double DegreeToRadian(double angle)
-        {
-            return Math.PI * angle / 180.0;
-        }
-
-        private double formatAngle(double oldAngle)
-        {
-            double newAngle;
-            newAngle = oldAngle % 360;
-
-            if (newAngle < 0)
-                newAngle += 360;
-
-            return newAngle;
-        }
-
-
-        private double getAngle(Vector2 a, Vector2 b)
-        {
-            double deltax = a.X - b.X;
-            double deltay = a.Y - b.Y;
-
-            double angle_rad = Math.Atan2(deltay, deltax);
-            return angle_rad * 180.0 / Math.PI;
         }
     }
 }

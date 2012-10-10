@@ -113,6 +113,7 @@
     <Compile Include="GameComponents\DebugPanel.cs" />
     <Compile Include="GameComponents\Level.cs" />
     <Compile Include="GameScreens\ScoreScreen.cs" />
+    <Compile Include="Helpers\CalcHelper.cs" />
     <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\LevelManager.cs" />
     <Compile Include="SceneObject\AmmoController.cs" />

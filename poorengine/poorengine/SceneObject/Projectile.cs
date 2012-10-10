@@ -7,6 +7,7 @@ using PoorEngine.Managers;
 using Microsoft.Xna.Framework;
 using PoorEngine.Textures;
 using Microsoft.Xna.Framework.Graphics;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
@@ -54,8 +55,8 @@ namespace PoorEngine.SceneObject
             _orientation = orientation + (float)_spread;
 
             Position = pos;
-            float xFactor = (float)Math.Sin(DegreeToRadian(_orientation));
-            float yFactor = (float)-Math.Cos(DegreeToRadian(_orientation));
+            float xFactor = (float)Math.Sin(CalcHelper.DegreeToRadian(_orientation));
+            float yFactor = (float)-Math.Cos(CalcHelper.DegreeToRadian(_orientation));
             Vector2 boostFactor = new Vector2(xFactor * velocityBoost, yFactor * velocityBoost);
 
             _velocity = velocity + boostFactor;
@@ -73,7 +74,7 @@ namespace PoorEngine.SceneObject
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
                                             Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
-                                            _orientation + (float)DegreeToRadian(180), _origin, 1f, SpriteEffects.None, 0f);
+                                            _orientation + (float)CalcHelper.DegreeToRadian(180), _origin, 1f, SpriteEffects.None, 0f);
             ScreenManager.SpriteBatch.End();
 
         }
@@ -85,7 +86,7 @@ namespace PoorEngine.SceneObject
                 _velocity += new Vector2(0f, (float)(5.8 * gameTime.ElapsedGameTime.TotalSeconds));
             }
 
-            _orientation = (float)getAngleAsRadian(Position, Position + _velocity);
+            _orientation = (float)CalcHelper.getAngleAsRadian(Position, Position + _velocity);
             Position += _velocity;
             if (SpawnTime <= 0.0)
                 SpawnTime = (float)gameTime.TotalGameTime.TotalSeconds;
@@ -116,19 +117,6 @@ namespace PoorEngine.SceneObject
             {
                 SceneGraphManager.RemoveObject(this);
             }
-        }
-
-        private double DegreeToRadian(double angle)
-        {
-            return Math.PI * angle / 180.0;
-        }
-
-        private double getAngleAsRadian(Vector2 a, Vector2 b)
-        {
-            double deltax = a.X - b.X;
-            double deltay = a.Y - b.Y;
-
-            return Math.Atan2(deltay, deltax);
         }
 
         public bool CanCollideWithPlayer(GameTime gameTime)
