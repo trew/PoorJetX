@@ -39,7 +39,7 @@ namespace PoorEngine.Managers
 
         public static void RemoveFx(int id)
         {
-            if (id != null && _soundEffects.ContainsKey(id))
+            if (_soundEffects.ContainsKey(id))
             {
                 _soundEffects.Remove(id);
                 _soundInstancesLoaded--;
@@ -48,7 +48,7 @@ namespace PoorEngine.Managers
 
         public static SoundEffectInstance GetByID(int id)
         {
-            if (id != null && _soundEffects.ContainsKey(id))
+            if (_soundEffects.ContainsKey(id))
             {
                 return _soundEffects[id];
             }

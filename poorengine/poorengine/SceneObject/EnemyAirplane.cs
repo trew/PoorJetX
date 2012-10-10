@@ -135,7 +135,8 @@ namespace PoorEngine.SceneObject
         {
             if (Position.Y > EngineManager.Device.Viewport.Height - 10)
             {
-                EngineManager.GroundExplosion.AddParticles(Position);
+                SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 50, false, 0.9f));
+                //EngineManager.GroundExplosion.AddParticles(Position);
                 SceneGraphManager.RemoveObject(this);
                 return;
             }

@@ -53,7 +53,12 @@ namespace PoorEngine.SceneObject
                 currentFrame.X++;
                 if (currentFrame.X > sheetSize.X)
                 {
-                    if (repeat)
+                    if (sheetSize.Y > currentFrame.Y)
+                    {
+                        currentFrame.X = 0;
+                        currentFrame.Y++;
+                    }
+                    else if (repeat)
                     {
                         currentFrame.X = 0;
                     }
