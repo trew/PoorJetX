@@ -194,7 +194,7 @@ namespace PoorEngine.SceneObject
                 if (smokeTimer <= 0)
                 {
                     smokeTimer = smokeTimerStartVal;
-                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(0.5f, 0.5f), 200, 15, false, 0.9f));
+                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(0.5f, 0.5f), 200, 15, false, 0.9f));
                 }
             }
 
@@ -464,8 +464,12 @@ namespace PoorEngine.SceneObject
 
         private void drawWingtipVortices()
         {
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(0, -4), new Vector2(0.1f, 0.1f), 250, 5, false, 0.9f));
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(2,10), new Vector2(0.1f, 0.1f), 250, 5, false, 0.9f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(0, -4), (float)DegreeToRadian(orientation), new Vector2(0.1f, 0.8f), 250, 5, false, 0.9f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(2, 10), (float)DegreeToRadian(orientation), new Vector2(0.1f, 0.8f), 250, 5, false, 0.9f));
         }
+
+
+
+
     }
 }
