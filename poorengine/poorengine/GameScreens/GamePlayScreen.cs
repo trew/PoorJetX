@@ -114,6 +114,7 @@ namespace PoorEngine.GameScreens
  	        base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             if (ScreenState != ScreenState.Active) { return; }
 
+            AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
 
@@ -140,29 +141,7 @@ namespace PoorEngine.GameScreens
             
             player1.HandleInput(input);
 
-            if (input.IsNewKeyPress(Keys.Space))
-            {
-                if (ammoController.dropBomb())
-                {
-                    SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Airplane.getPosition(), Airplane.getOrientation()+90, 10f), Airplane.getVelocity(), "bomb"));
-                    
-                    // For drawing shells dropping down when ammo is removed from ammocontroller
-                    //Vector2 bpos = ammoController.getLastBombPos();
-                    //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, Airplane.getVelocity().X), 0f, 220, 10f, "bomb"));
-                }
-            }
-
-            if (input.LastKeyboardState.IsKeyDown(Keys.LeftControl))
-            {
-                if (ammoController.fireBullet())
-                {
-                    SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Airplane.getPosition(), Airplane.getOrientation(), 30f), Airplane.getVelocity(), 15f, Airplane.getOrientation(), 3f, "bullet"));
-
-                    // For drawing shells dropping down when ammo is removed from ammocontroller
-                    //Vector2 bpos = ammoController.getLastBulletPos();
-                    //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, 10), 0f, 180, 10f, "bullet"));
-                }
-            }
+            
 
             if (input.IsNewKeyPress(Keys.Escape))
             {

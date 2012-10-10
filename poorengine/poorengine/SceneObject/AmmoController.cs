@@ -14,13 +14,9 @@ namespace PoorEngine.SceneObject
 {
     public class AmmoController: PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
-        const int MAXBULLETS = 200;
-        const int MAXBOMBS = 15;
-        const int BULLETSPERSECOND = 30;
-
         private int bulletCount;
         private int bombCount;
-        Stopwatch reloadTimer;
+
         Vector2 lastBulletPos;
         Vector2 lastBombPos;
 
@@ -28,64 +24,15 @@ namespace PoorEngine.SceneObject
             base("")
         {
             Position = new Vector2(10, 10);
-            bulletCount = MAXBULLETS;
-            bombCount = MAXBOMBS;
-            reloadTimer = new Stopwatch();
-            reloadTimer.Start();
-        }
-
-
-        public bool fireBullet()
-        {
-            if(reloadTimer.ElapsedMilliseconds > 1000/BULLETSPERSECOND)
-            {
-                if (bulletCount > 0)
-                {
-                    bulletCount = Math.Max(bulletCount - 1, 0);
-                    reloadTimer.Restart();
-                    //reloadTimer.Start();
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool dropBomb()
-        {
-            if (bombCount > 0)
-            {
-                bombCount = Math.Max(bombCount - 1, 0);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public void addBombs(int x)
-        {
-            bombCount = Math.Min(bombCount + x, MAXBOMBS);
-        }
-
-        public void addBullets(int x)
-        {
-            bulletCount = Math.Min(bulletCount + x, MAXBOMBS);
-        }
-
-        public Vector2 getLastBombPos() 
-        {
-            return lastBombPos;
-        }
-
-        public Vector2 getLastBulletPos() 
-        {
-            return lastBulletPos;
+            bulletCount = AmmoManager.BulletCount;
+            bombCount = AmmoManager.BombCount;
         }
 
         public void Update(GameTime gameTime)
         {
+            bulletCount = AmmoManager.BulletCount;
+            bombCount = AmmoManager.BombCount;
+
             if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
             {
                 ReadyToRender = !ReadyToRender;
@@ -112,8 +59,8 @@ namespace PoorEngine.SceneObject
                 }
                 ScreenManager.SpriteBatch.Draw(bulletTex, drawPos, Color.White);
             }
-            lastBulletPos = drawPos;
 
+            lastBulletPos = drawPos;
 
             // Set position for bomb-draw
             drawPos.X = 30;

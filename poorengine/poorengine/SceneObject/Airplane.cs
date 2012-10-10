@@ -10,6 +10,7 @@ using PoorEngine.Interfaces;
 using PoorEngine.Managers;
 using PoorEngine.Textures;
 using PoorEngine.GameComponents;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
@@ -441,6 +442,30 @@ namespace PoorEngine.SceneObject
                 if (thrust >= 0.05)
                 {
                     thrust -= 0.05;
+                }
+            }
+
+            if (input.IsNewKeyPress(Keys.Space))
+            {
+                if (AmmoManager.dropBomb())
+                {
+                    SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, (float)orientation + 90, 10f), velocity, "bomb"));
+
+                    // For drawing shells dropping down when ammo is removed from ammocontroller
+                    //Vector2 bpos = ammoController.getLastBombPos();
+                    //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, Airplane.getVelocity().X), 0f, 220, 10f, "bomb"));
+                }
+            }
+
+            if (input.LastKeyboardState.IsKeyDown(Keys.LeftControl))
+            {
+                if (AmmoManager.fireBullet())
+                {
+                    SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, (float)orientation, 30f), velocity, 15f, (float)orientation, 3f, "bullet"));
+
+                    // For drawing shells dropping down when ammo is removed from ammocontroller
+                    //Vector2 bpos = ammoController.getLastBulletPos();
+                    //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, 10), 0f, 180, 10f, "bullet"));
                 }
             }
         }

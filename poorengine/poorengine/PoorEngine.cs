@@ -61,6 +61,7 @@ namespace PoorEngine
 
         private static CameraManager _cameraManager = null;
         private static LevelManager _levelManagers = null;
+        private static AmmoManager _ammoManager = null;
         private static bool _checkedGraphicsOptions = false;
         private static bool _applyDeviceChanges = false;
 
@@ -115,6 +116,10 @@ namespace PoorEngine
             // Init the level managers
             _levelManagers = new LevelManager(this);
             Components.Add(_levelManagers);
+
+            // Innit Ammo-manager
+            _ammoManager = new AmmoManager(this);
+            Components.Add(_ammoManager);
 
             Debug = new DebugPanel(this);
             Components.Add(Debug);
