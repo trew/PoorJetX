@@ -41,8 +41,6 @@ namespace PoorEngine.SceneObject
 
             FrameTime = new TimeSpan(0, 0, 0, 0, 1000 / framesPerSecond);
             NextUpdate = new TimeSpan(0, 0, 0, 0, FrameTime.Milliseconds);
-
-            TextureManager.AddTexture(new PoorTexture("Textures/" + texName), texName);
         }
 
         public void Update(GameTime gameTime)
