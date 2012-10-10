@@ -193,6 +193,8 @@ namespace PoorEngine.SceneObject
             */
             airSpeed = Math.Min(airSpeed, 8);
 
+
+
         }
 
         public void LoadContent()
@@ -261,6 +263,11 @@ namespace PoorEngine.SceneObject
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Left))
             {
+                if (airSpeed > 7.2 && lforce > 0.2)
+                {
+                    drawWingtipVortices();
+                }
+
                 orientation -= lforce;
                 if (lforce < maxForce)
                 {
@@ -270,6 +277,8 @@ namespace PoorEngine.SceneObject
                 {
                     lforce = maxForce;
                 }
+
+                
             }
             else
             {
@@ -282,6 +291,11 @@ namespace PoorEngine.SceneObject
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Right))
             {
+                if (airSpeed > 7.2 && rforce > 0.2)
+                {
+                    drawWingtipVortices();
+                }
+
                 orientation += rforce;
                 if (rforce < maxForce)
                 {
@@ -347,6 +361,12 @@ namespace PoorEngine.SceneObject
                 newAngle += 360;
 
             return newAngle;
+        }
+
+        private void drawWingtipVortices()
+        {
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(0, -4), new Vector2(0.1f, 0.1f), 250, 5, false, 0.9f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(2,10), new Vector2(0.1f, 0.1f), 250, 5, false, 0.9f));
         }
     }
 }
