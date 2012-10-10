@@ -245,17 +245,36 @@ namespace PoorEngine.SceneObject
 
         }
 
+        public void Explode()
+        {
+            SceneGraphManager.RemoveObject(this);
+            UsedInBoundingBoxCheck = false;
+
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(1, 2), 255, 5, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(3, 2), 255, 6, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 8, false, 0.5f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(2, 3), 255, 10, false, 0.5f));
+        }
+
         public override void Collide(PoorSceneObject collidingWith)
         {
-            if (health <= 0)
-            {
-                ItsCrashTime = true;
-                
-                //SceneGraphManager.RemoveObject(this);
-                return;
-            }
-
-            if (collidingWith.GetType() == typeof(Projectile))
+            if (!ItsCrashTime && health > 0 && collidingWith.GetType() == typeof(Projectile))
             {
                 Projectile p = (Projectile)collidingWith;
                 health -= p.Damage;
@@ -264,8 +283,18 @@ namespace PoorEngine.SceneObject
                     health = 0;
                     ItsCrashTime = true;
                     EngineManager.Score += 1;
-                    //SceneGraphManager.RemoveObject(this);
                 }
+            } else if (collidingWith.GetType() == typeof(EnemyAirplane))
+            {
+                EnemyAirplane e = (EnemyAirplane)(collidingWith);
+
+                // Is the other plane crashing?
+                if (e.ItsCrashTime)
+                {
+                    EngineManager.Score += 2;
+                }
+                health = 0;
+                Explode();
             }
         }
 
