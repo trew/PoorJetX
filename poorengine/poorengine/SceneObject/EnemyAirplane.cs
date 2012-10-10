@@ -33,16 +33,22 @@ namespace PoorEngine.SceneObject
         private double targetX;
 
         private Texture2D texBlack;
-        private Texture2D texGreen;
+        private Texture2D texHealth;
         private Rectangle hpRectOutline;
         private Rectangle healthMeterRect;
+
+        private int smokeTimer;
+        private int smokeTimerStartVal;
 
         private int maxHealth;
         private int health;
 
+        private bool ItsCrashTime;
+
         public EnemyAirplane(int startHealth):
             base("apTex1")
         {
+            Z = 1;
             thrust = 3;
             lift = 0;
             orientation = 90;
@@ -54,17 +60,21 @@ namespace PoorEngine.SceneObject
             Position = new Vector2(1100,200);
             UsedInBoundingBoxCheck = true;
 
+            smokeTimer = 1;
+            smokeTimerStartVal = 20;
+
             health = maxHealth = startHealth;
+            ItsCrashTime = false; 
+
             hpRectOutline = new Rectangle(9999,9999, 40, 5);
             healthMeterRect = new Rectangle(9999, 9999, 38, 3);
 
             texBlack = new Texture2D(EngineManager.Device, 1, 1);
             texBlack.SetData(new Color[] { Color.Black });
 
-            texGreen = new Texture2D(EngineManager.Device, 1, 1);
-            texGreen.SetData(new Color[] { Color.Green });
+            texHealth = new Texture2D(EngineManager.Device, 1, 1);
         }
-
+        
         public override Rectangle BoundingBox
         {
             get
@@ -111,19 +121,44 @@ namespace PoorEngine.SceneObject
                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
                                            (float)DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
-
-
-
-            ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0,0), 1f, SpriteEffects.None, 0f);
-            ScreenManager.SpriteBatch.Draw(texGreen, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-
-
+            
+            // Draw health-bar, if plane still alive
+            if (!ItsCrashTime)
+            {
+                ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                ScreenManager.SpriteBatch.Draw(texHealth, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            }
+            
             ScreenManager.SpriteBatch.End();
         }
 
         public void Update(GameTime gameTime)
         {
+            // Update Healthbar draw-settings.
             healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
+            float hpPercent = ((float)health / maxHealth);
+            int red = (int)(255 - 255 * hpPercent);
+            int green = (int)(255 * hpPercent);
+            texHealth.SetData(new Color[] { new Color(red*3, green*2, 0) });
+
+            
+            if (hpPercent < 0.7)
+            {
+                smokeTimerStartVal = Math.Max(5, (int)(50 * hpPercent));
+
+                smokeTimer--;
+                if (smokeTimer <= 0)
+                {
+                    smokeTimer = smokeTimerStartVal;
+                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, new Vector2(0.5f, 0.5f), 200 , 15, false, 0.9f));
+                }
+            }
+
+            if (ItsCrashTime)
+            {
+                orientation = Math.Min(150, orientation + 0.3);
+                airSpeed *= 1.04;
+            }
 
             orientation = formatAngle(orientation);
             velocityAngle = formatAngle(velocityAngle);
@@ -132,10 +167,9 @@ namespace PoorEngine.SceneObject
             double diff = orientation - velocityAngle + 180;
             double posDiff = Math.Abs(diff - 180);
 
+            // Trying to make the enemy stick to a fixed position..
             targetX = CameraManager.Camera.Pos.X + (EngineManager.Device.Viewport.Width * 0.8);
-
             double xdiff = Position.X - targetX;
-
             thrust = 5 - xdiff / 300;
 
             
@@ -217,7 +251,9 @@ namespace PoorEngine.SceneObject
         {
             if (health <= 0)
             {
-                SceneGraphManager.RemoveObject(this);
+                ItsCrashTime = true;
+                
+                //SceneGraphManager.RemoveObject(this);
                 return;
             }
 
@@ -228,8 +264,9 @@ namespace PoorEngine.SceneObject
                 if (health <= 0)
                 {
                     health = 0;
+                    ItsCrashTime = true;
                     EngineManager.Score += 1;
-                    SceneGraphManager.RemoveObject(this);
+                    //SceneGraphManager.RemoveObject(this);
                 }
             }
         }
@@ -237,8 +274,6 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            
-
             TextureManager.AddTexture(new PoorTexture("Textures/airplane"), TextureName);
         }
 

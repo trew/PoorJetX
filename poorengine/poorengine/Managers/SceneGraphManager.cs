@@ -19,6 +19,16 @@ namespace PoorEngine.Managers
             get { return _root; }
         }
 
+        private static Node _new;
+        /// <summary>
+        /// New nodes to be added in next update
+        /// </summary>
+        public static Node New
+        {
+            get { return _new; }
+        }
+
+
         public static Queue<Node> removeQueue { get; set; }
 
         /// <summary>
@@ -29,6 +39,7 @@ namespace PoorEngine.Managers
             : base(game)
         {
             _root = new Node();
+            _new = new Node();
             removeQueue = new Queue<Node>();
         }
 
@@ -43,8 +54,17 @@ namespace PoorEngine.Managers
 
         public static new void Update(GameTime gameTime)
         {
-            _root.Update(gameTime);
+            // Add new nodes and sort the list
+            foreach (SceneObjectNode node in _new.Nodes)
+            {
+                _root.AddNode(node);
+                
+            }
+            _new.Nodes.Clear();
+            _root.Nodes.Sort(comp);
 
+            _root.Update(gameTime);
+            
             foreach (SceneObjectNode firstNode in _root.Nodes)
             {
                 PoorSceneObject first = firstNode.SceneObject;
@@ -99,6 +119,7 @@ namespace PoorEngine.Managers
         {
             SceneObjectNode node1 = (SceneObjectNode)x1;
             SceneObjectNode node2 = (SceneObjectNode)x2;
+
             if (node1.SceneObject.Z == node2.SceneObject.Z) return 0;
             return node1.SceneObject.Z > node2.SceneObject.Z ? -1 : 1;
         }
@@ -106,8 +127,10 @@ namespace PoorEngine.Managers
         public static void AddObject(PoorSceneObject newObject)
         {
             SceneObjectNode node = new SceneObjectNode(newObject);
-            _root.AddNode(node);
-            _root.Nodes.Sort(comp);
+            
+            node.LoadContent(); // this or crash in node.Draw
+            _new.AddNode(node);
+
         }
 
         public static void RemoveObject(PoorSceneObject oldObject)

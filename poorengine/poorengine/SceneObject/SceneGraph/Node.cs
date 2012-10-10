@@ -55,6 +55,7 @@ namespace PoorEngine.SceneObject.SceneGraph
 
         public virtual void Draw(GameTime gameTime)
         {
+            
             _nodes.ForEach(
                 delegate(Node node)
                 {
