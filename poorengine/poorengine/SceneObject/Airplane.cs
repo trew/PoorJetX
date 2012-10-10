@@ -29,6 +29,7 @@ namespace PoorEngine.SceneObject
         private double weight;
         private double angleOfAttack;
         private double angleSpeedModifier;
+        public bool IsDead = false;
 
         public Airplane():
             base("apTex1")
@@ -41,7 +42,7 @@ namespace PoorEngine.SceneObject
             linearVelocity = 0;
             velocityAngle = 90;
             weight = 1;
-            Position = new Vector2(200, 600);
+            Position = new Vector2(200, 500);
             Z = 0.5f;
             UsedInBoundingBoxCheck = true;
         }

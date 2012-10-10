@@ -103,6 +103,12 @@ namespace PoorEngine.GameScreens
             if (ScreenState != ScreenState.Active) { return; }
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
+
+            if (player1.IsDead)
+            {
+                ExitScreen();
+                ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+            }
         }
          
         /// <summary>
