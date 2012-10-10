@@ -170,7 +170,19 @@ namespace PoorEngine.GameComponents
 
         public void SlowDownX(Airplane p1)
         {
-            if (moveSpeed.X > 0) { moveSpeed.X -= 0.03f; }
+            if (moveSpeed.X > 0) {
+                float dif = moveSpeed.X - p1.getVelocity().X;
+
+                if (dif > 3)
+                    moveSpeed.X -= 0.3f;
+                else if (dif > 2)
+                    moveSpeed.X -= 0.2f;
+                else if (dif > 1)
+                    moveSpeed.X -= 0.1f;
+                else
+                    moveSpeed.X -= 0.03f;
+
+            }
             else if (moveSpeed.X < 0) { moveSpeed.X += 0.03f; }
         }
 
