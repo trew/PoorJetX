@@ -170,10 +170,10 @@ namespace PoorEngine.GameComponents
         public void SlowDownX(Airplane p1)
         {
             if (moveSpeed.X > 0) {
-                moveSpeed.X -= Math.Max(0.03f, SpeedDifference(p1).X * 0.05f);
+                moveSpeed.X -= Math.Max(0.03f, Math.Abs(SpeedDifference(p1).X * 0.05f));
             }
             else if (moveSpeed.X < 0) {
-                moveSpeed.X += Math.Max(0.03f, SpeedDifference(p1).X * 0.05f);
+                moveSpeed.X += Math.Max(0.03f, Math.Abs(SpeedDifference(p1).X * 0.05f));
             }
         }
 

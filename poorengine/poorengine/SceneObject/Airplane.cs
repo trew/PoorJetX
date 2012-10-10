@@ -171,13 +171,14 @@ namespace PoorEngine.SceneObject
                 ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
                 ScreenManager.SpriteBatch.Draw(texHealth, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
             }
-            
 
             ScreenManager.SpriteBatch.End();
         }
 
         public void Update(GameTime gameTime)
         {
+            EngineManager.Device.Textures[0] = null;
+
             // Update Healthbar draw-settings.
             healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
             float hpPercent = ((float)health / maxHealth);
@@ -353,9 +354,9 @@ namespace PoorEngine.SceneObject
 
             if (IsCrashing) return;
 
-            double forceIncreaseAmount = linearVelocity / 20;
+            double forceIncreaseAmount = linearVelocity / 10;
             double maxThrust = 7;
-            double maxForce = linearVelocity / 2.7;
+            double maxForce = linearVelocity / 8.1;
             double forceResetAmount = 0.085;
 
             // At high speeds, reduce maneuverability
@@ -366,8 +367,8 @@ namespace PoorEngine.SceneObject
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift))
             {
-                forceIncreaseAmount /= 2;
-                maxForce /= 3;
+                forceIncreaseAmount *= 2;
+                maxForce *= 3;
             }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Left))
