@@ -111,8 +111,6 @@ namespace PoorEngine.SceneObject
     
         public void Draw(GameTime gameTime)
         {
-            EngineManager.Debug.Print("Enemy boundingbox: " + BoundingBox.ToString());
-
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 

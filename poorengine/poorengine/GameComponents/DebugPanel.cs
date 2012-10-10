@@ -45,7 +45,6 @@ namespace PoorEngine.GameComponents
                 ViewAble = !ViewAble;
             }
 
-
         }
 
         public void Print(string s)
