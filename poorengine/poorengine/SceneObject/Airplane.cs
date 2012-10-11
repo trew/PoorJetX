@@ -449,7 +449,7 @@ namespace PoorEngine.SceneObject
             {
                 if (AmmoManager.dropBomb())
                 {
-                    SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, (float)orientation + 90, 10f), velocity, "bomb"));
+                    SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, (float)orientation + 90, 10f), velocity, "bomb2", 0.13f));
 
                     // For drawing shells dropping down when ammo is removed from ammocontroller
                     //Vector2 bpos = ammoController.getLastBombPos();

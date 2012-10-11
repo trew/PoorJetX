@@ -21,17 +21,19 @@ namespace PoorEngine.SceneObject
 
         public double SpawnTime { get; set; }
 
-        public Projectile(Vector2 pos, Vector2 velocity, string texture):
+        public Projectile(Vector2 pos, Vector2 velocity, string texture, float scale):
             base(texture)
         {
             /*
              *    THIS IS THE MOTHERFUCKING BOOOOMBS! edit: can also be used as airplane-urine
              */
             rnd = new Random(); // remove?
+            
             Position = pos;
             _velocity = velocity;
             _orientation = 0f;
             _spread = 0.0;
+            Scale = new Vector2(scale, scale);
             Z = 1.5f;
             Damage = 200;
             SpawnTime = 0.0;
@@ -74,7 +76,7 @@ namespace PoorEngine.SceneObject
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
                                             Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
-                                            _orientation + (float)CalcHelper.DegreeToRadian(180), _origin, 1f, SpriteEffects.None, 0f);
+                                            _orientation + (float)CalcHelper.DegreeToRadian(180), _origin, Scale, SpriteEffects.None, 0f);
             ScreenManager.SpriteBatch.End();
 
         }

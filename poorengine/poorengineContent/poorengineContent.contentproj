@@ -49,6 +49,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Textures\anim_groundcrash.png">
+      <Name>anim_groundcrash</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Textures\blank.jpg">
       <Name>blank</Name>
       <Importer>TextureImporter</Importer>
@@ -238,8 +243,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\anim_groundcrash.png">
-      <Name>anim_groundcrash</Name>
+    <Compile Include="Textures\bomb2.png">
+      <Name>bomb2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\splash.png">
+      <Name>splash</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

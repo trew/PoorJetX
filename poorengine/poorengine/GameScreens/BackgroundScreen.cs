@@ -27,7 +27,7 @@ namespace PoorJetX.GameScreens
         {
             base.LoadContent();
 
-            TextureManager.AddTexture(new PoorTexture("Textures/background"), texture);
+            TextureManager.AddTexture(new PoorTexture("Textures/splash"), texture);
         }
 
         public override void UnloadContent()

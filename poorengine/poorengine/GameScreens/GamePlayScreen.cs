@@ -51,6 +51,7 @@ namespace PoorEngine.GameScreens
         {
             base.LoadContent();
             TextureManager.AddTexture(new PoorTexture("Textures/bomb"), "bomb");
+            TextureManager.AddTexture(new PoorTexture("Textures/bomb2"), "bomb2");
             TextureManager.AddTexture(new PoorTexture("Textures/bullet"), "bullet");
 
             TextureManager.AddTexture(new PoorTexture("Textures/cloud1"), "cloud1");
