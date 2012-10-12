@@ -230,7 +230,7 @@ namespace PoorEngine.Particles
         /// AddParticles will have no effect.
         /// </summary>
         /// <param name="where">where the particle effect should be created</param>
-        public void AddParticles(Vector2 where)
+        public virtual void AddParticles(Vector2 where)
         {
             // the number of particles we want for this effect is a random number
             // somewhere between the two constants specified by the subclasses.
@@ -265,6 +265,7 @@ namespace PoorEngine.Particles
             // pick some random values for our particle
             float velocity = 
                 CalcHelper.RandomBetween(minInitialSpeed, maxInitialSpeed);
+            //velocity = new Vector2(velocity.X + vel, velocity.Y + vel);
             float acceleration =
 				CalcHelper.RandomBetween(minAcceleration, maxAcceleration);
             float lifetime =
@@ -277,7 +278,7 @@ namespace PoorEngine.Particles
             // then initialize it with those random values. initialize will save those,
             // and make sure it is marked as active.
             p.Initialize(
-                where, velocity * direction, acceleration * direction,
+                where, velocity*direction, acceleration * direction,
                 lifetime, scale, rotationSpeed);
         }
 

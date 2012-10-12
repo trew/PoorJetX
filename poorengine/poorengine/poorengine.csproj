@@ -120,9 +120,9 @@
     <Compile Include="Particles\ExplosionParticleSystem.cs" />
     <Compile Include="Particles\GroundExplosion.cs" />
     <Compile Include="Particles\Particle.cs" />
-    <Compile Include="Particles\ParticleSystem.cs" />
     <Compile Include="Managers\SoundFxLibrary.cs" />
     <Compile Include="Managers\SoundFxManager.cs" />
+    <Compile Include="Particles\ParticleSystem.cs" />
     <Compile Include="SceneObject\AmmoController.cs" />
     <Compile Include="SceneObject\AnimatedSprite.cs" />
     <Compile Include="SceneObject\Background.cs" />
@@ -147,13 +147,12 @@
     <Compile Include="Interfaces\IPoorDrawable.cs" />
     <Compile Include="Interfaces\IPoorLoadable.cs" />
     <Compile Include="Interfaces\IPoorSceneObject.cs" />
-    <Compile Include="Interfaces\IPoorShader.cs" />
     <Compile Include="Interfaces\IPoorTexture.cs" />
     <Compile Include="Interfaces\IPoorUpdateable.cs" />
     <Compile Include="Managers\EngineManager.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Managers\ScreenManager.cs" />
-    <Compile Include="Managers\ShaderManager.cs" />
+    <Compile Include="Managers\ParticleManager.cs" />
     <Compile Include="Managers\TextureManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
@@ -161,7 +160,6 @@
     <Compile Include="SceneObject\SkyGradient.cs" />
     <Compile Include="SceneObject\Visual.cs" />
     <Compile Include="Settings\GameSettings.cs" />
-    <Compile Include="Shaders\basicEffect.cs" />
     <Compile Include="Textures\PoorTexture.cs" />
   </ItemGroup>
   <ItemGroup>

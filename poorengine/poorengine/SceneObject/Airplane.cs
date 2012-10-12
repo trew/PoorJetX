@@ -134,7 +134,8 @@ namespace PoorEngine.SceneObject
 
             if (input.IsNewKeyPress(Keys.O))
             {
-                EngineManager.Explosion.AddParticles(CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2,EngineManager.Device.Viewport.Height / 2));
+                ParticleManager.GroundExplosion.AddParticles(CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2,EngineManager.Device.Viewport.Height / 2),
+                                    90f, 0f);
             }
         }
 
@@ -246,8 +247,8 @@ namespace PoorEngine.SceneObject
             /*
              *  Calculate movement-direction (X/Y-movement-ratio)
              */
-            double newX = Math.Sin(DegreeToRadian(velocityAngle));
-            double newY = -Math.Cos(DegreeToRadian(velocityAngle));
+            double newX = Math.Sin(CalcHelper.DegreeToRadian(velocityAngle));
+            double newY = -Math.Cos(CalcHelper.DegreeToRadian(velocityAngle));
 
 
             // Save old pos, used for speedcalculations

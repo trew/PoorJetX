@@ -80,8 +80,8 @@ namespace PoorEngine.Particles
             // acceleration, and basically says:
             // velocity at time t = initial velocity + acceleration * t)
             // We'll solve the equation for a0, using t = p.Lifetime and vt = 0.
-            float YAcc = Math.Abs(p.Velocity.Y) / p.Lifetime;
-            p.Acceleration = new Vector2(-p.Velocity.X / p.Lifetime, YAcc);
+            //float YAcc = Math.Abs(p.Velocity.Y) / p.Lifetime;
+            p.Acceleration = -p.Velocity / p.Lifetime; // new Vector2(-p.Velocity.X / p.Lifetime, YAcc);
         }
     }
 }

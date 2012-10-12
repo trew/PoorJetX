@@ -135,8 +135,8 @@ namespace PoorEngine.SceneObject
         {
             if (Position.Y > EngineManager.Device.Viewport.Height - 10)
             {
-                SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 50, false, 0.9f));
-                //EngineManager.GroundExplosion.AddParticles(Position);
+                SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
+                ParticleManager.GroundExplosion.AddParticles(Position, 30f, 10f);
                 SceneGraphManager.RemoveObject(this);
                 return;
             }
@@ -259,9 +259,7 @@ namespace PoorEngine.SceneObject
             SceneGraphManager.RemoveObject(this);
             UsedInBoundingBoxCheck = false;
 
-            EngineManager.Explosion.AddParticles(Position);
-            //SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(2.5f, 2.5f), 255, 10, false, 0.5f));
-            //SceneGraphManager.AddObject(new AnimatedSprite("anim_explosion1", new Point(64, 64), new Point(32, 1), Position, 0f, new Vector2(1.5f, 1.5f), 255, 35, false, 0.5f));
+            ParticleManager.Explosion.AddParticles(Position);
         }
 
         public override void Collide(PoorSceneObject collidingWith)

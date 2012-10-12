@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PoorEngine.Helpers;
 #endregion
 
 namespace PoorEngine.Particles
@@ -24,6 +25,9 @@ namespace PoorEngine.Particles
     /// </summary>
     public class GroundExplosion : ParticleSystem
     {
+        float direction;
+        float spread;
+
         public GroundExplosion(Game game, int howManyEffects)
             : base(game, howManyEffects)
         {
@@ -39,8 +43,8 @@ namespace PoorEngine.Particles
 
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.
-            minInitialSpeed = 20f;
-            maxInitialSpeed = 200f;
+            minInitialSpeed = 100f;
+            maxInitialSpeed = 500f;
 
             // doesn't matter what these values are set to, acceleration is tweaked in
             // the override of InitializeParticle.
@@ -48,11 +52,11 @@ namespace PoorEngine.Particles
             maxAcceleration = 0;
 
             // explosions should be relatively short lived
-            minLifetime = 1f;
-            maxLifetime = 1.5f;
+            minLifetime = 0.5f;
+            maxLifetime = 2.0f;
 
-            minScale = .2f;
-            maxScale = 1.0f;
+            minScale = .1f;
+            maxScale = 0.8f;
 
             minNumParticles = 20;
             maxNumParticles = 30;
@@ -64,6 +68,30 @@ namespace PoorEngine.Particles
             blendState = BlendState.Additive;
 
             DrawOrder = AdditiveDrawOrder;
+
+            // Overridden in InitializeParticle()
+            direction = 0;
+            spread = 360;
+        }
+
+        public void AddParticles(Vector2 where, float direction, float spread)
+        {
+            this.direction = direction;
+            this.spread = spread;
+            base.AddParticles(where);
+        }
+
+        protected override Vector2 PickRandomDirection()
+        {
+            float first = (direction - spread);
+            float second = (direction + spread);
+            float angle = CalcHelper.RandomBetween(first, second);
+
+            float Xangle = (float)Math.Sin(CalcHelper.DegreeToRadian(angle));
+            float Yangle = -(float)Math.Cos(CalcHelper.DegreeToRadian(angle));
+
+            Vector2 dir = new Vector2(Xangle, Yangle);
+            return dir;
         }
 
         protected override void InitializeParticle(Particle p, Vector2 where)
@@ -80,8 +108,7 @@ namespace PoorEngine.Particles
             // acceleration, and basically says:
             // velocity at time t = initial velocity + acceleration * t)
             // We'll solve the equation for a0, using t = p.Lifetime and vt = 0.
-            float YAcc = -Math.Abs(p.Velocity.Y) / p.Lifetime;
-            p.Acceleration = new Vector2(-p.Velocity.X / p.Lifetime, YAcc);
+            p.Acceleration = -p.Velocity / p.Lifetime;
         }
     }
 }

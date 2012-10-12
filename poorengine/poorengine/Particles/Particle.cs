@@ -109,7 +109,6 @@ namespace PoorEngine.Particles
         {
 
             Velocity += Acceleration * dt;
-            Velocity += new Vector2(0f, 9.8f * dt);
             Position += Velocity * dt;
 
             Rotation += RotationSpeed * dt;

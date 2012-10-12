@@ -67,12 +67,8 @@ namespace PoorEngine
 
         public static DebugPanel Debug = null;
 
+        private static ParticleManager _particleManagers = null;
         public static int Score = 0;
-
-        private static ExplosionParticleSystem _explosionParticles = null;
-        public static ExplosionParticleSystem Explosion { get { return _explosionParticles; } }
-        private static GroundExplosion _groundExplosion = null;
-        public static GroundExplosion GroundExplosion { get { return _groundExplosion; } }
 
         /// <summary>
         /// Create Poor Engine
@@ -124,11 +120,8 @@ namespace PoorEngine
             Debug = new DebugPanel(this);
             Components.Add(Debug);
 
-            _explosionParticles = new ExplosionParticleSystem(this, 1);
-            Components.Add(_explosionParticles);
-
-            _groundExplosion = new GroundExplosion(this, 1);
-            Components.Add(_groundExplosion);
+            _particleManagers = new ParticleManager(this);
+            Components.Add(_particleManagers);
 
             Content.RootDirectory = "Content";
         }
