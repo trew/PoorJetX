@@ -53,11 +53,13 @@ namespace PoorEngine.SceneObject
                 else
                 {
                     Texture2D texture = tex.BaseTexture as Texture2D;
+                    int textureWidth = (int)(texture.Width * Scale.X);
+                    int textureHeight = (int)(texture.Height * Scale.Y);
                     return new Rectangle(
                             (int)Position.X,
                             (int)Position.Y,
-                            texture.Width,
-                            texture.Height
+                            textureWidth,
+                            textureHeight
                         );
                 }
             }
