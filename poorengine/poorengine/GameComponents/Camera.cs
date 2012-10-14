@@ -21,6 +21,11 @@ namespace PoorEngine.GameComponents
             maxMoveSpeed = new Vector2(5.5f, 0f);
         }
 
+        public void Reset()
+        {
+            moveSpeed = new Vector2(0f, 0f);
+        }
+
         public void changePos(Vector2 change)
         {
             _pos += change;

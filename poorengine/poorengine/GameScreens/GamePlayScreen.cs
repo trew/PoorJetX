@@ -30,6 +30,7 @@ namespace PoorEngine.GameScreens
         public GamePlayScreen(int level)
         {
             CameraManager.Reset();
+            AmmoManager.Reset();
         }
 
         public int ScreenWidth

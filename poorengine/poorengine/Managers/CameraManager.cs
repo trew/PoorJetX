@@ -23,6 +23,7 @@ namespace PoorEngine.Managers
 
         public static void Reset() {
             _camera.Pos = new Vector2();
+            _camera.Reset();
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Interfaces;
 using PoorEngine.Managers;
 using PoorEngine.Textures;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
@@ -38,7 +39,7 @@ namespace PoorEngine.SceneObject
             this.rotation = rotation;
             this.framesPerSecond = framesPerSecond;
             this.repeat = repeat;
-            Z = 1;
+            this.Z -= CalcHelper.RandomBetween(0f, 0.1f);
 
             FrameTime = new TimeSpan(0, 0, 0, 0, 1000 / framesPerSecond);
             NextUpdate = new TimeSpan(0, 0, 0, 0, FrameTime.Milliseconds);

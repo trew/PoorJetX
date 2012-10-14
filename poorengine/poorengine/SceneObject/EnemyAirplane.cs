@@ -252,6 +252,8 @@ namespace PoorEngine.SceneObject
                 Math.Pow((Math.Max(Position.X, oldPos.X) - Math.Min(Position.X, oldPos.X)), 2) +
                 Math.Pow((Math.Max(Position.Y, oldPos.Y) - Math.Min(Position.Y, oldPos.Y)), 2));
 
+            // DEBUG
+            HandleInput(EngineManager.Input);
         }
 
         public void Explode()
@@ -260,6 +262,13 @@ namespace PoorEngine.SceneObject
             UsedInBoundingBoxCheck = false;
 
             ParticleManager.Explosion.AddParticles(Position);
+        }
+
+        public void Kill()
+        {
+            health = 0;
+            ItsCrashTime = true;
+            EngineManager.Score += 1;
         }
 
         public override void Collide(PoorSceneObject collidingWith)
@@ -327,6 +336,10 @@ namespace PoorEngine.SceneObject
 
         public void HandleInput(Input input)
         {
+            if (input.CurrentKeyboardState.IsKeyUp(Keys.RightControl)) { return; }
+
+            if (input.IsNewKeyPress(Keys.Space)) { Kill(); }
+
             double forceIncreaseAmount = linearVelocity / 20;
             double maxThrust = 7;
             double maxForce = linearVelocity / 2.7;

@@ -55,7 +55,7 @@ namespace PoorEngine.SceneObject
             velocityAngle = 90;
             weight = 1;
             Position = new Vector2(200, 500);
-            Z = 0.5f;
+            Z = 0.999f;
             UsedInBoundingBoxCheck = true;
             IsDead = false;
             IsCrashing = false;

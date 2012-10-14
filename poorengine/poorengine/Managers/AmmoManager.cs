@@ -13,6 +13,14 @@ namespace PoorEngine.Managers
         const int MAXBOMBS = 15;
         const int BULLETSPERSECOND = 30;
 
+        public static void Reset()
+        {
+            bulletCount = MAXBULLETS;
+            bombCount = MAXBOMBS;
+            reloadTimer.Reset();
+            reloadTimer.Stop();
+        }
+
         public static int MaxBullets
         {
             get { return MAXBULLETS; }
@@ -58,6 +66,8 @@ namespace PoorEngine.Managers
 
         public static bool fireBullet()
         {
+            if (!reloadTimer.IsRunning) { reloadTimer.Restart(); }
+
             if (reloadTimer.ElapsedMilliseconds > 1000 / BULLETSPERSECOND)
             {
                 if (bulletCount > 0)

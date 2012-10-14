@@ -133,6 +133,14 @@ namespace PoorEngine
         {
         }
 
+        public static void ResetGame()
+        {
+            Score = 0;
+            AmmoManager.Reset();
+            CameraManager.Reset();
+        }
+
+
         public static void ApplyResolutionChange()
         {
             int resolutionWidth = GameSettings.Default.ResolutionWidth;
