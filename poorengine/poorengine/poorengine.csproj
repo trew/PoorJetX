@@ -123,6 +123,7 @@
     <Compile Include="Managers\SoundFxLibrary.cs" />
     <Compile Include="Managers\SoundFxManager.cs" />
     <Compile Include="Particles\ParticleSystem.cs" />
+    <Compile Include="Particles\ProjectileHit.cs" />
     <Compile Include="SceneObject\AmmoController.cs" />
     <Compile Include="SceneObject\AnimatedSprite.cs" />
     <Compile Include="SceneObject\Background.cs" />

@@ -29,6 +29,8 @@ namespace PoorEngine.Managers
         private static GroundExplosion _groundExplosion = null;
         public static GroundExplosion GroundExplosion { get { return _groundExplosion; } }
 
+        private static ProjectileHit _projectileHit = null;
+        public static ProjectileHit ProjectileHit { get { return _projectileHit; } }
 
         public ParticleManager(Game game)
             :base(game)
@@ -44,6 +46,8 @@ namespace PoorEngine.Managers
             _groundExplosion = new GroundExplosion(EngineManager.Game, 1);
             EngineManager.Game.Components.Add(_groundExplosion);
 
+            _projectileHit = new ProjectileHit(EngineManager.Game, 1);
+            EngineManager.Game.Components.Add(_projectileHit);
         }
 
         public override void Update(GameTime gameTime)

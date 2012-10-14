@@ -28,7 +28,7 @@ namespace PoorEngine.Managers
 
         protected override void Draw(GameTime gameTime)
         {
-            Device.Clear(Color.LightBlue);
+            Device.Clear(Color.Black);
             base.Draw(gameTime);
         }
     }

@@ -78,8 +78,8 @@ namespace PoorEngine.GameScreens
             ammoController = new AmmoController();
             SceneGraphManager.AddObject(ammoController);
 
-//            SkyGradient skyGradient = new SkyGradient("skygradient");
-//            SceneGraphManager.AddObject(skyGradient);
+            SkyGradient skyGradient = new SkyGradient("skygradient");
+            SceneGraphManager.AddObject(skyGradient);
 
             player1 = new Airplane();
             SceneGraphManager.AddObject(player1);     
@@ -158,7 +158,6 @@ namespace PoorEngine.GameScreens
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            EngineManager.Device.Clear(Color.LightBlue);
         }
 
         /// <summary>

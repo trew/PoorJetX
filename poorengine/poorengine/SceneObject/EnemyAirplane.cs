@@ -268,6 +268,7 @@ namespace PoorEngine.SceneObject
             {
                 Projectile p = (Projectile)collidingWith;
                 health -= p.Damage;
+                ParticleManager.ProjectileHit.AddParticles(new Vector2(Position.X-10, Position.Y));
                 if (health <= 0)
                 {
                     health = 0;
