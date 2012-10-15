@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
 using PoorEngine.Managers;
 using PoorEngine.GameComponents;
 using PoorEngine.Textures;
-using PoorEngine.SceneObject.SceneGraph;
 using PoorEngine.SceneObject;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using PoorEngine.SceneObject.SceneGraph;
 using PoorEngine.GameScreens;
 using PoorJetX.GameScreens;
 using PoorEngine.Particles;

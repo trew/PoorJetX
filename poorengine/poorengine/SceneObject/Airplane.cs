@@ -169,6 +169,7 @@ namespace PoorEngine.SceneObject
                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
                                            (float)DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
+
             // Draw health-bar, if plane still alive
             if (!IsCrashing)
             {
@@ -188,8 +189,11 @@ namespace PoorEngine.SceneObject
             float hpPercent = ((float)health / maxHealth);
             int red = (int)(255 - 255 * hpPercent);
             int green = (int)(255 * hpPercent);
+
             texHealth.SetData(new Color[] { new Color(red * 3, green * 2, 0) });
 
+
+            // Spawn smoke-effects if HP is low
             if (hpPercent < 0.7)
             {
                 smokeTimerStartVal = Math.Max(5, (int)(50 * hpPercent));
@@ -202,21 +206,24 @@ namespace PoorEngine.SceneObject
                 }
             }
 
+            // Execute airplane-crash. Damn i love this comment.
             if (IsCrashing)
             {
                 orientation = Math.Min(150, orientation + 0.3);
             }
 
+            // Standardize angle-values
             orientation = formatAngle(orientation);
             velocityAngle = formatAngle(velocityAngle);
 
+            // Calculate alpha-diff
             double velocityAngleRotationSpeed = Math.Max(airSpeed, gravity) / (weight * 3);
             double diff = orientation - velocityAngle + 180;
             double posDiff = Math.Abs(diff - 180);
 
-            /*
-             * Adjust velocityAngle towards the airplane orientation 
-             */
+            
+            // Adjust velocityAngle towards the airplane orientation 
+            
             if (posDiff < velocityAngleRotationSpeed)
             {
                 velocityAngle = orientation;
@@ -230,9 +237,8 @@ namespace PoorEngine.SceneObject
                 velocityAngle += velocityAngleRotationSpeed;
             }
 
-            /*
-             *  Calculate angle of attack (alpha)
-             */
+
+            // Calculate angle of attack (alpha)
             angleOfAttack = velocityAngle - orientation;
             if (angleOfAttack < -180)
             {
@@ -243,9 +249,8 @@ namespace PoorEngine.SceneObject
                 angleOfAttack = (360 - angleOfAttack) * -1;
             }
 
-            /*
-             *  Calculate movement-direction (X/Y-movement-ratio)
-             */
+            
+            // Calculate movement-direction (X/Y-movement-ratio)
             double newX = Math.Sin(CalcHelper.DegreeToRadian(velocityAngle));
             double newY = -Math.Cos(CalcHelper.DegreeToRadian(velocityAngle));
 
