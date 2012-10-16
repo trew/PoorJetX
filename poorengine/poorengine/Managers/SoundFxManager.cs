@@ -54,5 +54,11 @@ namespace PoorEngine.Managers
             }
             return null;
         }
+
+        public static void Clear()
+        {
+            _soundEffects.Clear();
+            _soundInstancesLoaded = 0;
+        }
     }
 }
