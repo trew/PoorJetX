@@ -46,7 +46,7 @@ namespace PoorEngine.SceneObject
         // Sounds
         int engineFX_id;
         int diveFX_id;
-        int fireBulletFX;
+        int fireBulletFX_id;
         const float SOUNDVOLUME = 0.6f;
 
         public Airplane():
@@ -297,20 +297,13 @@ namespace PoorEngine.SceneObject
             Position += new Vector2(xmod, ymod);
             velocity = Position - oldPos;
 
-            linearVelocity = Math.Sqrt(
-                Math.Pow((Math.Max(Position.X, oldPos.X) - Math.Min(Position.X, oldPos.X)), 2) +
-                Math.Pow((Math.Max(Position.Y, oldPos.Y) - Math.Min(Position.Y, oldPos.Y)), 2));
+            linearVelocity = CalcHelper.DistanceBetween(Position, oldPos);
 
             if (airSpeed + 0.1 < linearVelocity)
             {
                 airSpeed += 0.025 / angleSpeedModifier;
             }
-            /*
-            else if (airSpeed > linearVelocity)
-            {
-                airSpeed -= 0.015 / angleSpeedModifier;
-            }
-            */
+
             if (!IsCrashing)
                 airSpeed = Math.Min(airSpeed, 8);
             else
@@ -344,11 +337,11 @@ namespace PoorEngine.SceneObject
             }
 
 
-            SoundFxManager.GetByID(engineFX_id).Pan = CalcHelper.PositionToMiddle(Position).X;
-            SoundFxManager.GetByID(diveFX_id).Pan = CalcHelper.PositionToMiddle(Position).X;
+            SoundFxManager.GetByID(engineFX_id).Pan = CalcHelper.CalcPan(Position).X;
+            SoundFxManager.GetByID(diveFX_id).Pan = CalcHelper.CalcPan(Position).X;
 
-            EngineManager.Debug.Print("Relpos X: " + CalcHelper.PositionToMiddle(Position).X);
-            EngineManager.Debug.Print("Relpos Y: " + CalcHelper.PositionToMiddle(Position).Y);
+            EngineManager.Debug.Print("Relpos X: " + CalcHelper.CalcPan(Position).X);
+            EngineManager.Debug.Print("Relpos Y: " + CalcHelper.CalcPan(Position).Y);
 
 
 
@@ -359,21 +352,23 @@ namespace PoorEngine.SceneObject
         public void LoadContent()
         {
             TextureManager.AddTexture(new PoorTexture("Textures/flygplan"), TextureName);
+
             SoundFxLibrary.AddToLibrary("SoundFX/engine1", "engine1");
             SoundFxLibrary.AddToLibrary("SoundFX/dive1", "dive1");
+            SoundFxLibrary.AddToLibrary("SoundFX/firebullet", "firebullet");
 
             engineFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("engine1"));
             diveFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("dive1"));
+            fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
+            SoundFxManager.GetByID(engineFX_id).Volume = 0.3f;
+
             SoundFxManager.GetByID(engineFX_id).IsLooped = true;
             SoundFxManager.GetByID(engineFX_id).Volume = 0.6f;
             SoundFxManager.GetByID(engineFX_id).Play();
-           
 
             SoundFxManager.GetByID(diveFX_id).IsLooped = true;
             SoundFxManager.GetByID(diveFX_id).Volume = 0f;
             SoundFxManager.GetByID(diveFX_id).Play();
-
-            //SoundFxLibrary.AddToLibrary("SoundFX/firebullet1", "firebullet1");
         }
 
         public void UnloadContent()
@@ -491,6 +486,14 @@ namespace PoorEngine.SceneObject
             {
                 if (AmmoManager.fireBullet())
                 {
+                    float volume = MathHelper.Clamp(CalcHelper.CalcVolume(Position) * 0.3f, 0f, 0.3f);
+                    float pan = CalcHelper.CalcPan(Position).X;
+
+                    SoundFxLibrary.GetFx("firebullet").Play(
+                                                            volume, 
+                                                            CalcHelper.RandomBetween(-0.2f, 0.3f), 
+                                                            pan);
+
                     SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, (float)orientation, 30f), velocity, 15f, (float)orientation, 3f, "bullet"));
                     ParticleManager.ProjectileHit.AddParticles(AmmoManager.LastBulletPos + CameraManager.Camera.Pos);
                 }
