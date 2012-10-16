@@ -59,13 +59,38 @@ namespace PoorEngine.Helpers
             return Math.Atan2(deltay, deltax);
         }
 
-        public static Vector2 PositionToMiddle(Vector2 pos)
+
+
+        public static double DistanceBetween(Vector2 a, Vector2 b)
+        {
+            return Math.Sqrt(
+                Math.Pow((Math.Max(a.X, b.X) - Math.Min(a.X, b.X)), 2) +
+                Math.Pow((Math.Max(a.Y, b.Y) - Math.Min(a.Y, b.Y)), 2));
+        }
+
+        public static double DistanceToMiddle(Vector2 objectPos)
+        {
+            Vector2 middlePos = CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2, 
+                                                                       EngineManager.Device.Viewport.Height / 2);
+
+            return DistanceBetween(objectPos, middlePos);
+        }
+
+        public static Vector2 CalcPan(Vector2 pos)
         {
             Vector2 relativeToCamera = pos - CameraManager.Camera.Pos;
             float x = (relativeToCamera.X / EngineManager.Device.Viewport.Width) - 0.5f;
             float y = (relativeToCamera.Y / EngineManager.Device.Viewport.Height) - 0.5f;
 
             return new Vector2(x, y);
+        }
+
+        public static float CalcVolume(Vector2 position)
+        {
+            float deadzone = 800f;    // How far from the middle of the screen will volume start going down
+            float borderzone = 1000f; // Over how long distance will the volume go from 100% to 0%
+
+            return (borderzone - ((float)CalcHelper.DistanceToMiddle(position) - deadzone)) / borderzone;
         }
     }
 }

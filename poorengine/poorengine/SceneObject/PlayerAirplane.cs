@@ -58,9 +58,6 @@ namespace PoorEngine.SceneObject
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            // Update soundFX based on _airSpeed-calculations etc
-            updateSound();
         }
 
         protected override void UpdatePhysics(GameTime gameTime)
@@ -159,33 +156,6 @@ namespace PoorEngine.SceneObject
                 _airSpeed = Math.Min(_airSpeed, 20);
         }
 
-        void updateSound()
-        {
-            float enginePitch = (float)(Math.Pow((_thrust / 9),1.8) - 0.1f);
-            enginePitch += (float)(_linearVelocity / 15);
-            SoundFxManager.GetByID(_engineFX_id).Pitch = MathHelper.Clamp(enginePitch, -1f, 1f);
-            SoundFxManager.GetByID(_engineFX_id).Volume = MathHelper.Clamp(enginePitch, 0.6f, 1f);
-            SoundFxManager.GetByID(_engineFX_id).Volume *= SOUNDVOLUME;
-
-            // Add dive-sound if speed is high enough
-            float airspeedPitch;
-            if (_linearVelocity > 7)
-            {
-                airspeedPitch = (float)((_linearVelocity -7) / 7);
-                airspeedPitch -= 0.1f;
-                SoundFxManager.GetByID(_diveFX_id).Pitch = MathHelper.Clamp(airspeedPitch, -1f, 1f);
-                SoundFxManager.GetByID(_diveFX_id).Volume = MathHelper.Clamp(airspeedPitch, 0f, 1f);
-                SoundFxManager.GetByID(_diveFX_id).Volume *= SOUNDVOLUME;
-            }
-            else
-            {
-                SoundFxManager.GetByID(_diveFX_id).Volume = 0f;
-            }
-
-            SoundFxManager.GetByID(_engineFX_id).Pan = CalcHelper.PositionToMiddle(Position).X;
-            SoundFxManager.GetByID(_diveFX_id).Pan = CalcHelper.PositionToMiddle(Position).X;
-        }
-
         public override void HandleInput(Input input)
         {
             HandleDebugInput(input);
@@ -261,9 +231,18 @@ namespace PoorEngine.SceneObject
             {
                 if (AmmoManager.fireBullet())
                 {
+                    float volume = MathHelper.Clamp(CalcHelper.CalcVolume(Position) * 0.3f, 0f, 0.3f);
+                    float pan = CalcHelper.CalcPan(Position).X;
+
+                    SoundFxLibrary.GetFx("firebullet").Play(
+                                                            volume,
+                                                            CalcHelper.RandomBetween(-0.2f, 0.3f),
+                                                            pan);
+
                     SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, Orientation, 30f), Velocity, 15f, Orientation, 3f, "bullet"));
                     ParticleManager.ProjectileHit.AddParticles(AmmoManager.LastBulletPos + CameraManager.Camera.Pos);
                 }
+
             }
         }
     }

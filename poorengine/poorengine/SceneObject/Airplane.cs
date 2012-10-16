@@ -46,7 +46,7 @@ namespace PoorEngine.SceneObject
         // Sounds
         protected int _engineFX_id;
         protected int _diveFX_id;
-        protected int _fireBulletFX;
+        protected int _fireBulletFX_id;
         public const float SOUNDVOLUME = 0.6f;
 
         public Airplane(int maxHealth, string textureName):
@@ -200,19 +200,24 @@ namespace PoorEngine.SceneObject
             }
             UpdatePhysics(gameTime);
 
+            // Update soundFX based on _airSpeed-calculations etc
+            UpdateSound();
+
         }
 
         protected virtual void UpdatePhysics(GameTime gameTime)
         {
         }
 
-        void updateSound()
+        public virtual void UpdateSound()
         {
             float enginePitch = (float)(Math.Pow((_thrust / 9),1.8) - 0.1f);
             enginePitch += (float)(_linearVelocity / 15);
             SoundFxManager.GetByID(_engineFX_id).Pitch = MathHelper.Clamp(enginePitch, -1f, 1f);
             SoundFxManager.GetByID(_engineFX_id).Volume = MathHelper.Clamp(enginePitch, 0.6f, 1f);
             SoundFxManager.GetByID(_engineFX_id).Volume *= SOUNDVOLUME;
+            SoundFxManager.GetByID(_engineFX_id).Volume *= CalcHelper.CalcVolume(Position);
+            EngineManager.Debug.Print("SoundVolume ID: " + _engineFX_id + " - Vol: " + SoundFxManager.GetByID(_engineFX_id).Volume);
 
             // Add dive-sound if speed is high enough
             float airspeedPitch;
@@ -229,37 +234,30 @@ namespace PoorEngine.SceneObject
                 SoundFxManager.GetByID(_diveFX_id).Volume = 0f;
             }
 
-
-            SoundFxManager.GetByID(_engineFX_id).Pan = CalcHelper.PositionToMiddle(Position).X;
-            SoundFxManager.GetByID(_diveFX_id).Pan = CalcHelper.PositionToMiddle(Position).X;
-
-            EngineManager.Debug.Print("Relpos X: " + CalcHelper.PositionToMiddle(Position).X);
-            EngineManager.Debug.Print("Relpos Y: " + CalcHelper.PositionToMiddle(Position).Y);
-
-
-
-
-            
+            SoundFxManager.GetByID(_engineFX_id).Pan = CalcHelper.CalcPan(Position).X;
+            SoundFxManager.GetByID(_diveFX_id).Pan = CalcHelper.CalcPan(Position).X;
         }
 
         public virtual void LoadContent()
         {
             TextureManager.AddTexture(new PoorTexture("Textures/flygplan"), TextureName);
+
             SoundFxLibrary.AddToLibrary("SoundFX/engine1", "engine1");
             SoundFxLibrary.AddToLibrary("SoundFX/dive1", "dive1");
+            SoundFxLibrary.AddToLibrary("SoundFX/firebullet", "firebullet");
 
             _engineFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("engine1"));
             _diveFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("dive1"));
+            _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
+            SoundFxManager.GetByID(_engineFX_id).Volume = 0.3f;
+
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
             SoundFxManager.GetByID(_engineFX_id).Volume = 0.6f;
             SoundFxManager.GetByID(_engineFX_id).Play();
-           
 
             SoundFxManager.GetByID(_diveFX_id).IsLooped = true;
             SoundFxManager.GetByID(_diveFX_id).Volume = 0f;
             SoundFxManager.GetByID(_diveFX_id).Play();
-
-            //SoundFxLibrary.AddToLibrary("SoundFX/firebullet1", "firebullet1");
         }
 
         public virtual void UnloadContent()
@@ -271,7 +269,6 @@ namespace PoorEngine.SceneObject
         {
             HandleDebugInput(input);
         }
-
 
         protected void drawWingtipVortices()
         {
