@@ -28,7 +28,7 @@ namespace PoorEngine.Managers
             get { return _new; }
         }
 
-
+        public static bool newObjectsAdded;
         public static Queue<Node> removeQueue { get; set; }
 
         /// <summary>
@@ -41,6 +41,8 @@ namespace PoorEngine.Managers
             _root = new Node();
             _new = new Node();
             removeQueue = new Queue<Node>();
+
+            newObjectsAdded = false;
         }
 
         /// <summary>
@@ -55,14 +57,18 @@ namespace PoorEngine.Managers
         public static new void Update(GameTime gameTime)
         {
             // Add new nodes and sort the list
-            foreach (SceneObjectNode node in _new.Nodes)
+            if (newObjectsAdded)
             {
-                _root.AddNode(node);
-                
-            }
-            _new.Nodes.Clear();
-            _root.Nodes.Sort(comp);
+                foreach (SceneObjectNode node in _new.Nodes)
+                {
+                    _root.AddNode(node);
 
+                }
+                _new.Nodes.Clear();
+                _root.Nodes.Sort(comp);
+
+                newObjectsAdded = false;
+            }
             _root.Update(gameTime);
             
             foreach (SceneObjectNode firstNode in _root.Nodes)
@@ -131,6 +137,7 @@ namespace PoorEngine.Managers
             node.LoadContent(); // this or crash in node.Draw
             _new.AddNode(node);
 
+            newObjectsAdded = true;
         }
 
         public static void RemoveObject(PoorSceneObject oldObject)
