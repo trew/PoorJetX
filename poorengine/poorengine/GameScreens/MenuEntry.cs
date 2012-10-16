@@ -14,6 +14,8 @@ namespace PoorJetX.GameScreens
     class MenuEntry
     {
         string text;
+        Color textColor;
+        Color selectedColor;
         /// <summary>
         /// Gets or sets the text of this menu entry.
         /// </summary>
@@ -45,12 +47,18 @@ namespace PoorJetX.GameScreens
                 Selected(this, EventArgs.Empty);
         }
 
+        public MenuEntry(string text)
+            :this(text, Color.Black, Color.DarkBlue)
+        {
+        }
         /// <summary>
         /// Constructs a new menu entry with the specified text.
         /// </summary>
-        public MenuEntry(string text)
+        public MenuEntry(string text, Color textColor, Color selectedColor)
         {
             this.text = text;
+            this.textColor = textColor;
+            this.selectedColor = selectedColor;
         }
 
         /// <summary>
@@ -70,14 +78,20 @@ namespace PoorJetX.GameScreens
                 selectionFade = Math.Max(selectionFade - fadeSpeed, 0);
         }
 
-        /// <summary>
-        /// Draws the menu entry. This can be overridden to customize the appearance.
-        /// </summary>
         public virtual void Draw(MenuScreen screen, Vector2 position,
                                  bool isSelected, GameTime gameTime)
         {
+            Draw(screen, new Rectangle((int)position.X, (int)position.Y, 0, 0), isSelected, gameTime);
+        }
+
+        /// <summary>
+        /// Draws the menu entry. This can be overridden to customize the appearance.
+        /// </summary>
+        public virtual void Draw(MenuScreen screen, Rectangle borders,
+                                 bool isSelected, GameTime gameTime)
+        {
             // Draw the selected entry in yellow, otherwise white.
-            Color color = isSelected ? Color.Yellow : Color.White;
+            Color color = isSelected ? selectedColor : textColor;
 
             // Pulsate the size of the selected menu entry.
             double time = gameTime.TotalGameTime.TotalSeconds;
@@ -91,7 +105,16 @@ namespace PoorJetX.GameScreens
 
             // Draw text, centered on the middle of each line.
 
-            Vector2 origin = new Vector2(0, ScreenManager.Font.LineSpacing / 2);
+            Vector2 origin = ScreenManager.Font.MeasureString(text) / 2;
+
+            Vector2 position;
+            if (borders.Height <= 0)
+                position = new Vector2(borders.X, borders.Y);
+            else
+            {
+                float x = TextureManager.GetCenterX(borders.X, borders.Width, 0);
+                position = new Vector2((int)x, borders.Y);
+            }
 
             ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, text, position, color, 0,
                                    origin, scale, SpriteEffects.None, 0);

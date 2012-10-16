@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 using PoorEngine.Managers;
 using PoorEngine.GameScreens;
 using PoorEngine.GameComponents;
@@ -13,7 +14,7 @@ namespace PoorJetX.GameScreens
         /// The main menu screen is the first thing displayed when the game starts up.
         /// </summary>
         public MainMenuScreen()
-            : base("Main Menu")
+            : base("")
         {
             MenuEntry playGameManuEntry = new MenuEntry("Play Game");
             MenuEntry highScoresMenuEntry = new MenuEntry("Highscores");

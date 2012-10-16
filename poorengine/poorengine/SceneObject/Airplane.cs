@@ -35,8 +35,8 @@ namespace PoorEngine.SceneObject
         private int maxHealth;
         public bool IsCrashing { get; set; }
 
-        private Texture2D texBlack;
-        private Texture2D texHealth;
+//        private Texture2D texBlack;
+//        private Texture2D texHealth;
         private Rectangle hpRectOutline;
         private Rectangle healthMeterRect;
 
@@ -70,10 +70,10 @@ namespace PoorEngine.SceneObject
             hpRectOutline = new Rectangle(9999, 9999, 40, 5);
             healthMeterRect = new Rectangle(9999, 9999, 38, 3);
 
-            texBlack = new Texture2D(EngineManager.Device, 1, 1);
-            texBlack.SetData(new Color[] { Color.Black });
+//            texBlack = new Texture2D(EngineManager.Device, 1, 1);
+//            texBlack.SetData(new Color[] { Color.Black });
 
-            texHealth = new Texture2D(EngineManager.Device, 1, 1);
+//            texHealth = new Texture2D(EngineManager.Device, 1, 1);
 
             smokeTimer = 1;
             smokeTimerStartVal = 20;
@@ -120,6 +120,8 @@ namespace PoorEngine.SceneObject
         {
             return velocity;
         }
+
+        public float HitPointsPercent { get { return ((float)health / maxHealth); } }
 
         public void HandleDebugInput(Input input)
         {
@@ -179,6 +181,15 @@ namespace PoorEngine.SceneObject
             // Draw health-bar, if plane still alive
             if (!IsCrashing)
             {
+                // Update Healthbar draw-settings.
+                healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
+                int red = (int)(255 - 255 * HitPointsPercent);
+                int green = (int)(255 * HitPointsPercent);
+
+                Color hpColor = new Color(red * 3, green * 2, 0);
+
+                Texture2D texBlack = TextureManager.GetColorTexture(Color.Black);
+                Texture2D texHealth = TextureManager.GetColorTexture(hpColor);
                 ScreenManager.SpriteBatch.Draw(texBlack, Position - CameraManager.Camera.Pos + new Vector2(-10, 20), hpRectOutline, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
                 ScreenManager.SpriteBatch.Draw(texHealth, Position - CameraManager.Camera.Pos + new Vector2(-9, 21), healthMeterRect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
             }
@@ -190,19 +201,10 @@ namespace PoorEngine.SceneObject
         {
             EngineManager.Device.Textures[0] = null;
 
-            // Update Healthbar draw-settings.
-            healthMeterRect.Width = (int)(38 * ((float)health / maxHealth));
-            float hpPercent = ((float)health / maxHealth);
-            int red = (int)(255 - 255 * hpPercent);
-            int green = (int)(255 * hpPercent);
-
-            texHealth.SetData(new Color[] { new Color(red * 3, green * 2, 0) });
-
-
             // Spawn smoke-effects if HP is low
-            if (hpPercent < 0.7)
+            if (HitPointsPercent < 0.7)
             {
-                smokeTimerStartVal = Math.Max(5, (int)(50 * hpPercent));
+                smokeTimerStartVal = Math.Max(5, (int)(50 * HitPointsPercent));
 
                 smokeTimer--;
                 if (smokeTimer <= 0)
@@ -520,9 +522,5 @@ namespace PoorEngine.SceneObject
             SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(0, -4), (float)DegreeToRadian(orientation), new Vector2(0.1f, 0.8f), 250, 5, false, 0.9f));
             SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position + new Vector2(2, 10), (float)DegreeToRadian(orientation), new Vector2(0.1f, 0.8f), 250, 5, false, 0.9f));
         }
-
-
-
-
     }
 }
