@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -262,6 +262,7 @@ namespace PoorEngine.SceneObject
             UsedInBoundingBoxCheck = false;
 
             ParticleManager.Explosion.AddParticles(Position);
+            ParticleManager.AirplaneExplosion.AddParticles(Position);
         }
 
         public void Kill()

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +13,10 @@ using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
-    public class Instrument: PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
+    public class Instrument: GameComponent
     {
+        private bool _visible;
+        public bool Visible { get { return _visible; } set { _visible = value; } }
         float currentValue;
         float minValue;
         float maxValue;
@@ -24,12 +26,15 @@ namespace PoorEngine.SceneObject
         float texHeight;
         private string _sourceName;
         GamePlayScreen currentScreen;
+        private string _texName;
+        public string TextureName { get { return _texName; } }
 
-        public Instrument(string texName, Vector2 position, 
+        public Instrument(Game game, string texName, Vector2 position, 
             float minVal, float maxVal, float scaleVal, 
             string sourceName, GamePlayScreen gameScreen):
-            base(texName)
+            base(game)
         {
+            _texName = texName;
             minValue = minVal;
             maxValue = maxVal;
             currentScreen = gameScreen;
@@ -38,7 +43,6 @@ namespace PoorEngine.SceneObject
             scale = scaleVal;
             needleTexture = new Texture2D(EngineManager.Device, 1, 1, false, SurfaceFormat.Color);
             needleTexture.SetData(new[] { Color.White });
-            Z = 0.1f;
         }
 
 
@@ -57,8 +61,9 @@ namespace PoorEngine.SceneObject
         }
 
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             if (_sourceName == "throttle")
             {
                 currentValue = (float)currentScreen.Airplane.getThrottle();
@@ -69,17 +74,17 @@ namespace PoorEngine.SceneObject
             }
             if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
             {
-                ReadyToRender = !ReadyToRender;
+                Visible = !Visible;
             }
             if (currentScreen.Airplane.IsCrashing)
             {
-                ReadyToRender = false;
+                Visible = false;
             }
         }
 
         public void Draw(GameTime gameTime)
         {
-            if (!ReadyToRender) return;
+            if (!Visible) return;
             // Standardize input, calculate positions
             float max_sd = maxValue - minValue;
             float curr_sd = currentValue - minValue;
@@ -105,13 +110,13 @@ namespace PoorEngine.SceneObject
 
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             texHeight = texture.Height;
-            ReadyToRender = true;
+            Visible = true;
         }
 
         public void UnloadContent()
         {
             TextureManager.RemoveTexture(TextureName);
-            ReadyToRender = false;
+            Visible = false;
         }
     }
 }

@@ -134,7 +134,7 @@ namespace PoorEngine.SceneObject
 
             if (input.IsNewKeyPress(Keys.O))
             {
-                ParticleManager.ProjectileHit.AddParticles(CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2,EngineManager.Device.Viewport.Height / 2));
+                ParticleManager.Explosion.AddParticles(CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2 + 100,EngineManager.Device.Viewport.Height -30 ));
             }
         }
 

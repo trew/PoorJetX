@@ -1,4 +1,4 @@
-﻿#region File Description
+#region File Description
 //-----------------------------------------------------------------------------
 // ParticleSystem.cs
 //
@@ -32,27 +32,57 @@ namespace PoorEngine.Managers
         private static ProjectileHit _projectileHit = null;
         public static ProjectileHit ProjectileHit { get { return _projectileHit; } }
 
+        private static AirplaneExplosion _airplaneExplosion = null;
+        public static AirplaneExplosion AirplaneExplosion { get { return _airplaneExplosion; } }
+
+        private static List<ParticleSystem> _systems = null;
+
         public ParticleManager(Game game)
             :base(game)
         {
+            _systems = new List<ParticleSystem>();
         }
 
         public override void Initialize()
         {
             base.Initialize();
             _explosionParticles = new ExplosionParticleSystem(EngineManager.Game, 1);
-            EngineManager.Game.Components.Add(_explosionParticles);
-
             _groundExplosion = new GroundExplosion(EngineManager.Game, 1);
-            EngineManager.Game.Components.Add(_groundExplosion);
-
             _projectileHit = new ProjectileHit(EngineManager.Game, 1);
-            EngineManager.Game.Components.Add(_projectileHit);
+            _airplaneExplosion = new AirplaneExplosion(EngineManager.Game, 1);
+            _explosionParticles.Initialize();
+            _groundExplosion.Initialize();
+            _projectileHit.Initialize();
+            _airplaneExplosion.Initialize();
         }
 
-        public override void Update(GameTime gameTime)
+        public static void LoadContent()
         {
-            base.Update(gameTime);
+            _systems.Add(_explosionParticles);
+            _systems.Add(_groundExplosion);
+            _systems.Add(_projectileHit);
+            _systems.Add(_airplaneExplosion);
+        }
+
+        public static void UnloadContent()
+        {
+            _systems.Clear();
+        }
+
+        public static new void Draw(GameTime gameTime)
+        {
+            foreach (ParticleSystem syst in _systems)
+            {
+                syst.Draw(gameTime);
+            }
+        }
+
+        public static new void Update(GameTime gameTime)
+        {
+            foreach (ParticleSystem syst in _systems)
+            {
+                syst.Update(gameTime);
+            }
         }
     }
 }
