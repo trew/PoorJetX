@@ -59,7 +59,8 @@ namespace PoorEngine.Managers
         {
             foreach (SoundEffectInstance i in _soundEffects.Values)
             {
-                i.Pause();
+                if(i.State == SoundState.Playing)
+                    i.Pause();
             }
         }
 
