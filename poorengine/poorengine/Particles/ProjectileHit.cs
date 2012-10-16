@@ -49,7 +49,7 @@ namespace PoorEngine.Particles
             minLifetime = .1f;
             maxLifetime = .5f;
 
-            minScale = .01f;
+            minScale = 0.01f;
             maxScale = 0.05f;
 
             minNumParticles = 10;
