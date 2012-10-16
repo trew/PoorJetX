@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -98,12 +98,14 @@ namespace PoorEngine.GameScreens
             // =============================
 
             SceneGraphManager.LoadContent();
+            ParticleManager.LoadContent();
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
             SceneGraphManager.Root.Nodes.Clear();
+            ParticleManager.UnloadContent();
         }
  
 
@@ -120,6 +122,7 @@ namespace PoorEngine.GameScreens
             AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
+            ParticleManager.Update(gameTime);
 
             if (player1.IsCrashing)
             {
@@ -160,6 +163,8 @@ namespace PoorEngine.GameScreens
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            SceneGraphManager.Draw(gameTime);
+            ParticleManager.Draw(gameTime);
         }
 
         /// <summary>
@@ -169,7 +174,6 @@ namespace PoorEngine.GameScreens
         public override void PostUIDraw(GameTime gameTime)
         {
             base.PostUIDraw(gameTime);
-            SceneGraphManager.Draw(gameTime);
         }
 
         private void updateCamera()

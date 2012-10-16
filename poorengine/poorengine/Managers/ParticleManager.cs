@@ -1,4 +1,4 @@
-﻿#region File Description
+#region File Description
 //-----------------------------------------------------------------------------
 // ParticleSystem.cs
 //
@@ -20,7 +20,7 @@ using PoorEngine.Particles;
 
 namespace PoorEngine.Managers
 {
-    public class ParticleManager : DrawableGameComponent
+    public class ParticleManager : GameComponent
     {
 
         private static ExplosionParticleSystem _explosionParticles = null;
@@ -31,6 +31,9 @@ namespace PoorEngine.Managers
 
         private static ProjectileHit _projectileHit = null;
         public static ProjectileHit ProjectileHit { get { return _projectileHit; } }
+
+        private static AirplaneExplosion _airplaneExplosion = null;
+        public static AirplaneExplosion AirplaneExplosion { get { return _airplaneExplosion; } }
 
         private static List<ParticleSystem> _systems = null;
 
@@ -43,40 +46,39 @@ namespace PoorEngine.Managers
         public override void Initialize()
         {
             base.Initialize();
-            _explosionParticles.Initialize();
-            _groundExplosion.Initialize();
-            _projectileHit.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            base.LoadContent();
             _explosionParticles = new ExplosionParticleSystem(EngineManager.Game, 1);
             _groundExplosion = new GroundExplosion(EngineManager.Game, 1);
             _projectileHit = new ProjectileHit(EngineManager.Game, 1);
+            _airplaneExplosion = new AirplaneExplosion(EngineManager.Game, 1);
+            _explosionParticles.Initialize();
+            _groundExplosion.Initialize();
+            _projectileHit.Initialize();
+            _airplaneExplosion.Initialize();
+        }
+
+        public static void LoadContent()
+        {
             _systems.Add(_explosionParticles);
             _systems.Add(_groundExplosion);
             _systems.Add(_projectileHit);
+            _systems.Add(_airplaneExplosion);
         }
 
-        protected override void UnloadContent()
+        public static void UnloadContent()
         {
-            base.UnloadContent();
             _systems.Clear();
         }
 
-        public override void Draw(GameTime gameTime)
+        public static new void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
             foreach (ParticleSystem syst in _systems)
             {
                 syst.Draw(gameTime);
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public static new void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             foreach (ParticleSystem syst in _systems)
             {
                 syst.Update(gameTime);
