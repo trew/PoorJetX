@@ -119,6 +119,7 @@
     <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\LevelManager.cs" />
     <Compile Include="Particles\AirplaneExplosion.cs" />
+    <Compile Include="Particles\ShrapnelExplosion.cs" />
     <Compile Include="Particles\ExplosionParticleSystem.cs" />
     <Compile Include="Particles\GroundExplosion.cs" />
     <Compile Include="Particles\Particle.cs" />

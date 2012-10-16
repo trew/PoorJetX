@@ -18,8 +18,22 @@ namespace PoorEngine.SceneObject
         Random rnd;
         double _spread;
         public int Damage;
+        int _soundFX_id;
 
         public double SpawnTime { get; set; }
+
+        public enum ProjectileType
+        {
+            Bullet,
+            Bomb
+        };
+
+        private ProjectileType _type;
+        public ProjectileType Type
+        { 
+            get { return _type; }
+        }
+
 
         public Projectile(Vector2 pos, Vector2 velocity, string texture, float scale):
             base(texture)
@@ -27,12 +41,17 @@ namespace PoorEngine.SceneObject
             /*
              *    THIS IS THE MOTHERFUCKING BOOOOMBS! edit: can also be used as airplane-urine
              */
+            _type = ProjectileType.Bomb;
+
             rnd = new Random(); // remove?
             
             Position = pos;
             _velocity = velocity;
             _orientation = 0f;
             _spread = 0.0;
+            _soundFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("bombwhistle"));
+            SoundFxManager.GetByID(_soundFX_id).IsLooped = true;
+
             Scale = new Vector2(scale, scale);
             Z = 1.5f;
             Damage = 200;
@@ -46,6 +65,8 @@ namespace PoorEngine.SceneObject
             /*
              *    THIS IS THE MOTHERFUCKING SHOTS!
              */
+            _type = ProjectileType.Bullet;
+
             Damage = 100;
             rnd = new Random(Guid.NewGuid().GetHashCode());
             _spread = (rnd.NextDouble() * spreadDegrees) / 2.0;
@@ -83,9 +104,19 @@ namespace PoorEngine.SceneObject
 
         public void Update(GameTime gameTime)
         {
-            if (true) // Can add condition for when projectile should get affected by _gravity
-            {
                 _velocity += new Vector2(0f, (float)(5.8 * gameTime.ElapsedGameTime.TotalSeconds));
+
+            // Lets whistle!
+            if (_type == ProjectileType.Bomb && _velocity.Y > 4)
+            {
+                if(SoundFxManager.GetByID(_soundFX_id).State == Microsoft.Xna.Framework.Audio.SoundState.Stopped)
+                    SoundFxManager.GetByID(_soundFX_id).Play();
+
+                SoundFxManager.GetByID(_soundFX_id).Pan = CalcHelper.CalcPan(Position).X * 1.7f;
+
+                float pitch =  1f - ((_velocity.Y - 4f) /10f); // Epic formula. Great taste. Crunchy on the outside. Chewy in the middle!
+                SoundFxManager.GetByID(_soundFX_id).Pitch = MathHelper.Clamp(pitch - 0.3f , -1, 1);
+                SoundFxManager.GetByID(_soundFX_id).Volume = CalcHelper.CalcVolume(Position) * MathHelper.Clamp(0.85f - pitch, 0f, 1f) * 0.3f;
             }
 
             _orientation = (float)CalcHelper.getAngleAsRadian(Position, Position + _velocity);
@@ -95,7 +126,22 @@ namespace PoorEngine.SceneObject
 
             if (Position.Y > EngineManager.Device.Viewport.Height)
             {
-                SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position - new Vector2(0, 15), 0f, new Vector2(0.2f, 0.2f), 200, 50, false, 0.9f));
+                if (_type == ProjectileType.Bullet)
+                {
+                    SoundFxLibrary.GetFx("hitplane1").Play(CalcHelper.CalcVolume(Position) * 0.05f, CalcHelper.RandomBetween(-1.0f, -0.4f), CalcHelper.CalcPan(Position).X * 1.5f);
+                    SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position - new Vector2(0, 15), 0f, new Vector2(0.2f, 0.2f), 200, 50, false, 0.9f));
+                }
+                else if (_type == ProjectileType.Bomb)
+                {
+                    ParticleManager.GroundExplosion.AddParticles(Position);
+                    SoundFxLibrary.GetFx("bomb2").Play(CalcHelper.CalcVolume(Position) * 0.35f, CalcHelper.RandomBetween(-0.5f, 1f), CalcHelper.CalcPan(Position).X * 1.2f);
+
+                    // Remove whisteling sound
+                    SoundFxManager.GetByID(_soundFX_id).Stop();
+                    SoundFxManager.RemoveFx(_soundFX_id);
+                }
+
+
                 SceneGraphManager.RemoveObject(this);
             }
         }
@@ -113,10 +159,12 @@ namespace PoorEngine.SceneObject
         public override void Collide(PoorSceneObject collidingWith)
         {
             if (collidingWith.GetType() == typeof(PlayerAirplane)) {
+                SoundFxManager.RemoveFx(_soundFX_id);
                 SceneGraphManager.RemoveObject(this);
             } 
             else if (collidingWith.GetType() == typeof(EnemyAirplane))
             {
+                SoundFxManager.RemoveFx(_soundFX_id);
                 SceneGraphManager.RemoveObject(this);
             }
         }

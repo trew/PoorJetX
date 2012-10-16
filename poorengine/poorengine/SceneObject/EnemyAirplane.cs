@@ -125,7 +125,20 @@ namespace PoorEngine.SceneObject
             {
                 Projectile p = (Projectile)collidingWith;
                 _health -= p.Damage;
-                ParticleManager.ProjectileHit.AddParticles(new Vector2(Position.X-10, Position.Y));
+                
+                if (((Projectile)collidingWith).Type == Projectile.ProjectileType.Bullet)
+                {
+                    ParticleManager.ProjectileHit.AddParticles(new Vector2(Position.X - 10, Position.Y));
+                    SoundFxLibrary.GetFx("hitplane1").Play(CalcHelper.CalcVolume(Position) * 0.1f, CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
+                }
+
+                else if (((Projectile)collidingWith).Type == Projectile.ProjectileType.Bomb)
+                {
+                    ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X - 10, Position.Y));
+                    ParticleManager.Explosion.AddParticles(Position);
+                    SoundFxLibrary.GetFx("bomb1").Play(CalcHelper.CalcVolume(Position) * 0.1f, CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
+                }
+
                 if (_health <= 0)
                 {
                     _health = 0;

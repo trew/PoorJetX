@@ -80,7 +80,9 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/bomb1", "bomb1");
             SoundFxLibrary.AddToLibrary("SoundFX/bomb2", "bomb2");
             SoundFxLibrary.AddToLibrary("SoundFX/bomb3", "bomb3");
-
+            SoundFxLibrary.AddToLibrary("SoundFX/bombdrop", "bombdrop");
+            SoundFxLibrary.AddToLibrary("SoundFX/bombwhistle", "bombwhistle");
+            SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
 
             LevelManager.CurrentLevel.LoadVisuals();
             LevelManager.CurrentLevel.QueueEnemies();
@@ -141,6 +143,11 @@ namespace PoorEngine.GameScreens
             { 
                 return; 
             }
+
+            EngineManager.Debug.Print("Total GameTime: " + gameTime.TotalGameTime);
+            EngineManager.Debug.Print("Elapsed GameTime: " + gameTime.ElapsedGameTime);
+            EngineManager.Debug.Print("Running Slowly: " + gameTime.IsRunningSlowly);
+            EngineManager.Debug.Print("==============================");
 
             AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);

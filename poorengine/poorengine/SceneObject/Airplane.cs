@@ -137,7 +137,7 @@ namespace PoorEngine.SceneObject
             SoundFxManager.RemoveFx(_engineFX_id);
             SoundFxManager.RemoveFx(_fireBulletFX_id);
 
-            SoundFxLibrary.GetFx("bomb1").Play();
+            SoundFxLibrary.GetFx("bomb1").Play(CalcHelper.CalcVolume(Position) * 0.4f, CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
             SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
             ParticleManager.GroundExplosion.AddParticles(Position, 30f, 10f);
@@ -153,7 +153,7 @@ namespace PoorEngine.SceneObject
             SoundFxManager.RemoveFx(_engineFX_id);
             SoundFxManager.RemoveFx(_fireBulletFX_id);
 
-            SoundFxLibrary.GetFx("bomb2").Play();
+            SoundFxLibrary.GetFx("bomb2").Play(CalcHelper.CalcVolume(Position) * 0.4f, CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
             ParticleManager.Explosion.AddParticles(Position);
             ParticleManager.AirplaneExplosion.AddParticles(Position);
@@ -281,7 +281,7 @@ namespace PoorEngine.SceneObject
         public virtual void LoadContent()
         {
             TextureManager.AddTexture(new PoorTexture("Textures/flygplan"), TextureName);
-
+            
             SoundFxLibrary.AddToLibrary("SoundFX/engine1", "engine1");
             SoundFxLibrary.AddToLibrary("SoundFX/dive1", "dive1");
             SoundFxLibrary.AddToLibrary("SoundFX/firebullet", "firebullet");

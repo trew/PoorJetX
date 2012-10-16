@@ -35,6 +35,9 @@ namespace PoorEngine.Managers
         private static AirplaneExplosion _airplaneExplosion = null;
         public static AirplaneExplosion AirplaneExplosion { get { return _airplaneExplosion; } }
 
+        private static ShrapnelExplosion _shrapnelExplosion = null;
+        public static ShrapnelExplosion ShrapnelExplosion { get { return _shrapnelExplosion; } }
+
         private static List<ParticleSystem> _systems = null;
 
         public ParticleManager(Game game)
@@ -50,10 +53,12 @@ namespace PoorEngine.Managers
             _groundExplosion = new GroundExplosion(EngineManager.Game, 1);
             _projectileHit = new ProjectileHit(EngineManager.Game, 1);
             _airplaneExplosion = new AirplaneExplosion(EngineManager.Game, 1);
+            _shrapnelExplosion = new ShrapnelExplosion(EngineManager.Game, 1);
             _explosionParticles.Initialize();
             _groundExplosion.Initialize();
             _projectileHit.Initialize();
             _airplaneExplosion.Initialize();
+            _shrapnelExplosion.Initialize();
         }
 
         public static void LoadContent()
@@ -62,6 +67,7 @@ namespace PoorEngine.Managers
             _systems.Add(_groundExplosion);
             _systems.Add(_projectileHit);
             _systems.Add(_airplaneExplosion);
+            _systems.Add(_shrapnelExplosion);
         }
 
         public static void UnloadContent()

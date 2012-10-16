@@ -58,13 +58,13 @@ namespace PoorEngine.GameComponents
             if (!ViewAble) return;
             ScreenManager.SpriteBatch.Begin();
 
-            ScreenManager.SpriteBatch.DrawString(debugFont, "Debug Panel", new Vector2(5, 5), Color.Black);
+            ScreenManager.SpriteBatch.DrawString(debugFont, "Debug Panel", new Vector2(50, 5), Color.Black);
             int count = 0;
             string s;
             while(strings.Count > 0)
             {
                 s = strings.Dequeue();
-                ScreenManager.SpriteBatch.DrawString(debugFont, s, new Vector2(5, 5+debugFont.LineSpacing * (count + 1)), Color.Black);
+                ScreenManager.SpriteBatch.DrawString(debugFont, s, new Vector2(50, 5+debugFont.LineSpacing * (count + 1)), Color.Black);
                 count++;
             }
 

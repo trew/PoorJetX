@@ -226,6 +226,7 @@ namespace PoorEngine.SceneObject
             {
                 if (AmmoManager.dropBomb())
                 {
+                    SoundFxLibrary.GetFx("bombdrop").Play(0.3f, CalcHelper.RandomBetween(0.8f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
                     SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, Orientation + 90, 10f), Velocity, "bomb2", 0.13f));
                 }
             }
@@ -234,13 +235,11 @@ namespace PoorEngine.SceneObject
             {
                 if (AmmoManager.fireBullet())
                 {
-                    float volume = MathHelper.Clamp(CalcHelper.CalcVolume(Position) * 0.3f, 0f, 0.3f);
-                    float pan = CalcHelper.CalcPan(Position).X;
 
                     SoundFxLibrary.GetFx("firebullet").Play(
-                                                            volume,
+                                                            0.1f,
                                                             CalcHelper.RandomBetween(-0.2f, 0.3f),
-                                                            pan);
+                                                            CalcHelper.CalcPan(Position).X );
 
                     SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, Orientation, 30f), Velocity, 15f, Orientation, 3f, "bullet"));
                     ParticleManager.ProjectileHit.AddParticles(AmmoManager.LastBulletPos + CameraManager.Camera.Pos);
