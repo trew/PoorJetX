@@ -13,6 +13,7 @@ namespace PoorEngine.GameComponents
         private Vector2 _pos;
         private Vector2 _velocity;
         private Vector2 _maxVelocity;
+        private bool _stopped;
 
         public Vector2 Velocity { get { return _velocity; } }
 
@@ -31,6 +32,7 @@ namespace PoorEngine.GameComponents
         public void Reset()
         {
             _velocity = new Vector2(0f, 0f);
+            _stopped = false;
         }
 
         public void changePos(Vector2 change)
@@ -45,12 +47,15 @@ namespace PoorEngine.GameComponents
 
         public void Update(PlayerAirplane player1)
         {
-            UpdateX(player1);
-            UpdateY(player1);
+            if (!_stopped)
+            {
+                UpdateX(player1);
+                UpdateY(player1);
 
-            changePos(_velocity);
-            if (Pos.Y > 0)
-                Pos = new Vector2(Pos.X, 0);
+                changePos(_velocity);
+                if (Pos.Y > 0)
+                    Pos = new Vector2(Pos.X, 0);
+            }
         }
 
         public void UpdateX(PlayerAirplane player1)
@@ -131,6 +136,11 @@ namespace PoorEngine.GameComponents
                 _velocity.Y += 0.7f;
                 _velocity.Y = Math.Min(_velocity.Y, p1.Velocity.Y);
             }
+        }
+
+        public void Stop()
+        {
+            _stopped = true;
         }
 
         public Vector2 Pos

@@ -119,22 +119,6 @@ namespace PoorEngine.SceneObject
 
         }
 
-        public void Explode()
-        {
-            SceneGraphManager.RemoveObject(this);
-            UsedInBoundingBoxCheck = false;
-
-            ParticleManager.Explosion.AddParticles(Position);
-            ParticleManager.AirplaneExplosion.AddParticles(Position);
-        }
-
-        public void Kill()
-        {
-            _health = 0;
-            IsCrashing = true;
-            EngineManager.Score += 1;
-        }
-
         public override void Collide(PoorSceneObject collidingWith)
         {
             if (!IsCrashing && _health > 0 && collidingWith.GetType() == typeof(Projectile))
@@ -158,7 +142,7 @@ namespace PoorEngine.SceneObject
                     EngineManager.Score += 2;
                 }
                 _health = 0;
-                Explode();
+                AirExplode();
             }
         }
     }

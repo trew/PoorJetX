@@ -58,6 +58,9 @@ namespace PoorEngine.SceneObject
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (IsDead)
+                CameraManager.Camera.Stop();
+
         }
 
         protected override void UpdatePhysics(GameTime gameTime)

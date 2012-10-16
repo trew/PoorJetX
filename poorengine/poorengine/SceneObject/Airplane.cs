@@ -120,6 +120,45 @@ namespace PoorEngine.SceneObject
             }
         }
 
+
+        public void Kill()
+        {
+            _health = 0;
+            IsCrashing = true;
+            EngineManager.Score += 1;
+        }
+
+        public void GroundExplode()
+        {
+            SceneGraphManager.RemoveObject(this);
+            UsedInBoundingBoxCheck = false;
+
+            SoundFxManager.RemoveFx(_diveFX_id);
+            SoundFxManager.RemoveFx(_engineFX_id);
+            SoundFxManager.RemoveFx(_fireBulletFX_id);
+
+            SoundFxLibrary.GetFx("bomb1").Play();
+
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
+            ParticleManager.GroundExplosion.AddParticles(Position, 30f, 10f);
+            ParticleManager.AirplaneExplosion.AddParticles(Position);
+        }
+
+        public void AirExplode()
+        {
+            SceneGraphManager.RemoveObject(this);
+            UsedInBoundingBoxCheck = false;
+
+            SoundFxManager.RemoveFx(_diveFX_id);
+            SoundFxManager.RemoveFx(_engineFX_id);
+            SoundFxManager.RemoveFx(_fireBulletFX_id);
+
+            SoundFxLibrary.GetFx("bomb2").Play();
+
+            ParticleManager.Explosion.AddParticles(Position);
+            ParticleManager.AirplaneExplosion.AddParticles(Position);
+        }
+
         public virtual void Draw(GameTime gameTime)
         {
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
@@ -172,9 +211,10 @@ namespace PoorEngine.SceneObject
 
             if (Position.Y > EngineManager.Device.Viewport.Height - 10)
             {
-                SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
-                ParticleManager.GroundExplosion.AddParticles(Position, 30f, 10f);
-                ParticleManager.AirplaneExplosion.AddParticles(Position);
+                IsDead = true;
+
+                GroundExplode();
+
                 SceneGraphManager.RemoveObject(this);
                 return;
             }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +41,7 @@ namespace PoorEngine.Managers
         {
             if (_soundEffects.ContainsKey(id))
             {
+                _soundEffects[id].Stop();
                 _soundEffects.Remove(id);
                 _soundInstancesLoaded--;
             }

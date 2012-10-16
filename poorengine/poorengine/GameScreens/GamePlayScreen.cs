@@ -76,6 +76,11 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/anim_explosion1"), "anim_explosion1");
             TextureManager.AddTexture(new PoorTexture("Textures/anim_groundcrash"), "anim_groundcrash");
 
+            // Sounds
+            SoundFxLibrary.AddToLibrary("SoundFX/bomb1", "bomb1");
+            SoundFxLibrary.AddToLibrary("SoundFX/bomb2", "bomb2");
+            SoundFxLibrary.AddToLibrary("SoundFX/bomb3", "bomb3");
+
 
             LevelManager.CurrentLevel.LoadVisuals();
             LevelManager.CurrentLevel.QueueEnemies();
@@ -153,8 +158,8 @@ namespace PoorEngine.GameScreens
 
             if (player1.IsDead)
             {
-                ExitScreen();
-                ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+            //    ExitScreen();
+            //    ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
             }
         }
          
