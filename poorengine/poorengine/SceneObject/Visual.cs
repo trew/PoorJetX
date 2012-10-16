@@ -51,10 +51,9 @@ namespace PoorEngine.SceneObject
                 // Draw the object if within screenwidth, one or more times depending on repeatMargin
                 for (int i = -1; i <= (int)(EngineManager.Device.Viewport.Width / (texture.Width + repeatMargin)) + 1; i++)
                 {
-                    Position = new Vector2(appear.X + i * (texture.Width + repeatMargin) - (int)CameraManager.Camera.Pos.X % ((texture.Width + repeatMargin) * Z) / Z, y);
-                    //ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
+                    Position = new Vector2(xbloodyhell + appear.X + i * (texture.Width + repeatMargin) - (int)CameraManager.Camera.Pos.X % ((texture.Width + repeatMargin) * Z) / Z,
+                                            y);
                     ScreenManager.SpriteBatch.Draw(texture, Position, null, Color.White, 0f, new Vector2(), scale, SpriteEffects.None, 0f);
-                    // new Color(80,80,80) for night-mode woo
                 }
             }
             else
@@ -68,6 +67,14 @@ namespace PoorEngine.SceneObject
         public void Update(GameTime gameTime)
         {
             xbloodyhell += constantSpeed;
+            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+            if (Math.Abs(xbloodyhell) > texture.Width)
+            {
+                if (xbloodyhell < 0)
+                    xbloodyhell += texture.Width + repeatMargin;
+                else
+                    xbloodyhell -= texture.Width + repeatMargin;
+            }
         }
 
         public void LoadContent()

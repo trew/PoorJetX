@@ -58,5 +58,14 @@ namespace PoorEngine.Helpers
 
             return Math.Atan2(deltay, deltax);
         }
+
+        public static Vector2 PositionToMiddle(Vector2 pos)
+        {
+            Vector2 relativeToCamera = pos - CameraManager.Camera.Pos;
+            float x = (relativeToCamera.X / EngineManager.Device.Viewport.Width) - 0.5f;
+            float y = (relativeToCamera.Y / EngineManager.Device.Viewport.Height) - 0.5f;
+
+            return new Vector2(x, y);
+        }
     }
 }

@@ -9,7 +9,7 @@
 	  <Scale>0.4</Scale>
       <FileName>hill1</FileName>
       <Z>3.2</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
 	
 	<LevelVisual>
@@ -20,7 +20,7 @@
 	  <Scale>0.2</Scale>
       <FileName>hill1</FileName>
       <Z>20.2</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
 
 	<LevelVisual>
@@ -31,7 +31,7 @@
 	  <Scale>0.5</Scale>
       <FileName>hill2</FileName>
       <Z>7.2</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
 	
 	<LevelVisual>
@@ -42,7 +42,7 @@
 	  <Scale>0.2</Scale>
       <FileName>hill2</FileName>
       <Z>15.2</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
 	
 	<LevelVisual>
@@ -53,7 +53,7 @@
 	  <Scale>0.4</Scale>
       <FileName>hill2</FileName>
       <Z>5.2</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
 
   
@@ -65,7 +65,7 @@
 	  <Scale>1</Scale>
       <FileName>cloud1</FileName>
       <Z>9.2</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>-0.5</ConstantSpeed>
     </LevelVisual>
 
     <LevelVisual>
@@ -76,7 +76,7 @@
 	  <Scale>1</Scale>
       <FileName>cloud2</FileName>
       <Z>6.3</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>-0.8</ConstantSpeed>
     </LevelVisual>
   </Visuals>
   
@@ -89,7 +89,7 @@
 	  <Scale>1</Scale>
       <FileName>cloud3</FileName>
       <Z>6.9</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>-1</ConstantSpeed>
     </LevelVisual>
 
     <LevelVisual>
@@ -100,7 +100,7 @@
 	  <Scale>1</Scale>
       <FileName>cloud4</FileName>
       <Z>7.7</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>-0.3</ConstantSpeed>
     </LevelVisual>
   </Visuals>
   
@@ -112,8 +112,8 @@
       <Y>550</Y>
 	  <Scale>1</Scale>
       <FileName>cloud5</FileName>
-      <Z>5.5</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <Z>6</Z>
+      <ConstantSpeed>-0.4</ConstantSpeed>
     </LevelVisual>
 
     <LevelVisual>
@@ -124,7 +124,29 @@
 	  <Scale>1</Scale>
       <FileName>cloud6</FileName>
       <Z>11.0</Z>
-      <ConstantSpeed>-5</ConstantSpeed>
+      <ConstantSpeed>-0.1</ConstantSpeed>
+    </LevelVisual>
+	
+	<LevelVisual>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>1600</RepeatMargin>
+      <X>1980</X>
+      <Y>7180</Y>
+	  <Scale>2.5</Scale>
+      <FileName>cloud3</FileName>
+      <Z>0.998</Z>
+      <ConstantSpeed>-0.1</ConstantSpeed>
+    </LevelVisual>
+	
+	<LevelVisual>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>1600</RepeatMargin>
+      <X>1980</X>
+      <Y>5700</Y>
+	  <Scale>3</Scale>
+      <FileName>cloud5</FileName>
+      <Z>0.998</Z>
+      <ConstantSpeed>-0.1</ConstantSpeed>
     </LevelVisual>
   </Visuals>
   
@@ -145,12 +167,42 @@
       <XAppear>500</XAppear>
       <Y>50</Y>
       <type>1</type>
+	  <health>2000</health>
     </LevelEnemy>
     
     <LevelEnemy>
-      <XAppear>500</XAppear>
-      <Y>100</Y>
+      <XAppear>1600</XAppear>
+      <Y>130</Y>
       <type>1</type>
+	  <health>2000</health>
+    </LevelEnemy>
+	
+	<LevelEnemy>
+      <XAppear>2900</XAppear>
+      <Y>500</Y>
+      <type>1</type>
+	  <health>2000</health>
+    </LevelEnemy>
+	
+	<LevelEnemy>
+      <XAppear>1310</XAppear>
+      <Y>45000</Y>
+      <type>1</type>
+	  <health>2000</health>
+    </LevelEnemy>
+	
+	<LevelEnemy>
+      <XAppear>1070</XAppear>
+      <Y>400</Y>
+      <type>1</type>
+	  <health>2000</health>
+    </LevelEnemy>
+	
+	<LevelEnemy>
+      <XAppear>900</XAppear>
+      <Y>570</Y>
+      <type>1</type>
+	  <health>2000</health>
     </LevelEnemy>
   </Enemies>
   
