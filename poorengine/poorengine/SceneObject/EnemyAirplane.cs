@@ -120,7 +120,7 @@ namespace PoorEngine.SceneObject
                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
                                            (float)CalcHelper.DegreeToRadian(orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
-            
+
             // Draw health-bar, if plane still alive
             if (!ItsCrashTime)
             {

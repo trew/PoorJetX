@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using PoorEngine.GameComponents;
@@ -22,15 +22,30 @@ namespace PoorJetX.GameScreens
 
         int _selectedEntry = 0;
         string _menuTitle;
+        Rectangle _borders;
+        int _width;
+        int _height;
 
+        public MenuScreen(string menuTitle) : this(menuTitle, 400, 300) { }
         /// <summary>
         /// Constructor.
         /// </summary>
-        public MenuScreen(string menuTitle)
+        public MenuScreen(string menuTitle, int width, int height)
         {
             _menuTitle = menuTitle;
+            _width = width;
+            _height = height;
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        }
+
+        public override void LoadContent()
+        {
+            base.LoadContent();
+            if (_borders == Rectangle.Empty)
+            {
+                _borders = TextureManager.GetCenterRectangle(_width, _height, EngineManager.Device.Viewport.Bounds);
+            }
         }
 
         /// <summary>
@@ -114,17 +129,20 @@ namespace PoorJetX.GameScreens
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            Vector2 position = new Vector2(100, 150);
-
+            Vector2 position = new Vector2(_borders.X, _borders.Y + ScreenManager.Font.LineSpacing);
+            if (_menuTitle != "")
+            {
+                position.Y += ScreenManager.Font.LineSpacing * 2;
+            }
             // Make the menu slide into place during transitions, using a
             // power curve to make things look more interesting (this makes
             // the movement slow down as it nears the end).
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             if (ScreenState == ScreenState.TransitionOn)
-                position.X -= transitionOffset * 256;
+                position.Y += transitionOffset * 256;
             else
-                position.X += transitionOffset * 512;
+                position.Y -= transitionOffset * 512;
 
             ScreenManager.SpriteBatch.Begin();
 
@@ -135,18 +153,25 @@ namespace PoorJetX.GameScreens
 
                 bool isSelected = IsActive && (i == _selectedEntry);
 
-                menuEntry.Draw(this, position, isSelected, gameTime);
+                Rectangle borders = new Rectangle(_borders.X, (int)position.Y, _borders.Width, _borders.Height);
+                menuEntry.Draw(this, borders, isSelected, gameTime);
 
                 position.Y += menuEntry.GetHeight(this);
             }
 
             // Draw the menu title.
-            Vector2 titlePosition = new Vector2(426, 80);
+            Vector2 titlePosition = new Vector2(
+                    TextureManager.GetCenterX(_borders.X,
+                                              _borders.Width,
+                                              0), 
+                    _borders.Y + ScreenManager.Font.LineSpacing);
             Vector2 titleOrigin = ScreenManager.Font.MeasureString(_menuTitle) / 2;
-            Color titleColor = new Color(192, 192, 192, TransitionAlpha);
+            Color titleColor = new Color(255, 255, 255, TransitionAlpha);
             float titleScale = 1.25f;
 
             titlePosition.Y -= transitionOffset * 100;
+
+            TextureManager.DrawRectangle(ScreenManager.SpriteBatch, _borders, 1, Color.Black);
 
             ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, _menuTitle, titlePosition, titleColor, 0,
                                    titleOrigin, titleScale, SpriteEffects.None, 0);

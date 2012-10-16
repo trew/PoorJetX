@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +19,11 @@ namespace PoorEngine.GameComponents
             _pos = startPos;
             moveSpeed = new Vector2(0f, 0f);
             maxMoveSpeed = new Vector2(5.5f, 0f);
+        }
+
+        public Vector2 Normalize(Vector2 pos)
+        {
+            return pos - _pos;
         }
 
         public void Reset()

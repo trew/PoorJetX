@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Textures;
 using PoorEngine.Interfaces;
+using PoorEngine.GameComponents;
+
 using System.Collections;
 
 namespace PoorEngine.Managers
@@ -75,6 +77,46 @@ namespace PoorEngine.Managers
                     _texturesLoaded--;
                 }
             }
+        }
+
+        public static Rectangle GetCenterRectangle(int width, int height, Rectangle outerBorder)
+        {
+            Rectangle border = new Rectangle(outerBorder.X + (outerBorder.Width / 2 - width / 2),
+                                             outerBorder.Y + (outerBorder.Height / 2 - height / 2),
+                                             width, height);
+            return border;
+        }
+
+        public static float GetCenterX(float x, float width, float textureWidth)
+        {
+            return x + width / 2 - textureWidth / 2;
+        }
+
+        public static Texture2D GetColorTexture(Color color)
+        {
+            Texture2D tex = new Texture2D(EngineManager.Device, 1, 1);
+            tex.SetData(new Color[] { color });
+            return tex;
+        }
+
+        public static void DrawRectangle(SpriteBatch sb, Rectangle rec, int thickness, Color color, Camera cam)
+        {
+            Vector2 pos = cam.Normalize(new Vector2(rec.X, rec.Y));
+            Rectangle newRec = new Rectangle((int)pos.X, (int)pos.Y, rec.Width, rec.Height);
+            DrawRectangle(sb, newRec, thickness, color);
+        }
+        public static void DrawRectangle(SpriteBatch sb, Rectangle rec, int thickness, Color color)
+        {
+            Texture2D tex = GetColorTexture(color);
+            //Top line
+            sb.Draw(tex, new Rectangle(rec.X, rec.Y, rec.Width, thickness), color);
+            //Left line
+            sb.Draw(tex, new Rectangle(rec.X, rec.Y, thickness, rec.Height), color);
+            
+            //Bottom line
+            sb.Draw(tex, new Rectangle(rec.X, rec.Y + rec.Height, rec.Width + thickness, thickness), color);
+            //Right line
+            sb.Draw(tex, new Rectangle(rec.X + rec.Width, rec.Y, thickness, rec.Height + thickness), color);
         }
 
         /// <summary>

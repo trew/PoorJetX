@@ -132,7 +132,10 @@ namespace PoorEngine.GameScreens
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
  	        base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-            if (ScreenState != ScreenState.Active) { return; }
+            if (ScreenState != ScreenState.Active || otherScreenHasFocus || coveredByOtherScreen) 
+            { 
+                return; 
+            }
 
             AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
@@ -168,10 +171,19 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.Escape))
             {
-                ExitScreen();
-                ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+                PauseMenuScreen pauseMenuScreen = new PauseMenuScreen(400, 300);
+                pauseMenuScreen.ExitToMenuEvent += ExitGame;
+                ScreenManager.AddScreen(pauseMenuScreen);
             }
+
         }
+
+        private void ExitGame(object sender, EventArgs e)
+        {
+            ExitScreen();
+            ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+        }
+
 
         /// <summary>
         /// This is called when the screen should draw itself.
