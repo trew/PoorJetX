@@ -26,12 +26,15 @@ namespace PoorEngine.GameScreens
         Instrument throttleMeter;
         Instrument airspeedMeter;
 
+        private Dictionary<string, Instrument> _instruments;
+
         AmmoController ammoController;
 
         public GamePlayScreen(int level)
         {
             CameraManager.Reset();
             AmmoManager.Reset();
+            _instruments = new Dictionary<string, Instrument>();
         }
 
         public int ScreenWidth
@@ -86,11 +89,18 @@ namespace PoorEngine.GameScreens
             player1 = new Airplane();
             SceneGraphManager.AddObject(player1);     
 
-            throttleMeter = new Instrument("instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
-            SceneGraphManager.AddObject(throttleMeter);
+            // Add instruments
+            throttleMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
+            _instruments.Add("throttleMeter", throttleMeter);
 
-            airspeedMeter = new Instrument("instrument", new Vector2(800, ScreenHeight), 0f, 13f, 0.5f, "linearvelocity", this);
-            SceneGraphManager.AddObject(airspeedMeter);
+            airspeedMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(800, ScreenHeight), 0f, 13f, 0.5f, "linearvelocity", this);
+            _instruments.Add("airspeedMeter", airspeedMeter);
+
+            foreach (Instrument inst in _instruments.Values)
+            {
+                inst.LoadContent();
+            }
+            // !Add instruments
 
 
             // DEBUG =======================
@@ -106,6 +116,11 @@ namespace PoorEngine.GameScreens
             base.UnloadContent();
             SceneGraphManager.Root.Nodes.Clear();
             ParticleManager.UnloadContent();
+            foreach (Instrument inst in _instruments.Values)
+            {
+                inst.UnloadContent();
+            }
+            _instruments.Clear();
         }
  
 
@@ -123,6 +138,10 @@ namespace PoorEngine.GameScreens
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
             ParticleManager.Update(gameTime);
+            foreach (Instrument inst in _instruments.Values)
+            {
+                inst.Update(gameTime);
+            }
 
             if (player1.IsCrashing)
             {
@@ -147,8 +166,6 @@ namespace PoorEngine.GameScreens
             
             player1.HandleInput(input);
 
-            
-
             if (input.IsNewKeyPress(Keys.Escape))
             {
                 ExitScreen();
@@ -165,6 +182,10 @@ namespace PoorEngine.GameScreens
             base.Draw(gameTime);
             SceneGraphManager.Draw(gameTime);
             ParticleManager.Draw(gameTime);
+            foreach (Instrument inst in _instruments.Values)
+            {
+                inst.Draw(gameTime);
+            }
         }
 
         /// <summary>
