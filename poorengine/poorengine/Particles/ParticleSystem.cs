@@ -93,7 +93,7 @@ namespace PoorEngine.Particles
         protected string textureFilename;
 
         /// <summary>
-        /// minInitialSpeed and maxInitialSpeed are used to control the initial velocity
+        /// minInitialSpeed and maxInitialSpeed are used to control the initial _velocity
         /// of the particles. The particle's initial speed will be a random number 
         /// between these two. The direction is determined by the function 
         /// PickRandomDirection, which can be overriden.
@@ -105,14 +105,14 @@ namespace PoorEngine.Particles
         /// minAcceleration and maxAcceleration are used to control the acceleration of
         /// the particles. The particle's acceleration will be a random number between
         /// these two. By default, the direction of acceleration is the same as the
-        /// direction of the initial velocity.
+        /// direction of the initial _velocity.
         /// </summary>
         protected float minAcceleration;
         protected float maxAcceleration;
 
         /// <summary>
         /// minRotationSpeed and maxRotationSpeed control the particles' angular
-        /// velocity: the speed at which particles will rotate. Each particle's rotation
+        /// _velocity: the speed at which particles will rotate. Each particle's rotation
         /// speed will be a random number between minRotationSpeed and maxRotationSpeed.
         /// Use smaller numbers to make particle systems look calm and wispy, and large 
         /// numbers for more violent effects.
@@ -259,13 +259,13 @@ namespace PoorEngine.Particles
         protected virtual void InitializeParticle(Particle p, Vector2 where)
         {
             // first, call PickRandomDirection to figure out which way the particle
-            // will be moving. velocity and acceleration's values will come from this.
+            // will be moving. _velocity and acceleration's values will come from this.
             Vector2 direction = PickRandomDirection();
 
             // pick some random values for our particle
             float velocity = 
                 CalcHelper.RandomBetween(minInitialSpeed, maxInitialSpeed);
-            //velocity = new Vector2(velocity.X + vel, velocity.Y + vel);
+            //_velocity = new Vector2(_velocity.X + vel, _velocity.Y + vel);
             float acceleration =
 				CalcHelper.RandomBetween(minAcceleration, maxAcceleration);
             float lifetime =

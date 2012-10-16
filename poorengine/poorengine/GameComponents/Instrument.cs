@@ -66,11 +66,11 @@ namespace PoorEngine.SceneObject
             base.Update(gameTime);
             if (_sourceName == "throttle")
             {
-                currentValue = (float)currentScreen.Airplane.getThrottle();
+                currentValue = (float)currentScreen.Airplane.Thrust;
             }
             else if (_sourceName == "linearvelocity")
             {
-                currentValue = (float)currentScreen.Airplane.getLinearVelocity();
+                currentValue = (float)currentScreen.Airplane.LinearVelocity;
             }
             if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
             {

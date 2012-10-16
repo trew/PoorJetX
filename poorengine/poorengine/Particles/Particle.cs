@@ -22,7 +22,7 @@ namespace PoorEngine.Particles
     /// <summary>
     /// particles are the little bits that will make up an effect. each effect will
     /// be comprised of many of these particles. They have basic physical properties,
-    /// such as position, velocity, acceleration, and rotation. They'll be drawn as
+    /// such as position, _velocity, acceleration, and rotation. They'll be drawn as
     /// sprites, all layered on top of one another, and will be very pretty.
     /// </summary>
     public class Particle

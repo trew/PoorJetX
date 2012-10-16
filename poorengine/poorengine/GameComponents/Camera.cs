@@ -11,14 +11,16 @@ namespace PoorEngine.GameComponents
     public class Camera
     {
         private Vector2 _pos;
-        private Vector2 moveSpeed;
-        private Vector2 maxMoveSpeed;
+        private Vector2 _velocity;
+        private Vector2 _maxVelocity;
+
+        public Vector2 Velocity { get { return _velocity; } }
 
         public Camera(Vector2 startPos)
         {
             _pos = startPos;
-            moveSpeed = new Vector2(0f, 0f);
-            maxMoveSpeed = new Vector2(5.5f, 0f);
+            _velocity = new Vector2(0f, 0f);
+            _maxVelocity = new Vector2(5.5f, 0f);
         }
 
         public Vector2 Normalize(Vector2 pos)
@@ -28,7 +30,7 @@ namespace PoorEngine.GameComponents
 
         public void Reset()
         {
-            moveSpeed = new Vector2(0f, 0f);
+            _velocity = new Vector2(0f, 0f);
         }
 
         public void changePos(Vector2 change)
@@ -38,7 +40,7 @@ namespace PoorEngine.GameComponents
 
         public Vector2 SpeedDifference(PlayerAirplane p1)
         {
-            return p1.getVelocity() - moveSpeed;
+            return p1.Velocity - Velocity;
         }
 
         public void Update(PlayerAirplane player1)
@@ -46,7 +48,7 @@ namespace PoorEngine.GameComponents
             UpdateX(player1);
             UpdateY(player1);
 
-            changePos(moveSpeed);
+            changePos(_velocity);
             if (Pos.Y > 0)
                 Pos = new Vector2(Pos.X, 0);
         }
@@ -57,27 +59,27 @@ namespace PoorEngine.GameComponents
             int borderSize = (int)(0.156 * screenWidth);
 
             // Guinness World Record If-statement
-            if (player1.Position.X < (Pos.X + borderSize) && !player1.headingRight())
+            if (player1.Position.X < (Pos.X + borderSize) && !player1.HeadingRight)
             {
                 MoveLeft(player1);
             }
 
-            else if (player1.Position.X < (Pos.X + borderSize) && player1.headingRight())
+            else if (player1.Position.X < (Pos.X + borderSize) && player1.HeadingRight)
             {
                 SlowDownX(player1);
             }
 
-            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 0.25f) && player1.headingRight())
+            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 0.25f) && player1.HeadingRight)
             {
                 MoveRightMegaMax(player1);
             }
 
-            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 2f) && player1.headingRight())
+            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 2f) && player1.HeadingRight)
             {
                 MoveRightMax(player1);
             }
 
-            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 5f) && player1.headingRight())
+            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 5f) && player1.HeadingRight)
             {
                 MoveRight(player1);
             }
@@ -95,17 +97,17 @@ namespace PoorEngine.GameComponents
 
             // if player is on top of the screen and not facing upwards
 
-            if (player1.getPosition().Y <= Pos.Y + borderSize)
+            if (player1.Position.Y <= Pos.Y + borderSize)
             {
                 MoveUp(player1);
             }
-            else if (player1.getPosition().Y > Pos.Y + (borderSize))
+            else if (player1.Position.Y > Pos.Y + (borderSize))
             {
                 MoveDown(player1);
             }
             else
             {
-                moveSpeed.Y = 0.0f;
+                _velocity.Y = 0.0f;
                 Pos = new Vector2(Pos.X, 0.0f);
             }
 
@@ -115,19 +117,19 @@ namespace PoorEngine.GameComponents
 
         public void MoveUp(PlayerAirplane p1)
         {
-            if (p1.getVelocity().Y < moveSpeed.Y)
+            if (p1.Velocity.Y < _velocity.Y)
             {
-                moveSpeed.Y -= 0.7f;
-                moveSpeed.Y = Math.Max(moveSpeed.Y, p1.getVelocity().Y);
+                _velocity.Y -= 0.7f;
+                _velocity.Y = Math.Max(_velocity.Y, p1.Velocity.Y);
             }
         }
 
         public void MoveDown(PlayerAirplane p1)
         {
-            if (p1.getVelocity().Y > moveSpeed.Y)
+            if (p1.Velocity.Y > _velocity.Y)
             {
-                moveSpeed.Y += 0.7f;
-                moveSpeed.Y = Math.Min(moveSpeed.Y, p1.getVelocity().Y);
+                _velocity.Y += 0.7f;
+                _velocity.Y = Math.Min(_velocity.Y, p1.Velocity.Y);
             }
         }
 
@@ -139,68 +141,68 @@ namespace PoorEngine.GameComponents
 
         public Vector2 GetMoveSpeed()
         {
-            return moveSpeed;
+            return _velocity;
         }
 
         public void MoveLeft(PlayerAirplane p1)
         {
-            moveSpeed.X -= Math.Max(0.5f, Math.Abs(SpeedDifference(p1).X * 0.13f));
-            moveSpeed.X = Math.Max(moveSpeed.X, p1.getVelocity().X);
+            _velocity.X -= Math.Max(0.5f, Math.Abs(SpeedDifference(p1).X * 0.13f));
+            _velocity.X = Math.Max(_velocity.X, p1.Velocity.X);
         }
 
         public void MoveRight(PlayerAirplane p1)
         {
 
-            if (p1.getVelocity().X > moveSpeed.X)
+            if (p1.Velocity.X > _velocity.X)
             {
-                moveSpeed.X += 0.07f;
-                moveSpeed.X = Math.Min(moveSpeed.X, p1.getVelocity().X);
+                _velocity.X += 0.07f;
+                _velocity.X = Math.Min(_velocity.X, p1.Velocity.X);
             }
-            moveSpeed.X = Math.Min(moveSpeed.X, maxMoveSpeed.X);
+            _velocity.X = Math.Min(_velocity.X, _maxVelocity.X);
         }
 
         public void MoveRightMax(PlayerAirplane p1)
         {
 
-            if (p1.getVelocity().X > moveSpeed.X)
+            if (p1.Velocity.X > _velocity.X)
             {
-                moveSpeed.X += 0.01f;
-                moveSpeed.X = Math.Min(moveSpeed.X, p1.getVelocity().X);
+                _velocity.X += 0.01f;
+                _velocity.X = Math.Min(_velocity.X, p1.Velocity.X);
             }
         }
 
         public void MoveRightMegaMax(PlayerAirplane p1)
         {
-            if (p1.getVelocity().X > moveSpeed.X)
+            if (p1.Velocity.X > _velocity.X)
             {
-                moveSpeed.X = Math.Max(moveSpeed.X, p1.getVelocity().X);
+                _velocity.X = Math.Max(_velocity.X, p1.Velocity.X);
             }
         }
 
         public void SlowDownX(PlayerAirplane p1)
         {
-            if (moveSpeed.X > 0) {
-                moveSpeed.X -= Math.Max(0.03f, Math.Abs(SpeedDifference(p1).X * 0.05f));
+            if (_velocity.X > 0) {
+                _velocity.X -= Math.Max(0.03f, Math.Abs(SpeedDifference(p1).X * 0.05f));
             }
-            else if (moveSpeed.X < 0) {
-                moveSpeed.X += Math.Max(0.03f, Math.Abs(SpeedDifference(p1).X * 0.05f));
+            else if (_velocity.X < 0) {
+                _velocity.X += Math.Max(0.03f, Math.Abs(SpeedDifference(p1).X * 0.05f));
             }
         }
 
         public void AdjustXMovespeed(PlayerAirplane p1)
         {
-            if (moveSpeed.X > p1.getVelocity().X) {
-                moveSpeed.X -= 0.01f;
+            if (_velocity.X > p1.Velocity.X) {
+                _velocity.X -= 0.01f;
             }
-            else if (moveSpeed.X < p1.getVelocity().X) { moveSpeed.X += 0.01f; }
-            moveSpeed.X = Math.Min(moveSpeed.X, maxMoveSpeed.X);
+            else if (_velocity.X < p1.Velocity.X) { _velocity.X += 0.01f; }
+            _velocity.X = Math.Min(_velocity.X, _maxVelocity.X);
         }
 
         public void AdjustYMovespeed(PlayerAirplane p1)
         {
-            if (moveSpeed.Y > p1.getVelocity().Y) { moveSpeed.Y -= 0.03f; }
-            else if (moveSpeed.Y < p1.getVelocity().Y) { moveSpeed.Y += 0.08f; }
-            moveSpeed.Y = Math.Min(moveSpeed.Y, maxMoveSpeed.Y);
+            if (_velocity.Y > p1.Velocity.Y) { _velocity.Y -= 0.03f; }
+            else if (_velocity.Y < p1.Velocity.Y) { _velocity.Y += 0.08f; }
+            _velocity.Y = Math.Min(_velocity.Y, _maxVelocity.Y);
         }
     }
 }
