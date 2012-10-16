@@ -363,21 +363,18 @@ namespace PoorEngine.SceneObject
 
             if (IsCrashing) return;
 
-            double forceIncreaseAmount = linearVelocity / 10;
+            double forceIncreaseAmount = MathHelper.Clamp((float)(0.1 / linearVelocity), 0.002f, 0.4f);
+
+
             double maxThrust = 7;
-            double maxForce = linearVelocity / 8.1;
+            double maxForce = MathHelper.Clamp((float)(3 / linearVelocity), 0.3f, 1.3f);//linearVelocity / 8.1;
             double forceResetAmount = 0.085;
 
-            // At high speeds, reduce maneuverability.
-            if (linearVelocity > 5.5)
-            {
-                maxForce /= (Math.Min(linearVelocity - 4.5f, 2));
-            }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift))
             {
-                forceIncreaseAmount *= 2;
-                maxForce *= 3;
+                forceIncreaseAmount *= 3;
+                maxForce = MathHelper.Clamp((float)(7.5 / linearVelocity), 1.2f, 1.5f);
             }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Left))
@@ -388,24 +385,13 @@ namespace PoorEngine.SceneObject
                 }
 
                 orientation -= lforce;
-                if (lforce < maxForce)
-                {
-                    lforce += forceIncreaseAmount;
-                }
-                else
-                {
-                    lforce = maxForce;
-                }
-
+                lforce = MathHelper.Clamp((float)(lforce + forceIncreaseAmount), 0f, (float)maxForce);
                 
             }
             else
             {
-                if (lforce > 0.005)
-                {
-                    orientation -= lforce;
-                    lforce -= forceResetAmount;
-                }
+                lforce = MathHelper.Clamp((float)(lforce -= forceResetAmount), 0f, 10f);
+                orientation -= lforce;
             }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Right))
@@ -416,38 +402,24 @@ namespace PoorEngine.SceneObject
                 }
 
                 orientation += rforce;
-                if (rforce < maxForce)
-                {
-                    rforce += forceIncreaseAmount;
-                }
-                else
-                {
-                    rforce = maxForce;
-                }
+                rforce = MathHelper.Clamp((float)(rforce + forceIncreaseAmount), 0f, (float)maxForce);
             }
             else
             {
-                if (rforce > 0.005)
-                {
-                    orientation += rforce;
-                    rforce -= forceResetAmount;
-                }
+                rforce = MathHelper.Clamp((float)(rforce -= forceResetAmount), 0f, 10f);
+                orientation += rforce;
             }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.X))
             {
                 if (thrust < maxThrust)
-                {
                     thrust += 0.05;
-                }
             }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Z))
             {
                 if (thrust >= 0.05)
-                {
                     thrust -= 0.05;
-                }
             }
 
             if (input.IsNewKeyPress(Keys.Space))
@@ -467,10 +439,6 @@ namespace PoorEngine.SceneObject
                 if (AmmoManager.fireBullet())
                 {
                     SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, (float)orientation, 30f), velocity, 15f, (float)orientation, 3f, "bullet"));
-
-                    // For drawing shells dropping down when ammo is removed from ammocontroller
-                    //Vector2 bpos = ammoController.getLastBulletPos();
-                    //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, 10), 0f, 180, 10f, "bullet"));
                 }
             }
         }
