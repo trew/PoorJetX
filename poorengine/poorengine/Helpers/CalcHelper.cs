@@ -82,6 +82,9 @@ namespace PoorEngine.Helpers
             float x = (relativeToCamera.X / EngineManager.Device.Viewport.Width) - 0.5f;
             float y = (relativeToCamera.Y / EngineManager.Device.Viewport.Height) - 0.5f;
 
+            x = MathHelper.Clamp(x, -0.5f, 0.5f);
+            y = MathHelper.Clamp(y, -0.5f, 0.5f);
+
             return new Vector2(x, y);
         }
 
