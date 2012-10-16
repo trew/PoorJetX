@@ -364,10 +364,8 @@ namespace PoorEngine.SceneObject
             if (IsCrashing) return;
 
             double forceIncreaseAmount = MathHelper.Clamp((float)(0.1 / linearVelocity), 0.002f, 0.4f);
-
-
             double maxThrust = 7;
-            double maxForce = MathHelper.Clamp((float)(3 / linearVelocity), 0.3f, 1.3f);//linearVelocity / 8.1;
+            double maxForce = MathHelper.Clamp((float)(3 / linearVelocity), 0.3f, 1.3f);
             double forceResetAmount = 0.085;
 
 
@@ -427,10 +425,6 @@ namespace PoorEngine.SceneObject
                 if (AmmoManager.dropBomb())
                 {
                     SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, (float)orientation + 90, 10f), velocity, "bomb2", 0.13f));
-
-                    // For drawing shells dropping down when ammo is removed from ammocontroller
-                    //Vector2 bpos = ammoController.getLastBombPos();
-                    //SceneGraphManager.AddObject(new Projectile(bpos + CameraManager.Camera.Pos, new Vector2(0, Airplane.getVelocity().X), 0f, 220, 10f, "bomb"));
                 }
             }
 
@@ -439,6 +433,7 @@ namespace PoorEngine.SceneObject
                 if (AmmoManager.fireBullet())
                 {
                     SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, (float)orientation, 30f), velocity, 15f, (float)orientation, 3f, "bullet"));
+                    ParticleManager.ProjectileHit.AddParticles(AmmoManager.LastBulletPos + CameraManager.Camera.Pos);
                 }
             }
         }
