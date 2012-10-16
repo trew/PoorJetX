@@ -14,7 +14,7 @@ using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
-    public class Airplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
+    public class PlayerAirplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
         private double thrust;
         private double airSpeed;
@@ -49,7 +49,7 @@ namespace PoorEngine.SceneObject
         int fireBulletFX;
         const float SOUNDVOLUME = 0.6f;
 
-        public Airplane():
+        public PlayerAirplane():
             base("apTex1")
         {
             thrust = 4;

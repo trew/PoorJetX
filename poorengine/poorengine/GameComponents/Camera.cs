@@ -36,12 +36,12 @@ namespace PoorEngine.GameComponents
             _pos += change;
         }
 
-        public Vector2 SpeedDifference(Airplane p1)
+        public Vector2 SpeedDifference(PlayerAirplane p1)
         {
             return p1.getVelocity() - moveSpeed;
         }
 
-        public void Update(Airplane player1)
+        public void Update(PlayerAirplane player1)
         {
             UpdateX(player1);
             UpdateY(player1);
@@ -51,7 +51,7 @@ namespace PoorEngine.GameComponents
                 Pos = new Vector2(Pos.X, 0);
         }
 
-        public void UpdateX(Airplane player1)
+        public void UpdateX(PlayerAirplane player1)
         {
             float screenWidth = EngineManager.Device.Viewport.Width;
             int borderSize = (int)(0.156 * screenWidth);
@@ -88,7 +88,7 @@ namespace PoorEngine.GameComponents
             }
         }
 
-        public void UpdateY(Airplane player1)
+        public void UpdateY(PlayerAirplane player1)
         {
             float screenHeight = EngineManager.Device.Viewport.Height;
             int borderSize = (int)(0.25 * screenHeight);
@@ -113,7 +113,7 @@ namespace PoorEngine.GameComponents
 
         }
 
-        public void MoveUp(Airplane p1)
+        public void MoveUp(PlayerAirplane p1)
         {
             if (p1.getVelocity().Y < moveSpeed.Y)
             {
@@ -122,7 +122,7 @@ namespace PoorEngine.GameComponents
             }
         }
 
-        public void MoveDown(Airplane p1)
+        public void MoveDown(PlayerAirplane p1)
         {
             if (p1.getVelocity().Y > moveSpeed.Y)
             {
@@ -142,13 +142,13 @@ namespace PoorEngine.GameComponents
             return moveSpeed;
         }
 
-        public void MoveLeft(Airplane p1)
+        public void MoveLeft(PlayerAirplane p1)
         {
             moveSpeed.X -= Math.Max(0.5f, Math.Abs(SpeedDifference(p1).X * 0.13f));
             moveSpeed.X = Math.Max(moveSpeed.X, p1.getVelocity().X);
         }
 
-        public void MoveRight(Airplane p1)
+        public void MoveRight(PlayerAirplane p1)
         {
 
             if (p1.getVelocity().X > moveSpeed.X)
@@ -159,7 +159,7 @@ namespace PoorEngine.GameComponents
             moveSpeed.X = Math.Min(moveSpeed.X, maxMoveSpeed.X);
         }
 
-        public void MoveRightMax(Airplane p1)
+        public void MoveRightMax(PlayerAirplane p1)
         {
 
             if (p1.getVelocity().X > moveSpeed.X)
@@ -169,7 +169,7 @@ namespace PoorEngine.GameComponents
             }
         }
 
-        public void MoveRightMegaMax(Airplane p1)
+        public void MoveRightMegaMax(PlayerAirplane p1)
         {
             if (p1.getVelocity().X > moveSpeed.X)
             {
@@ -177,7 +177,7 @@ namespace PoorEngine.GameComponents
             }
         }
 
-        public void SlowDownX(Airplane p1)
+        public void SlowDownX(PlayerAirplane p1)
         {
             if (moveSpeed.X > 0) {
                 moveSpeed.X -= Math.Max(0.03f, Math.Abs(SpeedDifference(p1).X * 0.05f));
@@ -187,7 +187,7 @@ namespace PoorEngine.GameComponents
             }
         }
 
-        public void AdjustXMovespeed(Airplane p1)
+        public void AdjustXMovespeed(PlayerAirplane p1)
         {
             if (moveSpeed.X > p1.getVelocity().X) {
                 moveSpeed.X -= 0.01f;
@@ -196,7 +196,7 @@ namespace PoorEngine.GameComponents
             moveSpeed.X = Math.Min(moveSpeed.X, maxMoveSpeed.X);
         }
 
-        public void AdjustYMovespeed(Airplane p1)
+        public void AdjustYMovespeed(PlayerAirplane p1)
         {
             if (moveSpeed.Y > p1.getVelocity().Y) { moveSpeed.Y -= 0.03f; }
             else if (moveSpeed.Y < p1.getVelocity().Y) { moveSpeed.Y += 0.08f; }

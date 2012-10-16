@@ -21,7 +21,7 @@ namespace PoorEngine.GameScreens
     public class GamePlayScreen : GameScreen 
     {
         const string airplaneTexture = "apTex1";
-        Airplane player1;
+        PlayerAirplane player1;
 
         Instrument throttleMeter;
         Instrument airspeedMeter;
@@ -47,7 +47,7 @@ namespace PoorEngine.GameScreens
             get { return EngineManager.Device.Viewport.Height; }
         }
 
-        public Airplane Airplane
+        public PlayerAirplane Airplane
         {
             get { return player1; }
         }
@@ -86,7 +86,7 @@ namespace PoorEngine.GameScreens
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
 
-            player1 = new Airplane();
+            player1 = new PlayerAirplane();
             SceneGraphManager.AddObject(player1);     
 
             // Add instruments
@@ -104,7 +104,7 @@ namespace PoorEngine.GameScreens
 
 
             // DEBUG =======================
-            //SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1",new Point(100,100), new Point(10,1), Airplane.getPosition(), new Vector2(1,1), 20, false));
+            //SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1",new Point(100,100), new Point(10,1), PlayerAirplane.getPosition(), new Vector2(1,1), 20, false));
             // =============================
 
             SceneGraphManager.LoadContent();

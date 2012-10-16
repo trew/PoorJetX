@@ -112,7 +112,7 @@ namespace PoorEngine.SceneObject
 
         public override void Collide(PoorSceneObject collidingWith)
         {
-            if (collidingWith.GetType() == typeof(Airplane)) {
+            if (collidingWith.GetType() == typeof(PlayerAirplane)) {
                 SceneGraphManager.RemoveObject(this);
             } 
             else if (collidingWith.GetType() == typeof(EnemyAirplane))

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -77,8 +77,8 @@ namespace PoorEngine.Managers
                     if (!second.UsedInBoundingBoxCheck) continue;
                     if (first.BoundingBox.Intersects(second.BoundingBox))
                     {
-                        if (first.GetType() == typeof(Airplane) && second.GetType() == typeof(Projectile) ||
-                            first.GetType() == typeof(Projectile) && second.GetType() == typeof(Airplane))
+                        if (first.GetType() == typeof(PlayerAirplane) && second.GetType() == typeof(Projectile) ||
+                            first.GetType() == typeof(Projectile) && second.GetType() == typeof(PlayerAirplane))
                         {
                             Projectile p = (Projectile)(first.GetType() == typeof(Projectile) ? first : second);
                             if (p.CanCollideWithPlayer(gameTime))
