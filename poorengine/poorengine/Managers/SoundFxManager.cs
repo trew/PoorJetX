@@ -71,5 +71,11 @@ namespace PoorEngine.Managers
                     i.Resume();
             }
         }
+
+        public static void Clear()
+        {
+            _soundEffects.Clear();
+            _soundInstancesLoaded = 0;
+        }
     }
 }
