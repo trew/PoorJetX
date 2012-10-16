@@ -17,9 +17,6 @@ namespace PoorEngine.SceneObject
         private int bulletCount;
         private int bombCount;
 
-        Vector2 lastBulletPos;
-        Vector2 lastBombPos;
-
         public AmmoController():
             base("")
         {
@@ -60,7 +57,7 @@ namespace PoorEngine.SceneObject
                 ScreenManager.SpriteBatch.Draw(bulletTex, drawPos, Color.White);
             }
 
-            lastBulletPos = drawPos;
+            AmmoManager.LastBulletPos = drawPos;
 
             // Set position for bomb-draw
             drawPos.X = 30;
@@ -70,7 +67,8 @@ namespace PoorEngine.SceneObject
                 ScreenManager.SpriteBatch.Draw(bombTex, drawPos, Color.White);
                 drawPos.Y += 10;
             }
-            lastBombPos = drawPos;
+
+            AmmoManager.LastBombPos = drawPos;
 
             ScreenManager.SpriteBatch.End();
         }

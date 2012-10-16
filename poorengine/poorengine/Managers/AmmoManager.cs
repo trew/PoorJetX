@@ -21,6 +21,9 @@ namespace PoorEngine.Managers
             reloadTimer.Stop();
         }
 
+        public static Vector2 LastBulletPos { get; set; }
+        public static Vector2 LastBombPos { get; set; }
+
         public static int MaxBullets
         {
             get { return MAXBULLETS; }
@@ -102,16 +105,6 @@ namespace PoorEngine.Managers
         public static void addBullets(int x)
         {
             bulletCount = Math.Min(bulletCount + x, MAXBOMBS);
-        }
-
-        public static Vector2 getLastBombPos()
-        {
-            return lastBombPos;
-        }
-
-        public static Vector2 getLastBulletPos()
-        {
-            return lastBulletPos;
         }
 
         public static void Update(GameTime gameTime)
