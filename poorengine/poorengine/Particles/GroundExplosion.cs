@@ -71,9 +71,15 @@ namespace PoorEngine.Particles
 
             // Overridden in InitializeParticle()
             direction = 0;
-            spread = 360;
+            spread = 180;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="where"></param>
+        /// <param name="direction">0-360 degrees where 0 is pointing straight up</param>
+        /// <param name="spread"> +- 0-180 degrees spread.</param>
         public void AddParticles(Vector2 where, float direction, float spread)
         {
             this.direction = direction;
