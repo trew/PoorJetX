@@ -171,6 +171,7 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.Escape))
             {
+                SoundFxManager.Pause();
                 PauseMenuScreen pauseMenuScreen = new PauseMenuScreen(400, 300);
                 pauseMenuScreen.ExitToMenuEvent += ExitGame;
                 ScreenManager.AddScreen(pauseMenuScreen);

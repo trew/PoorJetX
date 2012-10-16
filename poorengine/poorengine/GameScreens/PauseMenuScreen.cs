@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using PoorEngine.GameComponents;
@@ -46,6 +46,12 @@ namespace PoorJetX.GameScreens
             TransitionOnTime = TimeSpan.FromSeconds(0);
             TransitionOffTime = TimeSpan.FromSeconds(0);
             IsPopup = true;
+        }
+
+        protected override void OnCancel()
+        {
+            SoundFxManager.Resume();
+            base.OnCancel();
         }
 
         void OptionsMenuEntrySelected(object sender, EventArgs e)

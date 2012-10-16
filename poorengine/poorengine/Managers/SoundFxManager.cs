@@ -54,5 +54,22 @@ namespace PoorEngine.Managers
             }
             return null;
         }
+
+        public static void Pause()
+        {
+            foreach (SoundEffectInstance i in _soundEffects.Values)
+            {
+                i.Pause();
+            }
+        }
+
+        public static void Resume()
+        {
+            foreach (SoundEffectInstance i in _soundEffects.Values)
+            {
+                if (i.State == SoundState.Paused)
+                    i.Resume();
+            }
+        }
     }
 }
