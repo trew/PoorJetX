@@ -60,6 +60,7 @@ namespace PoorJetX.GameScreens
 
         void ExitToMenu(object sender, EventArgs e)
         {
+            SoundFxManager.Clear();
             OnCancel();
             ExitToMenuEvent.Invoke(sender, e);
         }
