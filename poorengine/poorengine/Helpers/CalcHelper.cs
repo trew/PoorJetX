@@ -92,8 +92,9 @@ namespace PoorEngine.Helpers
         {
             float deadzone = 800f;    // How far from the middle of the screen will volume start going down
             float borderzone = 1000f; // Over how long distance will the volume go from 100% to 0%
+            float distToMid = (float)CalcHelper.DistanceToMiddle(position);
 
-            return (borderzone - ((float)CalcHelper.DistanceToMiddle(position) - deadzone)) / borderzone;
+            return MathHelper.Clamp((float)(borderzone - (distToMid - deadzone)) / borderzone, 0f, 1f);
         }
     }
 }

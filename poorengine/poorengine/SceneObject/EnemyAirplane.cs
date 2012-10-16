@@ -54,7 +54,7 @@ namespace PoorEngine.SceneObject
 
             targetX = CameraManager.Camera.Pos.X + EngineManager.Device.Viewport.Width * 0.8;
             double xdiff = Position.X - targetX;
-            _thrust = 5 - xdiff / 300;
+            _thrust = MathHelper.Clamp((float)(5 - xdiff / 300), 0f, 7f);
 
             // Adjust _velocityAngle towards the airplane _orientation 
             if (posDiff < velocityAngleRotationSpeed)
