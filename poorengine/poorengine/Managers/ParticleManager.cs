@@ -20,7 +20,7 @@ using PoorEngine.Particles;
 
 namespace PoorEngine.Managers
 {
-    public class ParticleManager : GameComponent
+    public class ParticleManager : DrawableGameComponent
     {
 
         private static ExplosionParticleSystem _explosionParticles = null;
@@ -32,27 +32,55 @@ namespace PoorEngine.Managers
         private static ProjectileHit _projectileHit = null;
         public static ProjectileHit ProjectileHit { get { return _projectileHit; } }
 
+        private static List<ParticleSystem> _systems = null;
+
         public ParticleManager(Game game)
             :base(game)
         {
+            _systems = new List<ParticleSystem>();
         }
 
         public override void Initialize()
         {
             base.Initialize();
+            _explosionParticles.Initialize();
+            _groundExplosion.Initialize();
+            _projectileHit.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
             _explosionParticles = new ExplosionParticleSystem(EngineManager.Game, 1);
-            EngineManager.Game.Components.Add(_explosionParticles);
-
             _groundExplosion = new GroundExplosion(EngineManager.Game, 1);
-            EngineManager.Game.Components.Add(_groundExplosion);
-
             _projectileHit = new ProjectileHit(EngineManager.Game, 1);
-            EngineManager.Game.Components.Add(_projectileHit);
+            _systems.Add(_explosionParticles);
+            _systems.Add(_groundExplosion);
+            _systems.Add(_projectileHit);
+        }
+
+        protected override void UnloadContent()
+        {
+            base.UnloadContent();
+            _systems.Clear();
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+            foreach (ParticleSystem syst in _systems)
+            {
+                syst.Draw(gameTime);
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            foreach (ParticleSystem syst in _systems)
+            {
+                syst.Update(gameTime);
+            }
         }
     }
 }
