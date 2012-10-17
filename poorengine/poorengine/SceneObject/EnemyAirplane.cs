@@ -23,6 +23,7 @@ namespace PoorEngine.SceneObject
         private Stopwatch _reloadTimer;
         private Stopwatch _reloadBurstTimer;
         private int _firedBulletsInBurst;
+        private bool _initialBurst = false; //Don't wait for the first burst
         const int BURSTSPERMINUTE = 10;
         const int BULLETSINBURST = 5;
         const int BURSTBULLETPERSECOND = 10;
@@ -75,7 +76,7 @@ namespace PoorEngine.SceneObject
             if (_target == null) return;
             if (!_reloadTimer.IsRunning) _reloadTimer.Restart();
 
-            if (_reloadTimer.ElapsedMilliseconds > 60000 / BURSTSPERMINUTE)
+            if (_reloadTimer.ElapsedMilliseconds > 60000 / BURSTSPERMINUTE || !_initialBurst)
             {
                 // Start burst
                 if (!_reloadBurstTimer.IsRunning) _reloadBurstTimer.Restart();
@@ -99,6 +100,7 @@ namespace PoorEngine.SceneObject
 
                 // Stop the burst
                 } else {
+                    _initialBurst = true;
                     _reloadTimer.Restart();
                 }
             }
