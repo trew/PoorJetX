@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using PoorEngine.SceneObject.SceneGraph;
 using PoorEngine.SceneObject;
+using PoorEngine.Interfaces;
 
 namespace PoorEngine.Managers
 {
@@ -46,6 +47,11 @@ namespace PoorEngine.Managers
             _root.Draw(gameTime);
         }
 
+        private static bool typeMatch(Type a, Type b)
+        {
+            return a.IsAssignableFrom(b) || b.IsAssignableFrom(a);
+        }
+
         public static new void Update(GameTime gameTime)
         {
             // Add new nodes and sort the list
@@ -70,15 +76,17 @@ namespace PoorEngine.Managers
                 for(int second = 0; second < _root.Nodes.Count; second++)
                 {
                     PoorSceneObject secondObject = ((SceneObjectNode)_root.Nodes[second]).SceneObject;
-                    if (firstObject == secondObject) continue;
+                    if (firstObject.Equals(secondObject)) continue;
                     if (!secondObject.UsedInBoundingBoxCheck) continue;
                     if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
                     {
-                        if (firstObject.GetType() == typeof(PlayerAirplane) && secondObject.GetType() == typeof(Projectile) ||
-                            firstObject.GetType() == typeof(Projectile) && secondObject.GetType() == typeof(PlayerAirplane))
+                        if (typeMatch(firstObject.GetType(), typeof(Projectile)) && typeMatch(secondObject.GetType(), typeof(Airplane)) ||
+                            typeMatch(firstObject.GetType(), typeof(Airplane)) && typeMatch(secondObject.GetType(), typeof(Projectile)))
                         {
-                            Projectile p = (Projectile)(firstObject.GetType() == typeof(Projectile) ? firstObject : secondObject);
-                            if (p.CanCollideWithPlayer(gameTime))
+                            // Separate projectile and the other object
+                            Projectile p = (Projectile)(typeMatch(firstObject.GetType(), typeof(Projectile)) ? firstObject : secondObject);
+                            IPoorSceneObject obj = p == firstObject ? secondObject : firstObject;
+                            if (p.CanCollideWithObject(gameTime, obj))
                             {
                                 firstObject.Collide(secondObject);
                                 secondObject.Collide(firstObject);

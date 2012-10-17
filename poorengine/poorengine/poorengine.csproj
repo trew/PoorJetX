@@ -115,6 +115,7 @@
     <Compile Include="GameScreens\PauseMenuScreen.cs" />
     <Compile Include="GameScreens\ScoreScreen.cs" />
     <Compile Include="Helpers\CalcHelper.cs" />
+    <Compile Include="Managers\AIManager.cs" />
     <Compile Include="Managers\AmmoManager.cs" />
     <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\LevelManager.cs" />
