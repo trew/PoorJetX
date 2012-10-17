@@ -76,7 +76,7 @@ namespace PoorEngine.SceneObject
             Texture2D texture = TextureManager.GetTexture(texName).BaseTexture as Texture2D;
             Vector2 textureOrigin = new Vector2(frameSize.X / 2, frameSize.Y / 2);
             ScreenManager.SpriteBatch.Begin();
-            ScreenManager.SpriteBatch.Draw(texture, Position - CameraManager.Camera.Pos, new Rectangle(
+            ScreenManager.SpriteBatch.Draw(texture, CameraManager.Camera.Normalize(Position), new Rectangle(
                                 frameSize.X * currentFrame.X,
                                 frameSize.Y * currentFrame.Y,
                                 frameSize.X,

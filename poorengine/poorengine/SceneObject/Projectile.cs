@@ -96,7 +96,7 @@ namespace PoorEngine.SceneObject
 
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
-                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
+                                            CameraManager.Camera.Normalize(Position), null, Color.AliceBlue,
                                             _orientation + (float)CalcHelper.DegreeToRadian(180), _origin, Scale, SpriteEffects.None, 0f);
             ScreenManager.SpriteBatch.End();
 
