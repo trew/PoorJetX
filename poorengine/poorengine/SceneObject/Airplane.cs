@@ -113,14 +113,14 @@ namespace PoorEngine.SceneObject
         {
             if (IsCrashing) return;
 
-            if (collidingWith.GetType() == typeof(Projectile))
+            if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Projectile)))
             {
                 Projectile proj = (Projectile)collidingWith;
                 TakeDamage(proj.Damage);
             }
         }
 
-        public void Kill()
+        public virtual void Kill()
         {
             _health = 0;
             IsCrashing = true;

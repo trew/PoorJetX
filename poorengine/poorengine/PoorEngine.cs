@@ -149,7 +149,7 @@ namespace PoorEngine
             {
                 foreach (GameScreen screen in ScreenManager.GetScreens())
                 {
-                    if (screen.GetType() == typeof(GamePlayScreen))
+                    if (SceneGraphManager.TypeMatch(screen.GetType(), typeof(GamePlayScreen)))
                     {
                         GamePlayScreen gpScreen = (GamePlayScreen)screen;
                         return gpScreen.Airplane;

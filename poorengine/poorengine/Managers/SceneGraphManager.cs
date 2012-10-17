@@ -47,7 +47,7 @@ namespace PoorEngine.Managers
             _root.Draw(gameTime);
         }
 
-        private static bool typeMatch(Type a, Type b)
+        public static bool TypeMatch(Type a, Type b)
         {
             return a.IsAssignableFrom(b) || b.IsAssignableFrom(a);
         }
@@ -80,11 +80,11 @@ namespace PoorEngine.Managers
                     if (!secondObject.UsedInBoundingBoxCheck) continue;
                     if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
                     {
-                        if (typeMatch(firstObject.GetType(), typeof(Projectile)) && typeMatch(secondObject.GetType(), typeof(Airplane)) ||
-                            typeMatch(firstObject.GetType(), typeof(Airplane)) && typeMatch(secondObject.GetType(), typeof(Projectile)))
+                        if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(Airplane)) ||
+                            TypeMatch(firstObject.GetType(), typeof(Airplane)) && TypeMatch(secondObject.GetType(), typeof(Projectile)))
                         {
                             // Separate projectile and the other object
-                            Projectile p = (Projectile)(typeMatch(firstObject.GetType(), typeof(Projectile)) ? firstObject : secondObject);
+                            Projectile p = (Projectile)(TypeMatch(firstObject.GetType(), typeof(Projectile)) ? firstObject : secondObject);
                             IPoorSceneObject obj = p == firstObject ? secondObject : firstObject;
                             if (p.CanCollideWithObject(gameTime, obj))
                             {
