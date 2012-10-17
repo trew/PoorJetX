@@ -89,13 +89,21 @@ namespace PoorEngine.Managers
             EnemyAirplane enemy = null;
             // get the right-most side of the camera + an additional 100px
             // which we use.
-            float x = CameraManager.Camera.Pos.X;
+            float cameraPosition = CameraManager.Camera.Pos.X;
 
             do {
                 enemy = CurrentLevel.GetNextEnemy();
-                if (enemy != null && enemy.Position.X <= x)
+                if (enemy != null && enemy.Position.X <= cameraPosition)
                     enemy = CurrentLevel.SpawnEnemy();
-            } while (enemy != null && enemy.Position.X <= x);
+            } while (enemy != null && enemy.Position.X <= cameraPosition);
+
+            // Check if there is a text-object ready to appear
+            Text text = null;
+            do {
+                text = CurrentLevel.GetNextText();
+                if (text != null && text.Xappear <= cameraPosition)
+                    text = CurrentLevel.SpawnText();
+            } while (text != null && text.Xappear <= cameraPosition);
         }
     }
 }
