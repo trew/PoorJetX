@@ -100,6 +100,7 @@ namespace PoorEngine.SceneObject
 
                 // Stop the burst
                 } else {
+                    _firedBulletsInBurst = 0;
                     _initialBurst = true;
                     _reloadTimer.Restart();
                 }
