@@ -71,11 +71,25 @@ namespace PoorEngine.SceneObject
             }
         }
 
+        protected float GetAngleToTarget(GameTime gameTime)
+        {
+            int distanceMod = (int)CalcHelper.DistanceBetween(Position, Target.Position) / 75;
+            double orientation = CalcHelper.getAngle(Position, CalcHelper.calculatePoint(Target.Position, Target.Orientation, (float)Target.LinearVelocity * distanceMod)) - 90f;
+
+            EngineManager.Debug.Print("Calc: " + (Target.Position.Y - Position.Y) / 100);
+            orientation -= (Target.Position.X - Position.X) / 80;
+
+            orientation += (Target.Position.Y - Position.Y) / 150;
+
+            return (float)CalcHelper.formatAngle(orientation);
+        }
+
         protected void FireBullets(GameTime gameTime)
         {
             if (_target == null) return;
             if (!_reloadTimer.IsRunning) _reloadTimer.Restart();
 
+            GetAngleToTarget(gameTime);
             if (_reloadTimer.ElapsedMilliseconds > 60000 / BURSTSPERMINUTE || !_initialBurst)
             {
                 // Start burst
@@ -90,8 +104,7 @@ namespace PoorEngine.SceneObject
                                                         CalcHelper.RandomBetween(-0.2f, 0.3f),
                                                         CalcHelper.CalcPan(Position).X);
 
-
-                        float angle = (float)CalcHelper.formatAngle(CalcHelper.getAngle(Position, Target.Position) - 90f);
+                        float angle = GetAngleToTarget(gameTime);
                         SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, Orientation, 30f),
                                                            Velocity, 15f,
                                                            angle, 3f,

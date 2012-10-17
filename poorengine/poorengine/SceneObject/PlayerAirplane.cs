@@ -51,7 +51,7 @@ namespace PoorEngine.SceneObject
             if (collidingWith.GetType() == typeof(Projectile))
             {
                 Projectile proj = (Projectile)collidingWith;
-                TakeDamage(proj.Damage);
+                //TakeDamage(proj.Damage);
             }
         }
 

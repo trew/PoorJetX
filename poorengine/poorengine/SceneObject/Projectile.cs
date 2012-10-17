@@ -110,7 +110,7 @@ namespace PoorEngine.SceneObject
 
         public void Update(GameTime gameTime)
         {
-                _velocity += new Vector2(0f, (float)(5.8 * gameTime.ElapsedGameTime.TotalSeconds));
+            _velocity += new Vector2(0, (float)(5.8 * gameTime.ElapsedGameTime.TotalSeconds));
 
             // Lets whistle!
             if (_type == ProjectileType.Bomb && _velocity.Y > 4)
