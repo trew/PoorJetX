@@ -23,6 +23,9 @@ namespace PoorEngine.GameScreens
         const string airplaneTexture = "apTex1";
         PlayerAirplane player1;
 
+        int janitorCoffeeBreak;
+        const int tenMinutes = 30;
+
         Instrument throttleMeter;
         Instrument airspeedMeter;
 
@@ -32,6 +35,7 @@ namespace PoorEngine.GameScreens
 
         public GamePlayScreen(int level)
         {
+            janitorCoffeeBreak = 0;
             CameraManager.Reset();
             AmmoManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
@@ -75,7 +79,7 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/anim_smoke1"), "anim_smoke1");
             TextureManager.AddTexture(new PoorTexture("Textures/anim_explosion1"), "anim_explosion1");
             TextureManager.AddTexture(new PoorTexture("Textures/anim_groundcrash"), "anim_groundcrash");
-
+            
             // Sounds
             SoundFxLibrary.AddToLibrary("SoundFX/bomb1", "bomb1");
             SoundFxLibrary.AddToLibrary("SoundFX/bomb2", "bomb2");
@@ -138,16 +142,23 @@ namespace PoorEngine.GameScreens
         /// </summary>
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            
+
  	        base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             if (ScreenState != ScreenState.Active || otherScreenHasFocus || coveredByOtherScreen) 
             { 
                 return; 
             }
 
+            if(janitorCoffeeBreak++ > tenMinutes)
+                GC.Collect();
+
             EngineManager.Debug.Print("Total GameTime: " + gameTime.TotalGameTime);
             EngineManager.Debug.Print("Elapsed GameTime: " + gameTime.ElapsedGameTime);
             EngineManager.Debug.Print("Running Slowly: " + gameTime.IsRunningSlowly);
+            EngineManager.Debug.Print("GC.GetTotalMemory: " + GC.GetTotalMemory(false)/1024 + " KB");
             EngineManager.Debug.Print("==============================");
+            
 
             AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
