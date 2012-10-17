@@ -19,17 +19,9 @@ namespace PoorEngine.Managers
             get { return _root; }
         }
 
-        private static Node _new;
-        /// <summary>
-        /// New nodes to be added in next update
-        /// </summary>
-        public static Node New
-        {
-            get { return _new; }
-        }
-
         public static bool newObjectsAdded;
         public static Queue<Node> removeQueue { get; set; }
+        private static Queue<Node> _new;
 
         /// <summary>
         /// Create the scenegraph Managers.
@@ -39,7 +31,7 @@ namespace PoorEngine.Managers
             : base(game)
         {
             _root = new Node();
-            _new = new Node();
+            _new = new Queue<Node>();
             removeQueue = new Queue<Node>();
 
             newObjectsAdded = false;
@@ -59,12 +51,11 @@ namespace PoorEngine.Managers
             // Add new nodes and sort the list
             if (newObjectsAdded)
             {
-                foreach (SceneObjectNode node in _new.Nodes)
+                while(_new.Count > 0)
                 {
-                    _root.AddNode(node);
+                    _root.AddNode(_new.Dequeue());
 
                 }
-                _new.Nodes.Clear();
                 _root.Nodes.Sort(comp);
 
                 newObjectsAdded = false;
@@ -135,7 +126,7 @@ namespace PoorEngine.Managers
             SceneObjectNode node = new SceneObjectNode(newObject);
             
             node.LoadContent(); // this or crash in node.Draw
-            _new.AddNode(node);
+            _new.Enqueue(node);
 
             newObjectsAdded = true;
         }

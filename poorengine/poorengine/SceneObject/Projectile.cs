@@ -133,7 +133,7 @@ namespace PoorEngine.SceneObject
                 }
                 else if (_type == ProjectileType.Bomb)
                 {
-                    ParticleManager.GroundExplosion.AddParticles(Position);
+                    ParticleManager.GroundExplosion.AddParticles(Position, 0, 35);
                     SoundFxLibrary.GetFx("bomb2").Play(CalcHelper.CalcVolume(Position) * 0.35f, CalcHelper.RandomBetween(-0.5f, 1f), CalcHelper.CalcPan(Position).X * 1.2f);
 
                     // Remove whisteling sound
