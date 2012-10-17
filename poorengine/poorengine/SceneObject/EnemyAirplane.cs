@@ -105,10 +105,10 @@ namespace PoorEngine.SceneObject
                                                         CalcHelper.CalcPan(Position).X);
 
                         float angle = GetAngleToTarget(gameTime);
-                        SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, Orientation, 30f),
+                        SceneGraphManager.AddObject(new BulletProjectile(CalcHelper.calculatePoint(Position, Orientation, 30f),
                                                            Velocity, 15f,
                                                            angle, 3f,
-                                                           "bullet", this));
+                                                           this));
                     }
 
                 // Stop the burst
@@ -205,18 +205,18 @@ namespace PoorEngine.SceneObject
 
         public override void Collide(PoorSceneObject collidingWith)
         {
-            if (!IsCrashing && _health > 0 && collidingWith.GetType() == typeof(Projectile))
+            if (!IsCrashing && _health > 0 && SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Projectile)))
             {
                 Projectile p = (Projectile)collidingWith;
                 _health -= p.Damage;
                 
-                if (((Projectile)collidingWith).Type == Projectile.ProjectileType.Bullet)
+                if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(BulletProjectile)))
                 {
                     ParticleManager.ProjectileHit.AddParticles(new Vector2(Position.X - 10, Position.Y));
                     SoundFxLibrary.GetFx("hitplane1").Play(CalcHelper.CalcVolume(Position) * 0.1f, CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
                 }
 
-                else if (((Projectile)collidingWith).Type == Projectile.ProjectileType.Bomb)
+                else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(BombProjectile)))
                 {
                     ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X - 10, Position.Y));
                     ParticleManager.Explosion.AddParticles(Position);
@@ -229,7 +229,8 @@ namespace PoorEngine.SceneObject
                     IsCrashing = true;
                     EngineManager.Score += 1;
                 }
-            } else if (collidingWith.GetType() == typeof(EnemyAirplane))
+            } 
+            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(EnemyAirplane)))
             {
                 EnemyAirplane e = (EnemyAirplane)(collidingWith);
 
