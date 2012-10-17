@@ -96,8 +96,7 @@ namespace PoorEngine.Particles
             float Xangle = (float)Math.Sin(CalcHelper.DegreeToRadian(angle));
             float Yangle = -(float)Math.Cos(CalcHelper.DegreeToRadian(angle));
 
-            Vector2 dir = new Vector2(Xangle, Yangle);
-            return dir;
+            return new Vector2(Xangle, Yangle);
         }
 
         protected override void InitializeParticle(Particle p, Vector2 where)

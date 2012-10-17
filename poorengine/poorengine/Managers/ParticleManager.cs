@@ -81,17 +81,17 @@ namespace PoorEngine.Managers
 
         public static void Draw(GameTime gameTime)
         {
-            foreach (ParticleSystem syst in _systems)
+            for (int i = 0; i < _systems.Count; i++)
             {
-                syst.Draw(gameTime);
+                _systems[i].Draw(gameTime);
             }
         }
 
         public static new void Update(GameTime gameTime)
         {
-            foreach (ParticleSystem syst in _systems)
+            for (int i = 0; i < _systems.Count; i++)
             {
-                syst.Update(gameTime);
+                _systems[i].Update(gameTime);
             }
         }
     }
