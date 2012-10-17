@@ -12,6 +12,8 @@ using PoorEngine.Settings;
 using PoorEngine.Managers;
 using PoorEngine.GameComponents;
 using PoorEngine.Particles;
+using PoorEngine.SceneObject;
+using PoorEngine.GameScreens;
 
 namespace PoorEngine
 {
@@ -140,6 +142,22 @@ namespace PoorEngine
             CameraManager.Reset();
         }
 
+        public static PlayerAirplane Player
+        {
+            // OMFG SO UGLY!
+            get
+            {
+                foreach (GameScreen screen in ScreenManager.GetScreens())
+                {
+                    if (screen.GetType() == typeof(GamePlayScreen))
+                    {
+                        GamePlayScreen gpScreen = (GamePlayScreen)screen;
+                        return gpScreen.Airplane;
+                    }
+                }
+                return null;
+            }
+        }
 
         public static void ApplyResolutionChange()
         {
