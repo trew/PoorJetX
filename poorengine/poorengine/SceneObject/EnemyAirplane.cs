@@ -230,9 +230,9 @@ namespace PoorEngine.SceneObject
                     EngineManager.Score += 1;
                 }
             } 
-            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(EnemyAirplane)))
+            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane)))
             {
-                EnemyAirplane e = (EnemyAirplane)(collidingWith);
+                Airplane e = (Airplane)(collidingWith);
 
                 // Is the other plane crashing?
                 if (e.IsCrashing)

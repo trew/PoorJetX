@@ -120,7 +120,7 @@ namespace PoorEngine.SceneObject
             }
         }
 
-        public void Kill()
+        public virtual void Kill()
         {
             _health = 0;
             IsCrashing = true;

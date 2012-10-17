@@ -52,6 +52,14 @@ namespace PoorEngine.SceneObject
                 Projectile proj = (Projectile)collidingWith;
                 //TakeDamage(proj.Damage);
             }
+            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(EnemyAirplane)))
+            {
+                IsDead = true;
+                IsCrashing = true;
+                _health = 0;
+                AirExplode();
+            }
+
         }
 
         public override void Update(GameTime gameTime)
