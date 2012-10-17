@@ -45,7 +45,6 @@ namespace PoorEngine.Helpers
         {
             double deltax = a.X - b.X;
             double deltay = a.Y - b.Y;
-
             double angle_rad = Math.Atan2(deltay, deltax);
 
             return angle_rad * 180.0 / Math.PI;

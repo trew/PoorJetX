@@ -25,6 +25,22 @@ namespace PoorEngine.GameComponents
     }
 
     [Serializable]
+    public class LevelText
+    {
+        public string text;
+        public string fontName;
+        public int R;
+        public int G;
+        public int B;
+        public int X;
+        public int Y;
+        public int XAppear;
+        public bool center;
+        public float outline;
+        public float secondsTTL;
+    }
+
+    [Serializable]
     public class LevelBackground
     {
         public string FileName;
@@ -55,10 +71,19 @@ namespace PoorEngine.GameComponents
     {
 
         #region LevelData
+        private List<LevelText> _texts;
+        /// <summary>
+        /// A list of text-objects
+        /// </summary>
+        public List<LevelText> Texts
+        {
+            get { return _texts; }
+            set { _texts = value; }
+        }
+
         private List<LevelVisual> _visuals;
         /// <summary>
-        /// A list of visual objects where the String is the filename
-        /// and float is the moveRatio
+        /// A list of visual objects
         /// </summary>
         public List<LevelVisual> Visuals
         {
@@ -100,6 +125,7 @@ namespace PoorEngine.GameComponents
         }
 
         private Queue<EnemyAirplane> _enemies;
+        private Queue<Text> _texts;
 
         #region Utility functions
         /// <summary>
@@ -162,6 +188,47 @@ namespace PoorEngine.GameComponents
             _enemies.First().Position += new Vector2(EngineManager.Device.Viewport.Width + 100, 0);
             SceneGraphManager.AddObject(_enemies.First());
             return _enemies.Dequeue();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void QueueTexts()
+        {
+            // Sort texts by XAppear, so they appear correctly
+            // in the queue.
+            _data.Texts.Sort((LevelText x1, LevelText x2) =>
+                x1.XAppear < x2.XAppear ? -1 : 1);
+
+            _texts = new Queue<Text>();
+            foreach (LevelText lt in _data.Texts)
+            {
+                Text t = new Text(lt.text, lt.fontName, new Color(lt.R, lt.G, lt.B), new Vector2(lt.X, lt.Y), lt.XAppear, lt.center, lt.outline, lt.secondsTTL);
+                _texts.Enqueue(t);
+
+            }
+        }
+
+        /// <summary>
+        /// Get the next text in queue
+        /// </summary>
+        /// <returns></returns>
+        public Text GetNextText()
+        {
+            if (_texts == null || _texts.Count <= 0) return null;
+            return _texts.First();
+        }
+
+        /// <summary>
+        /// Spawns a new text
+        /// </summary>
+        /// <returns>An text, or null if no texts is in queue</returns>
+        public Text SpawnText()
+        {
+            if (_texts == null || _texts.Count <= 0) return null;
+            _texts.First().SpawnTime = DateTime.Now.TimeOfDay;
+            SceneGraphManager.AddObject(_texts.First());
+            return _texts.Dequeue();
         }
         #endregion
 

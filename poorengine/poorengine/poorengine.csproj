@@ -133,6 +133,7 @@
     <Compile Include="SceneObject\Background.cs" />
     <Compile Include="GameComponents\Camera.cs" />
     <Compile Include="SceneObject\Airplane.cs" />
+    <Compile Include="SceneObject\Text.cs" />
     <Compile Include="SceneObject\PlayerAirplane.cs" />
     <Compile Include="GameComponents\GameScreen.cs" />
     <Compile Include="GameComponents\Input.cs" />

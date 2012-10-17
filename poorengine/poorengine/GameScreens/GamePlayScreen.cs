@@ -90,6 +90,8 @@ namespace PoorEngine.GameScreens
 
             LevelManager.CurrentLevel.LoadVisuals();
             LevelManager.CurrentLevel.QueueEnemies();
+            LevelManager.CurrentLevel.QueueTexts();
+            // TODO CurrentLevel.QueueSounds();
 
             ammoController = new AmmoController();
             SceneGraphManager.AddObject(ammoController);
@@ -149,7 +151,7 @@ namespace PoorEngine.GameScreens
             { 
                 return; 
             }
-
+            
             if(janitorCoffeeBreak++ > tenMinutes)
                 GC.Collect();
 
@@ -222,6 +224,16 @@ namespace PoorEngine.GameScreens
             {
                 inst.Draw(gameTime);
             }
+
+            if (player1.IsCrashing || player1.IsDead)
+            {
+                Text.DrawTextCentered("message",
+                    "GAME OVER",
+                    Color.Red,
+                    200,
+                    1.3f);
+            }
+
         }
 
         /// <summary>
