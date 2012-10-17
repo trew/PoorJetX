@@ -61,6 +61,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Textures\bombtargetmarker.png">
+      <Name>bombtargetmarker</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Textures\gradient.jpg">
       <Name>gradient</Name>
       <Importer>TextureImporter</Importer>

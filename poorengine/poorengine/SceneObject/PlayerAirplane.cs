@@ -159,6 +159,92 @@ namespace PoorEngine.SceneObject
                 _airSpeed = Math.Min(_airSpeed, 20);
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            drawBulletPath();
+            drawBombPath();
+
+            base.Draw(gameTime);
+        }
+
+        private void drawBulletPath()
+        {
+            Vector2 oldPoint = Position;
+            Vector2 newPoint = Position;
+
+            float xFactor = (float)Math.Sin(CalcHelper.DegreeToRadian(_orientation));
+            float yFactor = (float)-Math.Cos(CalcHelper.DegreeToRadian(_orientation));
+            Vector2 boostFactor = new Vector2(xFactor * 15, yFactor * 15);
+            Vector2 pathbullet_velocity = _velocity + boostFactor;
+            ScreenManager.SpriteBatch.Begin();
+
+            for (int i = 1; i < 7; i++)
+            {
+                pathbullet_velocity += new Vector2(0, (float)(6.3 * EngineManager.Game.TargetElapsedTime.TotalSeconds * i));
+
+                oldPoint = newPoint;
+                newPoint += pathbullet_velocity * i;
+
+                DrawLine(Color.Black * (float)(0.5f / (float)i), oldPoint, newPoint);
+
+            }
+
+            ScreenManager.SpriteBatch.End();
+        }
+
+        private void drawBombPath()
+        {
+            Texture2D tex = TextureManager.GetTexture("bombtargetmarker").BaseTexture as Texture2D;
+
+            Vector2 oldPoint = CalcHelper.calculatePoint(Position, Orientation + 90, 10f);
+            Vector2 newPoint = oldPoint;
+            Vector2 pathbomb_velocity = _velocity;// +boostFactor;
+            double timeFactor = EngineManager.Game.TargetElapsedTime.TotalSeconds;
+            int screenHeight = EngineManager.Device.Viewport.Height;
+
+            ScreenManager.SpriteBatch.Begin();
+
+            float precision = 5f; // higher precision = more detailed drawn path, however shorter path
+            int repeats = 35; // higher number of repeats = longer path. TO HIGH GIVES BAD PERFORMANCE!
+
+            for (int i = 1; i < repeats; i++)
+            {
+                pathbomb_velocity += new Vector2(0, (float)((5.8f) * timeFactor / precision * (i)));
+                oldPoint = newPoint;
+                newPoint += pathbomb_velocity / precision * i;
+
+                DrawLine(Color.Red * (float)(20f / (float)i), oldPoint, newPoint);
+                //DrawLine(Color.Red, oldPoint, newPoint);
+                if (newPoint.Y > screenHeight - 50)
+                {
+                    ScreenManager.SpriteBatch.Draw(
+                        tex,
+                        new Vector2(CameraManager.Camera.Normalize(newPoint).X,
+                            EngineManager.Device.Viewport.Height - 60)
+                            + new Vector2(-tex.Width / 2, 0),
+                        Color.White);
+                    break;
+                }
+
+            }
+
+            ScreenManager.SpriteBatch.End();
+        }
+
+
+        public void DrawLine(Color color, Vector2 start, Vector2 end)
+        {
+           ScreenManager.SpriteBatch.Draw(TextureManager.GetColorTexture(color), 
+               CameraManager.Camera.Normalize(start), 
+               null, 
+               Color.White,
+               (float)Math.Atan2(end.Y - start.Y, end.X - start.X),
+                Vector2.Zero,
+                new Vector2(Vector2.Distance(start, end), 1f),
+                SpriteEffects.None, 0f);
+        }
+
+
         public override void HandleInput(Input input)
         {
             HandleDebugInput(input);
