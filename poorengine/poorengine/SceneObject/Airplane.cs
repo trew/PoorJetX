@@ -120,7 +120,6 @@ namespace PoorEngine.SceneObject
             }
         }
 
-
         public void Kill()
         {
             _health = 0;
@@ -257,7 +256,7 @@ namespace PoorEngine.SceneObject
             SoundFxManager.GetByID(_engineFX_id).Volume = MathHelper.Clamp(enginePitch, 0.6f, 1f);
             SoundFxManager.GetByID(_engineFX_id).Volume *= SOUNDVOLUME;
             SoundFxManager.GetByID(_engineFX_id).Volume *= CalcHelper.CalcVolume(Position);
-            EngineManager.Debug.Print("SoundVolume ID: " + _engineFX_id + " - Vol: " + SoundFxManager.GetByID(_engineFX_id).Volume);
+            //EngineManager.Debug.Print("SoundVolume ID: " + _engineFX_id + " - Vol: " + SoundFxManager.GetByID(_engineFX_id).Volume);
 
             // Add dive-sound if speed is high enough
             float airspeedPitch;
