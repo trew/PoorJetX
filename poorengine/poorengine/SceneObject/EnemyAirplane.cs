@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,27 +17,101 @@ namespace PoorEngine.SceneObject
 {
     public class EnemyAirplane : Airplane
     {
-        private Vector2 targetPos;
-        private double targetX;
+        private Airplane _target;
+        public Airplane Target { get { return _target; } }
+
+        private Stopwatch _reloadTimer;
+        private Stopwatch _reloadBurstTimer;
+        private int _firedBulletsInBurst;
+        private bool _initialBurst = false; //Don't wait for the first burst
+        const int BURSTSPERMINUTE = 10;
+        const int BULLETSINBURST = 5;
+        const int BURSTBULLETPERSECOND = 10;
 
         public EnemyAirplane(int maxHealth):
             base(maxHealth, "apTex1")
         {
             _thrust = 3;
             _airSpeed = 3;
-        }
-
-        public void setTargetPos(Vector2 tp)
-        {
-            targetPos = tp;
+            _reloadTimer = new Stopwatch();
+            _reloadBurstTimer = new Stopwatch();
+            _firedBulletsInBurst = 0;
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (!IsCrashing) UpdateAI(gameTime);
             base.Update(gameTime);
 
             // DEBUG
             HandleInput(EngineManager.Input);
+        }
+
+        protected void SetTarget(GameTime gameTime)
+        {
+            if (_target == null)
+                _target = EngineManager.Player;
+        }
+
+        protected void AdjustThrottle(GameTime gameTime)
+        {
+            // Find Target and adjust throttle according to where 
+            // target is located.
+            if (Target == null)
+            {
+                Vector2 targetX = new Vector2(CameraManager.Camera.Pos.X + EngineManager.Device.Viewport.Width * 0.8f, Position.Y);
+                Vector2 targetDiff = Position - targetX;
+                _thrust = MathHelper.Clamp((float)(5 - targetDiff.X / 300), 0f, 7f);
+            }
+            else
+            {
+                Vector2 targetX = Target.Position;
+                Vector2 targetDiff = Position - targetX;
+                _thrust = MathHelper.Clamp((float)(5 - targetDiff.X / 300), 0f, 7f);
+            }
+        }
+
+        protected void FireBullets(GameTime gameTime)
+        {
+            if (_target == null) return;
+            if (!_reloadTimer.IsRunning) _reloadTimer.Restart();
+
+            if (_reloadTimer.ElapsedMilliseconds > 60000 / BURSTSPERMINUTE || !_initialBurst)
+            {
+                // Start burst
+                if (!_reloadBurstTimer.IsRunning) _reloadBurstTimer.Restart();
+
+                if (_firedBulletsInBurst < BULLETSINBURST) {
+                    if (_reloadBurstTimer.ElapsedMilliseconds > 1000 / BURSTBULLETPERSECOND) {
+                        _reloadBurstTimer.Stop();
+                        _firedBulletsInBurst++;
+                        SoundFxLibrary.GetFx("firebullet").Play(
+                                                        0.1f,
+                                                        CalcHelper.RandomBetween(-0.2f, 0.3f),
+                                                        CalcHelper.CalcPan(Position).X);
+
+
+                        float angle = (float)CalcHelper.formatAngle(CalcHelper.getAngle(Position, Target.Position) - 90f);
+                        SceneGraphManager.AddObject(new Projectile(CalcHelper.calculatePoint(Position, Orientation, 30f),
+                                                           Velocity, 15f,
+                                                           angle, 3f,
+                                                           "bullet", this));
+                    }
+
+                // Stop the burst
+                } else {
+                    _firedBulletsInBurst = 0;
+                    _initialBurst = true;
+                    _reloadTimer.Restart();
+                }
+            }
+        }
+
+        protected void UpdateAI(GameTime gameTime)
+        {
+            SetTarget(gameTime);
+            AdjustThrottle(gameTime);
+            FireBullets(gameTime);
         }
 
         protected override void UpdatePhysics(GameTime gameTime)
@@ -51,10 +126,6 @@ namespace PoorEngine.SceneObject
             double velocityAngleRotationSpeed = Math.Max(_airSpeed, _gravity) / (_weight * 3);
             double diff = _orientation - _velocityAngle + 180;
             double posDiff = Math.Abs(diff - 180);
-
-            targetX = CameraManager.Camera.Pos.X + EngineManager.Device.Viewport.Width * 0.8;
-            double xdiff = Position.X - targetX;
-            _thrust = MathHelper.Clamp((float)(5 - xdiff / 300), 0f, 7f);
 
             // Adjust _velocityAngle towards the airplane _orientation 
             if (posDiff < velocityAngleRotationSpeed)

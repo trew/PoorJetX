@@ -13,6 +13,7 @@ namespace PoorEngine.SceneObject
 {
     public class Projectile : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
+        private IPoorSceneObject _originator;
         Vector2 _velocity;
         float _orientation;
         Random rnd;
@@ -21,6 +22,7 @@ namespace PoorEngine.SceneObject
         int _soundFX_id;
 
         public double SpawnTime { get; set; }
+        private double _invulnerableTime;
 
         public enum ProjectileType
         {
@@ -35,7 +37,7 @@ namespace PoorEngine.SceneObject
         }
 
 
-        public Projectile(Vector2 pos, Vector2 velocity, string texture, float scale):
+        public Projectile(Vector2 pos, Vector2 velocity, string texture, float scale, IPoorSceneObject origin):
             base(texture)
         {
             /*
@@ -57,9 +59,11 @@ namespace PoorEngine.SceneObject
             Damage = 200;
             SpawnTime = 0.0;
             UsedInBoundingBoxCheck = true;
+            _originator = origin;
+            _invulnerableTime = 1.0f;
         }
 
-        public Projectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, string texture):
+        public Projectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, string texture, IPoorSceneObject origin):
             base(texture)
         {
             /*
@@ -86,6 +90,8 @@ namespace PoorEngine.SceneObject
             Z = 1.5f;
             SpawnTime = 0.0f;
             UsedInBoundingBoxCheck = true;
+            _originator = origin;
+            _invulnerableTime = 0.1f;
         }
 
 
@@ -96,7 +102,7 @@ namespace PoorEngine.SceneObject
 
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
-                                            Position - CameraManager.Camera.Pos, null, Color.AliceBlue,
+                                            CameraManager.Camera.Normalize(Position), null, Color.AliceBlue,
                                             _orientation + (float)CalcHelper.DegreeToRadian(180), _origin, Scale, SpriteEffects.None, 0f);
             ScreenManager.SpriteBatch.End();
 
@@ -133,7 +139,7 @@ namespace PoorEngine.SceneObject
                 }
                 else if (_type == ProjectileType.Bomb)
                 {
-                    ParticleManager.GroundExplosion.AddParticles(Position);
+                    ParticleManager.GroundExplosion.AddParticles(Position, 0, 35);
                     SoundFxLibrary.GetFx("bomb2").Play(CalcHelper.CalcVolume(Position) * 0.35f, CalcHelper.RandomBetween(-0.5f, 1f), CalcHelper.CalcPan(Position).X * 1.2f);
 
                     // Remove whisteling sound
@@ -169,10 +175,11 @@ namespace PoorEngine.SceneObject
             }
         }
 
-        public bool CanCollideWithPlayer(GameTime gameTime)
+        public bool CanCollideWithObject(GameTime gameTime, IPoorSceneObject obj)
         {
-
-            return (gameTime.TotalGameTime.TotalSeconds > SpawnTime + 1.0);
+            if (obj == _originator)
+                return (gameTime.TotalGameTime.TotalSeconds > SpawnTime + _invulnerableTime);
+            return true;
         }
    
     }

@@ -77,7 +77,7 @@ namespace PoorEngine.Helpers
 
         public static Vector2 CalcPan(Vector2 pos)
         {
-            Vector2 relativeToCamera = pos - CameraManager.Camera.Pos;
+            Vector2 relativeToCamera = CameraManager.Camera.Normalize(pos);
             float x = (relativeToCamera.X / EngineManager.Device.Viewport.Width) - 0.5f;
             float y = (relativeToCamera.Y / EngineManager.Device.Viewport.Height) - 0.5f;
 

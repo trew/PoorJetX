@@ -49,11 +49,11 @@ namespace PoorEngine.Managers
         public override void Initialize()
         {
             base.Initialize();
-            _explosionParticles = new ExplosionParticleSystem(EngineManager.Game, 1);
-            _groundExplosion = new GroundExplosion(EngineManager.Game, 1);
-            _projectileHit = new ProjectileHit(EngineManager.Game, 1);
+            _explosionParticles = new ExplosionParticleSystem(EngineManager.Game, 3);
+            _groundExplosion = new GroundExplosion(EngineManager.Game, 8);
+            _projectileHit = new ProjectileHit(EngineManager.Game, 5);
             _airplaneExplosion = new AirplaneExplosion(EngineManager.Game, 1);
-            _shrapnelExplosion = new ShrapnelExplosion(EngineManager.Game, 1);
+            _shrapnelExplosion = new ShrapnelExplosion(EngineManager.Game, 3);
             _explosionParticles.Initialize();
             _groundExplosion.Initialize();
             _projectileHit.Initialize();
@@ -72,22 +72,26 @@ namespace PoorEngine.Managers
 
         public static void UnloadContent()
         {
+            for (int i=0; i< _systems.Count; i++)
+            {
+                _systems[i] = null;
+            }
             _systems.Clear();
         }
 
-        public static new void Draw(GameTime gameTime)
+        public static void Draw(GameTime gameTime)
         {
-            foreach (ParticleSystem syst in _systems)
+            for (int i = 0; i < _systems.Count; i++)
             {
-                syst.Draw(gameTime);
+                _systems[i].Draw(gameTime);
             }
         }
 
         public static new void Update(GameTime gameTime)
         {
-            foreach (ParticleSystem syst in _systems)
+            for (int i = 0; i < _systems.Count; i++)
             {
-                syst.Update(gameTime);
+                _systems[i].Update(gameTime);
             }
         }
     }

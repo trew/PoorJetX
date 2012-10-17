@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using PoorEngine.SceneObject.SceneGraph;
 using PoorEngine.SceneObject;
+using PoorEngine.Interfaces;
 
 namespace PoorEngine.Managers
 {
@@ -19,17 +20,9 @@ namespace PoorEngine.Managers
             get { return _root; }
         }
 
-        private static Node _new;
-        /// <summary>
-        /// New nodes to be added in next update
-        /// </summary>
-        public static Node New
-        {
-            get { return _new; }
-        }
-
         public static bool newObjectsAdded;
         public static Queue<Node> removeQueue { get; set; }
+        private static Queue<Node> _new;
 
         /// <summary>
         /// Create the scenegraph Managers.
@@ -39,7 +32,7 @@ namespace PoorEngine.Managers
             : base(game)
         {
             _root = new Node();
-            _new = new Node();
+            _new = new Queue<Node>();
             removeQueue = new Queue<Node>();
 
             newObjectsAdded = false;
@@ -54,49 +47,55 @@ namespace PoorEngine.Managers
             _root.Draw(gameTime);
         }
 
+        private static bool typeMatch(Type a, Type b)
+        {
+            return a.IsAssignableFrom(b) || b.IsAssignableFrom(a);
+        }
+
         public static new void Update(GameTime gameTime)
         {
             // Add new nodes and sort the list
             if (newObjectsAdded)
             {
-                foreach (SceneObjectNode node in _new.Nodes)
+                while(_new.Count > 0)
                 {
-                    _root.AddNode(node);
+                    _root.AddNode(_new.Dequeue());
 
                 }
-                _new.Nodes.Clear();
                 _root.Nodes.Sort(comp);
 
                 newObjectsAdded = false;
             }
             _root.Update(gameTime);
-            
-            foreach (SceneObjectNode firstNode in _root.Nodes)
-            {
-                PoorSceneObject first = firstNode.SceneObject;
-                if (!first.UsedInBoundingBoxCheck) continue;
 
-                foreach (SceneObjectNode secondNode in _root.Nodes)
+            for (int first = 0; first < _root.Nodes.Count; first++)
+            {
+                PoorSceneObject firstObject = ((SceneObjectNode)_root.Nodes[first]).SceneObject;
+                if (!firstObject.UsedInBoundingBoxCheck) continue;
+
+                for(int second = 0; second < _root.Nodes.Count; second++)
                 {
-                    PoorSceneObject second = secondNode.SceneObject;
-                    if (first == second) continue;
-                    if (!second.UsedInBoundingBoxCheck) continue;
-                    if (first.BoundingBox.Intersects(second.BoundingBox))
+                    PoorSceneObject secondObject = ((SceneObjectNode)_root.Nodes[second]).SceneObject;
+                    if (firstObject.Equals(secondObject)) continue;
+                    if (!secondObject.UsedInBoundingBoxCheck) continue;
+                    if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
                     {
-                        if (first.GetType() == typeof(PlayerAirplane) && second.GetType() == typeof(Projectile) ||
-                            first.GetType() == typeof(Projectile) && second.GetType() == typeof(PlayerAirplane))
+                        if (typeMatch(firstObject.GetType(), typeof(Projectile)) && typeMatch(secondObject.GetType(), typeof(Airplane)) ||
+                            typeMatch(firstObject.GetType(), typeof(Airplane)) && typeMatch(secondObject.GetType(), typeof(Projectile)))
                         {
-                            Projectile p = (Projectile)(first.GetType() == typeof(Projectile) ? first : second);
-                            if (p.CanCollideWithPlayer(gameTime))
+                            // Separate projectile and the other object
+                            Projectile p = (Projectile)(typeMatch(firstObject.GetType(), typeof(Projectile)) ? firstObject : secondObject);
+                            IPoorSceneObject obj = p == firstObject ? secondObject : firstObject;
+                            if (p.CanCollideWithObject(gameTime, obj))
                             {
-                                first.Collide(second);
-                                second.Collide(first);
+                                firstObject.Collide(secondObject);
+                                secondObject.Collide(firstObject);
                             }
                         }
                         else
                         {
-                            first.Collide(second);
-                            second.Collide(first);
+                            firstObject.Collide(secondObject);
+                            secondObject.Collide(firstObject);
                         }
                     }
                 }
@@ -135,7 +134,7 @@ namespace PoorEngine.Managers
             SceneObjectNode node = new SceneObjectNode(newObject);
             
             node.LoadContent(); // this or crash in node.Draw
-            _new.AddNode(node);
+            _new.Enqueue(node);
 
             newObjectsAdded = true;
         }

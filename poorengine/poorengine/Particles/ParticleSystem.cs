@@ -363,7 +363,7 @@ namespace PoorEngine.Particles
                 // and increase to 100% once they're finished.
                 float scale = p.Scale * (.75f + .25f * normalizedLifetime);
 
-                ScreenManager.SpriteBatch.Draw(texture, p.Position - CameraManager.Camera.Pos, null, color,
+                ScreenManager.SpriteBatch.Draw(texture, CameraManager.Camera.Normalize(p.Position), null, color,
                     p.Rotation, origin, scale, SpriteEffects.None, 0.0f);
             }
 
