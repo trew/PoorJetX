@@ -13,7 +13,7 @@ namespace PoorEngine.SceneObject
 {
     public abstract class Projectile : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
     {
-        protected IPoorSceneObject _originator;
+        protected IPoorWeaponHolder _originator;
         protected Vector2 _velocity;
         protected float _orientation;
         
@@ -23,7 +23,7 @@ namespace PoorEngine.SceneObject
         public double SpawnTime { get; set; }
         protected double _invulnerableTime;
 
-        public Projectile(string texture, Vector2 pos, Vector2 velocity, IPoorSceneObject origin) :
+        public Projectile(string texture, Vector2 pos, Vector2 velocity, IPoorWeaponHolder origin) :
             base(texture)
         {
             Position = pos;

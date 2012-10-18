@@ -13,7 +13,7 @@ namespace PoorEngine.SceneObject
     {
         private double _spread;
         protected int _soundFX_id;
-        public BombProjectile(Vector2 pos, Vector2 velocity, IPoorSceneObject origin) :
+        public BombProjectile(Vector2 pos, Vector2 velocity, IPoorWeaponHolder origin) :
             base("bomb2", pos, velocity, origin)
         {
             Scale = new Vector2(0.13f, 0.13f);

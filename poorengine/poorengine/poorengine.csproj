@@ -110,13 +110,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameComponents\AmmoDisplay.cs" />
     <Compile Include="GameComponents\DebugPanel.cs" />
     <Compile Include="GameComponents\Level.cs" />
     <Compile Include="GameScreens\PauseMenuScreen.cs" />
     <Compile Include="GameScreens\ScoreScreen.cs" />
     <Compile Include="Helpers\CalcHelper.cs" />
+    <Compile Include="Interfaces\IPoorWeaponHolder.cs" />
     <Compile Include="Managers\AIManager.cs" />
-    <Compile Include="Managers\AmmoManager.cs" />
     <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\LevelManager.cs" />
     <Compile Include="Particles\AirplaneExplosion.cs" />
@@ -128,23 +129,27 @@
     <Compile Include="Managers\SoundFxManager.cs" />
     <Compile Include="Particles\ParticleSystem.cs" />
     <Compile Include="Particles\ProjectileHit.cs" />
-    <Compile Include="SceneObject\AmmoController.cs" />
     <Compile Include="SceneObject\AnimatedSprite.cs" />
     <Compile Include="SceneObject\Background.cs" />
     <Compile Include="GameComponents\Camera.cs" />
-    <Compile Include="SceneObject\Airplane.cs" />
-    <Compile Include="SceneObject\BombProjectile.cs" />
-    <Compile Include="SceneObject\BulletProjectile.cs" />
+    <Compile Include="SceneObject\Airplanes\Airplane.cs" />
+    <Compile Include="SceneObject\Projectiles\CannonProjectile.cs" />
+    <Compile Include="SceneObject\Weapons\BombWeapon.cs" />
+    <Compile Include="SceneObject\Weapons\Cannon.cs" />
+    <Compile Include="SceneObject\Weapons\ProjectileWeapon.cs" />
+    <Compile Include="SceneObject\Weapons\Weapon.cs" />
+    <Compile Include="SceneObject\Projectiles\BombProjectile.cs" />
+    <Compile Include="SceneObject\Projectiles\BulletProjectile.cs" />
     <Compile Include="SceneObject\Text.cs" />
-    <Compile Include="SceneObject\PlayerAirplane.cs" />
+    <Compile Include="SceneObject\Airplanes\PlayerAirplane.cs" />
     <Compile Include="GameComponents\GameScreen.cs" />
     <Compile Include="GameComponents\Input.cs" />
     <Compile Include="GameScreens\GamePlayScreen.cs" />
     <Compile Include="Managers\SceneGraphManager.cs" />
-    <Compile Include="SceneObject\EnemyAirplane.cs" />
+    <Compile Include="SceneObject\Airplanes\EnemyAirplane.cs" />
     <Compile Include="GameComponents\Instrument.cs" />
     <Compile Include="SceneObject\PoorSceneObject.cs" />
-    <Compile Include="SceneObject\Projectile.cs" />
+    <Compile Include="SceneObject\Projectiles\Projectile.cs" />
     <Compile Include="SceneObject\SceneGraph\Node.cs" />
     <Compile Include="SceneObject\SceneGraph\NodeList.cs" />
     <Compile Include="SceneObject\SceneGraph\SceneObjectNode.cs" />
