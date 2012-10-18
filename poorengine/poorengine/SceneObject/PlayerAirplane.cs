@@ -171,8 +171,14 @@ namespace PoorEngine.SceneObject
         public override void Draw(GameTime gameTime)
         {
             drawBulletPath();
-            drawBombPath();
 
+            drawBombPath();
+            /*
+            if (DateTime.Now.Second % 2 == 0)
+                drawBombPath();
+            else
+                drawBombPath2();
+            */
             base.Draw(gameTime);
         }
 
@@ -186,7 +192,7 @@ namespace PoorEngine.SceneObject
             Vector2 boostFactor = new Vector2(xFactor * 15, yFactor * 15);
             Vector2 pathbullet_velocity = _velocity + boostFactor;
             ScreenManager.SpriteBatch.Begin();
-
+            
             for (int i = 1; i < 7; i++)
             {
                 pathbullet_velocity += new Vector2(0, (float)(6.3 * EngineManager.Game.TargetElapsedTime.TotalSeconds * i));
@@ -214,6 +220,67 @@ namespace PoorEngine.SceneObject
 
             ScreenManager.SpriteBatch.Begin();
 
+            float precision = 2f; // higher precision = more detailed drawn path, however shorter path
+            int repeats = 50; // higher number of repeats = longer path. TO HIGH GIVES BAD PERFORMANCE!
+
+            for (int i = 1; i < repeats; i++)
+            {
+                pathbomb_velocity += new Vector2(0, (float)((5.8f) * timeFactor / precision * (i)));
+                oldPoint = newPoint;
+                newPoint += pathbomb_velocity / precision * i;
+
+                //DrawLine(Color.Red * (float)(20f / (float)i), oldPoint, newPoint);
+                DrawLine(Color.White, oldPoint, newPoint);
+                if (newPoint.Y > screenHeight - 30)
+                {
+
+                    double k = (oldPoint.Y - newPoint.Y) / -(oldPoint.X - newPoint.X);
+                    EngineManager.Debug.Print("  K: " + k);
+                    /* y = k x + m
+
+                    y  -m = k x
+                     
+                    x = (y-m)/k
+                      
+                    */ 
+                      
+                    //  x = (20 - newPoint.Y) / k
+                    Vector2 drawPoint = new Vector2((float)(((oldPoint.Y) - (screenHeight - 30)) / k), screenHeight - 30f);
+                    EngineManager.Debug.Print(" DRAWING AT: " + (oldPoint + drawPoint));
+
+                    ScreenManager.SpriteBatch.Draw(
+                        tex,
+                        new Vector2(CameraManager.Camera.Normalize(oldPoint + drawPoint).X, screenHeight - 50f)
+                            + new Vector2(-tex.Width / 2, 0),
+                        Color.White);
+
+                    /*ScreenManager.SpriteBatch.Draw(
+                        TextureManager.GetTexture("apTex1").BaseTexture as Texture2D,
+                        new Vector2(CameraManager.Camera.Normalize(newPoint).X, screenHeight - 50f)
+                            + new Vector2(-tex.Width / 2, 0),
+                        Color.White);*/
+                    break;
+                }
+
+            }
+
+            ScreenManager.SpriteBatch.End();
+        }
+
+
+
+        private void drawBombPath2()
+        {
+            Texture2D tex = TextureManager.GetTexture("bombtargetmarker").BaseTexture as Texture2D;
+
+            Vector2 oldPoint = CalcHelper.calculatePoint(Position, Orientation + 90, 10f);
+            Vector2 newPoint = oldPoint;
+            Vector2 pathbomb_velocity = _velocity;// +boostFactor;
+            double timeFactor = EngineManager.Game.TargetElapsedTime.TotalSeconds;
+            int screenHeight = EngineManager.Device.Viewport.Height;
+
+            ScreenManager.SpriteBatch.Begin();
+
             float precision = 5f; // higher precision = more detailed drawn path, however shorter path
             int repeats = 35; // higher number of repeats = longer path. TO HIGH GIVES BAD PERFORMANCE!
 
@@ -223,8 +290,8 @@ namespace PoorEngine.SceneObject
                 oldPoint = newPoint;
                 newPoint += pathbomb_velocity / precision * i;
 
-                DrawLine(Color.Red * (float)(20f / (float)i), oldPoint, newPoint);
-                //DrawLine(Color.Red, oldPoint, newPoint);
+                //DrawLine(Color.Red * (float)(20f / (float)i), oldPoint, newPoint);
+                DrawLine(Color.Red, oldPoint, newPoint);
                 if (newPoint.Y > screenHeight - 50)
                 {
                     ScreenManager.SpriteBatch.Draw(
