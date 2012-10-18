@@ -52,7 +52,8 @@ namespace PoorEngine.SceneObject
 
         public virtual void Update(GameTime gameTime)
         {
-            _velocity += new Vector2(0, (float)(5.8 * gameTime.ElapsedGameTime.TotalSeconds));
+            if (SceneGraphManager.TypeMatch(typeof(PlayerAirplane), _originator.GetType()))
+                _velocity += new Vector2(0, (float)(5.8 * gameTime.ElapsedGameTime.TotalSeconds));
 
             _orientation = (float)CalcHelper.getAngleAsRadian(Position, Position + _velocity);
             Position += _velocity;

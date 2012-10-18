@@ -28,7 +28,7 @@ namespace PoorEngine.SceneObject
             Vector2 boostFactor = new Vector2(xFactor * velocityBoost, yFactor * velocityBoost);
 
             _velocity = velocity + boostFactor;
-            _invulnerableTime = 0.1f;
+            _invulnerableTime = 0.5f;
             Damage = 100;
 
 

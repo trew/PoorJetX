@@ -16,6 +16,8 @@ namespace PoorEngine.SceneObject
 {
     public class PlayerAirplane : Airplane
     {
+        private bool _bombPathTrigger;
+
         public PlayerAirplane():
             base(2000, "apTex1")
         {
@@ -201,6 +203,7 @@ namespace PoorEngine.SceneObject
 
         private void drawBombPath()
         {
+            if (!_bombPathTrigger) return;
             Texture2D tex = TextureManager.GetTexture("bombtargetmarker").BaseTexture as Texture2D;
 
             Vector2 oldPoint = CalcHelper.calculatePoint(Position, Orientation + 90, 10f);
@@ -317,14 +320,32 @@ namespace PoorEngine.SceneObject
                     _thrust -= 0.05;
             }
 
-            if (input.IsNewKeyPress(Keys.Space))
+            /* THIS ... *//*
+            if (_bombPathTrigger && input.IsNewKeyPress(Keys.Space)) {
+                if (AmmoManager.dropBomb())
+                {
+                    SoundFxLibrary.GetFx("bombdrop").Play(0.3f, CalcHelper.RandomBetween(0.8f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
+                    SceneGraphManager.AddObject(new BombProjectile(CalcHelper.calculatePoint(Position, Orientation + 90, 10f), Velocity, this));
+                    _bombPathTrigger = false;
+                }
+            } else if (input.IsNewKeyPress(Keys.Space))
+            {
+                _bombPathTrigger = true;
+            }
+            *//* ... OR THIS */
+            if (_bombPathTrigger && input.CurrentKeyboardState.IsKeyUp(Keys.Space))
             {
                 if (AmmoManager.dropBomb())
                 {
                     SoundFxLibrary.GetFx("bombdrop").Play(0.3f, CalcHelper.RandomBetween(0.8f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
                     SceneGraphManager.AddObject(new BombProjectile(CalcHelper.calculatePoint(Position, Orientation + 90, 10f), Velocity, this));
+                    _bombPathTrigger = false;
                 }
             }
+            else if (input.IsNewKeyPress(Keys.Space))
+            {
+                _bombPathTrigger = true;
+            }/**/
 
             if (input.LastKeyboardState.IsKeyDown(Keys.LeftControl))
             {

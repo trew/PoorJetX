@@ -25,8 +25,8 @@ namespace PoorEngine.SceneObject
         private int _firedBulletsInBurst;
         private bool _initialBurst = false; //Don't wait for the first burst
         const int BURSTSPERMINUTE = 10;
-        const int BULLETSINBURST = 5;
-        const int BURSTBULLETPERSECOND = 10;
+        const int BULLETSINBURST = 3;
+        const int BURSTBULLETPERSECOND = 30;
 
         public EnemyAirplane(int maxHealth):
             base(maxHealth, "apTex1")
@@ -73,13 +73,8 @@ namespace PoorEngine.SceneObject
 
         protected float GetAngleToTarget(GameTime gameTime)
         {
-            int distanceMod = (int)CalcHelper.DistanceBetween(Position, Target.Position) / 75;
+            int distanceMod = 1;// (int)CalcHelper.DistanceBetween(Position, Target.Position) / 75;
             double orientation = CalcHelper.getAngle(Position, CalcHelper.calculatePoint(Target.Position, Target.Orientation, (float)Target.LinearVelocity * distanceMod)) - 90f;
-
-            //EngineManager.Debug.Print("Calc: " + (Target.Position.Y - Position.Y) / 100);
-            orientation -= (Target.Position.X - Position.X) / 80;
-
-            orientation += (Target.Position.Y - Position.Y) / 150;
 
             return (float)CalcHelper.formatAngle(orientation);
         }
@@ -106,7 +101,7 @@ namespace PoorEngine.SceneObject
 
                         float angle = GetAngleToTarget(gameTime);
                         SceneGraphManager.AddObject(new BulletProjectile(CalcHelper.calculatePoint(Position, Orientation, 30f),
-                                                           Velocity, 15f,
+                                                           Velocity, 5f,
                                                            angle, 3f,
                                                            this));
                     }
