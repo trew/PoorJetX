@@ -57,28 +57,29 @@ namespace PoorEngine.GameScreens
         public override void LoadContent()
         {
             base.LoadContent();
-            TextureManager.AddTexture(new PoorTexture("Textures/bomb"), "bomb");
-            TextureManager.AddTexture(new PoorTexture("Textures/bomb2"), "bomb2");
-            TextureManager.AddTexture(new PoorTexture("Textures/bullet"), "bullet");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/bomb"), "bomb");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/bomb2"), "bomb2");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/bullet"), "bullet");
 
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud1"), "cloud1");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud2"), "cloud2");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud3"), "cloud3");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud4"), "cloud4");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud5"), "cloud5");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud6"), "cloud6");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud1"), "cloud1");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud2"), "cloud2");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud3"), "cloud3");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud4"), "cloud4");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud5"), "cloud5");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud6"), "cloud6");
 
-            TextureManager.AddTexture(new PoorTexture("Textures/smoke_black"), "smoke_black");
+            TextureManager.AddTexture(new PoorTexture("Textures/Particles/smoke_black"), "smoke_black");
+            TextureManager.AddTexture(new PoorTexture("Textures/Particles/smoke_white"), "smoke_white");
+            TextureManager.AddTexture(new PoorTexture("Textures/Particles/fire"), "fire");
 
-            TextureManager.AddTexture(new PoorTexture("Textures/hill1"), "hill1");
-            TextureManager.AddTexture(new PoorTexture("Textures/hill2"), "hill2");
+            TextureManager.AddTexture(new PoorTexture("Textures/Landscape/hill1"), "hill1");
+            TextureManager.AddTexture(new PoorTexture("Textures/Landscape/hill2"), "hill2");
 
-            TextureManager.AddTexture(new PoorTexture("Textures/bombtargetmarker"), "bombtargetmarker");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/bombtargetmarker"), "bombtargetmarker");
 
             // Animations
-            TextureManager.AddTexture(new PoorTexture("Textures/anim_smoke1"), "anim_smoke1");
-            TextureManager.AddTexture(new PoorTexture("Textures/anim_explosion1"), "anim_explosion1");
-            TextureManager.AddTexture(new PoorTexture("Textures/anim_groundcrash"), "anim_groundcrash");
+            TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_groundcrash"), "anim_groundcrash");
+            TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_smoke1"), "anim_smoke1");
             
             // Sounds
             SoundFxLibrary.AddToLibrary("SoundFX/bomb1", "bomb1");

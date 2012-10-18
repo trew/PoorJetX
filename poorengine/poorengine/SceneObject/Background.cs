@@ -47,7 +47,7 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/" + TextureName), TextureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/Landscape/" + TextureName), TextureName);
         }
 
         public void UnloadContent()

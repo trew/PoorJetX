@@ -45,6 +45,8 @@ namespace PoorEngine.SceneObject
         protected int _smokeTimerStartVal;
 
         protected ProjectileHit _fireeeee;
+        protected BlackSmoke _blackSmoke;
+        protected WhiteSmoke _whiteSmoke;
 
         // Sounds
         protected int _engineFX_id;
@@ -64,7 +66,13 @@ namespace PoorEngine.SceneObject
             _velocityAngle = 90;
             _weight = 1;
             _fireeeee = new ProjectileHit(EngineManager.Game, 7);
+            _blackSmoke = new BlackSmoke(EngineManager.Game, 8);
+            _whiteSmoke = new WhiteSmoke(EngineManager.Game, 8);
+
+            EngineManager.Game.Components.Add(_whiteSmoke);
+            EngineManager.Game.Components.Add(_blackSmoke);
             EngineManager.Game.Components.Add(_fireeeee);
+
             Position = new Vector2(200, 500);
             Z = 0.999f;
             UsedInBoundingBoxCheck = true;
@@ -145,7 +153,7 @@ namespace PoorEngine.SceneObject
 
             SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
             ParticleManager.GroundExplosion.AddParticles(Position, 30f, 10f);
-            ParticleManager.AirplaneExplosion.AddParticles(Position);
+            ParticleManager.ShrapnelExplosion.AddParticles(Position);
         }
 
         public void AirExplode()
@@ -227,20 +235,25 @@ namespace PoorEngine.SceneObject
             if (HitPointsPercent < 0.7)
             {
                 _smokeTimerStartVal = Math.Max(5, (int)(50 * HitPointsPercent));
-
                 _smokeTimer--;
+
                 if (_smokeTimer <= 0)
                 {
+                    _blackSmoke.AddParticles(Position);
                     _smokeTimer = _smokeTimerStartVal;
-                    //ParticleManager.
-                    //SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position, 0f, new Vector2(0.5f, 0.5f), 200, 15, false, 0.9f));
+                    
+                    if(HitPointsPercent < 0.15)
+                        _fireeeee.AddParticles(Position);
                 }
             }
 
             // Execute airplane-crash. Damn i love this comment.
-            // Damn good bloody good job.
+            // Damn good bloody damn good job.
+            // You're an excellent woman!
+            // In fact, you're the best person here!
             if (IsCrashing)
             {
+                _blackSmoke.AddParticles(Position);
                 _fireeeee.AddParticles(Position);
                 _orientation = Math.Min(150, _orientation + 0.3);
             }
@@ -285,7 +298,7 @@ namespace PoorEngine.SceneObject
 
         public virtual void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/flygplan"), TextureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/flygplan"), TextureName);
             
             SoundFxLibrary.AddToLibrary("SoundFX/engine1", "engine1");
             SoundFxLibrary.AddToLibrary("SoundFX/dive1", "dive1");

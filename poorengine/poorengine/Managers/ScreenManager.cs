@@ -80,7 +80,6 @@ namespace PoorEngine.Managers
             
             _spriteBatch = new SpriteBatch(EngineManager.Device);
             _font = EngineManager.Game.Content.Load<SpriteFont>("Fonts/menufont");
-            TextureManager.AddTexture(new PoorTexture("Textures/blank"), "blank");
  
             foreach (GameScreen screen in _screens)
             {
@@ -238,7 +237,7 @@ namespace PoorEngine.Managers
  
             _spriteBatch.Begin();
  
-            _spriteBatch.Draw(TextureManager.GetTexture("blank").BaseTexture as Texture2D,
+            _spriteBatch.Draw(TextureManager.GetColorTexture(Color.Black),
                              new Rectangle(0, 0, viewport.Width, viewport.Height),
                              new Color(0, 0, 0, (byte)alpha));
  

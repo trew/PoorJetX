@@ -33,7 +33,7 @@ namespace PoorEngine.Particles
         /// </summary>
         protected override void InitializeConstants()
         {
-            textureFilename = "Textures/smoke_black";
+            textureFilename = "Textures/Particles/fire";
 
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.
@@ -59,7 +59,7 @@ namespace PoorEngine.Particles
             maxRotationSpeed = MathHelper.PiOver4;
 
             // additive blending is very good at creating fiery effects.
-            blendState = BlendState.Additive;
+            blendState = BlendState.AlphaBlend;
 
             DrawOrder = AdditiveDrawOrder;
         }

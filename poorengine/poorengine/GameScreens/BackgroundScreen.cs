@@ -43,14 +43,14 @@ namespace PoorJetX.GameScreens
         {
             base.LoadContent();
 
-            TextureManager.AddTexture(new PoorTexture("Textures/splash_bg"), texture_bg);
-            TextureManager.AddTexture(new PoorTexture("Textures/splash_fg"), texture_fg);
+            TextureManager.AddTexture(new PoorTexture("Textures/Menu/splash_bg"), texture_bg);
+            TextureManager.AddTexture(new PoorTexture("Textures/Menu/splash_fg"), texture_fg);
 
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud1"), "cloud1");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud2"), "cloud2");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud3"), "cloud3");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud4"), "cloud4");
-            TextureManager.AddTexture(new PoorTexture("Textures/cloud5"), "cloud5");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud1"), "cloud1");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud2"), "cloud2");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud3"), "cloud3");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud4"), "cloud4");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud5"), "cloud5");
         }
 
         public override void UnloadContent()

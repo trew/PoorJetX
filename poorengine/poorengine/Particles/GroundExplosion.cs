@@ -39,7 +39,7 @@ namespace PoorEngine.Particles
         /// </summary>
         protected override void InitializeConstants()
         {
-            textureFilename = "Textures/explosion";
+            textureFilename = "Textures/Particles/explosion";
 
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.

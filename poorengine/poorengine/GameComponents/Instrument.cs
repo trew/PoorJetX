@@ -106,7 +106,7 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/instrument"), TextureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/instrument"), TextureName);
 
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             texHeight = texture.Height;

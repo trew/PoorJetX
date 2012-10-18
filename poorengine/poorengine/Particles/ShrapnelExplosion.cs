@@ -35,12 +35,12 @@ namespace PoorEngine.Particles
         /// </summary>
         protected override void InitializeConstants()
         {
-            textureFilename = "Textures/bomb";
+            textureFilename = "Textures/Particles/shrapnel";
 
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.
             minInitialSpeed = 10f;
-            maxInitialSpeed = 300f;
+            maxInitialSpeed = 150f;
 
             // doesn't matter what these values are set to, acceleration is tweaked in
             // the override of InitializeParticle.
@@ -51,8 +51,8 @@ namespace PoorEngine.Particles
             minLifetime = .2f;
             maxLifetime = 1.5f;
 
-            minScale = 0.2f;
-            maxScale = 0.6f;
+            minScale = 0.01f;
+            maxScale = 0.02f;
 
             minNumParticles = 30;
             maxNumParticles = 70;
