@@ -134,6 +134,7 @@ namespace PoorEngine.GameScreens
                 inst.UnloadContent();
             }
             _instruments.Clear();
+            EngineManager.Game.Components.Remove(_ammoDisplay);
         }
  
 
