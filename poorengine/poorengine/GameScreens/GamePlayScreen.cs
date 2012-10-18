@@ -68,6 +68,8 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/cloud5"), "cloud5");
             TextureManager.AddTexture(new PoorTexture("Textures/cloud6"), "cloud6");
 
+            TextureManager.AddTexture(new PoorTexture("Textures/smoke_black"), "smoke_black");
+
             TextureManager.AddTexture(new PoorTexture("Textures/hill1"), "hill1");
             TextureManager.AddTexture(new PoorTexture("Textures/hill2"), "hill2");
 
