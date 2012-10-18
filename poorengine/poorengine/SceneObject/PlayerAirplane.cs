@@ -318,7 +318,7 @@ namespace PoorEngine.SceneObject
                     _thrust -= 0.05;
             }
 
-            //if (input.CurrentKeyboardState.IsKeyDown(Keys.Space))
+            /* THIS ... *//*
             if (_bombPathTrigger && input.IsNewKeyPress(Keys.Space)) {
                 if (AmmoManager.dropBomb())
                 {
@@ -330,6 +330,20 @@ namespace PoorEngine.SceneObject
             {
                 _bombPathTrigger = true;
             }
+            *//* ... OR THIS */
+            if (_bombPathTrigger && input.CurrentKeyboardState.IsKeyUp(Keys.Space))
+            {
+                if (AmmoManager.dropBomb())
+                {
+                    SoundFxLibrary.GetFx("bombdrop").Play(0.3f, CalcHelper.RandomBetween(0.8f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
+                    SceneGraphManager.AddObject(new BombProjectile(CalcHelper.calculatePoint(Position, Orientation + 90, 10f), Velocity, this));
+                    _bombPathTrigger = false;
+                }
+            }
+            else if (input.IsNewKeyPress(Keys.Space))
+            {
+                _bombPathTrigger = true;
+            }/**/
 
             if (input.LastKeyboardState.IsKeyDown(Keys.LeftControl))
             {
