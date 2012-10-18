@@ -12,7 +12,7 @@ namespace PoorEngine.SceneObject
     public class BulletProjectile: Projectile
     {
         private double _spread;
-        public BulletProjectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, IPoorSceneObject origin) :
+        public BulletProjectile(Vector2 pos, Vector2 velocity, float velocityBoost, float orientation, float spreadDegrees, IPoorWeaponHolder origin) :
             base("bullet", pos, velocity, origin)
         {
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
@@ -30,8 +30,6 @@ namespace PoorEngine.SceneObject
             _velocity = velocity + boostFactor;
             _invulnerableTime = 0.5f;
             Damage = 100;
-
-
         }
 
         public override void Update(GameTime gameTime)

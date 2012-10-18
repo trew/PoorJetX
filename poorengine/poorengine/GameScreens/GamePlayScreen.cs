@@ -28,16 +28,14 @@ namespace PoorEngine.GameScreens
 
         Instrument throttleMeter;
         Instrument airspeedMeter;
+        AmmoDisplay _ammoDisplay;
 
         private Dictionary<string, Instrument> _instruments;
-
-        AmmoController ammoController;
 
         public GamePlayScreen(int level)
         {
             janitorCoffeeBreak = 0;
             CameraManager.Reset();
-            AmmoManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
         }
 
@@ -93,9 +91,6 @@ namespace PoorEngine.GameScreens
             LevelManager.CurrentLevel.QueueTexts();
             // TODO CurrentLevel.QueueSounds();
 
-            ammoController = new AmmoController();
-            SceneGraphManager.AddObject(ammoController);
-
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
 
@@ -121,6 +116,8 @@ namespace PoorEngine.GameScreens
             // =============================
 
             SceneGraphManager.LoadContent();
+            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
+            EngineManager.Game.Components.Add(_ammoDisplay);
             ParticleManager.LoadContent();
         }
 
@@ -162,18 +159,13 @@ namespace PoorEngine.GameScreens
             EngineManager.Debug.Print("==============================");
             
 
-            AmmoManager.Update(gameTime);
+            //AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
             ParticleManager.Update(gameTime);
             foreach (Instrument inst in _instruments.Values)
             {
                 inst.Update(gameTime);
-            }
-
-            if (player1.IsCrashing)
-            {
-                ammoController.ReadyToRender = false;
             }
 
             if (player1.IsDead)

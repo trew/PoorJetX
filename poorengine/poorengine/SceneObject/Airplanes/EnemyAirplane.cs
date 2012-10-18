@@ -20,22 +20,14 @@ namespace PoorEngine.SceneObject
         private Airplane _target;
         public Airplane Target { get { return _target; } }
 
-        private Stopwatch _reloadTimer;
-        private Stopwatch _reloadBurstTimer;
-        private int _firedBulletsInBurst;
-        private bool _initialBurst = false; //Don't wait for the first burst
-        const int BURSTSPERMINUTE = 10;
-        const int BULLETSINBURST = 3;
-        const int BURSTBULLETPERSECOND = 30;
+        private Cannon _weapon;
 
         public EnemyAirplane(int maxHealth):
             base(maxHealth, "apTex1")
         {
             _thrust = 3;
             _airSpeed = 3;
-            _reloadTimer = new Stopwatch();
-            _reloadBurstTimer = new Stopwatch();
-            _firedBulletsInBurst = 0;
+            _weapon = new Cannon(this);
         }
 
         public override void Update(GameTime gameTime)
@@ -82,37 +74,10 @@ namespace PoorEngine.SceneObject
         protected void FireBullets(GameTime gameTime)
         {
             if (_target == null) return;
-            if (!_reloadTimer.IsRunning) _reloadTimer.Restart();
 
-            GetAngleToTarget(gameTime);
-            if (_reloadTimer.ElapsedMilliseconds > 60000 / BURSTSPERMINUTE || !_initialBurst)
-            {
-                // Start burst
-                if (!_reloadBurstTimer.IsRunning) _reloadBurstTimer.Restart();
+            _weapon.Angle = GetAngleToTarget(gameTime);
 
-                if (_firedBulletsInBurst < BULLETSINBURST) {
-                    if (_reloadBurstTimer.ElapsedMilliseconds > 1000 / BURSTBULLETPERSECOND) {
-                        _reloadBurstTimer.Stop();
-                        _firedBulletsInBurst++;
-                        SoundFxLibrary.GetFx("firebullet").Play(
-                                                        0.1f,
-                                                        CalcHelper.RandomBetween(-0.2f, 0.3f),
-                                                        CalcHelper.CalcPan(Position).X);
-
-                        float angle = GetAngleToTarget(gameTime);
-                        SceneGraphManager.AddObject(new BulletProjectile(CalcHelper.calculatePoint(Position, Orientation, 30f),
-                                                           Velocity, 5f,
-                                                           angle, 3f,
-                                                           this));
-                    }
-
-                // Stop the burst
-                } else {
-                    _firedBulletsInBurst = 0;
-                    _initialBurst = true;
-                    _reloadTimer.Restart();
-                }
-            }
+            _weapon.Fire();
         }
 
         protected void UpdateAI(GameTime gameTime)

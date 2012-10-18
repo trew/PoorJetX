@@ -11,10 +11,11 @@ using PoorEngine.Managers;
 using PoorEngine.Textures;
 using PoorEngine.GameComponents;
 using PoorEngine.Helpers;
+using PoorEngine.Particles;
 
 namespace PoorEngine.SceneObject
 {
-    public abstract class Airplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable
+    public abstract class Airplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable, IPoorWeaponHolder
     {
         protected double _thrust;
         protected double _airSpeed;
@@ -43,6 +44,8 @@ namespace PoorEngine.SceneObject
         protected int _smokeTimer;
         protected int _smokeTimerStartVal;
 
+        protected ProjectileHit _fireeeee;
+
         // Sounds
         protected int _engineFX_id;
         protected int _diveFX_id;
@@ -60,6 +63,8 @@ namespace PoorEngine.SceneObject
             _linearVelocity = 0;
             _velocityAngle = 90;
             _weight = 1;
+            _fireeeee = new ProjectileHit(EngineManager.Game, 7);
+            EngineManager.Game.Components.Add(_fireeeee);
             Position = new Vector2(200, 500);
             Z = 0.999f;
             UsedInBoundingBoxCheck = true;
@@ -235,6 +240,7 @@ namespace PoorEngine.SceneObject
             // Damn good bloody good job.
             if (IsCrashing)
             {
+                _fireeeee.AddParticles(Position);
                 _orientation = Math.Min(150, _orientation + 0.3);
             }
             UpdatePhysics(gameTime);

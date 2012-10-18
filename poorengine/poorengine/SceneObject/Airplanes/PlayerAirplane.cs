@@ -18,9 +18,17 @@ namespace PoorEngine.SceneObject
     {
         private bool _bombPathTrigger;
 
+        private Weapon _bombWeapon;
+        public Weapon BombWeapon { get { return _bombWeapon; } }
+        private Weapon _projectileWeapon;
+        public Weapon ProjectileWeapon { get { return _projectileWeapon; } }
+
+
         public PlayerAirplane():
             base(2000, "apTex1")
         {
+            _bombWeapon = new BombWeapon(this);
+            _projectileWeapon = new ProjectileWeapon(this);
         }
 
         public override void HandleDebugInput(Input input)
@@ -171,7 +179,7 @@ namespace PoorEngine.SceneObject
         public override void Draw(GameTime gameTime)
         {
             drawBulletPath();
-            drawBombPath();
+            if (_bombPathTrigger) drawBombPath();
 
             base.Draw(gameTime);
         }
@@ -203,7 +211,6 @@ namespace PoorEngine.SceneObject
 
         private void drawBombPath()
         {
-            if (!_bombPathTrigger) return;
             Texture2D tex = TextureManager.GetTexture("bombtargetmarker").BaseTexture as Texture2D;
 
             Vector2 oldPoint = CalcHelper.calculatePoint(Position, Orientation + 90, 10f);
@@ -320,47 +327,19 @@ namespace PoorEngine.SceneObject
                     _thrust -= 0.05;
             }
 
-            /* THIS ... *//*
-            if (_bombPathTrigger && input.IsNewKeyPress(Keys.Space)) {
-                if (AmmoManager.dropBomb())
-                {
-                    SoundFxLibrary.GetFx("bombdrop").Play(0.3f, CalcHelper.RandomBetween(0.8f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
-                    SceneGraphManager.AddObject(new BombProjectile(CalcHelper.calculatePoint(Position, Orientation + 90, 10f), Velocity, this));
-                    _bombPathTrigger = false;
-                }
-            } else if (input.IsNewKeyPress(Keys.Space))
-            {
-                _bombPathTrigger = true;
-            }
-            *//* ... OR THIS */
             if (_bombPathTrigger && input.CurrentKeyboardState.IsKeyUp(Keys.Space))
             {
-                if (AmmoManager.dropBomb())
-                {
-                    SoundFxLibrary.GetFx("bombdrop").Play(0.3f, CalcHelper.RandomBetween(0.8f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
-                    SceneGraphManager.AddObject(new BombProjectile(CalcHelper.calculatePoint(Position, Orientation + 90, 10f), Velocity, this));
-                    _bombPathTrigger = false;
-                }
+                BombWeapon.Fire();
+                _bombPathTrigger = false;
             }
-            else if (input.IsNewKeyPress(Keys.Space))
+            else if (input.CurrentKeyboardState.IsKeyDown(Keys.Space))
             {
                 _bombPathTrigger = true;
-            }/**/
+            }
 
             if (input.LastKeyboardState.IsKeyDown(Keys.LeftControl))
             {
-                if (AmmoManager.fireBullet())
-                {
-
-                    SoundFxLibrary.GetFx("firebullet").Play(
-                                                            0.1f,
-                                                            CalcHelper.RandomBetween(-0.2f, 0.3f),
-                                                            CalcHelper.CalcPan(Position).X );
-
-                    SceneGraphManager.AddObject(new BulletProjectile(CalcHelper.calculatePoint(Position, Orientation, 30f), Velocity, 15f, Orientation, 3f, this));
-                    ParticleManager.ProjectileHit.AddParticles(AmmoManager.LastBulletPos + CameraManager.Camera.Pos);
-                }
-
+                ProjectileWeapon.Fire();
             }
         }
     }
