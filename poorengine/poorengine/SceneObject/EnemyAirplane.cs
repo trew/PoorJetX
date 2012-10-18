@@ -76,7 +76,7 @@ namespace PoorEngine.SceneObject
             int distanceMod = (int)CalcHelper.DistanceBetween(Position, Target.Position) / 75;
             double orientation = CalcHelper.getAngle(Position, CalcHelper.calculatePoint(Target.Position, Target.Orientation, (float)Target.LinearVelocity * distanceMod)) - 90f;
 
-            EngineManager.Debug.Print("Calc: " + (Target.Position.Y - Position.Y) / 100);
+            //EngineManager.Debug.Print("Calc: " + (Target.Position.Y - Position.Y) / 100);
             orientation -= (Target.Position.X - Position.X) / 80;
 
             orientation += (Target.Position.Y - Position.Y) / 150;
