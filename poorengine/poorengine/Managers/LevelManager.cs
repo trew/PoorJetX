@@ -14,7 +14,7 @@ namespace PoorEngine.Managers
     public class LevelManager : GameComponent
     {
 
-        private static String _levelPathPrefix = "level/";
+        private static String _levelPathPrefix = "//Levels/";
 
         public LevelManager(Game game)
             : base(game)
@@ -34,7 +34,7 @@ namespace PoorEngine.Managers
         /// </summary>
         public static void Load(int level)
         {
-            String filename = _levelPathPrefix + level.ToString() + ".xml";
+            String filename = "Content" + _levelPathPrefix + level.ToString() + ".xml";
             FileStream file = FileHelper.LoadGameContentFile(filename);
 
             // If the file is empty, just create a new file with the default

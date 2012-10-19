@@ -38,13 +38,14 @@ namespace PoorEngine.SceneObject
 
                 float pitch = 1f - ((_velocity.Y - 4f) / 10f); // Epic formula. Great taste. Crunchy on the outside. Chewy in the middle!
                 SoundFxManager.GetByID(_soundFX_id).Pitch = MathHelper.Clamp(pitch - 0.3f, -1, 1);
-                SoundFxManager.GetByID(_soundFX_id).Volume = CalcHelper.CalcVolume(Position) * MathHelper.Clamp(0.85f - pitch, 0f, 1f) * 0.3f;
+                SoundFxManager.GetByID(_soundFX_id).Volume = SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * MathHelper.Clamp(0.85f - pitch, 0f, 1f) * 0.3f);
             }
 
             if (Position.Y > EngineManager.Device.Viewport.Height)
             {
                 ParticleManager.GroundExplosion.AddParticles(Position, 0, 35);
-                SoundFxLibrary.GetFx("bomb2").Play(CalcHelper.CalcVolume(Position) * 0.35f, CalcHelper.RandomBetween(-0.5f, 1f), CalcHelper.CalcPan(Position).X * 1.2f);
+                SoundFxLibrary.GetFx("bomb2").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.35f),
+                                           CalcHelper.RandomBetween(-0.5f, 1f), CalcHelper.CalcPan(Position).X * 1.2f);
 
                 // Remove whisteling sound
                 SoundFxManager.GetByID(_soundFX_id).Stop();

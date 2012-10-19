@@ -28,7 +28,7 @@ namespace PoorEngine.SceneObject
             if (_reloadTimer.ElapsedMilliseconds > 1000 / BOMBSPERSECOND)
             {
 
-                SoundFxLibrary.GetFx("bombdrop").Play(0.3f, CalcHelper.RandomBetween(0.8f, 0.2f), CalcHelper.CalcPan(Owner.Position).X * 1.8f);
+                SoundFxLibrary.GetFx("bombdrop").Play(SoundFxManager.GetVolume("Sound", 0.3f), CalcHelper.RandomBetween(0.8f, 0.2f), CalcHelper.CalcPan(Owner.Position).X * 1.8f);
                 SceneGraphManager.AddObject(new BombProjectile(CalcHelper.calculatePoint(Owner.Position, Owner.Orientation + 90, 10f), Owner.Velocity, Owner));
                 _bombCount--;
                 _reloadTimer.Restart();

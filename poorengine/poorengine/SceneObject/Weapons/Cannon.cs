@@ -26,7 +26,7 @@ namespace PoorEngine.SceneObject
             {
 
                 SoundFxLibrary.GetFx("firebullet").Play(
-                                                        CalcHelper.CalcVolume(Owner.Position) * 0.1f,
+                                                        SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Owner.Position) * 0.1f),
                                                         CalcHelper.RandomBetween(-0.2f, 0.3f),
                                                         CalcHelper.CalcPan(Owner.Position).X);
 
