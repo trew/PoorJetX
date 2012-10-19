@@ -56,11 +56,9 @@ namespace PoorEngine.SceneObject
         }
         public override void Collide(PoorSceneObject collidingWith)
         {
-            base.Collide(collidingWith);
-            if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane)))
-            {
                 SoundFxManager.RemoveFx(_soundFX_id);
-            }
+                ParticleManager.GroundExplosion.AddParticles(Position, 0, 35);
+                base.Collide(collidingWith);
         }
     }
 }

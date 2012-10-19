@@ -74,7 +74,7 @@ namespace PoorEngine.SceneObject
             EngineManager.Game.Components.Add(_fireeeee);
 
             Position = new Vector2(200, 500);
-            Z = 0.999f;
+            Z = 0.997f;
             UsedInBoundingBoxCheck = true;
             IsDead = false;
             IsCrashing = false;
@@ -173,7 +173,13 @@ namespace PoorEngine.SceneObject
 
         public virtual void Draw(GameTime gameTime)
         {
-            Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+            Texture2D texture;
+
+            if (IsDead)
+                texture = TextureManager.GetTexture(TextureNameDestroyed).BaseTexture as Texture2D;
+            else
+                texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+            
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 
             ScreenManager.SpriteBatch.Begin();
@@ -229,6 +235,11 @@ namespace PoorEngine.SceneObject
 
                 SceneGraphManager.RemoveObject(this);
                 return;
+            }
+
+            if (Position.Y > EngineManager.Device.Viewport.Height - 75)
+            {
+                AddGroundDust();
             }
 
             // Spawn smoke-effects if HP is low
@@ -298,7 +309,8 @@ namespace PoorEngine.SceneObject
 
         public virtual void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/flygplan"), TextureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/" + TextureName), TextureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/" + TextureNameDestroyed), TextureNameDestroyed);
             
             SoundFxLibrary.AddToLibrary("SoundFX/engine1", "engine1");
             SoundFxLibrary.AddToLibrary("SoundFX/dive1", "dive1");
@@ -350,6 +362,36 @@ namespace PoorEngine.SceneObject
                                                            5,
                                                            false,
                                                            0.9f));
+        }
+
+        private void AddGroundDust()
+        {
+            EngineManager.Debug.Print("Linear velocity: " + LinearVelocity);
+
+            if (LinearVelocity > 5)
+                ParticleManager.WhiteSmoke.AddParticles(
+                    new Vector2(
+                        Position.X - (EngineManager.Device.Viewport.Height - Position.Y) + 20f,
+                        EngineManager.Device.Viewport.Height - 30));
+
+            if (LinearVelocity > 5.5)
+                ParticleManager.WhiteSmoke.AddParticles(
+                    new Vector2(
+                        Position.X - (EngineManager.Device.Viewport.Height - Position.Y) + 25f,
+                        EngineManager.Device.Viewport.Height - 30));
+
+            if (LinearVelocity > 6)
+                ParticleManager.WhiteSmoke.AddParticles(
+                    new Vector2(
+                        Position.X - (EngineManager.Device.Viewport.Height - Position.Y) + 30f,
+                        EngineManager.Device.Viewport.Height - 35));
+
+            if (LinearVelocity > 6.5)
+                ParticleManager.WhiteSmoke.AddParticles(
+                    new Vector2(
+                        Position.X - (EngineManager.Device.Viewport.Height - Position.Y) + 40f,
+                        EngineManager.Device.Viewport.Height - 25));
+
         }
     }
 }

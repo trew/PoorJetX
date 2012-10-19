@@ -20,7 +20,7 @@ namespace PoorEngine.GameScreens
 {
     public class GamePlayScreen : GameScreen 
     {
-        const string airplaneTexture = "apTex1";
+        const string airplaneTexture = "flygplan";
         PlayerAirplane player1;
 
         int janitorCoffeeBreak;
@@ -189,6 +189,21 @@ namespace PoorEngine.GameScreens
             base.HandleInput(input);
             
             player1.HandleInput(input);
+
+            if (input.IsNewKeyPress(Keys.E))
+            {
+                GroundCivilianVehicle gcv = new GroundCivilianVehicle(3000, "enemy_antiair");
+                gcv.Position = new Vector2(
+                        CameraManager.Camera.Pos.X +
+                        EngineManager.Device.Viewport.Width - 200f, 
+                        EngineManager.Device.Viewport.Height - 80f );
+
+                gcv.Velocity = new Vector2(0f, 0f);
+                gcv.LoadContent();
+
+                SceneGraphManager.AddObject(gcv);
+
+            }
 
             if (input.IsNewKeyPress(Keys.Escape))
             {

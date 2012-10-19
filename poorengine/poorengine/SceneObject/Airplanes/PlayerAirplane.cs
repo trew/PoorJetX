@@ -25,7 +25,7 @@ namespace PoorEngine.SceneObject
 
 
         public PlayerAirplane():
-            base(2000, "apTex1")
+            base(2000, "flygplan")
         {
             _bombWeapon = new BombWeapon(this);
             _projectileWeapon = new ProjectileWeapon(this);

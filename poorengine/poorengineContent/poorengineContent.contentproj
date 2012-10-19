@@ -67,11 +67,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\Particles\smoke_white.png">
-      <Name>smoke_white</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts\score.spritefont">
@@ -160,13 +155,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\Enemies\enemy_antiair_gun.png">
-      <Name>enemy_antiair_gun</Name>
+    <Compile Include="Textures\Enemies\enemy_antiair_weapon.png">
+      <Name>enemy_antiair_weapon</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\Enemies\enemy_antiair_wreck.png">
-      <Name>enemy_antiair_wreck</Name>
+    <Compile Include="Textures\Enemies\enemy_antiair_destroyed.png">
+      <Name>enemy_antiair_destroyed</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -275,6 +270,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Textures\Particles\smoke_white.png">
+      <Name>smoke_white</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Textures\UI\ammo_bombs.png">
       <Name>ammo_bombs</Name>
       <Importer>TextureImporter</Importer>
@@ -347,6 +347,13 @@
   <ItemGroup>
     <Compile Include="Textures\Animations\anim_smoke1.png">
       <Name>anim_smoke1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Objects\flygplan_destroyed.png">
+      <Name>flygplan_destroyed</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

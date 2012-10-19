@@ -23,7 +23,7 @@ namespace PoorEngine.SceneObject
         private Cannon _weapon;
 
         public EnemyAirplane(int maxHealth):
-            base(maxHealth, "apTex1")
+            base(maxHealth, "flygplan")
         {
             _thrust = 3;
             _airSpeed = 3;

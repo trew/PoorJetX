@@ -73,9 +73,7 @@ namespace PoorEngine.SceneObject
 
         public override void Collide(PoorSceneObject collidingWith)
         {
-            if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane))) {
-                SceneGraphManager.RemoveObject(this);
-            } 
+            SceneGraphManager.RemoveObject(this);
         }
 
         public virtual bool CanCollideWithObject(GameTime gameTime, IPoorSceneObject obj)

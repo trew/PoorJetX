@@ -16,7 +16,14 @@ namespace PoorEngine.SceneObject
             TextureName = textureName;
         }
 
+        public PoorSceneObject(String textureName, String textureNameDestroyed)
+        {
+            TextureName = textureName;
+            TextureNameDestroyed = textureNameDestroyed;
+        }
+
         public String TextureName { get; set; }
+        public String TextureNameDestroyed { get; set; }
 
         public virtual void Collide(PoorSceneObject collidingWith) {
         }

@@ -80,8 +80,8 @@ namespace PoorEngine.Managers
                     if (!secondObject.UsedInBoundingBoxCheck) continue;
                     if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
                     {
-                        if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(Airplane)) ||
-                            TypeMatch(firstObject.GetType(), typeof(Airplane)) && TypeMatch(secondObject.GetType(), typeof(Projectile)))
+                        if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(IPoorWeaponHolder)) ||
+                            TypeMatch(firstObject.GetType(), typeof(IPoorWeaponHolder)) && TypeMatch(secondObject.GetType(), typeof(Projectile)))
                         {
                             // Separate projectile and the other object
                             Projectile p = (Projectile)(TypeMatch(firstObject.GetType(), typeof(Projectile)) ? firstObject : secondObject);

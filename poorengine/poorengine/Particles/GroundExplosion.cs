@@ -44,7 +44,7 @@ namespace PoorEngine.Particles
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.
             minInitialSpeed = 100f;
-            maxInitialSpeed = 500f;
+            maxInitialSpeed = 300f;
 
             // doesn't matter what these values are set to, acceleration is tweaked in
             // the override of InitializeParticle.

@@ -26,9 +26,9 @@ namespace PoorEngine.SceneObject
             {
 
                 SoundFxLibrary.GetFx("firebullet").Play(
-                                                        0.1f,
+                                                        CalcHelper.CalcVolume(Owner.Position) * 0.1f,
                                                         CalcHelper.RandomBetween(-0.2f, 0.3f),
-                                                        CalcHelper.CalcPan(Position).X);
+                                                        CalcHelper.CalcPan(Owner.Position).X);
 
                 SceneGraphManager.AddObject(new CannonProjectile(Owner.Position,
                                                                  Owner.Velocity, Angle, Owner));
