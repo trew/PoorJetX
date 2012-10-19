@@ -88,10 +88,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExampleLevel.xml">
-      <Name>ExampleLevel</Name>
+    <None Include="Levels\1.xml">
+      <Name>1</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Compile Include="Fonts\message.spritefont">
       <Name>message</Name>
@@ -349,6 +350,14 @@
       <Name>anim_smoke1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DST-FlyingCobra.mp3">
+      <Name>DST-FlyingCobra</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

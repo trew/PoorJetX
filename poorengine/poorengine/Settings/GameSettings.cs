@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,6 +75,18 @@ namespace PoorEngine.Settings
                 if (_fullScreen != value)
                     _needSave = true;
                 _fullScreen = value;
+            }
+        }
+
+        private float _globalSoundVolume = 1.0f;
+        public float GlobalSoundVolume
+        {
+            get { return _globalSoundVolume; }
+            set
+            {
+                if (_globalSoundVolume != value)
+                    _needSave = true;
+                _globalSoundVolume = value;
             }
         }
 

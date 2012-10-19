@@ -121,6 +121,11 @@ namespace PoorEngine
             Components.Add(_particleManagers);
 
             Content.RootDirectory = "Content";
+
+            Song bgMusic = Content.Load<Song>("DST-FlyingCobra");
+            MediaPlayer.Volume = SoundFxManager.GetVolume("Music", 1.0f);
+            MediaPlayer.Play(bgMusic);
+            MediaPlayer.IsRepeating = true;
         }
 
         /// <summary>
@@ -212,6 +217,28 @@ namespace PoorEngine
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (Input.CurrentKeyboardState.IsKeyDown(Keys.F7))
+            {
+                SoundFxManager.SetVolume("Global", GameSettings.Default.GlobalSoundVolume - 0.01f);
+            }
+            else if (Input.CurrentKeyboardState.IsKeyDown(Keys.F8))
+            {
+                SoundFxManager.SetVolume("Global", GameSettings.Default.GlobalSoundVolume + 0.01f);
+            }
+            if (Input.CurrentKeyboardState.IsKeyDown(Keys.F9))
+            {
+                SoundFxManager.SetVolume("Sound", GameSettings.Default.SoundVolume - 0.01f);
+            }
+            else if (Input.CurrentKeyboardState.IsKeyDown(Keys.F10))
+            {
+                SoundFxManager.SetVolume("Sound", GameSettings.Default.SoundVolume + 0.01f);
+            }
+            if (Input.CurrentKeyboardState.IsKeyDown(Keys.F11))
+            {
+                SoundFxManager.SetVolume("Music", GameSettings.Default.MusicVolume - 0.01f);
+            } else if (Input.CurrentKeyboardState.IsKeyDown(Keys.F12)) {
+                SoundFxManager.SetVolume("Music", GameSettings.Default.MusicVolume + 0.01f);
+            }
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using PoorEngine.Interfaces;
 using PoorEngine.Managers;
@@ -52,7 +53,6 @@ namespace PoorEngine.SceneObject
         protected int _engineFX_id;
         protected int _diveFX_id;
         protected int _fireBulletFX_id;
-        public const float SOUNDVOLUME = 0.6f;
 
         public Airplane(int maxHealth, string textureName):
             base(textureName)
@@ -149,7 +149,7 @@ namespace PoorEngine.SceneObject
             SoundFxManager.RemoveFx(_engineFX_id);
             SoundFxManager.RemoveFx(_fireBulletFX_id);
 
-            SoundFxLibrary.GetFx("bomb1").Play(CalcHelper.CalcVolume(Position) * 0.4f, CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
+            SoundFxLibrary.GetFx("bomb1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.4f), CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
             SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
             ParticleManager.GroundExplosion.AddParticles(Position, 30f, 10f);
@@ -165,7 +165,8 @@ namespace PoorEngine.SceneObject
             SoundFxManager.RemoveFx(_engineFX_id);
             SoundFxManager.RemoveFx(_fireBulletFX_id);
 
-            SoundFxLibrary.GetFx("bomb2").Play(CalcHelper.CalcVolume(Position) * 0.4f, CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
+            SoundFxLibrary.GetFx("bomb2").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.4f),
+                                    CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
             ParticleManager.Explosion.AddParticles(Position);
             ParticleManager.AirplaneExplosion.AddParticles(Position);
@@ -273,24 +274,20 @@ namespace PoorEngine.SceneObject
             float enginePitch = (float)(Math.Pow((_thrust / 9),1.8) - 0.1f);
             enginePitch += (float)(_linearVelocity / 15);
             SoundFxManager.GetByID(_engineFX_id).Pitch = MathHelper.Clamp(enginePitch, -1f, 1f);
-            SoundFxManager.GetByID(_engineFX_id).Volume = MathHelper.Clamp(enginePitch, 0.6f, 1f);
-            SoundFxManager.GetByID(_engineFX_id).Volume *= SOUNDVOLUME;
-            SoundFxManager.GetByID(_engineFX_id).Volume *= CalcHelper.CalcVolume(Position);
+            float volume = MathHelper.Clamp(enginePitch, 0.6f, 1f) * CalcHelper.CalcVolume(Position);
+            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", volume);
 
             // Add dive-sound if speed is high enough
             float airspeedPitch;
+            float diveVolume = 0;
             if (_linearVelocity > 7)
             {
                 airspeedPitch = (float)((_linearVelocity -7) / 7);
                 airspeedPitch -= 0.1f;
+                diveVolume = MathHelper.Clamp(airspeedPitch, 0f, 1f);
                 SoundFxManager.GetByID(_diveFX_id).Pitch = MathHelper.Clamp(airspeedPitch, -1f, 1f);
-                SoundFxManager.GetByID(_diveFX_id).Volume = MathHelper.Clamp(airspeedPitch, 0f, 1f);
-                SoundFxManager.GetByID(_diveFX_id).Volume *= SOUNDVOLUME;
             }
-            else
-            {
-                SoundFxManager.GetByID(_diveFX_id).Volume = 0f;
-            }
+            SoundFxManager.GetByID(_diveFX_id).Volume = SoundFxManager.GetVolume("Sound", diveVolume);
 
             SoundFxManager.GetByID(_engineFX_id).Pan = CalcHelper.CalcPan(Position).X;
             SoundFxManager.GetByID(_diveFX_id).Pan = CalcHelper.CalcPan(Position).X;
@@ -307,10 +304,10 @@ namespace PoorEngine.SceneObject
             _engineFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("engine1"));
             _diveFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("dive1"));
             _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
-            SoundFxManager.GetByID(_engineFX_id).Volume = 0.3f;
+            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", 0.3f);
 
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
-            SoundFxManager.GetByID(_engineFX_id).Volume = 0.6f;
+            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", 0.6f);
             SoundFxManager.GetByID(_engineFX_id).Play();
 
             SoundFxManager.GetByID(_diveFX_id).IsLooped = true;

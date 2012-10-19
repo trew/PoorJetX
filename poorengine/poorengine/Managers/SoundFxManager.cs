@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Content;
+using PoorEngine.Settings;
 
 namespace PoorEngine.Managers
 {
@@ -35,6 +37,35 @@ namespace PoorEngine.Managers
             _soundEffects.Add(_idCounter, instance);
             _soundInstancesLoaded++;
             return _idCounter;
+        }
+
+        public static void SetVolume(string category, float volume)
+        {
+            if (category == "Global")
+                GameSettings.Default.GlobalSoundVolume = MathHelper.Clamp(volume, 0, 1);
+            if (category == "Music")
+                GameSettings.Default.MusicVolume = MathHelper.Clamp(volume, 0, 1);
+            if (category == "Sound")
+                GameSettings.Default.SoundVolume = MathHelper.Clamp(volume, 0, 1);
+
+            MediaPlayer.Volume = GameSettings.Default.MusicVolume * GameSettings.Default.GlobalSoundVolume;
+
+        }
+
+
+        /// <summary>
+        /// Categories is either "Sound" or "Music". It returns the `actual`
+        /// sound value, modified by Global sound volume.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public static float GetVolume(string category, float volume)
+        {
+            if (category == "Sound")
+                return GameSettings.Default.SoundVolume * GameSettings.Default.GlobalSoundVolume * volume;
+            if (category == "Music")
+                return GameSettings.Default.MusicVolume * GameSettings.Default.GlobalSoundVolume * volume;
+            return 0;
         }
 
         public static void RemoveFx(int id)

@@ -56,7 +56,7 @@ namespace PoorJetX.GameScreens
         /// </summary>
         public override void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/gradient"), texture);
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/gradient"), texture);
         }
 
         /// <summary>

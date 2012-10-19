@@ -173,14 +173,16 @@ namespace PoorEngine.SceneObject
                 if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(BulletProjectile)))
                 {
                     ParticleManager.ProjectileHit.AddParticles(new Vector2(Position.X - 10, Position.Y));
-                    SoundFxLibrary.GetFx("hitplane1").Play(CalcHelper.CalcVolume(Position) * 0.1f, CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
+                    SoundFxLibrary.GetFx("hitplane1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.1f),
+                                        CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
                 }
 
                 else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(BombProjectile)))
                 {
                     ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X - 10, Position.Y));
                     ParticleManager.Explosion.AddParticles(Position);
-                    SoundFxLibrary.GetFx("bomb1").Play(CalcHelper.CalcVolume(Position) * 0.1f, CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
+                    SoundFxLibrary.GetFx("bomb1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.1f),
+                                        CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
                 }
 
                 if (_health <= 0)

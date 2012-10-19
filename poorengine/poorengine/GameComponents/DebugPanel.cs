@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Managers;
+using PoorEngine.Settings;
 
 namespace PoorEngine.GameComponents
 {
@@ -61,7 +62,10 @@ namespace PoorEngine.GameComponents
             ScreenManager.SpriteBatch.DrawString(debugFont, "Debug Panel", new Vector2(50, 5), Color.Black);
             int count = 0;
             string s;
-            while(strings.Count > 0)
+            strings.Enqueue("Global volume: " + GameSettings.Default.GlobalSoundVolume);
+            strings.Enqueue("Sound volume: " + GameSettings.Default.SoundVolume);
+            strings.Enqueue("Music volume: " + GameSettings.Default.MusicVolume);
+            while (strings.Count > 0)
             {
                 s = strings.Dequeue();
                 ScreenManager.SpriteBatch.DrawString(debugFont, s, new Vector2(50, 5+debugFont.LineSpacing * (count + 1)), Color.Black);
