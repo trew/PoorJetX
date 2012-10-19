@@ -181,7 +181,7 @@ namespace PoorEngine.SceneObject
             SoundFxManager.RemoveFx(_engineFX_id);
             SoundFxManager.RemoveFx(_fireBulletFX_id);
 
-            SoundFxLibrary.GetFx("bomb1").Play(CalcHelper.CalcVolume(Position) * 0.4f, CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
+            SoundFxLibrary.GetFx("bomb1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.4f), CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
             SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), new Vector2(Position.X, EngineManager.Device.Viewport.Height) + new Vector2(210, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
             ParticleManager.GroundExplosion.AddParticles(Position, 30f, 50f);
@@ -199,7 +199,7 @@ namespace PoorEngine.SceneObject
 
             _engineFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("engine1"));
             _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
-            SoundFxManager.GetByID(_engineFX_id).Volume = 0.3f;
+            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", 0.3f);
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
             SoundFxManager.GetByID(_engineFX_id).Play();
         }
