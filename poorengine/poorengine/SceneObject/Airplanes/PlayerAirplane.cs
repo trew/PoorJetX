@@ -71,7 +71,7 @@ namespace PoorEngine.SceneObject
         {
             base.Update(gameTime);
             if (IsDead)
-                CameraManager.Camera.Stop();
+                CameraManager.Camera.Stop(Position);
 
         }
 

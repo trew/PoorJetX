@@ -12,6 +12,7 @@ namespace PoorEngine.GameComponents
     public class Camera
     {
         private Vector2 _pos;
+        private Vector2 _targetPos; //used when camera is stopping.
         private Vector2 _velocity;
         private Vector2 _maxVelocity;
         private bool _stopped;
@@ -57,11 +58,14 @@ namespace PoorEngine.GameComponents
             {
                 UpdateX(player1);
                 UpdateY(player1);
-
-                changePos(_velocity);
-                if (Pos.Y > 0)
-                    Pos = new Vector2(Pos.X, 0);
             }
+            else
+            {
+                SlowDown();
+            }
+            changePos(_velocity);
+            if (Pos.Y > 0)
+                Pos = new Vector2(Pos.X, 0);
         }
 
         public void UpdateX(PlayerAirplane player1)
@@ -142,9 +146,14 @@ namespace PoorEngine.GameComponents
             }
         }
 
-        public void Stop()
+        /// <summary>
+        /// The camera will "slide" into position when stopping.
+        /// </summary>
+        /// <param name="targetPosition">The actual position where we'll end up</param>
+        public void Stop(Vector2 targetPosition)
         {
             _stopped = true;
+            _targetPos = targetPosition;
         }
 
         public Vector2 Pos
@@ -217,6 +226,20 @@ namespace PoorEngine.GameComponents
             if (_velocity.Y > p1.Velocity.Y) { _velocity.Y -= 0.03f; }
             else if (_velocity.Y < p1.Velocity.Y) { _velocity.Y += 0.08f; }
             _velocity.Y = Math.Min(_velocity.Y, _maxVelocity.Y);
+        }
+
+        public void SlowDown()
+        {
+            if (Pos.X + GameHelper.HalfScreenWidth > _targetPos.X)
+            {
+                _velocity.X -= 0.1f;
+            }
+            else if (Pos.X + GameHelper.HalfScreenWidth < _targetPos.X) {
+                _velocity.X += 0.1f;
+            }
+
+
+            _velocity.X = Math.Min(_velocity.X, _maxVelocity.X);
         }
     }
 }
