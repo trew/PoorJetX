@@ -9,8 +9,8 @@ namespace PoorEngine.SceneObject
 {
     public class GroundCivilianVehicle : GroundVehicle
     {
-        public GroundCivilianVehicle(int maxHealth, string textureName)
-            :base(maxHealth, textureName + "_body", textureName + "_destroyed")
+        public GroundCivilianVehicle(int maxHealth)
+            :base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
         {
             _type = "civilian";
             Scale = new Vector2(0.4f, 0.4f);

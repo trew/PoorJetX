@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PoorEngine.SceneObject
 {
-    public class GroundBattleVehicle : GroundVehicle, IPoorWeaponHolder
+    public class AntiAirVehicle : GroundVehicle, IPoorWeaponHolder, IPoorEnemy
     {
         private AntiAirCannon _weapon;
         private float _weaponOrientation;
@@ -20,14 +20,16 @@ namespace PoorEngine.SceneObject
 
         private Airplane _target;
         public Airplane Target { get { return _target; } }
-        
-        public GroundBattleVehicle(int maxHealth, string textureName) // Add weapon parameter (obj/str)
-            : base(maxHealth, textureName + "_body", textureName + "_destroyed")
+
+        public bool IsDead { get { return _destroyed; } }
+
+        public AntiAirVehicle(int maxHealth) // Add weapon parameter (obj/str)
+            : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
         {
             _type = "battle";
             Scale = new Vector2(0.4f, 0.4f);
 
-            TextureNameWeapon = textureName + "_weapon";
+            TextureNameWeapon = "enemy_antiair_weapon";
             _weapon = new AntiAirCannon(this);
         }
 

@@ -64,7 +64,7 @@ namespace PoorEngine.GameComponents
         /// </summary>
         public int Y;
 
-        public int type;
+        public string type;
 
         public int health;
     }
@@ -132,9 +132,9 @@ namespace PoorEngine.GameComponents
             _data = data;
         }
 
-        private Queue<EnemyAirplane> _enemies;
+        private Queue<PoorSceneObject> _enemies;
         private Queue<Text> _texts;
-        private List<IPoorEnemy> _aliveEnemies;
+        private List<IPoorEnemy> _aliveEnemies; // used for victory conditions
 
         #region Utility functions
         public void Load()
@@ -177,14 +177,22 @@ namespace PoorEngine.GameComponents
             _data.Enemies.Sort((LevelEnemy x1, LevelEnemy x2) =>
                 x1.XAppear < x2.XAppear ? -1 : 1);
 
-            _enemies = new Queue<EnemyAirplane>();
+            _enemies = new Queue<PoorSceneObject>();
             foreach (LevelEnemy le in _data.Enemies)
             {
-
-
-                EnemyAirplane e = new EnemyAirplane(le.health);
-                e.Position = new Vector2(le.XAppear, le.Y);
-                _enemies.Enqueue(e);
+                PoorSceneObject e = null;
+                if (le.type == "Airplane")
+                {
+                    e = new EnemyAirplane(le.health);
+                    e.Position = new Vector2(le.XAppear, le.Y);
+                }
+                else if (le.type == "Vehicle")
+                {
+                    e = new AntiAirVehicle(le.health);
+                    e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 47);
+                }
+                if (e != null)
+                    _enemies.Enqueue(e);
             }
         }
 
@@ -192,7 +200,7 @@ namespace PoorEngine.GameComponents
         /// Get the next enemy in queue
         /// </summary>
         /// <returns></returns>
-        public EnemyAirplane GetNextEnemy()
+        public PoorSceneObject GetNextEnemy()
         {
             if (_enemies == null || _enemies.Count <= 0) return null;
             return _enemies.First();
@@ -202,7 +210,7 @@ namespace PoorEngine.GameComponents
         /// Spawns a new enemy
         /// </summary>
         /// <returns>An enemy, or null if no enemies is in queue</returns>
-        public EnemyAirplane SpawnEnemy()
+        public PoorSceneObject SpawnEnemy()
         {
             if (_enemies == null || _enemies.Count <= 0) return null;
 

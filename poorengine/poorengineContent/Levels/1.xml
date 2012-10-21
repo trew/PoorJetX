@@ -227,44 +227,51 @@
     <LevelEnemy>
       <XAppear>500</XAppear>
       <Y>50</Y>
-      <type>1</type>
+      <type>Airplane</type>
 	    <health>2000</health>
     </LevelEnemy>
     
     <LevelEnemy>
       <XAppear>1600</XAppear>
       <Y>130</Y>
-      <type>1</type>
+      <type>Airplane</type>
 	    <health>2000</health>
     </LevelEnemy>
 	
 	<LevelEnemy>
       <XAppear>2900</XAppear>
       <Y>500</Y>
-      <type>1</type>
+      <type>Airplane</type>
 	    <health>2000</health>
     </LevelEnemy>
 	
 	<LevelEnemy>
       <XAppear>1310</XAppear>
       <Y>450</Y>
-      <type>1</type>
+      <type>Airplane</type>
 	    <health>2000</health>
     </LevelEnemy>
 	
 	<LevelEnemy>
       <XAppear>1070</XAppear>
       <Y>400</Y>
-      <type>1</type>
+      <type>Airplane</type>
 	    <health>2000</health>
     </LevelEnemy>
 	
 	<LevelEnemy>
       <XAppear>900</XAppear>
       <Y>570</Y>
-      <type>1</type>
+      <type>Airplane</type>
 	    <health>2000</health>
-    </LevelEnemy>
+  </LevelEnemy>
+
+  <LevelEnemy>
+    <XAppear>900</XAppear>
+    <Y>0</Y>
+    <type>Vehicle</type>
+    <health>2000</health>
+  </LevelEnemy>
   </Enemies>
   
 </LevelData>

@@ -218,7 +218,7 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.E))
             {
-                GroundCivilianVehicle gcv = new GroundCivilianVehicle(3000, "enemy_antiair");
+                GroundCivilianVehicle gcv = new GroundCivilianVehicle(3000);
                 gcv.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
                         GameHelper.ScreenWidth - 200f, 
@@ -232,7 +232,7 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.R))
             {
-                GroundBattleVehicle gbv = new GroundBattleVehicle(3000, "enemy_antiair");
+                AntiAirVehicle gbv = new AntiAirVehicle(3000);
                 gbv.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
                         GameHelper.ScreenWidth - 200f,

@@ -87,7 +87,7 @@ namespace PoorEngine.Managers
 
             if (CurrentLevel.Loaded)
             {
-                EnemyAirplane enemy = null;
+                PoorSceneObject enemy = null;
 
                 // get the right-most side of the camera + an additional 100px
                 // which we use.
