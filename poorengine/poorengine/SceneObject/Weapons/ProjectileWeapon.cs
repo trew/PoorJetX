@@ -13,10 +13,12 @@ namespace PoorEngine.SceneObject
     {
         public const int BULLETSPERSECOND = 30;
         public const int MAXBULLETS = 200;
+        public int MAX_BULLETS { get { return MAXBULLETS; } }
+
 
         protected int _bulletCount = MAXBULLETS;
-        public int BulletCount { get { return _bulletCount; } }
-
+        public int AmmoCount { get { return _bulletCount; } }
+        
         public ProjectileWeapon(IPoorWeaponHolder owner)
             :base(owner)
         {

@@ -14,7 +14,8 @@ namespace PoorEngine.SceneObject
         public const float BOMBSPERSECOND = 1.5f;
 
         protected int _bombCount = MAXBOMBS;
-        public int BombCount { get { return _bombCount; } }
+        public int AmmoCount { get { return _bombCount; } }
+        public int MAX_BOMBS { get { return MAXBOMBS; } }
 
         public BombWeapon(IPoorWeaponHolder owner)
             : base(owner)
