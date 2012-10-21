@@ -44,11 +44,14 @@ namespace PoorEngine.SceneObject
                 Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
                 int textureWidth = (int)(texture.Width * Scale.X);
                 int textureHeight = (int)(texture.Height * Scale.Y);
+
+                double orientationDegrees = CalcHelper.RadianToDegree(_orientation);
+
                 return new Rectangle(
-                        (int)Position.X - textureWidth / 2,
-                        (int)Position.Y - textureHeight / 2,
-                        textureWidth,
-                        textureHeight
+                        (int)Position.X - textureHeight / 2,
+                        (int)Position.Y - textureWidth / 2,
+                        textureHeight,
+                        textureWidth
                     );
             }
         }
@@ -76,6 +79,7 @@ namespace PoorEngine.SceneObject
                 _velocity += new Vector2(0, (float)(5.8 * gameTime.ElapsedGameTime.TotalSeconds));
 
             _orientation = (float)CalcHelper.getAngleAsRadian(Position, Position + _velocity);
+
             Position += _velocity;
             if (SpawnTime <= 0.0)
                 SpawnTime = (float)gameTime.TotalGameTime.TotalSeconds;
