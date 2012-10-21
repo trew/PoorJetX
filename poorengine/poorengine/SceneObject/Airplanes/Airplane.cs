@@ -59,6 +59,7 @@ namespace PoorEngine.SceneObject
         public Airplane(int maxHealth, string textureName):
             base(textureName)
         {
+            TextureNameDestroyed = textureName; // TODO: TEMP
             _thrust = 4;
             _lift = 0;
             _orientation = 90;
@@ -146,7 +147,7 @@ namespace PoorEngine.SceneObject
 
         public void GroundExplode()
         {
-            SceneGraphManager.RemoveObject(this);
+            //SceneGraphManager.RemoveObject(this);
             UsedInBoundingBoxCheck = false;
 
             SoundFxManager.RemoveFx(_diveFX_id);
@@ -237,50 +238,51 @@ namespace PoorEngine.SceneObject
         {
             EngineManager.Device.Textures[0] = null;
 
-            if (Position.Y > GameHelper.GroundLevel -10)
+            if (Position.Y > GameHelper.GroundLevel -10 && !IsDead)
             {
                 IsDead = true;
                 GroundExplode();
-                SceneGraphManager.RemoveObject(this);
                 return;
             }
 
-            if (Position.Y > GameHelper.GroundLevel - 45)
+            if (!IsDead)
             {
-                AddGroundDust();
-            }
-
-            // Spawn smoke-effects if HP is low
-            if (HitPointsPercent < 0.7)
-            {
-                _smokeTimerStartVal = Math.Max(5, (int)(50 * HitPointsPercent));
-                _smokeTimer--;
-
-                if (_smokeTimer <= 0)
+                if (Position.Y > GameHelper.GroundLevel - 45)
                 {
-                    _blackSmoke.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
-                    _smokeTimer = _smokeTimerStartVal;
-                    
-                    if(HitPointsPercent < 0.15)
-                        _fireeeee.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
+                    AddGroundDust();
                 }
+
+                // Spawn smoke-effects if HP is low
+                if (HitPointsPercent < 0.7)
+                {
+                    _smokeTimerStartVal = Math.Max(5, (int)(50 * HitPointsPercent));
+                    _smokeTimer--;
+
+                    if (_smokeTimer <= 0)
+                    {
+                        _blackSmoke.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
+                        _smokeTimer = _smokeTimerStartVal;
+
+                        if (HitPointsPercent < 0.15)
+                            _fireeeee.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
+                    }
+                }
+
+                // Execute airplane-crash. Damn i love this comment.
+                // Damn good bloody damn good job.
+                // You're an excellent woman!
+                // In fact, you're the best person here!
+                if (IsCrashing)
+                {
+                    _blackSmoke.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 15f));
+                    _fireeeee.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
+                    _orientation = Math.Min(150, _orientation + 0.3);
+                }
+                UpdatePhysics(gameTime);
+
+                // Update soundFX based on _airSpeed-calculations etc
+                UpdateSound();
             }
-
-            // Execute airplane-crash. Damn i love this comment.
-            // Damn good bloody damn good job.
-            // You're an excellent woman!
-            // In fact, you're the best person here!
-            if (IsCrashing)
-            {
-                _blackSmoke.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 15f));
-                _fireeeee.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
-                _orientation = Math.Min(150, _orientation + 0.3);
-            }
-            UpdatePhysics(gameTime);
-
-            // Update soundFX based on _airSpeed-calculations etc
-            UpdateSound();
-
         }
 
         protected virtual void UpdatePhysics(GameTime gameTime)
@@ -289,26 +291,29 @@ namespace PoorEngine.SceneObject
 
         public virtual void UpdateSound()
         {
-            float enginePitch = (float)(Math.Pow((_thrust / 9),1.8) - 0.1f);
-            enginePitch += (float)(_linearVelocity / 15);
-            SoundFxManager.GetByID(_engineFX_id).Pitch = MathHelper.Clamp(enginePitch, -1f, 1f);
-            float volume = MathHelper.Clamp(enginePitch, 0.6f, 1f) * CalcHelper.CalcVolume(Position);
-            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", volume);
-
-            // Add dive-sound if speed is high enough
-            float airspeedPitch;
-            float diveVolume = 0;
-            if (_linearVelocity > 7)
+            if (!IsDead)
             {
-                airspeedPitch = (float)((_linearVelocity -7) / 7);
-                airspeedPitch -= 0.1f;
-                diveVolume = MathHelper.Clamp(airspeedPitch, 0f, 1f);
-                SoundFxManager.GetByID(_diveFX_id).Pitch = MathHelper.Clamp(airspeedPitch, -1f, 1f);
-            }
-            SoundFxManager.GetByID(_diveFX_id).Volume = SoundFxManager.GetVolume("Sound", diveVolume);
+                float enginePitch = (float)(Math.Pow((_thrust / 9), 1.8) - 0.1f);
+                enginePitch += (float)(_linearVelocity / 15);
+                SoundFxManager.GetByID(_engineFX_id).Pitch = MathHelper.Clamp(enginePitch, -1f, 1f);
+                float volume = MathHelper.Clamp(enginePitch, 0.6f, 1f) * CalcHelper.CalcVolume(Position);
+                SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", volume);
 
-            SoundFxManager.GetByID(_engineFX_id).Pan = CalcHelper.CalcPan(Position).X;
-            SoundFxManager.GetByID(_diveFX_id).Pan = CalcHelper.CalcPan(Position).X;
+                // Add dive-sound if speed is high enough
+                float airspeedPitch;
+                float diveVolume = 0;
+                if (_linearVelocity > 7)
+                {
+                    airspeedPitch = (float)((_linearVelocity - 7) / 7);
+                    airspeedPitch -= 0.1f;
+                    diveVolume = MathHelper.Clamp(airspeedPitch, 0f, 1f);
+                    SoundFxManager.GetByID(_diveFX_id).Pitch = MathHelper.Clamp(airspeedPitch, -1f, 1f);
+                }
+                SoundFxManager.GetByID(_diveFX_id).Volume = SoundFxManager.GetVolume("Sound", diveVolume);
+
+                SoundFxManager.GetByID(_engineFX_id).Pan = CalcHelper.CalcPan(Position).X;
+                SoundFxManager.GetByID(_diveFX_id).Pan = CalcHelper.CalcPan(Position).X;
+            }
         }
 
         public virtual void LoadContent()
