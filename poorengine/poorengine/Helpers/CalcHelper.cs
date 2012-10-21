@@ -94,8 +94,8 @@ namespace PoorEngine.Helpers
 
         public static float CalcVolume(Vector2 position)
         {
-            float deadzone = 700f;    // How far from the middle of the screen will volume start going down
-            float borderzone = 1500f; // Over how long distance will the volume go from 100% to 0%
+            float deadzone = 900f;    // How far from the middle of the screen will volume start going down
+            float borderzone = 1000f; // Over how long distance will the volume go from 100% to 0%
             float distToMid = (float)CalcHelper.DistanceToMiddle(position);
 
             return MathHelper.Clamp((float)(borderzone - (distToMid - deadzone)) / borderzone, 0f, 1f);

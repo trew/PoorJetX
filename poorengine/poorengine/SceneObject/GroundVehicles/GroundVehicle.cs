@@ -43,6 +43,9 @@ namespace PoorEngine.SceneObject
         protected int _engineFX_id;
         protected int _fireBulletFX_id;
 
+        // Graphics-related
+        protected string TextureNameWeapon;
+
         public GroundVehicle(int maxHealth, string textureName, string textureNameDestroyed)
             :base(textureName, textureNameDestroyed)
         {
@@ -66,8 +69,6 @@ namespace PoorEngine.SceneObject
         public virtual void Update(GameTime gameTime)
         {
             EngineManager.Device.Textures[0] = null;
-
-            
 
             if (!_destroyed)
             {
@@ -226,18 +227,27 @@ namespace PoorEngine.SceneObject
             SoundFxLibrary.AddToLibrary("SoundFX/firebullet", "firebullet");
 
             _engineFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("engine1"));
-            _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
+            
             SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.3f);
-
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
             SoundFxManager.GetByID(_engineFX_id).Play();
+
+            if (_type == "battle")
+            {
+                TextureManager.AddTexture(new PoorTexture("Textures/Enemies/" + TextureNameWeapon), TextureNameWeapon);
+                _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
+            }
         }
 
         public virtual void UnloadContent()
         {
             TextureManager.RemoveTexture(TextureName);
             TextureManager.RemoveTexture(TextureNameDestroyed);
+
+            if (_type == "battle")
+            {
+                TextureManager.RemoveTexture(TextureNameWeapon);
+            }
         }
-        
     }
 }

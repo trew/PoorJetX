@@ -57,9 +57,8 @@ namespace PoorEngine.SceneObject
         protected int _fireBulletFX_id;
 
         public Airplane(int maxHealth, string textureName):
-            base(textureName)
+            base(textureName, textureName + "_destroyed")
         {
-            TextureNameDestroyed = textureName; // TODO: TEMP
             _thrust = 4;
             _lift = 0;
             _orientation = 90;
@@ -163,13 +162,13 @@ namespace PoorEngine.SceneObject
             SoundFxManager.RemoveFx(_engineFX_id);
             SoundFxManager.RemoveFx(_fireBulletFX_id);
 
+            _orientation = CalcHelper.RandomBetween(100f, 140f);
+
             SoundFxLibrary.GetFx("bomb1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.4f), CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
             SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(150, -80), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
             ParticleManager.GroundExplosion.AddParticles(Position, _velocity.X * 8f, 10f);
             ParticleManager.ShrapnelExplosion.AddParticles(Position, 0, 150);
-
-            
         }
 
         public void AirExplode()

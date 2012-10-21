@@ -22,9 +22,17 @@ namespace PoorEngine.SceneObject
 
         private Cannon _weapon;
 
-        public EnemyAirplane(int maxHealth):
-            base(maxHealth, "Enemies/airplane_enemy")
+        private string RndEnemyTex()
         {
+            return "Enemies/airplane_enemy" + (int)CalcHelper.RandomBetween(1f, 5.99f);
+        }
+
+        public EnemyAirplane(int maxHealth):
+            base(maxHealth, "")
+        {
+            TextureName = RndEnemyTex();
+            TextureNameDestroyed = TextureName + "_destroyed";
+
             _thrust = 3;
             _airSpeed = 3;
             _weapon = new Cannon(this);

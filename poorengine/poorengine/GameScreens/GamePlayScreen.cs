@@ -65,6 +65,7 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/bomb"), "bomb");
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/bomb2"), "bomb2");
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/bullet"), "bullet");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/aabullet"), "aabullet");
 
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud1"), "cloud1");
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud2"), "cloud2");
@@ -215,6 +216,20 @@ namespace PoorEngine.GameScreens
                 gcv.LoadContent();
 
                 SceneGraphManager.AddObject(gcv);
+            }
+
+            if (input.IsNewKeyPress(Keys.R))
+            {
+                GroundBattleVehicle gbv = new GroundBattleVehicle(3000, "enemy_antiair");
+                gbv.Position = new Vector2(
+                        CameraManager.Camera.Pos.X +
+                        GameHelper.ScreenWidth - 200f,
+                        GameHelper.GroundLevel - 47);
+
+                gbv.Velocity = new Vector2(0f, 0f);
+                gbv.LoadContent();
+
+                SceneGraphManager.AddObject(gbv);
 
             }
 
