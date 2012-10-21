@@ -140,7 +140,7 @@
     <Compile Include="GameComponents\Camera.cs" />
     <Compile Include="SceneObject\Airplanes\Airplane.cs" />
     <Compile Include="SceneObject\GroundVehicles\GroundCivilianVehicle.cs" />
-    <Compile Include="SceneObject\GroundVehicles\GroundBattleVehicle.cs" />
+    <Compile Include="SceneObject\GroundVehicles\AntiAirVehicle.cs" />
     <Compile Include="SceneObject\GroundVehicles\GroundVehicle.cs" />
     <Compile Include="SceneObject\Projectiles\CannonProjectile.cs" />
     <Compile Include="SceneObject\Projectiles\AAProjectile.cs" />
