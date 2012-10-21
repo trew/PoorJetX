@@ -30,6 +30,11 @@ namespace PoorEngine.Helpers
             return Math.PI * angle / 180.0;
         }
 
+        public static double RadianToDegree(double angle)
+        {
+            return CalcHelper.formatAngle(angle * (180 / Math.PI));
+        }
+
         public static double formatAngle(double oldAngle)
         {
             double newAngle;

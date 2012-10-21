@@ -43,7 +43,8 @@ namespace PoorEngine.SceneObject
 
             if (Position.Y > GameHelper.GroundLevel + 10)
             {
-                ParticleManager.GroundExplosion.AddParticles(Position, 0, 35);
+
+                ParticleManager.GroundExplosion.AddParticles(Position,  _velocity.X * 8f, 0);
                 SoundFxLibrary.GetFx("bomb2").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.35f),
                                            CalcHelper.RandomBetween(-0.5f, 1f), CalcHelper.CalcPan(Position).X * 1.2f);
 

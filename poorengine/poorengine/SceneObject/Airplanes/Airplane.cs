@@ -96,6 +96,16 @@ namespace PoorEngine.SceneObject
             get
             {
                 Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+                if ((_orientation >= -5 && _orientation < 45) || (_orientation > 315 && _orientation <= 365) || (_orientation > 135 && _orientation < 225))
+                {
+                    return new Rectangle(
+                        (int)Position.X - texture.Height / 2,
+                        (int)Position.Y - texture.Width / 2,
+                        texture.Height,
+                        texture.Width
+                    );
+                }
+
                 return new Rectangle(
                         (int)Position.X - texture.Width / 2,
                         (int)Position.Y - texture.Height / 2,
@@ -155,8 +165,8 @@ namespace PoorEngine.SceneObject
             SoundFxLibrary.GetFx("bomb1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.4f), CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
             SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(150, -80), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
-            ParticleManager.GroundExplosion.AddParticles(Position, 30f, 10f);
-            ParticleManager.ShrapnelExplosion.AddParticles(Position, 0f, 120f);
+            ParticleManager.GroundExplosion.AddParticles(Position, _velocity.X * 8f, 10f);
+            ParticleManager.ShrapnelExplosion.AddParticles(Position, 0, 150);
 
             
         }
@@ -173,8 +183,8 @@ namespace PoorEngine.SceneObject
             SoundFxLibrary.GetFx("bomb2").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.4f),
                                     CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
-            ParticleManager.Explosion.AddParticles(Position);
-            ParticleManager.ShrapnelExplosion.AddParticles(Position);
+            ParticleManager.Explosion.AddParticles(Position, 0f, 360f);
+            ParticleManager.ShrapnelExplosion.AddParticles(Position, 0f, 360f);
         }
 
         public virtual void Draw(GameTime gameTime)
@@ -308,6 +318,7 @@ namespace PoorEngine.SceneObject
 
             SoundFxManager.GetByID(_engineFX_id).Pan = CalcHelper.CalcPan(Position).X;
             SoundFxManager.GetByID(_diveFX_id).Pan = CalcHelper.CalcPan(Position).X;
+
         }
 
         public virtual void LoadContent()
