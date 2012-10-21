@@ -172,10 +172,9 @@ namespace PoorEngine.SceneObject
             
         }
 
-        public void AirExplode()
+        public virtual void AirExplode()
         {
             SceneGraphManager.RemoveObject(this);
-            CameraManager.Camera.Stop(Position);
             UsedInBoundingBoxCheck = false;
 
             SoundFxManager.RemoveFx(_diveFX_id);

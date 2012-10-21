@@ -49,6 +49,12 @@ namespace PoorEngine.SceneObject
             }
         }
 
+        public override void AirExplode()
+        {
+            CameraManager.Camera.Stop(Position);
+            base.AirExplode();
+        }
+
         public override void Collide(PoorSceneObject collidingWith)
         {
             if (IsCrashing) return;
