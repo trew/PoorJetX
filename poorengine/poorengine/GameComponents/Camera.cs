@@ -14,11 +14,11 @@ namespace PoorEngine.GameComponents
         private Vector2 _pos;
 
         private Vector2 _targetPos; //used when camera is stopping.
-        private Vector2 _lastPosition;
 
         private Vector2 _velocity;
         private Vector2 _maxVelocity;
         private bool _stopped;
+        private bool _isCruising;
 
         public Vector2 Velocity { get { return _velocity; } }
 
@@ -65,8 +65,14 @@ namespace PoorEngine.GameComponents
         {
             _stopped = true;
             _targetPos = targetPosition;
-            _lastPosition = new Vector2(_pos.X, _pos.Y);
         }
+
+        public void Cruise()
+        {
+            _stopped = true;
+            _isCruising = true;
+        }
+
 
         public Vector2 Pos
         {
@@ -81,9 +87,19 @@ namespace PoorEngine.GameComponents
                 UpdateX(player1);
                 UpdateY(player1);
             }
-            else
+            else if (!_isCruising)
             {
                 AdjustToTarget();
+            }
+            else
+            {
+                SlowDownY();
+                if (_velocity.X < 2.0f)
+                {
+                    _velocity.X += 0.2f;
+                } else {
+                    SlowDownX();
+                }
             }
             changePos(_velocity);
             if (Pos.Y > 0)
@@ -234,49 +250,61 @@ namespace PoorEngine.GameComponents
             _velocity.Y = Math.Min(_velocity.Y, _maxVelocity.Y);
         }
 
-        public void SlowDown()
+        private void SlowDownX()
         {
-            if (_velocity.X < 0.01f && _velocity.X > -0.01f)
+            if (_velocity.X > 0)
             {
-                _velocity.X = 0;
-            }
-            else if (_velocity.X > 0)
-            {
-                _velocity.X -= MathHelper.Clamp(Math.Abs(_velocity.X / 100), 0.01f, 0.1f);
+                _velocity.X -= MathHelper.Clamp(Math.Abs(_velocity.X / 100), 0.05f, 0.1f);
             }
             else if (_velocity.X < 0)
             {
-                _velocity.X += MathHelper.Clamp(Math.Abs(_velocity.X / 100), 0.01f, 0.1f);
+                _velocity.X += MathHelper.Clamp(Math.Abs(_velocity.X / 100), 0.05f, 0.1f);
+            }
+        }
+
+        private void SlowDownY()
+        {
+            if (_velocity.Y > 0)
+            {
+                _velocity.Y -= MathHelper.Clamp(Math.Abs(_velocity.Y / 100), 0.05f, 0.1f);
+            }
+            else if (_velocity.Y < 0)
+            {
+                _velocity.Y += MathHelper.Clamp(Math.Abs(_velocity.Y / 100), 0.05f, 0.1f);
             }
         }
 
         public void AdjustToTarget()
         {
+            AdjustToTargetX();
+            AdjustToTargetY();
+        }
+
+        private void AdjustToTargetX()
+        {
             // Target is to the LEFT, MOVE LEFT DAMMIT!
             if (Pos.X + GameHelper.HalfScreenWidth > _targetPos.X)
             {
-                // We are to the right of the point were our Stop() function
-                // was called. Slow down and move to the left.
-                if (Pos.X > _lastPosition.X)
+                if (Pos.X + GameHelper.HalfScreenWidth > _targetPos.X + 200)
                 {
-                    _velocity.X += -0.2f;
+                    _velocity.X -= 0.1f;
                 }
                 else
                 {
-                    SlowDown();
+                    SlowDownX();
                 }
             }
             // Target is to the RIGHT, MOVE RIGHT DAMMIT!
             else if (Pos.X + GameHelper.HalfScreenWidth < _targetPos.X) {
                 // We are to the right of the point were our Stop() function
                 // was called. Slow down and move to the left.
-                if (Pos.X < _lastPosition.X)
+                if (Pos.X + GameHelper.HalfScreenWidth > _targetPos.X - 200)
                 {
-                    _velocity.X += 0.2f;
+                    _velocity.X += 0.1f;
                 }
                 else
                 {
-                    SlowDown();
+                    SlowDownX();
                 }
             }
 
@@ -294,6 +322,55 @@ namespace PoorEngine.GameComponents
                 {
                     _pos.X = _targetPos.X - GameHelper.HalfScreenWidth;
                     _velocity.X = 0;
+                }
+            }
+        }
+        private void AdjustToTargetY()
+        {
+            // Target is ABOVE US, MOVE UP DAMMIT!
+            if (Pos.Y + GameHelper.HalfScreenHeight > _targetPos.Y)
+            {
+                if (Pos.Y + GameHelper.HalfScreenHeight > _targetPos.Y + 150)
+                {
+                    _velocity.Y -= 0.1f;
+                }
+                else
+                {
+                    SlowDownY();
+                }
+            }
+            // Target is BELOW US, MOVE DOWN DAMMIT!
+            else if (Pos.Y + GameHelper.HalfScreenHeight < _targetPos.Y)
+            {
+                // We are to the right of the point were our Stop() function
+                // was called. Slow down and move to the left.
+                if (Pos.Y + GameHelper.HalfScreenHeight > _targetPos.Y - 150)
+                {
+                    _velocity.Y += 0.1f;
+                }
+                else
+                {
+                    SlowDownY();
+                }
+            }
+
+            // Make sure we don't pass target.
+            if (_velocity.Y < 0 && (_pos.Y + GameHelper.HalfScreenHeight > _targetPos.Y))
+            {
+                if (_pos.Y + GameHelper.HalfScreenHeight + _velocity.Y < _targetPos.Y)
+                {
+                    _pos.Y = _targetPos.Y - GameHelper.HalfScreenHeight;
+                    if (_pos.Y > 0) _pos.Y = 0;
+                    _velocity.Y = 0;
+                }
+            }
+            else if (_velocity.Y > 0 && (_pos.Y + GameHelper.HalfScreenHeight < _targetPos.Y))
+            {
+                if (_pos.Y + GameHelper.HalfScreenHeight + _velocity.Y > _targetPos.Y)
+                {
+                    _pos.Y = _targetPos.Y - GameHelper.HalfScreenHeight;
+                    if (_pos.Y > 0) _pos.Y = 0;
+                    _velocity.Y = 0;
                 }
             }
         }

@@ -171,7 +171,7 @@ namespace PoorEngine.SceneObject
             ParticleManager.ShrapnelExplosion.AddParticles(Position, 0, 150);
         }
 
-        public void AirExplode()
+        public virtual void AirExplode()
         {
             SceneGraphManager.RemoveObject(this);
             UsedInBoundingBoxCheck = false;
