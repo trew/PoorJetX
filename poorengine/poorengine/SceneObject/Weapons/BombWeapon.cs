@@ -17,6 +17,8 @@ namespace PoorEngine.SceneObject
         public int AmmoCount { get { return _bombCount; } }
         public int MAX_BOMBS { get { return MAXBOMBS; } }
 
+        public bool Refilled;
+
         public BombWeapon(IPoorWeaponHolder owner)
             : base(owner)
         {
@@ -36,6 +38,15 @@ namespace PoorEngine.SceneObject
                 return true;
             }
             return false;
+        }
+
+        public void Refill(int amount)
+        {
+            int oldCount = _bombCount;
+            _bombCount = CalcHelper.Clamp(_bombCount + amount, 0, MAXBOMBS);
+
+            if(oldCount != _bombCount)
+                Refilled = true;
         }
     }
 }

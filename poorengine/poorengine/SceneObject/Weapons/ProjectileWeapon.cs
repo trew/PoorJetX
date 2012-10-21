@@ -18,6 +18,8 @@ namespace PoorEngine.SceneObject
 
         protected int _bulletCount = MAXBULLETS;
         public int AmmoCount { get { return _bulletCount; } }
+
+        public bool Refilled;
         
         public ProjectileWeapon(IPoorWeaponHolder owner)
             :base(owner)
@@ -43,6 +45,15 @@ namespace PoorEngine.SceneObject
                 return true;
             }
             return false;
+        }
+
+        public void Refill(int amount) 
+        {
+            int oldCount = _bulletCount;
+            _bulletCount = CalcHelper.Clamp(_bulletCount + amount, 0, MAXBULLETS);
+
+            if (oldCount != _bulletCount)
+                Refilled = true;
         }
 
         public override void Update(GameTime gameTime)

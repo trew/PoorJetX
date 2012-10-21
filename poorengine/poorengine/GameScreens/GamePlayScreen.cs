@@ -94,12 +94,14 @@ namespace PoorEngine.GameScreens
 
             TextureManager.AddTexture(new PoorTexture("Textures/UI/bombtargetmarker"), "bombtargetmarker");
 
+            // For ammo-related UI
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs"), "ammo_bombs");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_low"), "ammo_bombs_low");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_none"), "ammo_bombs_none");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg"), "ammo_mg");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_low"), "ammo_mg_low");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_none"), "ammo_mg_none");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_refill"), "ammo_refill");
 
             // Animations
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_groundcrash"), "anim_groundcrash");
@@ -133,11 +135,6 @@ namespace PoorEngine.GameScreens
                 inst.LoadContent();
             }
             // !Add instruments
-
-
-            // DEBUG =======================
-            //SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1",new Point(100,100), new Point(10,1), PlayerAirplane.getPosition(), new Vector2(1,1), 20, false));
-            // =============================
 
             SceneGraphManager.LoadContent();
             _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
@@ -248,6 +245,19 @@ namespace PoorEngine.GameScreens
 
                 SceneGraphManager.AddObject(gbv);
 
+            }
+
+
+            if (input.IsNewKeyPress(Keys.W))
+            {
+                AmmoBase ab = new AmmoBase();
+                ab.Position = new Vector2(
+                        CameraManager.Camera.Pos.X +
+                        GameHelper.ScreenWidth - 250f,
+                        GameHelper.GroundLevel + 10);
+                ab.LoadContent();
+
+                SceneGraphManager.AddObject(ab);
             }
 
             if (input.IsNewKeyPress(Keys.P)) {

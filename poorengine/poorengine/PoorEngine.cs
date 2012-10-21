@@ -144,6 +144,7 @@ namespace PoorEngine
         public static PlayerAirplane Player
         {
             // OMFG SO UGLY!
+            // Indeed :S
             get
             {
                 foreach (GameScreen screen in ScreenManager.GetScreens())

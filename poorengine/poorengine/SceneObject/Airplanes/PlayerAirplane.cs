@@ -84,6 +84,16 @@ namespace PoorEngine.SceneObject
             }
         }
 
+        public void RefillMG(int amount)
+        {
+            ((ProjectileWeapon)_projectileWeapon).Refill(amount);
+        }
+
+        public void RefillBombs(int amount)
+        {
+            ((BombWeapon)_bombWeapon).Refill(amount);
+        }
+
         protected override void UpdatePhysics(GameTime gameTime)
         {
             base.UpdatePhysics(gameTime);

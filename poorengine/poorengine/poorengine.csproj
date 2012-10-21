@@ -145,6 +145,7 @@
     <Compile Include="SceneObject\GroundVehicles\GroundVehicle.cs" />
     <Compile Include="SceneObject\Projectiles\CannonProjectile.cs" />
     <Compile Include="SceneObject\Projectiles\AAProjectile.cs" />
+    <Compile Include="SceneObject\Stationary\AmmoBase.cs" />
     <Compile Include="SceneObject\Weapons\BombWeapon.cs" />
     <Compile Include="SceneObject\Weapons\Cannon.cs" />
     <Compile Include="SceneObject\Weapons\AntiAirCannon.cs" />
