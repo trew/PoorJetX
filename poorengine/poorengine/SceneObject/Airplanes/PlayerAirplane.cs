@@ -70,7 +70,7 @@ namespace PoorEngine.SceneObject
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (IsDead)
+            if (IsDead && !CameraManager.Camera.Stopped)
                 CameraManager.Camera.Stop(Position);
 
         }

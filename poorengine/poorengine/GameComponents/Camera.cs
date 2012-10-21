@@ -12,7 +12,10 @@ namespace PoorEngine.GameComponents
     public class Camera
     {
         private Vector2 _pos;
+
         private Vector2 _targetPos; //used when camera is stopping.
+        private Vector2 _lastPosition;
+
         private Vector2 _velocity;
         private Vector2 _maxVelocity;
         private bool _stopped;
@@ -52,6 +55,25 @@ namespace PoorEngine.GameComponents
             return p1.Velocity - Velocity;
         }
 
+        public bool Stopped { get { return _stopped; } }
+
+        /// <summary>
+        /// The camera will "slide" into position when stopping.
+        /// </summary>
+        /// <param name="targetPosition">The actual position where we'll end up</param>
+        public void Stop(Vector2 targetPosition)
+        {
+            _stopped = true;
+            _targetPos = targetPosition;
+            _lastPosition = new Vector2(_pos.X, _pos.Y);
+        }
+
+        public Vector2 Pos
+        {
+            get { return _pos; }
+            set { _pos = value; }
+        }
+
         public void Update(PlayerAirplane player1)
         {
             if (!_stopped)
@@ -61,7 +83,7 @@ namespace PoorEngine.GameComponents
             }
             else
             {
-                SlowDown();
+                AdjustToTarget();
             }
             changePos(_velocity);
             if (Pos.Y > 0)
@@ -146,22 +168,6 @@ namespace PoorEngine.GameComponents
             }
         }
 
-        /// <summary>
-        /// The camera will "slide" into position when stopping.
-        /// </summary>
-        /// <param name="targetPosition">The actual position where we'll end up</param>
-        public void Stop(Vector2 targetPosition)
-        {
-            _stopped = true;
-            _targetPos = targetPosition;
-        }
-
-        public Vector2 Pos
-        {
-            get { return _pos; }
-            set { _pos = value; }
-        }
-
         public Vector2 GetMoveSpeed()
         {
             return _velocity;
@@ -230,16 +236,66 @@ namespace PoorEngine.GameComponents
 
         public void SlowDown()
         {
+            if (_velocity.X < 0.01f && _velocity.X > -0.01f)
+            {
+                _velocity.X = 0;
+            }
+            else if (_velocity.X > 0)
+            {
+                _velocity.X -= MathHelper.Clamp(Math.Abs(_velocity.X / 100), 0.01f, 0.1f);
+            }
+            else if (_velocity.X < 0)
+            {
+                _velocity.X += MathHelper.Clamp(Math.Abs(_velocity.X / 100), 0.01f, 0.1f);
+            }
+        }
+
+        public void AdjustToTarget()
+        {
+            // Target is to the LEFT, MOVE LEFT DAMMIT!
             if (Pos.X + GameHelper.HalfScreenWidth > _targetPos.X)
             {
-                _velocity.X -= 0.1f;
+                // We are to the right of the point were our Stop() function
+                // was called. Slow down and move to the left.
+                if (Pos.X > _lastPosition.X)
+                {
+                    _velocity.X += -0.2f;
+                }
+                else
+                {
+                    SlowDown();
+                }
             }
+            // Target is to the RIGHT, MOVE RIGHT DAMMIT!
             else if (Pos.X + GameHelper.HalfScreenWidth < _targetPos.X) {
-                _velocity.X += 0.1f;
+                // We are to the right of the point were our Stop() function
+                // was called. Slow down and move to the left.
+                if (Pos.X < _lastPosition.X)
+                {
+                    _velocity.X += 0.2f;
+                }
+                else
+                {
+                    SlowDown();
+                }
             }
 
-
-            _velocity.X = Math.Min(_velocity.X, _maxVelocity.X);
+            // Make sure we don't pass target.
+            if (_velocity.X < 0 && (_pos.X + GameHelper.HalfScreenWidth > _targetPos.X) ) {
+                if (_pos.X + GameHelper.HalfScreenWidth + _velocity.X < _targetPos.X)
+                {
+                    _pos.X = _targetPos.X - GameHelper.HalfScreenWidth;
+                    _velocity.X = 0;
+                }
+            }
+            else if (_velocity.X > 0 && (_pos.X + GameHelper.HalfScreenWidth < _targetPos.X) )
+            {
+                if (_pos.X + GameHelper.HalfScreenWidth + _velocity.X > _targetPos.X)
+                {
+                    _pos.X = _targetPos.X - GameHelper.HalfScreenWidth;
+                    _velocity.X = 0;
+                }
+            }
         }
     }
 }
