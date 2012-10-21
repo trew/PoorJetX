@@ -20,7 +20,7 @@ namespace PoorEngine.GameScreens
 {
     public class GamePlayScreen : GameScreen 
     {
-        const string airplaneTexture = "flygplan";
+        const string airplaneTexture = "airplane_player";
         PlayerAirplane player1;
 
         int janitorCoffeeBreak;
@@ -49,6 +49,11 @@ namespace PoorEngine.GameScreens
             get { return EngineManager.Device.Viewport.Height; }
         }
 
+        public int GroundLevel
+        {
+            get { return ScreenHeight - 65; }
+        }
+
         public PlayerAirplane Airplane
         {
             get { return player1; }
@@ -72,8 +77,15 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/Particles/smoke_white"), "smoke_white");
             TextureManager.AddTexture(new PoorTexture("Textures/Particles/fire"), "fire");
 
-            TextureManager.AddTexture(new PoorTexture("Textures/Landscape/hill1"), "hill1");
-            TextureManager.AddTexture(new PoorTexture("Textures/Landscape/hill2"), "hill2");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/hill1"), "hill1");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/hill2"), "hill2");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/hill3"), "hill3");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain1"), "mountain1");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain2"), "mountain2");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain3"), "mountain3");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain4"), "mountain4");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain5"), "mountain5");
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain6"), "mountain6");
 
             TextureManager.AddTexture(new PoorTexture("Textures/UI/bombtargetmarker"), "bombtargetmarker");
 
@@ -101,10 +113,10 @@ namespace PoorEngine.GameScreens
             SceneGraphManager.AddObject(player1);     
 
             // Add instruments
-            throttleMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(500, ScreenHeight), 0f, 7.5f, 1f, "throttle", this);
+            throttleMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(150, ScreenHeight), 0f, 7.5f, 0.6f, "throttle", "Throttle", this);
             _instruments.Add("throttleMeter", throttleMeter);
 
-            airspeedMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(800, ScreenHeight), 0f, 13f, 0.5f, "linearvelocity", this);
+            airspeedMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(270, ScreenHeight), 0f, 13f, 0.6f, "linearvelocity", "Airspeed", this);
             _instruments.Add("airspeedMeter", airspeedMeter);
 
             foreach (Instrument inst in _instruments.Values)
@@ -161,6 +173,7 @@ namespace PoorEngine.GameScreens
             EngineManager.Debug.Print("Running Slowly: " + gameTime.IsRunningSlowly);
             EngineManager.Debug.Print("GC.GetTotalMemory: " + GC.GetTotalMemory(false)/1024 + " KB");
             EngineManager.Debug.Print("==============================");
+            EngineManager.Debug.Print("Score: " + EngineManager.Score);
             
 
             //AmmoManager.Update(gameTime);
@@ -195,8 +208,8 @@ namespace PoorEngine.GameScreens
                 GroundCivilianVehicle gcv = new GroundCivilianVehicle(3000, "enemy_antiair");
                 gcv.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
-                        EngineManager.Device.Viewport.Width - 200f, 
-                        EngineManager.Device.Viewport.Height - 80f );
+                        GameHelper.ScreenWidth - 200f, 
+                        GameHelper.GroundLevel -47 );
 
                 gcv.Velocity = new Vector2(0f, 0f);
                 gcv.LoadContent();
@@ -231,6 +244,14 @@ namespace PoorEngine.GameScreens
             base.Draw(gameTime);
             SceneGraphManager.Draw(gameTime);
             ParticleManager.Draw(gameTime);
+
+            // Draw Score
+            Text.DrawText("cartoon18", // Font
+                        "Score: " + EngineManager.Score,   // Text
+                        Color.White,    // Inner color
+                        new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
+                        1.3f);          // Outline thickness
+
             foreach (Instrument inst in _instruments.Values)
             {
                 inst.Draw(gameTime);

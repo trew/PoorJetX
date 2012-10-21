@@ -20,6 +20,8 @@ namespace PoorEngine.SceneObject
         protected bool _destroyed;
         public float HitPointsPercent { get { return ((float)_health / _maxHealth); } }
 
+        protected string _type;
+
         // Movement
         protected Vector2 _velocity;
         public Vector2 Velocity
@@ -47,7 +49,10 @@ namespace PoorEngine.SceneObject
             UsedInBoundingBoxCheck = true;
             Z = 0.999f;
 
+            _destroyed = false;
             _health = _maxHealth = maxHealth;
+            _hpRectOutline = new Rectangle(9999, 9999, 40, 5);
+            _healthMeterRect = new Rectangle(9999, 9999, 38, 3);
 
             _fireeeee = new ProjectileHit(EngineManager.Game, 7);
             _blackSmoke = new BlackSmoke(EngineManager.Game, 8);
@@ -61,11 +66,13 @@ namespace PoorEngine.SceneObject
         public virtual void Update(GameTime gameTime)
         {
             EngineManager.Device.Textures[0] = null;
-            UpdateSound();
+
+            
 
             if (!_destroyed)
             {
                 Position += _velocity;
+                UpdateSound();
             }
 
             if (_destroyed && Position.X < CameraManager.Camera.Pos.X - 1000)
@@ -91,7 +98,7 @@ namespace PoorEngine.SceneObject
         private void UpdateSound()
         {
             SoundFxManager.GetByID(_engineFX_id).Pan = CalcHelper.CalcPan(Position).X;
-            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position));
+            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.3f);
         }
 
         public virtual void Draw(GameTime gameTime)
@@ -107,7 +114,7 @@ namespace PoorEngine.SceneObject
             ScreenManager.SpriteBatch.Draw(texture,
                                            CameraManager.Camera.Normalize(Position),  // Position
                                            null,                // Source-Rectangle 
-                                           Color.AliceBlue,
+                                           Color.White,
                                            0f,                 // Rotation
                                            Vector2.Zero,        // Origin 
                                            Scale, 
@@ -126,8 +133,12 @@ namespace PoorEngine.SceneObject
 
                 Texture2D texBlack = TextureManager.GetColorTexture(Color.Black);
                 Texture2D texHealth = TextureManager.GetColorTexture(hpColor);
+
+                Vector2 normPos = CameraManager.Camera.Normalize(Position);
+                Vector2 offset = new Vector2(40, 40);
+
                 ScreenManager.SpriteBatch.Draw(texBlack,
-                                               CameraManager.Camera.Normalize(Position) + new Vector2(-10, 20),
+                                               normPos + new Vector2(-10, 20) + offset,
                                                _hpRectOutline,
                                                Color.White,
                                                0f,
@@ -136,7 +147,7 @@ namespace PoorEngine.SceneObject
                                                SpriteEffects.None,
                                                0f);
                 ScreenManager.SpriteBatch.Draw(texHealth,
-                                               CameraManager.Camera.Normalize(Position) + new Vector2(-9, 21),
+                                               normPos + new Vector2(-9, 21) + offset,
                                                _healthMeterRect,
                                                Color.White,
                                                0f,
@@ -158,6 +169,12 @@ namespace PoorEngine.SceneObject
                 TakeDamage(proj.Damage);
             }
 
+            if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane)))
+            {
+                TakeDamage(10000000);
+                EngineManager.Score += 2; // Bonus points for being killed by crashing airplane
+            }
+
             // EngineManager.Score += wahtever, om dör! Gör i underklasser ist?
           
         }
@@ -170,7 +187,12 @@ namespace PoorEngine.SceneObject
                 _health = 0;
                 _destroyed = true;
                 GroundExplode();
-                EngineManager.Score += 1;
+
+                if (_type.Equals("battle"))
+                    EngineManager.Score += 3;
+                else if (_type.Equals("civilian"))
+                    EngineManager.Score += 1;
+                    
             }
         }
 
@@ -181,11 +203,14 @@ namespace PoorEngine.SceneObject
             SoundFxManager.RemoveFx(_engineFX_id);
             SoundFxManager.RemoveFx(_fireBulletFX_id);
 
-            SoundFxLibrary.GetFx("bomb1").Play(CalcHelper.CalcVolume(Position) * 0.4f, CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
+            SoundFxLibrary.GetFx("bomb1").Play(
+                SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.3f), 
+                CalcHelper.RandomBetween(0f, 0.4f), 
+                CalcHelper.CalcPan(Position).X * 1.8f);
 
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), new Vector2(Position.X, EngineManager.Device.Viewport.Height) + new Vector2(210, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
-            ParticleManager.GroundExplosion.AddParticles(Position, 30f, 50f);
-            ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X + 50f, EngineManager.Device.Viewport.Height-30));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), new Vector2(Position.X, GameHelper.ScreenHeight) + new Vector2(190, -160), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
+            ParticleManager.GroundExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 30f, 50f);
+            ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 0f, 120f);
         }
 
         public virtual void LoadContent()
@@ -199,7 +224,7 @@ namespace PoorEngine.SceneObject
 
             _engineFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("engine1"));
             _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
-            SoundFxManager.GetByID(_engineFX_id).Volume = 0.3f;
+            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.3f);
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
             SoundFxManager.GetByID(_engineFX_id).Play();
         }

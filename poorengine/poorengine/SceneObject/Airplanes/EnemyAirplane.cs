@@ -23,7 +23,7 @@ namespace PoorEngine.SceneObject
         private Cannon _weapon;
 
         public EnemyAirplane(int maxHealth):
-            base(maxHealth, "flygplan")
+            base(maxHealth, "Enemies/airplane_enemy")
         {
             _thrust = 3;
             _airSpeed = 3;
@@ -51,7 +51,7 @@ namespace PoorEngine.SceneObject
             // target is located.
             if (Target == null)
             {
-                Vector2 targetX = new Vector2(CameraManager.Camera.Pos.X + EngineManager.Device.Viewport.Width * 0.8f, Position.Y);
+                Vector2 targetX = new Vector2(CameraManager.Camera.Pos.X + GameHelper.ScreenWidth * 0.8f, Position.Y);
                 Vector2 targetDiff = Position - targetX;
                 _thrust = MathHelper.Clamp((float)(5 - targetDiff.X / 300), 0f, 7f);
             }

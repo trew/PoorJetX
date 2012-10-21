@@ -69,8 +69,8 @@ namespace PoorEngine.Helpers
 
         public static double DistanceToMiddle(Vector2 objectPos)
         {
-            Vector2 middlePos = CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2, 
-                                                                       EngineManager.Device.Viewport.Height / 2);
+            Vector2 middlePos = CameraManager.Camera.Pos + new Vector2(GameHelper.HalfScreenWidth,
+                                                                       GameHelper.HalfScreenWidth);
 
             return DistanceBetween(objectPos, middlePos);
         }
@@ -78,8 +78,8 @@ namespace PoorEngine.Helpers
         public static Vector2 CalcPan(Vector2 pos)
         {
             Vector2 relativeToCamera = CameraManager.Camera.Normalize(pos);
-            float x = (relativeToCamera.X / EngineManager.Device.Viewport.Width) - 0.5f;
-            float y = (relativeToCamera.Y / EngineManager.Device.Viewport.Height) - 0.5f;
+            float x = (relativeToCamera.X / GameHelper.ScreenWidth) - 0.5f;
+            float y = (relativeToCamera.Y / GameHelper.ScreenHeight) - 0.5f;
 
             x = MathHelper.Clamp(x, -0.5f, 0.5f);
             y = MathHelper.Clamp(y, -0.5f, 0.5f);

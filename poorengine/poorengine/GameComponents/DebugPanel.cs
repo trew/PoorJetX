@@ -12,7 +12,7 @@ namespace PoorEngine.GameComponents
     public class DebugPanel : DrawableGameComponent
     {
         SpriteFont debugFont;
-        bool ViewAble = true;
+        public bool ViewDebug = true;
 
         Queue<string> strings;
 
@@ -43,7 +43,7 @@ namespace PoorEngine.GameComponents
  	        base.Update(gameTime);
             if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.D))
             {
-                ViewAble = !ViewAble;
+                ViewDebug = !ViewDebug;
             }
 
         }
@@ -56,7 +56,7 @@ namespace PoorEngine.GameComponents
         public override void  Draw(GameTime gameTime)
         {
  	        base.Draw(gameTime);
-            if (!ViewAble) return;
+            if (!ViewDebug) return;
             ScreenManager.SpriteBatch.Begin();
 
             ScreenManager.SpriteBatch.DrawString(debugFont, "Debug Panel", new Vector2(50, 5), Color.Black);

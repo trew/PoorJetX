@@ -24,6 +24,7 @@ namespace PoorEngine.SceneObject
         protected double _orientation;
         protected double _lforce;
         protected double _rforce;
+        protected double _cobraForce;
         protected double _lift;
         protected double _gravity;
         protected Vector2 _velocity;
@@ -48,6 +49,7 @@ namespace PoorEngine.SceneObject
         protected ProjectileHit _fireeeee;
         protected BlackSmoke _blackSmoke;
         protected WhiteSmoke _whiteSmoke;
+        protected GroundDust _groundDust;
 
         // Sounds
         protected int _engineFX_id;
@@ -68,10 +70,12 @@ namespace PoorEngine.SceneObject
             _fireeeee = new ProjectileHit(EngineManager.Game, 7);
             _blackSmoke = new BlackSmoke(EngineManager.Game, 8);
             _whiteSmoke = new WhiteSmoke(EngineManager.Game, 8);
+            _groundDust = new GroundDust(EngineManager.Game, 5);
 
             EngineManager.Game.Components.Add(_whiteSmoke);
             EngineManager.Game.Components.Add(_blackSmoke);
             EngineManager.Game.Components.Add(_fireeeee);
+            EngineManager.Game.Components.Add(_groundDust);
 
             Position = new Vector2(200, 500);
             Z = 0.997f;
@@ -151,9 +155,11 @@ namespace PoorEngine.SceneObject
 
             SoundFxLibrary.GetFx("bomb1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.4f), CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(170, -130), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
+            SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), Position + new Vector2(150, -80), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
             ParticleManager.GroundExplosion.AddParticles(Position, 30f, 10f);
-            ParticleManager.ShrapnelExplosion.AddParticles(Position);
+            ParticleManager.ShrapnelExplosion.AddParticles(Position, 0f, 120f);
+
+            
         }
 
         public void AirExplode()
@@ -169,7 +175,7 @@ namespace PoorEngine.SceneObject
                                     CalcHelper.RandomBetween(0f, 0.4f), CalcHelper.CalcPan(Position).X * 1.8f);
 
             ParticleManager.Explosion.AddParticles(Position);
-            ParticleManager.AirplaneExplosion.AddParticles(Position);
+            ParticleManager.ShrapnelExplosion.AddParticles(Position);
         }
 
         public virtual void Draw(GameTime gameTime)
@@ -221,6 +227,9 @@ namespace PoorEngine.SceneObject
                                                0f);
             }
 
+            if (EngineManager.Debug.ViewDebug) // Draw debug boundingbox
+                TextureManager.DrawRectangle(ScreenManager.SpriteBatch, CameraManager.Camera.Normalize(BoundingBox), 1, Color.Black);
+
             ScreenManager.SpriteBatch.End();
         }
 
@@ -228,17 +237,15 @@ namespace PoorEngine.SceneObject
         {
             EngineManager.Device.Textures[0] = null;
 
-            if (Position.Y > EngineManager.Device.Viewport.Height - 10)
+            if (Position.Y > GameHelper.GroundLevel -10)
             {
                 IsDead = true;
-
                 GroundExplode();
-
                 SceneGraphManager.RemoveObject(this);
                 return;
             }
 
-            if (Position.Y > EngineManager.Device.Viewport.Height - 75)
+            if (Position.Y > GameHelper.GroundLevel - 45)
             {
                 AddGroundDust();
             }
@@ -251,11 +258,11 @@ namespace PoorEngine.SceneObject
 
                 if (_smokeTimer <= 0)
                 {
-                    _blackSmoke.AddParticles(Position);
+                    _blackSmoke.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
                     _smokeTimer = _smokeTimerStartVal;
                     
                     if(HitPointsPercent < 0.15)
-                        _fireeeee.AddParticles(Position);
+                        _fireeeee.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
                 }
             }
 
@@ -265,8 +272,8 @@ namespace PoorEngine.SceneObject
             // In fact, you're the best person here!
             if (IsCrashing)
             {
-                _blackSmoke.AddParticles(Position);
-                _fireeeee.AddParticles(Position);
+                _blackSmoke.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 15f));
+                _fireeeee.AddParticles(CalcHelper.calculatePoint(Position, Orientation + 10, 35f));
                 _orientation = Math.Min(150, _orientation + 0.3);
             }
             UpdatePhysics(gameTime);
@@ -306,8 +313,8 @@ namespace PoorEngine.SceneObject
 
         public virtual void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/" + TextureName), TextureName);
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/" + TextureNameDestroyed), TextureNameDestroyed);
+            TextureManager.AddTexture(new PoorTexture("Textures/" + TextureName), TextureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/" + TextureNameDestroyed), TextureNameDestroyed);
             
             SoundFxLibrary.AddToLibrary("SoundFX/engine1", "engine1");
             SoundFxLibrary.AddToLibrary("SoundFX/dive1", "dive1");
@@ -316,10 +323,9 @@ namespace PoorEngine.SceneObject
             _engineFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("engine1"));
             _diveFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("dive1"));
             _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
-            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", 0.3f);
 
+            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", 0.3f);
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
-            SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", 0.6f);
             SoundFxManager.GetByID(_engineFX_id).Play();
 
             SoundFxManager.GetByID(_diveFX_id).IsLooped = true;
@@ -364,31 +370,19 @@ namespace PoorEngine.SceneObject
         private void AddGroundDust()
         {
             EngineManager.Debug.Print("Linear velocity: " + LinearVelocity);
+            
 
             if (LinearVelocity > 5)
-                ParticleManager.WhiteSmoke.AddParticles(
+                _groundDust.AddParticles(
                     new Vector2(
-                        Position.X - (EngineManager.Device.Viewport.Height - Position.Y) + 20f,
-                        EngineManager.Device.Viewport.Height - 30));
-
-            if (LinearVelocity > 5.5)
-                ParticleManager.WhiteSmoke.AddParticles(
-                    new Vector2(
-                        Position.X - (EngineManager.Device.Viewport.Height - Position.Y) + 25f,
-                        EngineManager.Device.Viewport.Height - 30));
-
-            if (LinearVelocity > 6)
-                ParticleManager.WhiteSmoke.AddParticles(
-                    new Vector2(
-                        Position.X - (EngineManager.Device.Viewport.Height - Position.Y) + 30f,
-                        EngineManager.Device.Viewport.Height - 35));
+                        (Position.X - (GameHelper.GroundLevel - Position.Y)),
+                        GameHelper.GroundLevel), 45f, 20f);
 
             if (LinearVelocity > 6.5)
-                ParticleManager.WhiteSmoke.AddParticles(
+                _whiteSmoke.AddParticles(
                     new Vector2(
-                        Position.X - (EngineManager.Device.Viewport.Height - Position.Y) + 40f,
-                        EngineManager.Device.Viewport.Height - 25));
-
+                        (Position.X - (GameHelper.GroundLevel - Position.Y)),
+                        GameHelper.GroundLevel), 45f, 20f);
         }
     }
 }

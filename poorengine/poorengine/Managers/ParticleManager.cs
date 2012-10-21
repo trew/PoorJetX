@@ -44,6 +44,9 @@ namespace PoorEngine.Managers
         private static WhiteSmoke _whiteSmoke = null;
         public static WhiteSmoke WhiteSmoke { get { return _whiteSmoke; } }
 
+        private static GroundDust _groundDust = null;
+        public static GroundDust GroundDust { get { return _groundDust; } }
+
         private static Fire _fire = null;
         public static Fire Fire { get { return _fire; } }
 
@@ -65,6 +68,7 @@ namespace PoorEngine.Managers
             _shrapnelExplosion = new ShrapnelExplosion(EngineManager.Game, 3);
             _blackSmoke = new BlackSmoke(EngineManager.Game, 3);
             _whiteSmoke = new WhiteSmoke(EngineManager.Game, 3);
+            _groundDust = new GroundDust(EngineManager.Game, 3);
             _fire = new Fire(EngineManager.Game, 3);
             _explosionParticles.Initialize();
             _groundExplosion.Initialize();
@@ -73,6 +77,7 @@ namespace PoorEngine.Managers
             _shrapnelExplosion.Initialize();
             _blackSmoke.Initialize();
             _whiteSmoke.Initialize();
+            _groundDust.Initialize();
             _fire.Initialize();
         }
 
@@ -85,6 +90,7 @@ namespace PoorEngine.Managers
             _systems.Add(_shrapnelExplosion);
             _systems.Add(_blackSmoke);
             _systems.Add(_whiteSmoke);
+            _systems.Add(_groundDust);
             _systems.Add(_fire);
         }
 

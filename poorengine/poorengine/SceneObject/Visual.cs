@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Interfaces;
 using PoorEngine.Managers;
 using PoorEngine.Textures;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
@@ -45,11 +46,11 @@ namespace PoorEngine.SceneObject
 
             int scaleCompensation = texture.Height - (int)(texture.Height * scale);
 
-            float y = EngineManager.Device.Viewport.Height - texture.Height - (CameraManager.Camera.Pos.Y / Z) - appear.Y + scaleCompensation;
+            float y = GameHelper.ScreenHeight - texture.Height - (CameraManager.Camera.Pos.Y / Z) - appear.Y + scaleCompensation;
             if (repeatable)
             {
                 // Draw the object if within screenwidth, one or more times depending on repeatMargin
-                for (int i = -1; i <= (int)(EngineManager.Device.Viewport.Width / (texture.Width + repeatMargin)) + 1; i++)
+                for (int i = -1; i <= (int)(GameHelper.ScreenWidth / (texture.Width + repeatMargin)) + 1; i++)
                 {
                     Position = new Vector2(xbloodyhell + appear.X + i * (texture.Width + repeatMargin) - (int)CameraManager.Camera.Pos.X % ((texture.Width + repeatMargin) * Z) / Z,
                                             y);

@@ -41,7 +41,7 @@ namespace PoorEngine.SceneObject
                 SoundFxManager.GetByID(_soundFX_id).Volume = SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * MathHelper.Clamp(0.85f - pitch, 0f, 1f) * 0.3f);
             }
 
-            if (Position.Y > EngineManager.Device.Viewport.Height)
+            if (Position.Y > GameHelper.GroundLevel + 10)
             {
                 ParticleManager.GroundExplosion.AddParticles(Position, 0, 35);
                 SoundFxLibrary.GetFx("bomb2").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.35f),

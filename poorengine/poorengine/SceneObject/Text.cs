@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Interfaces;
 using PoorEngine.Managers;
 using PoorEngine.Textures;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
@@ -88,7 +89,7 @@ namespace PoorEngine.SceneObject
             if (centered)
             {
                 textPos = new Vector2(TextureManager.GetCenterX(0f,
-                                                                EngineManager.Device.Viewport.Width,
+                                                                GameHelper.ScreenWidth,
                                                                 font.MeasureString(text).X),
                                       position.Y);
             }

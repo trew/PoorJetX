@@ -22,6 +22,9 @@ namespace PoorEngine.Particles
 {
     public class Fire : ParticleSystem
     {
+        float direction;
+        float spread;
+
         public Fire(Game game, int howManyEffects)
             : base(game, howManyEffects)
         {
@@ -46,11 +49,11 @@ namespace PoorEngine.Particles
             maxAcceleration = 0;
 
             // explosions should be relatively short lived
-            minLifetime = .1f;
-            maxLifetime = .5f;
+            minLifetime = .2f;
+            maxLifetime = .8f;
 
             minScale = 0.01f;
-            maxScale = 0.05f;
+            maxScale = 0.15f;
 
             minNumParticles = 10;
             maxNumParticles = 20;
@@ -63,6 +66,32 @@ namespace PoorEngine.Particles
 
             DrawOrder = AdditiveDrawOrder;
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="where"></param>
+        /// <param name="direction">0-360 degrees where 0 is pointing straight up</param>
+        /// <param name="spread"> +- 0-180 degrees spread.</param>
+        public void AddParticles(Vector2 where, float direction, float spread)
+        {
+            this.direction = direction;
+            this.spread = spread;
+            base.AddParticles(where);
+        }
+
+        protected override Vector2 PickRandomDirection()
+        {
+            float first = (direction - spread);
+            float second = (direction + spread);
+            float angle = CalcHelper.RandomBetween(first, second);
+
+            float Xangle = (float)Math.Sin(CalcHelper.DegreeToRadian(angle));
+            float Yangle = -(float)Math.Cos(CalcHelper.DegreeToRadian(angle));
+
+            return new Vector2(Xangle, Yangle);
+        }
+
 
         protected override void InitializeParticle(Particle p, Vector2 where)
         {

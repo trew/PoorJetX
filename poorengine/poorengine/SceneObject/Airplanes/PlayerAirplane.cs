@@ -25,7 +25,7 @@ namespace PoorEngine.SceneObject
 
 
         public PlayerAirplane():
-            base(2000, "flygplan")
+            base(2000, "Player/airplane_player")
         {
             _bombWeapon = new BombWeapon(this);
             _projectileWeapon = new ProjectileWeapon(this);
@@ -38,11 +38,6 @@ namespace PoorEngine.SceneObject
                 TakeDamage(200);
             }
 
-            if (input.CurrentKeyboardState.IsKeyDown(Keys.A))
-            {
-                _orientation -= 4;
-            }
-
             if (input.CurrentKeyboardState.IsKeyDown(Keys.S))
             {
                 _thrust = 0;
@@ -50,7 +45,7 @@ namespace PoorEngine.SceneObject
 
             if (input.IsNewKeyPress(Keys.O))
             {
-                ParticleManager.Explosion.AddParticles(CameraManager.Camera.Pos + new Vector2(EngineManager.Device.Viewport.Width / 2 + 100,EngineManager.Device.Viewport.Height -30 ));
+                ParticleManager.Explosion.AddParticles(CameraManager.Camera.Pos + new Vector2(GameHelper.HalfScreenWidth + 100, GameHelper.ScreenHeight - 30));
             }
         }
 
@@ -186,8 +181,8 @@ namespace PoorEngine.SceneObject
 
         private void drawBulletPath()
         {
-            Vector2 oldPoint = Position;
-            Vector2 newPoint = Position;
+            Vector2 oldPoint = CalcHelper.calculatePoint(Position, Orientation - 10, 30f);
+            Vector2 newPoint = CalcHelper.calculatePoint(Position, Orientation - 10, 30f);
 
             float xFactor = (float)Math.Sin(CalcHelper.DegreeToRadian(_orientation));
             float yFactor = (float)-Math.Cos(CalcHelper.DegreeToRadian(_orientation));
@@ -202,8 +197,10 @@ namespace PoorEngine.SceneObject
                 oldPoint = newPoint;
                 newPoint += pathbullet_velocity * i;
 
-                DrawLine(Color.Black * (float)(0.5f / (float)i), oldPoint, newPoint);
+                DrawLine(Color.Black * (float)(0.3f / (float)i), oldPoint, newPoint);
 
+                if (newPoint.Y > GameHelper.GroundLevel + 10)
+                    break;
             }
 
             ScreenManager.SpriteBatch.End();
@@ -217,7 +214,7 @@ namespace PoorEngine.SceneObject
             Vector2 newPoint = oldPoint;
             Vector2 pathbomb_velocity = _velocity;// +boostFactor;
             double timeFactor = EngineManager.Game.TargetElapsedTime.TotalSeconds;
-            int screenHeight = EngineManager.Device.Viewport.Height;
+            int screenHeight = GameHelper.ScreenHeight;
 
             ScreenManager.SpriteBatch.Begin();
 
@@ -230,19 +227,28 @@ namespace PoorEngine.SceneObject
                 oldPoint = newPoint;
                 newPoint += pathbomb_velocity / precision * i;
 
-                DrawLine(Color.Red * (float)(15f / (float)i) * 0.5f, oldPoint, newPoint);
-                if (newPoint.Y > screenHeight - 30)
+                if (newPoint.Y < GameHelper.GroundLevel)
+                    DrawLine(Color.Red * (float)(6f / (float)i) * 0.5f, oldPoint, newPoint);
+
+                if (newPoint.Y > GameHelper.GroundLevel)
                 {
                     double k = (oldPoint.Y - newPoint.Y) / -(oldPoint.X - newPoint.X);
                     
                     // x = (y-m)/k     We cannot afford to loose this formulare, after all our hard work with Gymnasiematte!
-                    Vector2 drawPoint = new Vector2((float)(((oldPoint.Y) - (screenHeight - 30)) / k), screenHeight - 30f);
+                    Vector2 drawPoint = new Vector2((float)(((oldPoint.Y) - GameHelper.GroundLevel) / k), GameHelper.GroundLevel);
+
+                    Vector2 markerDrawPoint = new Vector2(CameraManager.Camera.Normalize(oldPoint + drawPoint).X,
+                            GameHelper.GroundLevel - 35f - CameraManager.Camera.Pos.Y)
+                            + new Vector2(-tex.Width / 2, 0);
+
+                    DrawLine(Color.Red * (float)(6f / (float)i) * 0.5f,
+                        oldPoint,
+                        new Vector2((oldPoint + drawPoint).X,
+                            GameHelper.GroundLevel));
 
                     ScreenManager.SpriteBatch.Draw(
                         tex,
-                        new Vector2(CameraManager.Camera.Normalize(oldPoint + drawPoint).X,
-                            screenHeight - 50f - CameraManager.Camera.Pos.Y)
-                            + new Vector2(-tex.Width / 2, 0),
+                        markerDrawPoint,
                         Color.White);
                     break;
                 }
@@ -283,7 +289,7 @@ namespace PoorEngine.SceneObject
             }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Left))
-            {
+            {   
                 if (_airSpeed > 7.2 && _lforce > 0.2)
                 {
                     drawWingtipVortices();
@@ -325,6 +331,20 @@ namespace PoorEngine.SceneObject
             {
                 if (_thrust >= 0.05)
                     _thrust -= 0.05;
+            }
+
+            EngineManager.Debug.Print("COBRA FORCE: " + _cobraForce); 
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.A))
+            {
+                _cobraForce = MathHelper.Clamp((float)(_cobraForce -= 0.021f), 0f, 4f);
+                _orientation -= _cobraForce;
+                ParticleManager.WhiteSmoke.AddParticles(CalcHelper.calculatePoint(Position, (float)_orientation + 180f, 30f));
+                ParticleManager.WhiteSmoke.AddParticles(CalcHelper.calculatePoint(Position, (float)_orientation + 80f, 25f));
+            }
+            else
+            {
+                _cobraForce = MathHelper.Clamp((float)(_cobraForce += 0.03f), 0f, 4f);
+                
             }
 
             if (_bombPathTrigger && input.CurrentKeyboardState.IsKeyUp(Keys.Space))

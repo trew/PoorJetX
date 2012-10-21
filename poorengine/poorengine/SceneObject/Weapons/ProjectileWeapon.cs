@@ -34,7 +34,7 @@ namespace PoorEngine.SceneObject
                                                         CalcHelper.RandomBetween(-0.2f, 0.3f),
                                                         CalcHelper.CalcPan(Position).X);
 
-                SceneGraphManager.AddObject(new BulletProjectile(CalcHelper.calculatePoint(Owner.Position, Owner.Orientation, 30f),
+                SceneGraphManager.AddObject(new BulletProjectile(CalcHelper.calculatePoint(Owner.Position, Owner.Orientation - 10, 30f),
                                                                  Owner.Velocity, 15f, Owner.Orientation, 3f, Owner));
                 _reloadTimer.Restart();
                 _bulletCount--;

@@ -46,6 +46,10 @@ namespace PoorEngine.SceneObject
             ScreenManager.SpriteBatch.Draw(texture,
                                             CameraManager.Camera.Normalize(Position), null, Color.AliceBlue,
                                             _orientation + (float)CalcHelper.DegreeToRadian(180), _origin, Scale, SpriteEffects.None, 0f);
+
+            if (EngineManager.Debug.ViewDebug) // Draw debug boundingbox
+                TextureManager.DrawRectangle(ScreenManager.SpriteBatch, CameraManager.Camera.Normalize(BoundingBox), 1, Color.Black);
+
             ScreenManager.SpriteBatch.End();
 
         }

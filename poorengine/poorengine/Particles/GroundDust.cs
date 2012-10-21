@@ -20,12 +20,12 @@ using PoorEngine.Textures;
 
 namespace PoorEngine.Particles
 {
-    public class BlackSmoke : ParticleSystem
+    public class GroundDust : ParticleSystem
     {
         float direction;
         float spread;
 
-        public BlackSmoke(Game game, int howManyEffects)
+        public GroundDust(Game game, int howManyEffects)
             : base(game, howManyEffects)
         {
         }
@@ -36,12 +36,12 @@ namespace PoorEngine.Particles
         /// </summary>
         protected override void InitializeConstants()
         {
-            textureFilename = "Textures/Particles/smoke_black";
+            textureFilename = "Textures/Particles/ground_dust";
 
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.
-            minInitialSpeed = 10f;
-            maxInitialSpeed = 100f;
+            minInitialSpeed = 130f;
+            maxInitialSpeed = 160f;
 
             // doesn't matter what these values are set to, acceleration is tweaked in
             // the override of InitializeParticle.
@@ -49,14 +49,14 @@ namespace PoorEngine.Particles
             maxAcceleration = 0;
 
             // explosions should be relatively short lived
-            minLifetime = .1f;
-            maxLifetime = .5f;
+            minLifetime = .2f;
+            maxLifetime = .8f;
 
-            minScale = 0.01f;
-            maxScale = 0.05f;
+            minScale = 0.06f;
+            maxScale = 0.07f;
 
             minNumParticles = 10;
-            maxNumParticles = 20;
+            maxNumParticles = 30;
 
             minRotationSpeed = -MathHelper.PiOver4;
             maxRotationSpeed = MathHelper.PiOver4;
@@ -91,6 +91,7 @@ namespace PoorEngine.Particles
 
             return new Vector2(Xangle, Yangle);
         }
+
 
         protected override void InitializeParticle(Particle p, Vector2 where)
         {

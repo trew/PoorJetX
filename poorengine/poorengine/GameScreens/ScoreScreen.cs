@@ -8,6 +8,7 @@ using PoorEngine.Interfaces;
 using PoorEngine.Textures;
 using PoorEngine.Managers;
 using PoorEngine.GameComponents;
+using PoorEngine.Helpers;
 
 namespace PoorJetX.GameScreens
 {
@@ -97,8 +98,8 @@ namespace PoorJetX.GameScreens
 
             Vector2 origin = _font.MeasureString(_score) / 2;
 
-            float x = EngineManager.Device.Viewport.Width / 2;
-            float y = EngineManager.Device.Viewport.Height / 2;
+            float x = GameHelper.HalfScreenWidth;
+            float y = GameHelper.HalfScreenHeight;
             ScreenManager.SpriteBatch.DrawString(_font, _score, new Vector2(x, y), color, 0,
                                    origin, scale, SpriteEffects.None, 0);
 

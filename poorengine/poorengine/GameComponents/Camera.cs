@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using PoorEngine.SceneObject;
 using PoorEngine.Managers;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.GameComponents
 {
@@ -27,6 +28,11 @@ namespace PoorEngine.GameComponents
         public Vector2 Normalize(Vector2 pos)
         {
             return pos - _pos;
+        }
+
+        public Rectangle Normalize(Rectangle Hitbox)
+        {
+            return new Rectangle(Hitbox.X - (int)Pos.X, Hitbox.Y - (int)Pos.Y, Hitbox.Width, Hitbox.Height);
         }
 
         public void Reset()
@@ -60,8 +66,7 @@ namespace PoorEngine.GameComponents
 
         public void UpdateX(PlayerAirplane player1)
         {
-            float screenWidth = EngineManager.Device.Viewport.Width;
-            int borderSize = (int)(0.156 * screenWidth);
+            int borderSize = (int)(0.156 * GameHelper.ScreenWidth);
 
             // Guinness World Record If-statement
             if (player1.Position.X < (Pos.X + borderSize) && !player1.HeadingRight)
@@ -74,17 +79,17 @@ namespace PoorEngine.GameComponents
                 SlowDownX(player1);
             }
 
-            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 0.25f) && player1.HeadingRight)
+            else if (player1.Position.X > Pos.X + (GameHelper.ScreenWidth - borderSize * 0.25f) && player1.HeadingRight)
             {
                 MoveRightMegaMax(player1);
             }
 
-            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 2f) && player1.HeadingRight)
+            else if (player1.Position.X > Pos.X + (GameHelper.ScreenWidth - borderSize * 2f) && player1.HeadingRight)
             {
                 MoveRightMax(player1);
             }
 
-            else if (player1.Position.X > Pos.X + (screenWidth - borderSize * 5f) && player1.HeadingRight)
+            else if (player1.Position.X > Pos.X + (GameHelper.ScreenWidth - borderSize * 5f) && player1.HeadingRight)
             {
                 MoveRight(player1);
             }
@@ -97,8 +102,7 @@ namespace PoorEngine.GameComponents
 
         public void UpdateY(PlayerAirplane player1)
         {
-            float screenHeight = EngineManager.Device.Viewport.Height;
-            int borderSize = (int)(0.25 * screenHeight);
+            int borderSize = (int)(0.25 * GameHelper.ScreenHeight);
 
             // if player is on top of the screen and not facing upwards
 

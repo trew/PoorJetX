@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using PoorEngine.Managers;
 using PoorEngine.Textures;
 using Microsoft.Xna.Framework.Graphics;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
@@ -15,14 +16,14 @@ namespace PoorEngine.SceneObject
         public SkyGradient(string textureName):
             base(textureName)
         {
-            Position = new Vector2(0, EngineManager.Device.Viewport.Height - 2048);
+            Position = new Vector2(0, GameHelper.ScreenHeight - 2048);
             Z = 50;
         }
 
         public void Draw(GameTime gameTime)
         {
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
-            Rectangle rect = new Rectangle(0, 0, EngineManager.Device.Viewport.Width, 2048);
+            Rectangle rect = new Rectangle(0, 0, GameHelper.ScreenWidth, 2048);
 
             float y = Position.Y - (CameraManager.Camera.Pos.Y / (Z / 7) );
 

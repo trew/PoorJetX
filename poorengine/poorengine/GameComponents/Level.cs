@@ -6,6 +6,7 @@ using System.Text;
 using PoorEngine.SceneObject;
 using PoorEngine.Managers;
 using Microsoft.Xna.Framework;
+using PoorEngine.Helpers;
 #endregion
 
 namespace PoorEngine.GameComponents
@@ -17,10 +18,9 @@ namespace PoorEngine.GameComponents
         public int RepeatMargin;
         public int X;
         public int Y;
-        public bool AlignToBottom;
+        public float Scale;
         public string FileName;
         public float Z;
-        public float Scale;
         public float ConstantSpeed;
     }
 
@@ -45,6 +45,8 @@ namespace PoorEngine.GameComponents
     {
         public string FileName;
         public float Z;
+        public float YZ;
+        public float Height;
     }
 
     [Serializable]
@@ -136,7 +138,7 @@ namespace PoorEngine.GameComponents
         {
             foreach (LevelBackground bg in _data.Backgrounds)
             {
-                Background layer = new Background(bg.FileName, bg.Z);
+                Background layer = new Background(bg.FileName, bg.Z, bg.YZ, bg.Height);
                 SceneGraphManager.AddObject(layer);
             }
 
@@ -185,7 +187,7 @@ namespace PoorEngine.GameComponents
         {
             if (_enemies == null || _enemies.Count <= 0) return null;
 
-            _enemies.First().Position += new Vector2(EngineManager.Device.Viewport.Width + 100, 0);
+            _enemies.First().Position += new Vector2(GameHelper.ScreenWidth + 100, 0);
             SceneGraphManager.AddObject(_enemies.First());
             return _enemies.Dequeue();
         }

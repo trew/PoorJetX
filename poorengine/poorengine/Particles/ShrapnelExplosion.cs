@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PoorEngine.Helpers;
 #endregion
 
 namespace PoorEngine.Particles
@@ -24,6 +25,9 @@ namespace PoorEngine.Particles
     /// </summary>
     public class ShrapnelExplosion : ParticleSystem
     {
+        float direction;
+        float spread;
+
         public ShrapnelExplosion(Game game, int howManyEffects)
             : base(game, howManyEffects)
         {
@@ -40,7 +44,7 @@ namespace PoorEngine.Particles
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.
             minInitialSpeed = 10f;
-            maxInitialSpeed = 150f;
+            maxInitialSpeed = 200f;
 
             // doesn't matter what these values are set to, acceleration is tweaked in
             // the override of InitializeParticle.
@@ -48,14 +52,14 @@ namespace PoorEngine.Particles
             maxAcceleration = 0;
 
             // explosions should be relatively short lived
-            minLifetime = .2f;
+            minLifetime = 0.5f;
             maxLifetime = 1.5f;
 
-            minScale = 0.01f;
-            maxScale = 0.02f;
+            minScale = 0.1f;
+            maxScale = 0.3f;
 
-            minNumParticles = 30;
-            maxNumParticles = 70;
+            minNumParticles = 70;
+            maxNumParticles = 120;
 
             minRotationSpeed = -MathHelper.PiOver4;
             maxRotationSpeed = MathHelper.PiOver4;
@@ -64,6 +68,31 @@ namespace PoorEngine.Particles
             blendState = BlendState.AlphaBlend;
 
             DrawOrder = AdditiveDrawOrder;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="where"></param>
+        /// <param name="direction">0-360 degrees where 0 is pointing straight up</param>
+        /// <param name="spread"> +- 0-180 degrees spread.</param>
+        public void AddParticles(Vector2 where, float direction, float spread)
+        {
+            this.direction = direction;
+            this.spread = spread;
+            base.AddParticles(where);
+        }
+
+        protected override Vector2 PickRandomDirection()
+        {
+            float first = (direction - spread);
+            float second = (direction + spread);
+            float angle = CalcHelper.RandomBetween(first, second);
+
+            float Xangle = (float)Math.Sin(CalcHelper.DegreeToRadian(angle));
+            float Yangle = -(float)Math.Cos(CalcHelper.DegreeToRadian(angle));
+
+            return new Vector2(Xangle, Yangle);
         }
 
         protected override void InitializeParticle(Particle p, Vector2 where)

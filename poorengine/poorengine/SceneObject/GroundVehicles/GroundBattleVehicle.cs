@@ -18,12 +18,17 @@ namespace PoorEngine.SceneObject
         public GroundBattleVehicle(int maxHealth, string textureName) // Add weapon parameter (obj/str)
             : base(maxHealth, textureName + "_body", textureName + "_destroyed")
         {
+            _type = "battle";
             Scale = new Vector2(0.2f, 0.2f);
             _textureNameWeapon = textureName + "_weapon";
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (!_destroyed && _health <= 0)
+            {
+                EngineManager.Score += 3;
+            }
             if (!_destroyed) UpdateAI(gameTime);
             base.Update(gameTime);
         }
