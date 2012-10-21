@@ -37,6 +37,22 @@ namespace PoorEngine.SceneObject
             _invulnerableTime = 0;
         }
 
+        public override Rectangle BoundingBox
+        {
+            get
+            {
+                Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+                int textureWidth = (int)(texture.Width * Scale.X);
+                int textureHeight = (int)(texture.Height * Scale.Y);
+                return new Rectangle(
+                        (int)Position.X - textureWidth / 2,
+                        (int)Position.Y - textureHeight / 2,
+                        textureWidth,
+                        textureHeight
+                    );
+            }
+        }
+
         public virtual void Draw(GameTime gameTime)
         {
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
