@@ -156,6 +156,9 @@ namespace PoorEngine.SceneObject
                                                SpriteEffects.None,
                                                0f);
             }
+
+            if (EngineManager.Debug.ViewDebug) // Draw debug boundingbox
+                TextureManager.DrawRectangle(ScreenManager.SpriteBatch, CameraManager.Camera.Normalize(BoundingBox), 1, Color.Black);
             
             ScreenManager.SpriteBatch.End();
         }
@@ -225,6 +228,7 @@ namespace PoorEngine.SceneObject
             _engineFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("engine1"));
             _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
             SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.3f);
+
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
             SoundFxManager.GetByID(_engineFX_id).Play();
         }
