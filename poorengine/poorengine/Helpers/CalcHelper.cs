@@ -17,6 +17,13 @@ namespace PoorEngine.Helpers
             return min + (float)random.NextDouble() * (max - min);
         }
 
+        public static double Clamp(double value, double min, double max)
+        {
+            if (value < min) return min;
+            if (value > max) return max;
+            return value;
+        }
+
         public static Vector2 calculatePoint(Vector2 currentPos, float direction, float distance)
         {
             float newX = (float)Math.Sin(DegreeToRadian(direction)) * distance;

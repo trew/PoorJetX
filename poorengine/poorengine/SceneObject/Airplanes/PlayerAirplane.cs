@@ -23,6 +23,7 @@ namespace PoorEngine.SceneObject
         private Weapon _projectileWeapon;
         public Weapon ProjectileWeapon { get { return _projectileWeapon; } }
 
+        private double _maxThrust = 7;
 
         public PlayerAirplane():
             base(2000, "Player/airplane_player")
@@ -78,12 +79,31 @@ namespace PoorEngine.SceneObject
             base.Update(gameTime);
             if (IsDead && !CameraManager.Camera.Stopped)
                 CameraManager.Camera.Stop(Position);
-
+            else if (LevelManager.CurrentLevel.Completed)
+            {
+                CameraManager.Camera.Cruise();
+            }
         }
 
         protected override void UpdatePhysics(GameTime gameTime)
         {
             base.UpdatePhysics(gameTime);
+            if (LevelManager.CurrentLevel.Completed)
+            {
+                // Force behavior
+                if (_orientation < 180 && _orientation > 90)
+                {
+                    _orientation -= 1f;
+                    if (CalcHelper.formatAngle(_orientation) < 90) _orientation = 90;
+                }
+                else
+                {
+                    _orientation += 1f;
+                    if (_orientation < 180 && _orientation > 90) _orientation = 90;
+                }
+                _thrust = _maxThrust;
+            }
+
             // Standardize angle-values
             _orientation = CalcHelper.formatAngle(_orientation);
             _velocityAngle = CalcHelper.formatAngle(_velocityAngle);
@@ -148,8 +168,16 @@ namespace PoorEngine.SceneObject
             double movementMultiplier = _airSpeed - drag;
 
             float xmod = (float)(newX * movementMultiplier);
-            float ymod = (float)(((newY * movementMultiplier)) + _gravity - _lift);
-            ymod += (float)(9.8 * gameTime.ElapsedGameTime.TotalSeconds);
+            float ymod;
+            if (!LevelManager.CurrentLevel.Completed)
+            {
+                ymod = (float)(((newY * movementMultiplier)) + _gravity - _lift);
+                ymod += (float)(9.8 * gameTime.ElapsedGameTime.TotalSeconds);
+            }
+            else
+            {
+                ymod = (float)(newY * movementMultiplier);
+            }
 
             
             // Save old pos, used for speedcalculations
@@ -283,7 +311,6 @@ namespace PoorEngine.SceneObject
             if (IsCrashing) return;
 
             double forceIncreaseAmount = MathHelper.Clamp((float)(0.1 / _linearVelocity), 0.002f, 0.4f);
-            double maxThrust = 7;
             double maxForce = MathHelper.Clamp((float)(3 / _linearVelocity), 0.3f, 1.3f);
             double forceResetAmount = 0.085;
 
@@ -329,14 +356,12 @@ namespace PoorEngine.SceneObject
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.X))
             {
-                if (_thrust < maxThrust)
-                    _thrust += 0.05;
+                _thrust = CalcHelper.Clamp(_thrust + 0.05, 0.0, _maxThrust);
             }
 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.Z))
             {
-                if (_thrust >= 0.05)
-                    _thrust -= 0.05;
+                _thrust = CalcHelper.Clamp(_thrust - 0.05, 0.0, _maxThrust);
             }
 
             EngineManager.Debug.Print("COBRA FORCE: " + _cobraForce); 

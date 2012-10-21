@@ -7,6 +7,7 @@ using PoorEngine.SceneObject;
 using PoorEngine.Managers;
 using Microsoft.Xna.Framework;
 using PoorEngine.Helpers;
+using PoorEngine.Interfaces;
 #endregion
 
 namespace PoorEngine.GameComponents
@@ -120,6 +121,11 @@ namespace PoorEngine.GameComponents
     public class Level
     {
         private LevelData _data;
+        private bool _loaded = false;
+        public bool Loaded { get { return _loaded; } }
+
+        private bool _completed = false;
+        public bool Completed { get { return _completed; } set { _completed = value; } }
 
         public Level(LevelData data)
         {
@@ -128,8 +134,19 @@ namespace PoorEngine.GameComponents
 
         private Queue<EnemyAirplane> _enemies;
         private Queue<Text> _texts;
+        private List<IPoorEnemy> _aliveEnemies;
 
         #region Utility functions
+        public void Load()
+        {
+            _aliveEnemies = new List<IPoorEnemy>();
+            LoadVisuals();
+            QueueEnemies();
+            QueueTexts();
+            // TODO QueueSounds();
+            _loaded = true;
+        }
+
         /// <summary>
         /// Load all backgrounds for this level and add them
         /// to the Scene using SceneGraphManager.
@@ -189,7 +206,13 @@ namespace PoorEngine.GameComponents
 
             _enemies.First().Position += new Vector2(GameHelper.ScreenWidth + 100, 0);
             SceneGraphManager.AddObject(_enemies.First());
+            _aliveEnemies.Add((IPoorEnemy)_enemies.First());
             return _enemies.Dequeue();
+        }
+
+        public bool RemoveEnemy(IPoorSceneObject enemy)
+        {
+            return _aliveEnemies.Remove((IPoorEnemy)enemy);
         }
 
         /// <summary>
@@ -233,6 +256,23 @@ namespace PoorEngine.GameComponents
             return _texts.Dequeue();
         }
         #endregion
+
+
+        /// <summary>
+        /// Pretty much the victory conditions for our game.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasEnemies()
+        {
+            if (_enemies.Count > 0) return true;
+            foreach (IPoorEnemy enemy in _aliveEnemies)
+            {
+                if (!enemy.IsDead)
+                    return true;
+            }
+            _completed = true;
+            return false;
+        }
 
     }
 }

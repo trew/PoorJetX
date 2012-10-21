@@ -148,6 +148,10 @@ namespace PoorEngine.Managers
                     if (removeQueue.Contains(node))
                         return;
                     removeQueue.Enqueue(node);
+                    if (TypeMatch(node.SceneObject.GetType(), typeof(IPoorEnemy)))
+                    {
+                        LevelManager.CurrentLevel.RemoveEnemy(node.SceneObject);
+                    }
                     return;
                 }
             }

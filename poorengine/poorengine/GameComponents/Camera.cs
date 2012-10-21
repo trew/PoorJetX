@@ -18,6 +18,7 @@ namespace PoorEngine.GameComponents
         private Vector2 _velocity;
         private Vector2 _maxVelocity;
         private bool _stopped;
+        private bool _isCruising;
 
         public Vector2 Velocity { get { return _velocity; } }
 
@@ -66,6 +67,13 @@ namespace PoorEngine.GameComponents
             _targetPos = targetPosition;
         }
 
+        public void Cruise()
+        {
+            _stopped = true;
+            _isCruising = true;
+        }
+
+
         public Vector2 Pos
         {
             get { return _pos; }
@@ -79,9 +87,19 @@ namespace PoorEngine.GameComponents
                 UpdateX(player1);
                 UpdateY(player1);
             }
-            else
+            else if (!_isCruising)
             {
                 AdjustToTarget();
+            }
+            else
+            {
+                SlowDownY();
+                if (_velocity.X < 2.0f)
+                {
+                    _velocity.X += 0.2f;
+                } else {
+                    SlowDownX();
+                }
             }
             changePos(_velocity);
             if (Pos.Y > 0)
@@ -248,11 +266,11 @@ namespace PoorEngine.GameComponents
         {
             if (_velocity.Y > 0)
             {
-                _velocity.Y -= MathHelper.Clamp(Math.Abs(_velocity.Y / 100), 0.5f, 0.1f);
+                _velocity.Y -= MathHelper.Clamp(Math.Abs(_velocity.Y / 100), 0.05f, 0.1f);
             }
             else if (_velocity.Y < 0)
             {
-                _velocity.Y += MathHelper.Clamp(Math.Abs(_velocity.Y / 100), 0.5f, 0.1f);
+                _velocity.Y += MathHelper.Clamp(Math.Abs(_velocity.Y / 100), 0.05f, 0.1f);
             }
         }
 

@@ -15,6 +15,7 @@ using PoorEngine.GameScreens;
 using PoorJetX.GameScreens;
 using PoorEngine.Particles;
 using PoorEngine.Helpers;
+using System.Diagnostics;
 
 namespace PoorEngine.GameScreens
 {
@@ -30,6 +31,8 @@ namespace PoorEngine.GameScreens
         Instrument airspeedMeter;
         AmmoDisplay _ammoDisplay;
 
+        Stopwatch _deathTimer;
+
         private Dictionary<string, Instrument> _instruments;
 
         public GamePlayScreen(int level)
@@ -37,6 +40,7 @@ namespace PoorEngine.GameScreens
             janitorCoffeeBreak = 0;
             CameraManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
+            _deathTimer = new Stopwatch();
         }
 
         public int ScreenWidth
@@ -101,10 +105,7 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/bombwhistle", "bombwhistle");
             SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
 
-            LevelManager.CurrentLevel.LoadVisuals();
-            LevelManager.CurrentLevel.QueueEnemies();
-            LevelManager.CurrentLevel.QueueTexts();
-            // TODO CurrentLevel.QueueSounds();
+            LevelManager.CurrentLevel.Load();
 
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
@@ -187,8 +188,19 @@ namespace PoorEngine.GameScreens
 
             if (player1.IsDead)
             {
-            //    ExitScreen();
-            //    ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+
+                if (!_deathTimer.IsRunning) {
+                    _deathTimer.Restart();
+                }
+                else
+                {
+                    if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5)) {
+                        ExitGame();
+                    }
+                }
+            } else if (!LevelManager.CurrentLevel.HasEnemies())
+            {
+                player1.Kill();
             }
         }
          
@@ -218,20 +230,29 @@ namespace PoorEngine.GameScreens
 
             }
 
+            if (input.IsNewKeyPress(Keys.P)) {
+                LevelManager.CurrentLevel.Completed = true;
+            }
+
             if (input.IsNewKeyPress(Keys.Escape))
             {
                 SoundFxManager.Pause();
                 PauseMenuScreen pauseMenuScreen = new PauseMenuScreen(400, 300);
-                pauseMenuScreen.ExitToMenuEvent += ExitGame;
+                pauseMenuScreen.ExitToMenuEvent += ExitGameEvent;
                 ScreenManager.AddScreen(pauseMenuScreen);
             }
 
         }
 
-        private void ExitGame(object sender, EventArgs e)
+        private void ExitGame()
         {
             ExitScreen();
             ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+        }
+
+        private void ExitGameEvent(object sender, EventArgs e)
+        {
+            ExitGame();
         }
 
 

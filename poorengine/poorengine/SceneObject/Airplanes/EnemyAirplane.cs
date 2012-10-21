@@ -15,7 +15,7 @@ using PoorEngine.Helpers;
 
 namespace PoorEngine.SceneObject
 {
-    public class EnemyAirplane : Airplane
+    public class EnemyAirplane : Airplane, IPoorEnemy
     {
         private Airplane _target;
         public Airplane Target { get { return _target; } }
