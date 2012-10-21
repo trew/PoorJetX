@@ -19,7 +19,7 @@ namespace PoorEngine.SceneObject
         protected int _maxHealth;
         protected bool _destroyed;
         public float HitPointsPercent { get { return ((float)_health / _maxHealth); } }
-
+        public bool IsDead { get { return _destroyed; } }
         protected string _type;
 
         // Movement
@@ -33,7 +33,7 @@ namespace PoorEngine.SceneObject
         // Particle-effects
         protected ProjectileHit _fireeeee;
         protected BlackSmoke _blackSmoke;
-        protected WhiteSmoke _whiteSmoke;
+        protected GroundDust _groundDust;
 
         //Health-bar
         protected Rectangle _hpRectOutline;
@@ -46,11 +46,16 @@ namespace PoorEngine.SceneObject
         // Graphics-related
         protected string TextureNameWeapon;
 
+        // Other
+        protected bool alternating;
+
         public GroundVehicle(int maxHealth, string textureName, string textureNameDestroyed)
             :base(textureName, textureNameDestroyed)
         {
             UsedInBoundingBoxCheck = true;
-            Z = 0.999f;
+            alternating = true;
+
+            Z = CalcHelper.RandomBetween(0.99801f, 0.9989f);
 
             _destroyed = false;
             _health = _maxHealth = maxHealth;
@@ -59,9 +64,9 @@ namespace PoorEngine.SceneObject
 
             _fireeeee = new ProjectileHit(EngineManager.Game, 7);
             _blackSmoke = new BlackSmoke(EngineManager.Game, 8);
-            _whiteSmoke = new WhiteSmoke(EngineManager.Game, 8);
+            _groundDust = new GroundDust(EngineManager.Game, 4);
 
-            EngineManager.Game.Components.Add(_whiteSmoke);
+            EngineManager.Game.Components.Add(_groundDust);
             EngineManager.Game.Components.Add(_blackSmoke);
             EngineManager.Game.Components.Add(_fireeeee);
         }
@@ -69,11 +74,18 @@ namespace PoorEngine.SceneObject
         public virtual void Update(GameTime gameTime)
         {
             EngineManager.Device.Textures[0] = null;
+            alternating = !alternating;
 
             if (!_destroyed)
             {
                 Position += _velocity;
                 UpdateSound();
+
+                if (Velocity.X > 0)
+                {
+                    if (alternating) _groundDust.AddParticles(new Vector2(Position.X + 20, GameHelper.GroundLevel + 10), 330f, 20f);
+                    else             _groundDust.AddParticles(new Vector2(Position.X + 70, GameHelper.GroundLevel + 10), 330f, 20f);
+                }
             }
 
             if (_destroyed && Position.X < CameraManager.Camera.Pos.X - 1000)
@@ -178,9 +190,7 @@ namespace PoorEngine.SceneObject
                 TakeDamage(10000000);
                 EngineManager.Score += 2; // Bonus points for being killed by crashing airplane
             }
-
-            // EngineManager.Score += wahtever, om dör! Gör i underklasser ist?
-          
+                      
         }
 
         public virtual void TakeDamage(int dmg)

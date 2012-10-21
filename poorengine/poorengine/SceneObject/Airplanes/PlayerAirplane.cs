@@ -71,7 +71,6 @@ namespace PoorEngine.SceneObject
                 _health = 0;
                 AirExplode();
             }
-
         }
 
         public override void Update(GameTime gameTime)

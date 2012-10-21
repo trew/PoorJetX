@@ -20,7 +20,7 @@ namespace PoorEngine.SceneObject
         bool firstBurst;
         private int bulletsThisBurst;
         private Stopwatch _burstTimer;
-        ProjectileHit _muzzleFlash;
+        MuzzleFlash _muzzleFlash;
 
         Vector2[] gunOffset;
 
@@ -34,7 +34,7 @@ namespace PoorEngine.SceneObject
             _burstTimer = new Stopwatch();
             _burstTimer.Start();
 
-            _muzzleFlash = new ProjectileHit(EngineManager.Game, 7);
+            _muzzleFlash = new MuzzleFlash(EngineManager.Game, 7);
             EngineManager.Game.Components.Add(_muzzleFlash);
 
             gunOffset = new Vector2[4];

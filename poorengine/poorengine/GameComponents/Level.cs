@@ -186,10 +186,15 @@ namespace PoorEngine.GameComponents
                     e = new EnemyAirplane(le.health);
                     e.Position = new Vector2(le.XAppear, le.Y);
                 }
-                else if (le.type == "Vehicle")
+                else if (le.type == "AntiAir")
                 {
                     e = new AntiAirVehicle(le.health);
-                    e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 47);
+                    e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 49);
+                }
+                else if (le.type == "Transport")
+                {
+                    e = new GroundTransport(le.health);
+                    e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 39);
                 }
                 if (e != null)
                     _enemies.Enqueue(e);

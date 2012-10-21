@@ -77,6 +77,7 @@ namespace PoorEngine.Managers
                 {
                     PoorSceneObject secondObject = ((SceneObjectNode)_root.Nodes[second]).SceneObject;
                     if (firstObject.Equals(secondObject)) continue;
+                    if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(Projectile))) continue;
                     if (!secondObject.UsedInBoundingBoxCheck) continue;
                     if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
                     {

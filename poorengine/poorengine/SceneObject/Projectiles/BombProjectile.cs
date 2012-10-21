@@ -20,7 +20,7 @@ namespace PoorEngine.SceneObject
             _invulnerableTime = 1.0f;
             _soundFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("bombwhistle"));
             SoundFxManager.GetByID(_soundFX_id).IsLooped = true;
-            Damage = 200;
+            Damage = 10000;
 
         }
 

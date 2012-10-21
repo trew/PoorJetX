@@ -94,6 +94,13 @@ namespace PoorEngine.GameScreens
 
             TextureManager.AddTexture(new PoorTexture("Textures/UI/bombtargetmarker"), "bombtargetmarker");
 
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs"), "ammo_bombs");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_low"), "ammo_bombs_low");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_none"), "ammo_bombs_none");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg"), "ammo_mg");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_low"), "ammo_mg_low");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_none"), "ammo_mg_none");
+
             // Animations
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_groundcrash"), "anim_groundcrash");
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_smoke1"), "anim_smoke1");
@@ -218,13 +225,11 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.E))
             {
-                GroundCivilianVehicle gcv = new GroundCivilianVehicle(3000);
+                GroundTransport gcv = new GroundTransport(3000);
                 gcv.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
                         GameHelper.ScreenWidth - 200f, 
-                        GameHelper.GroundLevel -47 );
-
-                gcv.Velocity = new Vector2(0f, 0f);
+                        GameHelper.GroundLevel -38 );
                 gcv.LoadContent();
 
                 SceneGraphManager.AddObject(gcv);

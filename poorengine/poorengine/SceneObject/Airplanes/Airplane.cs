@@ -144,6 +144,14 @@ namespace PoorEngine.SceneObject
                 Projectile proj = (Projectile)collidingWith;
                 TakeDamage(proj.Damage);
             }
+            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(GroundVehicle)))
+            {
+                IsDead = true;
+                IsCrashing = true;
+                _health = 0;
+                AirExplode();
+            }
+
         }
 
         public virtual void Kill()
@@ -205,7 +213,7 @@ namespace PoorEngine.SceneObject
                                            origin, Scale, SpriteEffects.None, 0f);
 
             // Draw _health-bar, if plane still alive
-            if (!IsCrashing)
+            if (!(IsCrashing || IsDead))
             {
                 // Update Healthbar draw-settings.
                 _healthMeterRect.Width = (int)(38 * ((float)_health / _maxHealth));

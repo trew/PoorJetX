@@ -21,8 +21,6 @@ namespace PoorEngine.SceneObject
         private Airplane _target;
         public Airplane Target { get { return _target; } }
 
-        public bool IsDead { get { return _destroyed; } }
-
         public AntiAirVehicle(int maxHealth) // Add weapon parameter (obj/str)
             : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
         {
@@ -53,17 +51,20 @@ namespace PoorEngine.SceneObject
 
             _weapon.Position = new Vector2(bodyTexture.Width / 2 * Scale.X, 20f);
 
-            ScreenManager.SpriteBatch.Begin();
-            ScreenManager.SpriteBatch.Draw(weaponTexture,
-                                               CameraManager.Camera.Normalize(Position) + _weapon.Position,
-                                               null,
-                                               Color.White,
-                                               (float)CalcHelper.DegreeToRadian((double)_weaponOrientation),
-                                               weaponOrigin,
-                                               (float)(Scale.X),
-                                               SpriteEffects.None,
-                                               0f);
-            ScreenManager.SpriteBatch.End();
+            if (!_destroyed)
+            {
+                ScreenManager.SpriteBatch.Begin();
+                ScreenManager.SpriteBatch.Draw(weaponTexture,
+                                                   CameraManager.Camera.Normalize(Position) + _weapon.Position,
+                                                   null,
+                                                   Color.White,
+                                                   (float)CalcHelper.DegreeToRadian((double)_weaponOrientation),
+                                                   weaponOrigin,
+                                                   (float)(Scale.X),
+                                                   SpriteEffects.None,
+                                                   0f);
+                ScreenManager.SpriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }

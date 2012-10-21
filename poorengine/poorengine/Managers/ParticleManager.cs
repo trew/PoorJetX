@@ -47,6 +47,9 @@ namespace PoorEngine.Managers
         private static GroundDust _groundDust = null;
         public static GroundDust GroundDust { get { return _groundDust; } }
 
+        private static MuzzleFlash _muzzleFlash = null;
+        public static MuzzleFlash MuzzleFlash { get { return _muzzleFlash; } }
+
         private static Fire _fire = null;
         public static Fire Fire { get { return _fire; } }
 
@@ -69,6 +72,7 @@ namespace PoorEngine.Managers
             _blackSmoke = new BlackSmoke(EngineManager.Game, 3);
             _whiteSmoke = new WhiteSmoke(EngineManager.Game, 3);
             _groundDust = new GroundDust(EngineManager.Game, 3);
+            _muzzleFlash = new MuzzleFlash(EngineManager.Game, 3);
             _fire = new Fire(EngineManager.Game, 3);
             _explosionParticles.Initialize();
             _groundExplosion.Initialize();
@@ -78,6 +82,7 @@ namespace PoorEngine.Managers
             _blackSmoke.Initialize();
             _whiteSmoke.Initialize();
             _groundDust.Initialize();
+            _muzzleFlash.Initialize();
             _fire.Initialize();
         }
 
@@ -91,6 +96,7 @@ namespace PoorEngine.Managers
             _systems.Add(_blackSmoke);
             _systems.Add(_whiteSmoke);
             _systems.Add(_groundDust);
+            _systems.Add(_muzzleFlash);
             _systems.Add(_fire);
         }
 

@@ -43,9 +43,22 @@ namespace PoorEngine.GameComponents
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+
+
+            //Texture2D bombTex = TextureManager.GetTexture("bomb").BaseTexture as Texture2D;
+            //Texture2D mgTex = TextureManager.GetTexture("bomb").BaseTexture as Texture2D;
+
+            //ScreenManager.SpriteBatch.Begin();
+
+
+
+
+            //ScreenManager.SpriteBatch.End();
+
+
+            
             Texture2D bulletTex = TextureManager.GetTexture("bullet").BaseTexture as Texture2D;
             Texture2D bombTex = TextureManager.GetTexture("bomb").BaseTexture as Texture2D;
-
             ScreenManager.SpriteBatch.Begin();
 
             // Set position for bullet-ammo-draw
@@ -71,6 +84,7 @@ namespace PoorEngine.GameComponents
             }
 
             ScreenManager.SpriteBatch.End();
+            
 
         }
     }

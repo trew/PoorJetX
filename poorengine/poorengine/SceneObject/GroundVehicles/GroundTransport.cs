@@ -4,16 +4,28 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using PoorEngine.Managers;
+using PoorEngine.Helpers;
+using PoorEngine.Interfaces;
 
 namespace PoorEngine.SceneObject
 {
-    public class GroundCivilianVehicle : GroundVehicle
+    public class GroundTransport : GroundVehicle, IPoorEnemy
     {
-        public GroundCivilianVehicle(int maxHealth)
-            :base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
+        private string RndEnemyTex()
         {
+            return "enemy_transport" + (int)CalcHelper.RandomBetween(1f, 3.99f);
+        }
+
+        public GroundTransport(int maxHealth)
+            :base(maxHealth, "", "")
+        {
+            TextureName = RndEnemyTex();
+            TextureNameDestroyed = TextureName + "_destroyed";
+
+            Velocity = new Vector2(CalcHelper.RandomBetween(1, 3.5f), 0);
+
             _type = "civilian";
-            Scale = new Vector2(0.4f, 0.4f);
+            Scale = new Vector2(1f, 1f);
         }
 
         public override void Update(GameTime gameTime)
