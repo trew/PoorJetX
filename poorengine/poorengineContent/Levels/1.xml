@@ -247,7 +247,7 @@
 	
 	<LevelEnemy>
       <XAppear>1310</XAppear>
-      <Y>45000</Y>
+      <Y>450</Y>
       <type>1</type>
 	    <health>2000</health>
     </LevelEnemy>

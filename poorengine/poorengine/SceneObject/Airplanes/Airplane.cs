@@ -86,14 +86,13 @@ namespace PoorEngine.SceneObject
 
             _hpRectOutline = new Rectangle(9999, 9999, 40, 5);
             _healthMeterRect = new Rectangle(9999, 9999, 38, 3);
-
             _smokeTimer = 1;
             _smokeTimerStartVal = 20;
 
         }
 
         public override Rectangle BoundingBox
-        {
+        { 
             get
             {
                 Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
