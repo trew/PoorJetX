@@ -248,10 +248,13 @@ namespace PoorEngine.GameScreens
                 else
                 {
                     if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5)) {
-                        ExitGame();
+                        ExitScreen();
+                        ScreenManager.AddScreen(new GamePlayScreen(LevelManager.CurrentLevel.LevelNumber + 1));
                     }
                 }
-            } else if (LevelManager.CurrentLevel.Completed)
+            }
+            LevelManager.CurrentLevel.CheckCompleted();
+            if (LevelManager.CurrentLevel.Completed)
             {
                 if (!_completedTimer.IsRunning)
                 {
@@ -259,7 +262,7 @@ namespace PoorEngine.GameScreens
                 }
                 else
                 {
-                    if (_completedTimer.Elapsed > new TimeSpan(0, 0, 3))
+                    if (_completedTimer.Elapsed > new TimeSpan(0, 0, 10))
                     {
                         ExitScreen();
                         ScreenManager.AddScreen(new GamePlayScreen(LevelManager.CurrentLevel.LevelNumber + 1));
