@@ -41,6 +41,18 @@ namespace PoorEngine.GameScreens
             CameraManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
             _deathTimer = new Stopwatch();
+            EngineManager.Score = 0;
+        }
+
+        public void Reset()
+        {
+            janitorCoffeeBreak = 0;
+            CameraManager.Reset();
+            _instruments = new Dictionary<string, Instrument>();
+            _deathTimer = new Stopwatch();
+            EngineManager.Score = 0;
+
+            GC.Collect();
         }
 
         public int ScreenWidth
@@ -145,6 +157,47 @@ namespace PoorEngine.GameScreens
         public override void UnloadContent()
         {
             base.UnloadContent();
+            TextureManager.RemoveTexture("bomb");
+            TextureManager.RemoveTexture("bomb2");
+            TextureManager.RemoveTexture("bullet");
+            TextureManager.RemoveTexture("aabullet");
+
+            TextureManager.RemoveTexture("cloud1");
+            TextureManager.RemoveTexture("cloud2");
+            TextureManager.RemoveTexture("cloud3");
+            TextureManager.RemoveTexture("cloud4");
+            TextureManager.RemoveTexture("cloud5");
+            TextureManager.RemoveTexture("cloud6");
+
+            TextureManager.RemoveTexture("smoke_black");
+            TextureManager.RemoveTexture("smoke_white");
+            TextureManager.RemoveTexture("fire");
+
+            TextureManager.RemoveTexture("hill1");
+            TextureManager.RemoveTexture("hill2");
+            TextureManager.RemoveTexture("hill3");
+            TextureManager.RemoveTexture("mountain1");
+            TextureManager.RemoveTexture("mountain2");
+            TextureManager.RemoveTexture("mountain3");
+            TextureManager.RemoveTexture("mountain4");
+            TextureManager.RemoveTexture("mountain5");
+            TextureManager.RemoveTexture("mountain6");
+
+            TextureManager.RemoveTexture("bombtargetmarker");
+
+            // For ammo-related UI
+            TextureManager.RemoveTexture("ammo_bombs");
+            TextureManager.RemoveTexture("ammo_bombs_low");
+            TextureManager.RemoveTexture("ammo_bombs_none");
+            TextureManager.RemoveTexture("ammo_mg");
+            TextureManager.RemoveTexture("ammo_mg_low");
+            TextureManager.RemoveTexture("ammo_mg_none");
+            TextureManager.RemoveTexture("ammo_refill");
+
+            // Animations
+            TextureManager.RemoveTexture("anim_groundcrash");
+            TextureManager.RemoveTexture("anim_smoke1");
+
             SceneGraphManager.Root.Nodes.Clear();
             ParticleManager.UnloadContent();
             foreach (Instrument inst in _instruments.Values)
@@ -205,7 +258,7 @@ namespace PoorEngine.GameScreens
                 }
             } else if (!LevelManager.CurrentLevel.HasEnemies())
             {
-                player1.Kill();
+                //player1.Kill();
             }
         }
          
@@ -269,6 +322,7 @@ namespace PoorEngine.GameScreens
                 SoundFxManager.Pause();
                 PauseMenuScreen pauseMenuScreen = new PauseMenuScreen(400, 300);
                 pauseMenuScreen.ExitToMenuEvent += ExitGameEvent;
+                pauseMenuScreen.RestartGameEvent += RestartGameEvent;
                 ScreenManager.AddScreen(pauseMenuScreen);
             }
 
@@ -278,6 +332,12 @@ namespace PoorEngine.GameScreens
         {
             ExitScreen();
             ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+        }
+
+        private void RestartGameEvent(object sender, EventArgs e)
+        {
+            ExitScreen();
+            ScreenManager.AddScreen(new GamePlayScreen(LevelManager.CurrentLevel.LevelNumber));
         }
 
         private void ExitGameEvent(object sender, EventArgs e)

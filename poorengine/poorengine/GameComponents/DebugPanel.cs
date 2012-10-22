@@ -65,6 +65,8 @@ namespace PoorEngine.GameComponents
             strings.Enqueue("Global volume: " + GameSettings.Default.GlobalSoundVolume);
             strings.Enqueue("Sound volume: " + GameSettings.Default.SoundVolume);
             strings.Enqueue("Music volume: " + GameSettings.Default.MusicVolume);
+            strings.Enqueue("SoundFXLoaded: " + SoundFxLibrary.SoundEffectsLoaded);
+            strings.Enqueue("Screens loaded: " + string.Join(", ", ScreenManager.TraceScreens().ToArray()));
             while (strings.Count > 0)
             {
                 s = strings.Dequeue();

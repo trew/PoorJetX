@@ -158,7 +158,8 @@ namespace PoorEngine.SceneObject
         {
             _health = 0;
             IsCrashing = true;
-            EngineManager.Score += 1;
+            if (SceneGraphManager.TypeMatch(this.GetType(), typeof(IPoorEnemy)))
+                EngineManager.Score += 1;
         }
 
         public void GroundExplode()
@@ -357,6 +358,7 @@ namespace PoorEngine.SceneObject
         public virtual void UnloadContent()
         {
             TextureManager.RemoveTexture(TextureName);
+            TextureManager.RemoveTexture(TextureNameDestroyed);
         }
 
         public virtual void HandleInput(Input input)

@@ -164,14 +164,14 @@ namespace PoorEngine.Managers
         /// <summary>
         /// Prints a list of all the screens, for debugging.
         /// </summary>
-        private void TraceScreens()
+        public static List<string> TraceScreens()
         {
             List<string> screenNames = new List<string>();
  
             foreach (GameScreen screen in _screens)
                 screenNames.Add(screen.GetType().Name);
- 
-            Trace.WriteLine(string.Join(", ", screenNames.ToArray()));
+
+            return screenNames;
         }
  
         /// <summary>

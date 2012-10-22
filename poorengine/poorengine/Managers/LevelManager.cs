@@ -53,7 +53,7 @@ namespace PoorEngine.Managers
 
                 if (loadedLevelData != null)
                 {
-                    Level loadedLevel = new Level(loadedLevelData);
+                    Level loadedLevel = new Level(loadedLevelData, level);
                     _currentLevel = loadedLevel;
                 }
                 else
