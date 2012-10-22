@@ -24,9 +24,6 @@ namespace PoorEngine.GameScreens
         const string airplaneTexture = "airplane_player";
         PlayerAirplane player1;
 
-        int janitorCoffeeBreak;
-        const int tenMinutes = 30;
-
         Instrument throttleMeter;
         Instrument airspeedMeter;
         AmmoDisplay _ammoDisplay;
@@ -36,11 +33,12 @@ namespace PoorEngine.GameScreens
 
         private int _currentLevelNumber;
 
+        private int _lives;
+
         private Dictionary<string, Instrument> _instruments;
 
         public GamePlayScreen(int level)
         {
-            janitorCoffeeBreak = 0;
             CameraManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
             _deathTimer = new Stopwatch();
@@ -48,6 +46,7 @@ namespace PoorEngine.GameScreens
             EngineManager.Score = 0;
             _currentLevelNumber = level;
             SoundFxManager.Clear();
+            _lives = 3;
         }
 
         public void Reset()
@@ -66,6 +65,7 @@ namespace PoorEngine.GameScreens
 
             player1 = new PlayerAirplane();
             SceneGraphManager.AddObject(player1);
+            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
         }
 
         public int ScreenWidth
@@ -161,10 +161,9 @@ namespace PoorEngine.GameScreens
 
             player1 = new PlayerAirplane();
             SceneGraphManager.AddObject(player1);
+            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
 
             SceneGraphManager.LoadContent();
-            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
-            EngineManager.Game.Components.Add(_ammoDisplay);
             ParticleManager.LoadContent();
         }
 
@@ -219,7 +218,7 @@ namespace PoorEngine.GameScreens
                 inst.UnloadContent();
             }
             _instruments.Clear();
-            EngineManager.Game.Components.Remove(_ammoDisplay);
+            _ammoDisplay = null;
         }
  
 
@@ -230,18 +229,12 @@ namespace PoorEngine.GameScreens
         /// </summary>
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            
-
  	        base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             if (ScreenState != ScreenState.Active || otherScreenHasFocus || coveredByOtherScreen) 
             { 
                 return; 
             }
-            
-            if(janitorCoffeeBreak++ > tenMinutes)
-                GC.Collect();
 
-            //AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
             ParticleManager.Update(gameTime);
@@ -249,6 +242,7 @@ namespace PoorEngine.GameScreens
             {
                 inst.Update(gameTime);
             }
+            _ammoDisplay.Update(gameTime);
 
             if (player1.IsDead)
             {
@@ -259,13 +253,23 @@ namespace PoorEngine.GameScreens
                 else
                 {
                     if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5)) {
-                        this.Reset();
+                        if (_lives - 1 <= 0)
+                        {
+                            ExitScreen();
+                            ScreenManager.AddScreen(new ScoreScreen());
+                        }
+                        else
+                        {
+                            _lives--;
+                            this.Reset();
+                        }
                     }
                 }
             }
             LevelManager.CurrentLevel.CheckCompleted();
             if (LevelManager.CurrentLevel.Completed)
             {
+                player1.UsedInBoundingBoxCheck = false;
                 if (!_completedTimer.IsRunning)
                 {
                     _completedTimer.Restart();
@@ -282,7 +286,7 @@ namespace PoorEngine.GameScreens
                         else
                         {
                             ExitScreen();
-                            ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+                            ScreenManager.AddScreen(new VictoryScreen());
                         }
                     }
                 }
@@ -302,7 +306,7 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.E))
             {
-                GroundTransport gcv = new GroundTransport(3000);
+                GroundTransport gcv = new GroundTransport(3000, false);
                 gcv.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
                         GameHelper.ScreenWidth - 200f, 
@@ -314,7 +318,7 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.R))
             {
-                AntiAirVehicle gbv = new AntiAirVehicle(3000);
+                AntiAirVehicle gbv = new AntiAirVehicle(3000, false);
                 gbv.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
                         GameHelper.ScreenWidth - 200f,
@@ -370,13 +374,12 @@ namespace PoorEngine.GameScreens
         private void ExitGame()
         {
             ExitScreen();
-            ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+            ScreenManager.AddScreen(new ScoreScreen());
         }
 
         private void RestartGameEvent(object sender, EventArgs e)
         {
-            ExitScreen();
-            ScreenManager.AddScreen(new GamePlayScreen(LevelManager.CurrentLevel.LevelNumber));
+            this.Reset();
         }
 
         private void ExitGameEvent(object sender, EventArgs e)
@@ -395,8 +398,15 @@ namespace PoorEngine.GameScreens
             SceneGraphManager.Draw(gameTime);
             ParticleManager.Draw(gameTime);
 
-            // Draw Score
 
+            foreach (Instrument inst in _instruments.Values)
+            {
+                inst.Draw(gameTime);
+            }
+            _ammoDisplay.Draw(gameTime);
+
+            // Draw Score
+            ScreenManager.SpriteBatch.Begin();
             Text.DrawText(
                         ScreenManager.Cartoon18, // Font
                         "Level: " + LevelManager.CurrentLevel.LevelNumber,   // Text
@@ -408,11 +418,6 @@ namespace PoorEngine.GameScreens
                         Color.White,    // Inner color
                         new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
                         1.3f);          // Outline thickness
-
-            foreach (Instrument inst in _instruments.Values)
-            {
-                inst.Draw(gameTime);
-            }
 
             if (player1.IsCrashing || player1.IsDead)
             {
@@ -433,6 +438,7 @@ namespace PoorEngine.GameScreens
                     200,
                     1.3f);
             }
+            ScreenManager.SpriteBatch.End();
 
         }
 

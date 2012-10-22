@@ -95,17 +95,6 @@ namespace PoorEngine.SceneObject
                 SceneGraphManager.RemoveObject(this);
                 return;
             }
-
-            if (!_destroyed && Position.X < CameraManager.Camera.Pos.X - 2000)
-            {
-                SoundFxManager.RemoveFx(_engineFX_id);
-                SoundFxManager.RemoveFx(_fireBulletFX_id);
-                SceneGraphManager.RemoveObject(this);
-                return;
-            }
-
-            
-
         }
 
         private void UpdateSound()

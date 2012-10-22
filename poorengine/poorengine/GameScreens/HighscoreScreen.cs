@@ -13,20 +13,17 @@ using PoorEngine.SceneObject;
 
 namespace PoorJetX.GameScreens
 {
-    public class ScoreScreen : GameScreen
+    public class HighscoreScreen : GameScreen
     {
-        const string background = "scorescreen";
-        private String _score;
         SpriteFont _font;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ScoreScreen()
+        public HighscoreScreen()
         {
-            _score = "Score: " + EngineManager.Score.ToString();
             TransitionOnTime = TimeSpan.FromSeconds(0.5f);
-            TransitionOffTime = TimeSpan.FromSeconds(0.5f);
+            TransitionOffTime = TimeSpan.FromSeconds(0.0f);
         }
 
         public override void LoadContent()
@@ -34,27 +31,14 @@ namespace PoorJetX.GameScreens
             base.LoadContent();
             _font = ScreenManager.Cartoon24;
 
-            TextureManager.AddTexture(new PoorTexture("Textures/menu/"+ background), background);
+            //TextureManager.AddTexture(new PoorTexture("Textures/menu/"+ background), background);
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
 
-            TextureManager.RemoveTexture(background);
-        }
-
-        /// <summary>
-        /// Updates the background screen. Unlike most screens, this should not
-        /// transition off even if it has been covered by another screen: it is
-        /// supposed to be covered, after all! This overload forces the
-        /// coveredByOtherScreen parameter to false in order to stop the base
-        /// Update method wanting to transition off.
-        /// </summary>
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
-                                                       bool coveredByOtherScreen)
-        {
-            base.Update(gameTime, otherScreenHasFocus, false);
+            //TextureManager.RemoveTexture(background);
         }
 
         public override void HandleInput(Input input)
@@ -64,8 +48,6 @@ namespace PoorJetX.GameScreens
             if (input.IsNewKeyPress(Keys.Enter))
             {
                 ExitScreen();
-                ScreenManager.AddScreen(new BackgroundScreen());
-                ScreenManager.AddScreen(new MainMenuScreen());
             }
 
         }
@@ -80,9 +62,9 @@ namespace PoorJetX.GameScreens
 
             ScreenManager.SpriteBatch.Begin();
 
-            ScreenManager.SpriteBatch.Draw(TextureManager.GetTexture(background).BaseTexture as Texture2D,
+/*            ScreenManager.SpriteBatch.Draw(TextureManager.GetTexture(background).BaseTexture as Texture2D,
                                             fullscreen,
-                                            new Color(fade, fade, fade));
+                                            new Color(fade, fade, fade));*/
 
             // Pulsate the size of the selected menu entry.
             double time = gameTime.TotalGameTime.TotalSeconds;
@@ -97,11 +79,11 @@ namespace PoorJetX.GameScreens
 
             // Draw text, centered on the middle of each line.e
 
-            Vector2 origin = _font.MeasureString(_score) / 2;
+            Vector2 origin = _font.MeasureString("HIGHSCORES!") / 2;
 
             float x = GameHelper.HalfScreenWidth;
             float y = GameHelper.HalfScreenHeight;
-            Text.DrawText(_font, _score, Color.Black, Color.White, 1f, scale, 0f, new Vector2(x,y), origin, false);
+            Text.DrawText(_font, "HIGHSCORES!", Color.Black, Color.White, 1f, scale, 0f, new Vector2(x, y), origin, false);
 
             ScreenManager.SpriteBatch.End();
         }

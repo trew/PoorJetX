@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -13,7 +13,10 @@ namespace PoorEngine.Managers
     {
         private static List<GameScreen> _screens = new List<GameScreen>();
         private static List<GameScreen> _screensToUpdate = new List<GameScreen>();
- 
+
+        int janitorCoffeeBreak;
+        const int tenMinutes = 10;
+
         /// <summary>
         /// Expose an array holding all the screens. We return a copy rather
         /// than the real master list, because screens should only ever be added
@@ -81,6 +84,7 @@ namespace PoorEngine.Managers
             : base(game)
         {
             Enabled = true;
+            janitorCoffeeBreak = 0;
         }
  
         protected override void LoadContent()
@@ -127,6 +131,12 @@ namespace PoorEngine.Managers
         /// </summary>
         public override void Update(GameTime gameTime)
         {
+            if (janitorCoffeeBreak++ > tenMinutes)
+            {
+                GC.Collect();
+                janitorCoffeeBreak = 0;
+            }
+
             // Read the keyboard and gamepad.
             EngineManager.Input.Update();
  

@@ -196,7 +196,7 @@
   <Texts>
     <LevelText>
 	    <text>No! EnemyAirplane. What r u doin? EnemyAirplane!?</text>
-	    <fontName>message</fontName>
+	    <fontName>cartoon18</fontName>
 	    <R>255</R>
 	    <G>255</G>
 	    <B>255</B>
@@ -210,7 +210,7 @@
 
 	  <LevelText>
 	    <text>STAHP!!</text>
-	    <fontName>message</fontName>
+	    <fontName>cartoon18</fontName>
 	    <R>255</R>
 	    <G>255</G>
 	    <B>255</B>
@@ -229,6 +229,7 @@
       <Y>0</Y>
       <type>Airplane</type>
 	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
     
     <LevelEnemy>
@@ -236,6 +237,7 @@
       <Y>130</Y>
       <type>Airplane</type>
 	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -243,6 +245,7 @@
       <Y>500</Y>
       <type>Airplane</type>
 	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -250,6 +253,7 @@
       <Y>450</Y>
       <type>Airplane</type>
 	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -257,6 +261,7 @@
       <Y>400</Y>
       <type>Airplane</type>
 	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -264,6 +269,7 @@
       <Y>570</Y>
       <type>Airplane</type>
 	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
@@ -271,6 +277,7 @@
       <Y>0</Y>
       <type>AntiAir</type>
       <health>9000</health>
+      <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
@@ -278,6 +285,7 @@
       <Y>0</Y>
       <type>Transport</type>
       <health>5000</health>
+      <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
@@ -285,6 +293,7 @@
       <Y>0</Y>
       <type>Transport</type>
       <health>5000</health>
+      <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
@@ -292,6 +301,7 @@
       <Y>0</Y>
       <type>Transport</type>
       <health>5000</health>
+      <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
   </Enemies>
 

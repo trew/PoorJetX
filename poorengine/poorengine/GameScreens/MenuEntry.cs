@@ -122,9 +122,7 @@ namespace PoorJetX.GameScreens
                 position = new Vector2((int)x, borders.Y);
             }
 
-            ScreenManager.SpriteBatch.End();
             PoorEngine.SceneObject.Text.DrawText(
-                ScreenManager.SpriteBatch,
                 font,
                 Text,
                 Color.Black,
@@ -135,9 +133,6 @@ namespace PoorJetX.GameScreens
                 position, 
                 origin,
                 false);
-            ScreenManager.SpriteBatch.Begin();
-            //ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, text, position, color, 0,
-            //                       origin, scale, SpriteEffects.None, 0);
         }
 
         /// <summary>

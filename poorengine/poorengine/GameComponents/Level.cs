@@ -1,4 +1,4 @@
-﻿#region Using statements
+#region Using statements
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +67,8 @@ namespace PoorEngine.GameComponents
         public string type;
 
         public int health;
+
+        public bool RequiredForVictory;
     }
 
     [Serializable]
@@ -207,17 +209,17 @@ namespace PoorEngine.GameComponents
                 PoorSceneObject e = null;
                 if (le.type == "Airplane")
                 {
-                    e = new EnemyAirplane(le.health);
+                    e = new EnemyAirplane(le.health, le.RequiredForVictory);
                     e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 70 - le.Y);
                 }
                 else if (le.type == "AntiAir")
                 {
-                    e = new AntiAirVehicle(le.health);
+                    e = new AntiAirVehicle(le.health, le.RequiredForVictory);
                     e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 49);
                 }
                 else if (le.type == "Transport")
                 {
-                    e = new GroundTransport(le.health);
+                    e = new GroundTransport(le.health, le.RequiredForVictory);
                     e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 39);
                 }
                 if (e != null)
@@ -357,7 +359,7 @@ namespace PoorEngine.GameComponents
             if (_enemies.Count > 0) return false;
             foreach (IPoorEnemy enemy in _aliveEnemies)
             {
-                if (!enemy.IsDead)
+                if (!enemy.IsDead && enemy.RequiredForVictory)
                     return false;
             }
             _completed = true;

@@ -104,8 +104,6 @@ namespace PoorEngine.SceneObject
             // Draw needle
             DrawLine(ScreenManager.SpriteBatch, needleTexture, 3, (texHeight - 15) * scale, curr_real - 90, Color.White, needle_origin);
            
-            ScreenManager.SpriteBatch.End();
-
             // Draw title-text
             Text.DrawText(
                         ScreenManager.Cartoon14, // Font
@@ -116,7 +114,7 @@ namespace PoorEngine.SceneObject
                                                                 ScreenManager.Cartoon14.MeasureString(_titleString).X),-20f),      // Position
                         1.3f);          // Outline thickness
 
-            
+            ScreenManager.SpriteBatch.End();
         }
 
         public void LoadContent()

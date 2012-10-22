@@ -28,6 +28,7 @@ namespace PoorEngine.SceneObject
         public PlayerAirplane():
             base(2000, "Player/airplane_player")
         {
+            _orientation = 85;
             _bombWeapon = new BombWeapon(this);
             _projectileWeapon = new ProjectileWeapon(this);
         }
@@ -62,7 +63,7 @@ namespace PoorEngine.SceneObject
             if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Projectile)))
             {
                 Projectile proj = (Projectile)collidingWith;
-                //TakeDamage(proj.Damage);
+                TakeDamage(proj.Damage);
             }
             else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(EnemyAirplane)))
             {
@@ -326,6 +327,7 @@ namespace PoorEngine.SceneObject
             HandleDebugInput(input);
 
             if (IsCrashing) return;
+            if (LevelManager.CurrentLevel.Completed) return;
 
             double forceIncreaseAmount = MathHelper.Clamp((float)(0.1 / _linearVelocity), 0.002f, 0.4f);
             double maxForce = MathHelper.Clamp((float)(3 / _linearVelocity), 0.3f, 1.3f);
