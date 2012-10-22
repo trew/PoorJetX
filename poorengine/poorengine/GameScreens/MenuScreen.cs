@@ -5,6 +5,7 @@ using PoorEngine.GameComponents;
 using Microsoft.Xna.Framework;
 using PoorEngine.Managers;
 using Microsoft.Xna.Framework.Graphics;
+using PoorEngine.SceneObject;
 
 namespace PoorJetX.GameScreens
 {
@@ -25,6 +26,7 @@ namespace PoorJetX.GameScreens
         Rectangle _borders;
         int _width;
         int _height;
+        SpriteFont _titleFont;
 
         public MenuScreen(string menuTitle) : this(menuTitle, 400, 300) { }
         /// <summary>
@@ -37,11 +39,13 @@ namespace PoorJetX.GameScreens
             _height = height;
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
+            _titleFont = ScreenManager.Cartoon24;
             if (_borders == Rectangle.Empty)
             {
                 _borders = TextureManager.GetCenterRectangle(_width, _height, EngineManager.Device.Viewport.Bounds);
@@ -129,10 +133,10 @@ namespace PoorJetX.GameScreens
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            Vector2 position = new Vector2(_borders.X, _borders.Y + ScreenManager.Font.LineSpacing);
+            Vector2 position = new Vector2(_borders.X, _borders.Y + ScreenManager.Cartoon18.LineSpacing);
             if (_menuTitle != "")
             {
-                position.Y += ScreenManager.Font.LineSpacing * 2;
+                position.Y += ScreenManager.Cartoon18.LineSpacing * 2;
             }
             // Make the menu slide into place during transitions, using a
             // power curve to make things look more interesting (this makes
@@ -164,19 +168,20 @@ namespace PoorJetX.GameScreens
                     TextureManager.GetCenterX(_borders.X,
                                               _borders.Width,
                                               0), 
-                    _borders.Y + ScreenManager.Font.LineSpacing);
-            Vector2 titleOrigin = ScreenManager.Font.MeasureString(_menuTitle) / 2;
+                    _borders.Y + _titleFont.LineSpacing);
+            Vector2 titleOrigin = _titleFont.MeasureString(_menuTitle) / 2;
             Color titleColor = new Color(255, 255, 255, TransitionAlpha);
             float titleScale = 1.25f;
 
             titlePosition.Y -= transitionOffset * 100;
 
-            TextureManager.DrawRectangle(ScreenManager.SpriteBatch, _borders, 1, Color.Black);
+            //TextureManager.DrawRectangle(ScreenManager.SpriteBatch, _borders, 1, Color.Black);
 
-            ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, _menuTitle, titlePosition, titleColor, 0,
-                                   titleOrigin, titleScale, SpriteEffects.None, 0);
-
+           // ScreenManager.SpriteBatch.DrawString(ScreenManager.Cartoon18, _menuTitle, titlePosition, titleColor, 0,
+            //                       titleOrigin, titleScale, SpriteEffects.None, 0);
             ScreenManager.SpriteBatch.End();
+
+            Text.DrawText(ScreenManager.SpriteBatch, _titleFont, _menuTitle, Color.Black, Color.Orange, 1f, titleScale, 0f, titlePosition, titleOrigin, false);
         }
     }
 }

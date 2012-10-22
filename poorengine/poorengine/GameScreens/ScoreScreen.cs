@@ -9,6 +9,7 @@ using PoorEngine.Textures;
 using PoorEngine.Managers;
 using PoorEngine.GameComponents;
 using PoorEngine.Helpers;
+using PoorEngine.SceneObject;
 
 namespace PoorJetX.GameScreens
 {
@@ -31,7 +32,7 @@ namespace PoorJetX.GameScreens
         public override void LoadContent()
         {
             base.LoadContent();
-            _font = EngineManager.Game.Content.Load<SpriteFont>("Fonts/score");
+            _font = ScreenManager.Cartoon24;
 
             TextureManager.AddTexture(new PoorTexture("Textures/menu/"+ background), background);
         }
@@ -103,9 +104,9 @@ namespace PoorJetX.GameScreens
             ScreenManager.SpriteBatch.DrawString(_font, _score, new Vector2(x, y), color, 0,
                                    origin, scale, SpriteEffects.None, 0);
 
-
             ScreenManager.SpriteBatch.End();
 
+            Text.DrawText(ScreenManager.SpriteBatch, _font, _score, Color.Black, Color.White, 1f, scale, 0f, new Vector2(x,y), origin, false); 
         }
     }
 }

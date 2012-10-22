@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Managers;
+using PoorEngine.SceneObject;
 
 namespace PoorJetX.GameScreens
 {
@@ -14,6 +15,7 @@ namespace PoorJetX.GameScreens
     class MenuEntry
     {
         string text;
+        SpriteFont font;
         Color textColor;
         Color selectedColor;
         /// <summary>
@@ -48,7 +50,7 @@ namespace PoorJetX.GameScreens
         }
 
         public MenuEntry(string text)
-            :this(text, Color.Black, Color.DarkBlue)
+            :this(text, Color.DarkRed, Color.Red)
         {
         }
         /// <summary>
@@ -59,6 +61,7 @@ namespace PoorJetX.GameScreens
             this.text = text;
             this.textColor = textColor;
             this.selectedColor = selectedColor;
+            this.font = ScreenManager.Cartoon24;
         }
 
         /// <summary>
@@ -90,6 +93,9 @@ namespace PoorJetX.GameScreens
         public virtual void Draw(MenuScreen screen, Rectangle borders,
                                  bool isSelected, GameTime gameTime)
         {
+            if(font == null)
+                font = ScreenManager.Cartoon24;
+
             // Draw the selected entry in yellow, otherwise white.
             Color color = isSelected ? selectedColor : textColor;
 
@@ -105,7 +111,7 @@ namespace PoorJetX.GameScreens
 
             // Draw text, centered on the middle of each line.
 
-            Vector2 origin = ScreenManager.Font.MeasureString(text) / 2;
+            Vector2 origin = font.MeasureString(text) / 2;
 
             Vector2 position;
             if (borders.Height <= 0)
@@ -116,8 +122,22 @@ namespace PoorJetX.GameScreens
                 position = new Vector2((int)x, borders.Y);
             }
 
-            ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, text, position, color, 0,
-                                   origin, scale, SpriteEffects.None, 0);
+            ScreenManager.SpriteBatch.End();
+            PoorEngine.SceneObject.Text.DrawText(
+                ScreenManager.SpriteBatch,
+                font,
+                Text,
+                Color.Black,
+                color,
+                1f,
+                scale,
+                0f,
+                position, 
+                origin,
+                false);
+            ScreenManager.SpriteBatch.Begin();
+            //ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, text, position, color, 0,
+            //                       origin, scale, SpriteEffects.None, 0);
         }
 
         /// <summary>
@@ -125,7 +145,7 @@ namespace PoorJetX.GameScreens
         /// </summary>
         public virtual int GetHeight(MenuScreen screen)
         {
-            return ScreenManager.Font.LineSpacing;
+            return font.LineSpacing;
         }
     }
 }

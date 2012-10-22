@@ -107,12 +107,13 @@ namespace PoorEngine.SceneObject
             ScreenManager.SpriteBatch.End();
 
             // Draw title-text
-            Text.DrawText("cartoon14", // Font
+            Text.DrawText(
+                        ScreenManager.Cartoon14, // Font
                         _titleString,   // Text
                         Color.White,    // Inner color
                         scaledPos + new Vector2(TextureManager.GetCenterX(0f,
                                                                 tex.Width * scale,
-                                                                EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon14").MeasureString(_titleString).X),-20f),      // Position
+                                                                ScreenManager.Cartoon14.MeasureString(_titleString).X),-20f),      // Position
                         1.3f);          // Outline thickness
 
             

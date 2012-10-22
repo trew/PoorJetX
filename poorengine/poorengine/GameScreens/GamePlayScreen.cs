@@ -357,7 +357,8 @@ namespace PoorEngine.GameScreens
             ParticleManager.Draw(gameTime);
 
             // Draw Score
-            Text.DrawText("cartoon18", // Font
+            Text.DrawText(
+                        ScreenManager.Cartoon18, // Font
                         "Score: " + EngineManager.Score,   // Text
                         Color.White,    // Inner color
                         new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
@@ -370,7 +371,8 @@ namespace PoorEngine.GameScreens
 
             if (player1.IsCrashing || player1.IsDead)
             {
-                Text.DrawTextCentered("message",
+                Text.DrawTextCentered(
+                    ScreenManager.Cartoon24,
                     "GAME OVER",
                     Color.Red,
                     200,
