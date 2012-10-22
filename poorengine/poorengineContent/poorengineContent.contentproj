@@ -117,11 +117,13 @@
       <Name>cartoon14</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Fonts\cartoon18.spritefont">
       <Name>cartoon18</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
     <None Include="Levels\1.xml">
       <Name>1</Name>
@@ -549,6 +551,13 @@
   <ItemGroup>
     <Compile Include="Textures\UI\ammo_refill.png">
       <Name>ammo_refill</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Menu\scorescreen.png">
+      <Name>scorescreen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

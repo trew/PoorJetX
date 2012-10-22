@@ -77,6 +77,7 @@ namespace PoorEngine
         /// <param name="windowsTitle"></param>
         protected PoorEngine(string windowsTitle)
         {
+            this.Window.Title = "PoorJet X Beta";
             _graphicsDeviceManager = new GraphicsDeviceManager(this);
 
             GameSettings.Initialize();

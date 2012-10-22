@@ -14,7 +14,7 @@ namespace PoorJetX.GameScreens
 {
     public class ScoreScreen : GameScreen
     {
-        const string background = "scoreBackground";
+        const string background = "scorescreen";
         private String _score;
         SpriteFont _font;
 
@@ -33,7 +33,7 @@ namespace PoorJetX.GameScreens
             base.LoadContent();
             _font = EngineManager.Game.Content.Load<SpriteFont>("Fonts/score");
 
-            TextureManager.AddTexture(new PoorTexture("Textures/background"), background);
+            TextureManager.AddTexture(new PoorTexture("Textures/menu/"+ background), background);
         }
 
         public override void UnloadContent()

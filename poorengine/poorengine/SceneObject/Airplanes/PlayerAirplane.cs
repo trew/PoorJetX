@@ -71,6 +71,14 @@ namespace PoorEngine.SceneObject
                 _health = 0;
                 AirExplode();
             }
+
+            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(GroundVehicle)))
+            {
+                AirExplode();
+                IsDead = true;
+                IsCrashing = true;
+                _health = 0;
+            }
         }
 
         public override void Update(GameTime gameTime)

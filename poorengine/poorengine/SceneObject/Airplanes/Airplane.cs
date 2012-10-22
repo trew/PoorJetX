@@ -99,18 +99,18 @@ namespace PoorEngine.SceneObject
                 if ((_orientation >= -5 && _orientation < 45) || (_orientation > 315 && _orientation <= 365) || (_orientation > 135 && _orientation < 225))
                 {
                     return new Rectangle(
-                        (int)Position.X - texture.Height / 2,
-                        (int)Position.Y - texture.Width / 2,
-                        texture.Height,
-                        texture.Width
+                        (int)Position.X - texture.Height / 2 + 5,
+                        (int)Position.Y - texture.Width / 2  + 5,
+                        texture.Height - 10,
+                        texture.Width - 10
                     );
                 }
 
                 return new Rectangle(
-                        (int)Position.X - texture.Width / 2,
-                        (int)Position.Y - texture.Height / 2,
-                        texture.Width,
-                        texture.Height
+                        (int)Position.X - texture.Width / 2 + 5,
+                        (int)Position.Y - texture.Height / 2 + 5,
+                        texture.Width - 10,
+                        texture.Height - 10
                     );
             }
         }
