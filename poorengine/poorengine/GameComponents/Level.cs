@@ -144,9 +144,13 @@ namespace PoorEngine.GameComponents
         private bool _completed = false;
         public bool Completed { get { return _completed; } set { _completed = value; } }
 
-        public Level(LevelData data)
+        private int _levelNumber = 0;
+        public int LevelNumber { get { return _levelNumber; } }
+
+        public Level(LevelData data, int levelNumber)
         {
             _data = data;
+            _levelNumber = levelNumber;
         }
 
         private Queue<PoorSceneObject> _enemies;

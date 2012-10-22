@@ -358,6 +358,7 @@ namespace PoorEngine.SceneObject
         public virtual void UnloadContent()
         {
             TextureManager.RemoveTexture(TextureName);
+            TextureManager.RemoveTexture(TextureNameDestroyed);
         }
 
         public virtual void HandleInput(Input input)

@@ -43,6 +43,7 @@ namespace PoorEngine.GameComponents
         {
             _velocity = new Vector2(0f, 0f);
             _stopped = false;
+            _isCruising = false;
         }
 
         public void changePos(Vector2 change)

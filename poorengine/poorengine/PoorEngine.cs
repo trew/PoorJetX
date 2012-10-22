@@ -135,12 +135,6 @@ namespace PoorEngine
         {
         }
 
-        public static void ResetGame()
-        {
-            Score = 0;
-            CameraManager.Reset();
-        }
-
         public static PlayerAirplane Player
         {
             // OMFG SO UGLY!

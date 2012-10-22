@@ -93,7 +93,7 @@ namespace PoorEngine.Managers
                     // Do the objects collide?
                     if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
                     {
-                        // Check whether this pair has already been checked.
+                        // Check whether this pair has already collided.
                         pair = new Pair<PoorSceneObject, PoorSceneObject>(firstObject, secondObject);
 
                         if (_collidedObjects.Contains(pair))
