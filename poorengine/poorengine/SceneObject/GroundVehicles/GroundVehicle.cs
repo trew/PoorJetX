@@ -83,8 +83,8 @@ namespace PoorEngine.SceneObject
 
                 if (Velocity.X > 0)
                 {
-                    if (alternating) _groundDust.AddParticles(new Vector2(Position.X + 20, GameHelper.GroundLevel + 10), 330f, 20f);
-                    else             _groundDust.AddParticles(new Vector2(Position.X + 70, GameHelper.GroundLevel + 10), 330f, 20f);
+                    //if (alternating) _groundDust.AddParticles(new Vector2(Position.X + 20, GameHelper.GroundLevel + 10), 330f, 20f);
+                    //else             _groundDust.AddParticles(new Vector2(Position.X + 70, GameHelper.GroundLevel + 10), 330f, 20f);
                 }
             }
 

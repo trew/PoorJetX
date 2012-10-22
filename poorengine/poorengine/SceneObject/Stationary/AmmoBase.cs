@@ -50,6 +50,12 @@ namespace PoorEngine.SceneObject
                 }
                 
             }
+
+            if (Position.X < CameraManager.Camera.Pos.X - 2000)
+            {
+                SceneGraphManager.RemoveObject(this);
+                return;
+            }
         }
 
         public void Draw(GameTime gameTime)

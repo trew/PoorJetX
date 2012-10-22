@@ -293,9 +293,14 @@
       <type>Transport</type>
       <health>5000</health>
     </LevelEnemy>
-    
-    
-    
   </Enemies>
+
+  <!-- Various bases -->
+  <Objects>
+    <LevelObject>
+      <type>ammobase</type>
+      <XAppear>1200</XAppear>
+    </LevelObject>
+  </Objects>
 
 </LevelData>

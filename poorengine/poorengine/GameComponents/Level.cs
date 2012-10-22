@@ -70,6 +70,13 @@ namespace PoorEngine.GameComponents
     }
 
     [Serializable]
+    public class LevelObject
+    {
+        public string type;
+        public int XAppear;
+    }
+
+    [Serializable]
     public class LevelData
     {
 
@@ -114,6 +121,16 @@ namespace PoorEngine.GameComponents
             get { return _enemies; }
             set { _enemies = value; }
         }
+
+        private List<LevelObject> _objects;
+        /// <summary>
+        /// A list of objects that spawn in this level
+        /// </summary>
+        public List<LevelObject> Objects
+        {
+            get { return _objects; }
+            set { _objects = value; }
+        }
         #endregion
 
     }
@@ -134,6 +151,7 @@ namespace PoorEngine.GameComponents
 
         private Queue<PoorSceneObject> _enemies;
         private Queue<Text> _texts;
+        private Queue<LevelObject> _objects;
         private List<IPoorEnemy> _aliveEnemies; // used for victory conditions
 
         #region Utility functions
@@ -143,6 +161,7 @@ namespace PoorEngine.GameComponents
             LoadVisuals();
             QueueEnemies();
             QueueTexts();
+            QueueObjects();
             // TODO QueueSounds();
             _loaded = true;
         }
@@ -270,7 +289,58 @@ namespace PoorEngine.GameComponents
             SceneGraphManager.AddObject(_texts.First());
             return _texts.Dequeue();
         }
-        #endregion
+
+
+
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public void QueueObjects()
+        {
+            // Sort objects by XAppear, so they appear correctly
+            // in the queue.
+            _data.Objects.Sort((LevelObject x1, LevelObject x2) =>
+                x1.XAppear < x2.XAppear ? -1 : 1);
+
+            _objects = new Queue<LevelObject>();
+            foreach (LevelObject lt in _data.Objects)
+            {
+                _objects.Enqueue(lt);
+            }
+        }
+
+        /// <summary>
+        /// Get the next object in queue
+        /// </summary>
+        /// <returns></returns>
+        public LevelObject GetNextObject()
+        {
+            if (_objects == null || _objects.Count <= 0) return null;
+            return _objects.First();
+        }
+
+        /// <summary>
+        /// Spawns a new object
+        /// </summary>
+        /// <returns>An object, or null if no object is in queue</returns>
+        public LevelObject SpawnObject()
+        {
+            if (_objects == null || _objects.Count <= 0) return null;
+            
+            if (_objects.First().type.Equals("ammobase"))
+            {
+                AmmoBase ab = new AmmoBase();
+                ab.Position = new Vector2(
+                                            CameraManager.Camera.Pos.X + GameHelper.ScreenWidth + 250f,
+                                            GameHelper.GroundLevel + 10);
+                SceneGraphManager.AddObject(ab);
+            }
+            else
+                return null;
+
+            return _objects.Dequeue();
+        }
 
 
         /// <summary>
@@ -288,6 +358,8 @@ namespace PoorEngine.GameComponents
             _completed = true;
             return false;
         }
+
+        #endregion
 
     }
 }
