@@ -25,8 +25,7 @@ namespace PoorEngine.SceneObject
         public String TextureName { get; set; }
         public String TextureNameDestroyed { get; set; }
 
-        public virtual void Collide(PoorSceneObject collidingWith) {
-        }
+        public virtual void Collide(PoorSceneObject collidingWith) { }
 
         private bool _readyToRender = false;
         /// <summary>

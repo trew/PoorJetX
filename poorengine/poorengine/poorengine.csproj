@@ -117,6 +117,7 @@
     <Compile Include="GameScreens\ScoreScreen.cs" />
     <Compile Include="Helpers\CalcHelper.cs" />
     <Compile Include="Helpers\GameHelper.cs" />
+    <Compile Include="Helpers\Pair.cs" />
     <Compile Include="Interfaces\IPoorEnemy.cs" />
     <Compile Include="Interfaces\IPoorWeaponHolder.cs" />
     <Compile Include="Managers\AIManager.cs" />

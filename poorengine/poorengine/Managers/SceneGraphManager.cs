@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using PoorEngine.SceneObject.SceneGraph;
 using PoorEngine.SceneObject;
 using PoorEngine.Interfaces;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.Managers
 {
@@ -23,6 +24,7 @@ namespace PoorEngine.Managers
         public static bool newObjectsAdded;
         public static Queue<Node> removeQueue { get; set; }
         private static Queue<Node> _new;
+        private static List<Pair<PoorSceneObject, PoorSceneObject>> _collidedObjects;
 
         /// <summary>
         /// Create the scenegraph Managers.
@@ -36,6 +38,7 @@ namespace PoorEngine.Managers
             removeQueue = new Queue<Node>();
 
             newObjectsAdded = false;
+            _collidedObjects = new List<Pair<PoorSceneObject, PoorSceneObject>>();
         }
 
         /// <summary>
@@ -68,6 +71,7 @@ namespace PoorEngine.Managers
             }
             _root.Update(gameTime);
 
+            Pair<PoorSceneObject, PoorSceneObject> pair;
             for (int first = 0; first < _root.Nodes.Count; first++)
             {
                 PoorSceneObject firstObject = ((SceneObjectNode)_root.Nodes[first]).SceneObject;
@@ -76,11 +80,29 @@ namespace PoorEngine.Managers
                 for(int second = 0; second < _root.Nodes.Count; second++)
                 {
                     PoorSceneObject secondObject = ((SceneObjectNode)_root.Nodes[second]).SceneObject;
+
+                    // If we're comparing the same object, continue
                     if (firstObject.Equals(secondObject)) continue;
+
+                    // If both of the objects is Projectiles, skip detection
                     if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(Projectile))) continue;
+
+                    // If the second object isn't used for bounding box check, continue
                     if (!secondObject.UsedInBoundingBoxCheck) continue;
+
+                    // Do the objects collide?
                     if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
                     {
+                        // Check whether this pair has already been checked.
+                        pair = new Pair<PoorSceneObject, PoorSceneObject>(firstObject, secondObject);
+
+                        if (_collidedObjects.Contains(pair))
+                        {
+                            pair = null;
+                            continue;
+                        }
+                        _collidedObjects.Add(pair);
+
                         if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(IPoorWeaponHolder)) ||
                             TypeMatch(firstObject.GetType(), typeof(IPoorWeaponHolder)) && TypeMatch(secondObject.GetType(), typeof(Projectile)))
                         {
@@ -101,6 +123,8 @@ namespace PoorEngine.Managers
                     }
                 }
             }
+
+            _collidedObjects.Clear();
 
             // Remove all queued nodes
             while (removeQueue.Count > 0) {
