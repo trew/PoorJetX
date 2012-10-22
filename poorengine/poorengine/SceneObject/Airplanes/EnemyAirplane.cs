@@ -69,7 +69,7 @@ namespace PoorEngine.SceneObject
             {
                 Vector2 targetX = new Vector2(CameraManager.Camera.Pos.X + GameHelper.ScreenWidth * 0.8f, Position.Y);
                 Vector2 targetDiff = Position - targetX;
-                _thrust = MathHelper.Clamp((float)(5 - targetDiff.X / 300), 0f, 7f);
+                _thrust = MathHelper.Clamp((float)(2 - targetDiff.X / 300), 0f, 7f);
             }
             else
             {
