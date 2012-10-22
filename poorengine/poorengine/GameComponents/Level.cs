@@ -184,7 +184,7 @@ namespace PoorEngine.GameComponents
                 if (le.type == "Airplane")
                 {
                     e = new EnemyAirplane(le.health);
-                    e.Position = new Vector2(le.XAppear, le.Y);
+                    e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 70 - le.Y);
                 }
                 else if (le.type == "AntiAir")
                 {
