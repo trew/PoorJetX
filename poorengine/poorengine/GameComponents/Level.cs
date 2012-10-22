@@ -168,6 +168,7 @@ namespace PoorEngine.GameComponents
             QueueObjects();
             // TODO QueueSounds();
             _loaded = true;
+            _completed = false;
         }
 
         /// <summary>
@@ -351,16 +352,16 @@ namespace PoorEngine.GameComponents
         /// Pretty much the victory conditions for our game.
         /// </summary>
         /// <returns></returns>
-        public bool HasEnemies()
+        public bool CheckCompleted()
         {
-            if (_enemies.Count > 0) return true;
+            if (_enemies.Count > 0) return false;
             foreach (IPoorEnemy enemy in _aliveEnemies)
             {
                 if (!enemy.IsDead)
-                    return true;
+                    return false;
             }
             _completed = true;
-            return false;
+            return true;
         }
 
         #endregion

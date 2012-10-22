@@ -70,8 +70,6 @@ namespace PoorEngine.Managers
 
         public static void RemoveFx(int id)
         {
-            if (id == null)
-                return;
 
             if (_soundEffects.ContainsKey(id))
             {

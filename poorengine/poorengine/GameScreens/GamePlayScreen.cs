@@ -32,6 +32,9 @@ namespace PoorEngine.GameScreens
         AmmoDisplay _ammoDisplay;
 
         Stopwatch _deathTimer;
+        Stopwatch _completedTimer;
+
+        private int _currentLevelNumber;
 
         private Dictionary<string, Instrument> _instruments;
 
@@ -41,18 +44,28 @@ namespace PoorEngine.GameScreens
             CameraManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
             _deathTimer = new Stopwatch();
+            _completedTimer = new Stopwatch();
             EngineManager.Score = 0;
+            _currentLevelNumber = level;
+            SoundFxManager.Clear();
         }
 
         public void Reset()
         {
-            janitorCoffeeBreak = 0;
             CameraManager.Reset();
-            _instruments = new Dictionary<string, Instrument>();
             _deathTimer = new Stopwatch();
-            EngineManager.Score = 0;
+            _completedTimer = new Stopwatch();
+            SceneGraphManager.Root.Nodes.Clear();
+            SoundFxManager.Clear();
 
-            GC.Collect();
+            LevelManager.Load(_currentLevelNumber);
+            LevelManager.CurrentLevel.Load();
+
+            SkyGradient skyGradient = new SkyGradient("skygradient");
+            SceneGraphManager.AddObject(skyGradient);
+
+            player1 = new PlayerAirplane();
+            SceneGraphManager.AddObject(player1);
         }
 
         public int ScreenWidth
@@ -127,14 +140,6 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/bombwhistle", "bombwhistle");
             SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
 
-            LevelManager.CurrentLevel.Load();
-
-            SkyGradient skyGradient = new SkyGradient("skygradient");
-            SceneGraphManager.AddObject(skyGradient);
-
-            player1 = new PlayerAirplane();
-            SceneGraphManager.AddObject(player1);     
-
             // Add instruments
             throttleMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(150, ScreenHeight), 0f, 7.5f, 0.6f, "throttle", "Throttle", this);
             _instruments.Add("throttleMeter", throttleMeter);
@@ -147,6 +152,15 @@ namespace PoorEngine.GameScreens
                 inst.LoadContent();
             }
             // !Add instruments
+
+            LevelManager.Load(_currentLevelNumber);
+            LevelManager.CurrentLevel.Load();
+
+            SkyGradient skyGradient = new SkyGradient("skygradient");
+            SceneGraphManager.AddObject(skyGradient);
+
+            player1 = new PlayerAirplane();
+            SceneGraphManager.AddObject(player1);
 
             SceneGraphManager.LoadContent();
             _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
@@ -227,14 +241,6 @@ namespace PoorEngine.GameScreens
             if(janitorCoffeeBreak++ > tenMinutes)
                 GC.Collect();
 
-            EngineManager.Debug.Print("Total GameTime: " + gameTime.TotalGameTime);
-            EngineManager.Debug.Print("Elapsed GameTime: " + gameTime.ElapsedGameTime);
-            EngineManager.Debug.Print("Running Slowly: " + gameTime.IsRunningSlowly);
-            EngineManager.Debug.Print("GC.GetTotalMemory: " + GC.GetTotalMemory(false)/1024 + " KB");
-            EngineManager.Debug.Print("==============================");
-            EngineManager.Debug.Print("Score: " + EngineManager.Score);
-            
-
             //AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
@@ -253,12 +259,33 @@ namespace PoorEngine.GameScreens
                 else
                 {
                     if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5)) {
-                        ExitGame();
+                        this.Reset();
                     }
                 }
-            } else if (!LevelManager.CurrentLevel.HasEnemies())
+            }
+            LevelManager.CurrentLevel.CheckCompleted();
+            if (LevelManager.CurrentLevel.Completed)
             {
-                //player1.Kill();
+                if (!_completedTimer.IsRunning)
+                {
+                    _completedTimer.Restart();
+                }
+                else
+                {
+                    if (_completedTimer.Elapsed > new TimeSpan(0, 0, 10))
+                    {
+                        if (LevelManager.HasNextLevel())
+                        {
+                            _currentLevelNumber += 1;
+                            this.Reset();
+                        }
+                        else
+                        {
+                            ExitScreen();
+                            ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+                        }
+                    }
+                }
             }
         }
          
@@ -357,8 +384,14 @@ namespace PoorEngine.GameScreens
             ParticleManager.Draw(gameTime);
 
             // Draw Score
+
             Text.DrawText(
                         ScreenManager.Cartoon18, // Font
+                        "Level: " + LevelManager.CurrentLevel.LevelNumber,   // Text
+                        Color.White,    // Inner color
+                        new Vector2(GameHelper.ScreenWidth - 200f, 5f),      // Position
+                        1.3f);          // Outline thickness
+            Text.DrawText(ScreenManager.Cartoon18, // Font
                         "Score: " + EngineManager.Score,   // Text
                         Color.White,    // Inner color
                         new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
@@ -375,6 +408,16 @@ namespace PoorEngine.GameScreens
                     ScreenManager.Cartoon24,
                     "GAME OVER",
                     Color.Red,
+                    200,
+                    1.3f);
+            }
+
+            if (LevelManager.CurrentLevel.Completed)
+            {
+                Text.DrawTextCentered(
+                    ScreenManager.Cartoon24,
+                    "Level Completed!",
+                    Color.White,
                     200,
                     1.3f);
             }
