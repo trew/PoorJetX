@@ -39,6 +39,18 @@ namespace PoorEngine.SceneObject
                 EngineManager.Score += 1;
             }
             base.Update(gameTime);
+
+            if (!RequiredForVictory)
+            {
+                if (!_destroyed && Position.X < CameraManager.Camera.Pos.X - 2000)
+                {
+                    SoundFxManager.RemoveFx(_engineFX_id);
+                    SoundFxManager.RemoveFx(_fireBulletFX_id);
+                    SceneGraphManager.RemoveObject(this);
+                    return;
+                }
+            }
+
         }
 
         public override void Draw(GameTime gameTime)

@@ -30,6 +30,7 @@ namespace PoorEngine.SceneObject
             : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
         {
             _requiredForVictory = requiredForVictory;
+
             _type = "battle";
             Scale = new Vector2(0.4f, 0.4f);
 
@@ -45,6 +46,17 @@ namespace PoorEngine.SceneObject
             }
             if (!_destroyed) UpdateAI(gameTime);
             base.Update(gameTime);
+            if (!RequiredForVictory)
+            {
+                if (!_destroyed && Position.X < CameraManager.Camera.Pos.X - 2000)
+                {
+                    SoundFxManager.RemoveFx(_engineFX_id);
+                    SoundFxManager.RemoveFx(_fireBulletFX_id);
+                    SceneGraphManager.RemoveObject(this);
+                    return;
+                }
+            }
+
         }
 
         public override void Draw(GameTime gameTime)
