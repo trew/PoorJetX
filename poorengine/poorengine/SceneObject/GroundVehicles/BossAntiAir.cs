@@ -17,13 +17,14 @@ namespace PoorEngine.SceneObject
         private AntiAirCannon _weapon2;
         private float _weaponOrientation1;
         private float _weaponOrientation2;
-
         
         public float Orientation { get { return _weaponOrientation1; } }
 
         private Airplane _target;
         public Airplane Target { get { return _target; } }
         Vector2 WeaponScale;
+
+        public bool RequiredForVictory { get; set; }
 
         public BossAntiAir(int maxHealth) // Add weapon parameter (obj/str)
             : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
@@ -39,6 +40,8 @@ namespace PoorEngine.SceneObject
             _weapon2 = new AntiAirCannon(this);
             _weapon2.Position = new Vector2(180, 65);
             _weapon2.setGunLength(100);
+
+            RequiredForVictory = true;
         }
 
         public override void Update(GameTime gameTime)

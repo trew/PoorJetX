@@ -59,8 +59,18 @@ namespace PoorEngine.SceneObject
 
             _destroyed = false;
             _health = _maxHealth = maxHealth;
-            _hpRectOutline = new Rectangle(9999, 9999, 40, 5);
-            _healthMeterRect = new Rectangle(9999, 9999, 38, 3);
+
+            if (SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)))
+            {
+                _hpRectOutline = new Rectangle(9999, 9999, 200, 12);
+                _healthMeterRect = new Rectangle(9999, 9999, 196, 10);
+            }
+            else
+            {
+                _hpRectOutline = new Rectangle(9999, 9999, 40, 5);
+                _healthMeterRect = new Rectangle(9999, 9999, 38, 3);
+            }
+            
 
             _fireeeee = new ProjectileHit(EngineManager.Game, 7);
             _blackSmoke = new BlackSmoke(EngineManager.Game, 8);
@@ -83,8 +93,8 @@ namespace PoorEngine.SceneObject
 
                 if (Velocity.X > 0)
                 {
-                    //if (alternating) _groundDust.AddParticles(new Vector2(Position.X + 20, GameHelper.GroundLevel + 10), 330f, 20f);
-                    //else             _groundDust.AddParticles(new Vector2(Position.X + 70, GameHelper.GroundLevel + 10), 330f, 20f);
+                    if (alternating) _groundDust.AddParticles(new Vector2(Position.X + 20, GameHelper.GroundLevel + 10), 330f, 20f);
+                    else             _groundDust.AddParticles(new Vector2(Position.X + 70, GameHelper.GroundLevel + 10), 330f, 20f);
                 }
             }
 
@@ -123,11 +133,22 @@ namespace PoorEngine.SceneObject
                                            SpriteEffects.None,
                                            0f);                 // Layer-depth
 
-            // Draw _health-bar, if vehiclenot destroyed
+            // Draw _health-bar, if vehicle not destroyed
             if (!_destroyed)
             {
                 // Update Healthbar draw-settings.
-                _healthMeterRect.Width = (int)(38 * ((float)_health / _maxHealth));
+                Vector2 offset;
+                if (SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)))
+                {
+                    offset = new Vector2(70, 175);
+                    _healthMeterRect.Width = (int)(196 * ((float)_health / _maxHealth));
+                }
+                else
+                {
+                    offset = new Vector2(40, 40);
+                    _healthMeterRect.Width = (int)(38 * ((float)_health / _maxHealth));
+                }
+                
                 int red = (int)(255 - 255 * HitPointsPercent);
                 int green = (int)(255 * HitPointsPercent);
 
@@ -137,7 +158,6 @@ namespace PoorEngine.SceneObject
                 Texture2D texHealth = TextureManager.GetColorTexture(hpColor);
 
                 Vector2 normPos = CameraManager.Camera.Normalize(Position);
-                Vector2 offset = new Vector2(40, 40);
 
                 ScreenManager.SpriteBatch.Draw(texBlack,
                                                normPos + new Vector2(-10, 20) + offset,
@@ -215,9 +235,8 @@ namespace PoorEngine.SceneObject
 
             if(SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)))
             {
-                SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), new Vector2(Position.X, GameHelper.ScreenHeight) + new Vector2(490, -300), 0f, new Vector2(5f, 5f), 200, 20, false, 0.9f));
-                ParticleManager.GroundExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 30f, 50f);
-                ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 0f, 120f);
+                SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), new Vector2(Position.X, GameHelper.ScreenHeight) + new Vector2(540, -350), 0f, new Vector2(5f, 5f), 200, 20, false, 0.9f));
+                ParticleManager.GroundExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 30f, 360f);
             }
             else
             {
