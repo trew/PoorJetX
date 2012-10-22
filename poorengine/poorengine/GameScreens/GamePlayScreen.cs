@@ -24,9 +24,6 @@ namespace PoorEngine.GameScreens
         const string airplaneTexture = "airplane_player";
         PlayerAirplane player1;
 
-        int janitorCoffeeBreak;
-        const int tenMinutes = 30;
-
         Instrument throttleMeter;
         Instrument airspeedMeter;
         AmmoDisplay _ammoDisplay;
@@ -40,7 +37,6 @@ namespace PoorEngine.GameScreens
 
         public GamePlayScreen(int level)
         {
-            janitorCoffeeBreak = 0;
             CameraManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
             _deathTimer = new Stopwatch();
@@ -66,6 +62,7 @@ namespace PoorEngine.GameScreens
 
             player1 = new PlayerAirplane();
             SceneGraphManager.AddObject(player1);
+            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
         }
 
         public int ScreenWidth
@@ -161,10 +158,9 @@ namespace PoorEngine.GameScreens
 
             player1 = new PlayerAirplane();
             SceneGraphManager.AddObject(player1);
+            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
 
             SceneGraphManager.LoadContent();
-            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
-            EngineManager.Game.Components.Add(_ammoDisplay);
             ParticleManager.LoadContent();
         }
 
@@ -219,7 +215,7 @@ namespace PoorEngine.GameScreens
                 inst.UnloadContent();
             }
             _instruments.Clear();
-            EngineManager.Game.Components.Remove(_ammoDisplay);
+            _ammoDisplay = null;
         }
  
 
@@ -230,18 +226,12 @@ namespace PoorEngine.GameScreens
         /// </summary>
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            
-
  	        base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             if (ScreenState != ScreenState.Active || otherScreenHasFocus || coveredByOtherScreen) 
             { 
                 return; 
             }
-            
-            if(janitorCoffeeBreak++ > tenMinutes)
-                GC.Collect();
 
-            //AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
             ParticleManager.Update(gameTime);
@@ -249,6 +239,7 @@ namespace PoorEngine.GameScreens
             {
                 inst.Update(gameTime);
             }
+            _ammoDisplay.Update(gameTime);
 
             if (player1.IsDead)
             {
@@ -363,8 +354,7 @@ namespace PoorEngine.GameScreens
 
         private void RestartGameEvent(object sender, EventArgs e)
         {
-            ExitScreen();
-            ScreenManager.AddScreen(new GamePlayScreen(LevelManager.CurrentLevel.LevelNumber));
+            this.Reset();
         }
 
         private void ExitGameEvent(object sender, EventArgs e)
@@ -399,6 +389,7 @@ namespace PoorEngine.GameScreens
             {
                 inst.Draw(gameTime);
             }
+            _ammoDisplay.Draw(gameTime);
 
             if (player1.IsCrashing || player1.IsDead)
             {
