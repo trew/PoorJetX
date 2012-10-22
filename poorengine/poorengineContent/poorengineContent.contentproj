@@ -125,6 +125,30 @@
       <Processor>FontDescriptionProcessor</Processor>
       <SubType>Designer</SubType>
     </Compile>
+    <Compile Include="Fonts\cartoon24.spritefont">
+      <SubType>Designer</SubType>
+      <Name>cartoon24</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="Fonts\cartoon14regular.spritefont">
+      <SubType>Designer</SubType>
+      <Name>cartoon14regular</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="Fonts\cartoon24regular.spritefont">
+      <SubType>Designer</SubType>
+      <Name>cartoon24regular</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="Fonts\cartoon18regular.spritefont">
+      <SubType>Designer</SubType>
+      <Name>cartoon18regular</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="Levels\1.xml">
       <Name>1</Name>
       <Importer>XmlImporter</Importer>

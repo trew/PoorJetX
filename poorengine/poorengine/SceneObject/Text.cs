@@ -46,16 +46,16 @@ namespace PoorEngine.SceneObject
 
         public void Draw(GameTime gameTime)
         {
-                Text.DrawText(ScreenManager.SpriteBatch, _textFont, _text, Color.Black, _color, outline, 1f, 0f, Position, _centered);
+                Text.DrawText(ScreenManager.SpriteBatch, _textFont, _text, Color.Black, _color, outline, 1f, 0f, Position, Vector2.Zero, _centered);
         }
 
 
         // Static functions
         #region Static functions
-        public static void DrawTextCentered(string fontName, string text, Color color, float Ypos, float outlineThickness)
+        public static void DrawTextCentered(SpriteFont font, string text, Color color, float Ypos, float outlineThickness)
         {
             DrawText(ScreenManager.SpriteBatch,
-                EngineManager.Game.Content.Load<SpriteFont>("Fonts/" + fontName),
+                font,
                 text,
                 Color.Black,
                 color,
@@ -63,13 +63,15 @@ namespace PoorEngine.SceneObject
                 1f,
                 0f,
                 new Vector2(0, Ypos),
+                Vector2.Zero,
                 true);
         }
 
-        public static void DrawText(string fontName, string text, Color color, Vector2 pos, float outlineThickness)
+
+        public static void DrawText(SpriteFont font, string text, Color color, Vector2 pos, float outlineThickness)
         {
             DrawText(ScreenManager.SpriteBatch,
-                EngineManager.Game.Content.Load<SpriteFont>("Fonts/" + fontName),
+                font,
                 text,
                 Color.Black,
                 color,
@@ -77,10 +79,11 @@ namespace PoorEngine.SceneObject
                 1f,
                 0f,
                 pos,
+                Vector2.Zero,
                 false);
         }
 
-        public static void DrawText(SpriteBatch sb, SpriteFont font, string text, Color backColor, Color frontColor, float outline, float scale, float rotation, Vector2 position, bool centered)
+        public static void DrawText(SpriteBatch sb, SpriteFont font, string text, Color backColor, Color frontColor, float outline, float scale, float rotation, Vector2 position, Vector2 origin, bool centered)
         {
             float displacement = outline;
             ScreenManager.SpriteBatch.Begin();
@@ -96,32 +99,41 @@ namespace PoorEngine.SceneObject
             else
                 textPos = position;
 
+
+            // shadow
+            sb.DrawString(font, text, textPos + new Vector2(displacement * scale, displacement * scale),//Here’s the displacement
+                backColor,
+                rotation,
+                origin,
+                scale,
+                SpriteEffects.None, 1f);
+
             //These 4 draws are the background of the text and each of them have a certain displacement each way.
             sb.DrawString(font, text, textPos + new Vector2(displacement * scale, displacement * scale),//Here’s the displacement
             backColor,
             rotation,
-            Vector2.Zero,
+            origin,
             scale,
             SpriteEffects.None, 1f);
 
             sb.DrawString(font, text, textPos + new Vector2(-displacement * scale, -displacement * scale),
             backColor,
             rotation,
-            Vector2.Zero,
+            origin,
             scale,
             SpriteEffects.None, 1f);
 
             sb.DrawString(font, text, textPos + new Vector2(-displacement * scale, displacement * scale),
             backColor,
             rotation,
-            Vector2.Zero,
+            origin,
             scale,
             SpriteEffects.None, 1f);
 
             sb.DrawString(font, text, textPos + new Vector2(displacement * scale, -displacement * scale),
             backColor,
             rotation,
-            Vector2.Zero,
+            origin,
             scale,
             SpriteEffects.None, 1f);
 
@@ -130,7 +142,7 @@ namespace PoorEngine.SceneObject
             sb.DrawString(font, text, textPos,
             frontColor,
             rotation,
-            Vector2.Zero,
+            origin,
             scale,
             SpriteEffects.None, 1f);
 
@@ -149,7 +161,18 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            _textFont = EngineManager.Game.Content.Load<SpriteFont>("Fonts/" + _fontName);
+            if (_fontName.Equals("cartoon14"))
+                _textFont = ScreenManager.Cartoon14;
+            if (_fontName.Equals("cartoon14regular"))
+                _textFont = ScreenManager.Cartoon14regular;
+            if (_fontName.Equals("cartoon18"))
+                _textFont = ScreenManager.Cartoon18;
+            if (_fontName.Equals("cartoon18regular"))
+                _textFont = ScreenManager.Cartoon18regular;
+            if (_fontName.Equals("cartoon24"))
+                _textFont = ScreenManager.Cartoon24;
+            if (_fontName.Equals("cartoon24regular"))
+                _textFont = ScreenManager.Cartoon24regular;
         }
 
         public void UnloadContent()

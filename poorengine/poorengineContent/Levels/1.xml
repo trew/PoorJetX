@@ -196,7 +196,7 @@
   <Texts>
     <LevelText>
 	    <text>No! EnemyAirplane. What r u doin? EnemyAirplane!?</text>
-	    <fontName>message</fontName>
+	    <fontName>cartoon18</fontName>
 	    <R>255</R>
 	    <G>255</G>
 	    <B>255</B>
@@ -210,7 +210,7 @@
 
 	  <LevelText>
 	    <text>STAHP!!</text>
-	    <fontName>message</fontName>
+	    <fontName>cartoon18</fontName>
 	    <R>255</R>
 	    <G>255</G>
 	    <B>255</B>

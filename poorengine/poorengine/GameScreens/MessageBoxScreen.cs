@@ -93,7 +93,7 @@ namespace PoorJetX.GameScreens
             // Center the message text in the viewport.
             Viewport viewport = EngineManager.Device.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
-            Vector2 textSize = ScreenManager.Font.MeasureString(_message);
+            Vector2 textSize = ScreenManager.Cartoon18.MeasureString(_message);
             Vector2 textPosition = (viewportSize - textSize) / 2;
 
             // The background includes a border somewhat larger than the text itself.
@@ -114,7 +114,7 @@ namespace PoorJetX.GameScreens
             ScreenManager.SpriteBatch.Draw(TextureManager.GetTexture(texture).BaseTexture as Texture2D, backgroundRectangle, color);
 
             // Draw the message box text.
-            ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, _message, textPosition, color);
+            ScreenManager.SpriteBatch.DrawString(ScreenManager.Cartoon18, _message, textPosition, color);
 
             ScreenManager.SpriteBatch.End();
         }

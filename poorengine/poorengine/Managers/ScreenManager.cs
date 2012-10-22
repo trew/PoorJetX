@@ -46,15 +46,24 @@ namespace PoorEngine.Managers
             get { return _spriteBatch; }
         }
  
-        private static SpriteFont _font;
-        /// <summary>
-        /// A default font shared by all the screens. This saves
-        /// each screen having to bother loading their own local copy.
-        /// </summary>
-        public static SpriteFont Font
-        {
-            get { return _font; }
-        }
+        // Standard fonts shared between Screens
+        private static SpriteFont _cartoon14;
+        public static SpriteFont Cartoon14 { get { return _cartoon14; } }
+
+        private static SpriteFont _cartoon18;
+        public static SpriteFont Cartoon18 { get { return _cartoon18; } }
+
+        private static SpriteFont _cartoon24;
+        public static SpriteFont Cartoon24 { get { return _cartoon24; } }
+
+        private static SpriteFont _cartoon14regular;
+        public static SpriteFont Cartoon14regular { get { return _cartoon14regular; } }
+
+        private static SpriteFont _cartoon18regular;
+        public static SpriteFont Cartoon18regular { get { return _cartoon18regular; } }
+
+        private static SpriteFont _cartoon24regular;
+        public static SpriteFont Cartoon24regular { get { return _cartoon24regular; } }
 
         bool _traceEnabled = false;
         /// <summary>
@@ -83,7 +92,12 @@ namespace PoorEngine.Managers
             base.LoadContent();
             
             _spriteBatch = new SpriteBatch(EngineManager.Device);
-            _font = EngineManager.Game.Content.Load<SpriteFont>("Fonts/menufont");
+            _cartoon14 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon14");
+            _cartoon18 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon18");
+            _cartoon24 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon24");
+            _cartoon14regular = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon14regular");
+            _cartoon18regular = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon18regular");
+            _cartoon24regular = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon24regular");
  
             foreach (GameScreen screen in _screens)
             {
