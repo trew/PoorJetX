@@ -108,6 +108,15 @@ namespace PoorEngine.Managers
                     if (text != null && text.Xappear <= cameraPosition)
                         text = CurrentLevel.SpawnText();
                 } while (text != null && text.Xappear <= cameraPosition);
+
+                // Check if there is a stationary object ready to appear
+                LevelObject lobj = null;
+                do
+                {
+                    lobj = CurrentLevel.GetNextObject();
+                    if (lobj != null && lobj.XAppear <= cameraPosition)
+                        lobj = CurrentLevel.SpawnObject();
+                } while (lobj != null && lobj.XAppear <= cameraPosition);
             }
         }
     }
