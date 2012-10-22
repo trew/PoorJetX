@@ -13,18 +13,16 @@ using PoorEngine.SceneObject;
 
 namespace PoorJetX.GameScreens
 {
-    public class ScoreScreen : GameScreen
+    public class VictoryScreen : GameScreen
     {
-        const string background = "scorescreen";
-        private String _score;
+        const string background = "victoryscreen";
         SpriteFont _font;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ScoreScreen()
+        public VictoryScreen()
         {
-            _score = "Score: " + EngineManager.Score.ToString();
             TransitionOnTime = TimeSpan.FromSeconds(0.5f);
             TransitionOffTime = TimeSpan.FromSeconds(0.5f);
         }
@@ -34,14 +32,14 @@ namespace PoorJetX.GameScreens
             base.LoadContent();
             _font = ScreenManager.Cartoon24;
 
-            TextureManager.AddTexture(new PoorTexture("Textures/menu/"+ background), background);
+            //TextureManager.AddTexture(new PoorTexture("Textures/menu/"+ background), background);
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
 
-            TextureManager.RemoveTexture(background);
+            //TextureManager.RemoveTexture(background);
         }
 
         /// <summary>
@@ -80,9 +78,9 @@ namespace PoorJetX.GameScreens
 
             ScreenManager.SpriteBatch.Begin();
 
-            ScreenManager.SpriteBatch.Draw(TextureManager.GetTexture(background).BaseTexture as Texture2D,
+/*            ScreenManager.SpriteBatch.Draw(TextureManager.GetTexture(background).BaseTexture as Texture2D,
                                             fullscreen,
-                                            new Color(fade, fade, fade));
+                                            new Color(fade, fade, fade));*/
 
             // Pulsate the size of the selected menu entry.
             double time = gameTime.TotalGameTime.TotalSeconds;
@@ -97,16 +95,16 @@ namespace PoorJetX.GameScreens
 
             // Draw text, centered on the middle of each line.e
 
-            Vector2 origin = _font.MeasureString(_score) / 2;
+            Vector2 origin = _font.MeasureString("VICTORY!") / 2;
 
             float x = GameHelper.HalfScreenWidth;
             float y = GameHelper.HalfScreenHeight;
-            ScreenManager.SpriteBatch.DrawString(_font, _score, new Vector2(x, y), color, 0,
+            ScreenManager.SpriteBatch.DrawString(_font, "VICTORY!", new Vector2(x, y), color, 0,
                                    origin, scale, SpriteEffects.None, 0);
 
             ScreenManager.SpriteBatch.End();
 
-            Text.DrawText(ScreenManager.SpriteBatch, _font, _score, Color.Black, Color.White, 1f, scale, 0f, new Vector2(x,y), origin, false); 
+            Text.DrawText(ScreenManager.SpriteBatch, _font, "VICTORY!", Color.Black, Color.White, 1f, scale, 0f, new Vector2(x, y), origin, false); 
         }
     }
 }

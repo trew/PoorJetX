@@ -33,6 +33,8 @@ namespace PoorEngine.GameScreens
 
         private int _currentLevelNumber;
 
+        private int _lives;
+
         private Dictionary<string, Instrument> _instruments;
 
         public GamePlayScreen(int level)
@@ -44,6 +46,7 @@ namespace PoorEngine.GameScreens
             EngineManager.Score = 0;
             _currentLevelNumber = level;
             SoundFxManager.Clear();
+            _lives = 3;
         }
 
         public void Reset()
@@ -250,7 +253,16 @@ namespace PoorEngine.GameScreens
                 else
                 {
                     if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5)) {
-                        this.Reset();
+                        if (_lives - 1 <= 0)
+                        {
+                            ExitScreen();
+                            ScreenManager.AddScreen(new ScoreScreen());
+                        }
+                        else
+                        {
+                            _lives--;
+                            this.Reset();
+                        }
                     }
                 }
             }
@@ -274,7 +286,7 @@ namespace PoorEngine.GameScreens
                         else
                         {
                             ExitScreen();
-                            ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+                            ScreenManager.AddScreen(new VictoryScreen());
                         }
                     }
                 }
@@ -350,7 +362,7 @@ namespace PoorEngine.GameScreens
         private void ExitGame()
         {
             ExitScreen();
-            ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+            ScreenManager.AddScreen(new ScoreScreen());
         }
 
         private void RestartGameEvent(object sender, EventArgs e)

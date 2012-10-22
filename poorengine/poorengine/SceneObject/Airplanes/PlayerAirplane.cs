@@ -28,6 +28,7 @@ namespace PoorEngine.SceneObject
         public PlayerAirplane():
             base(2000, "Player/airplane_player")
         {
+            _orientation = 85;
             _bombWeapon = new BombWeapon(this);
             _projectileWeapon = new ProjectileWeapon(this);
         }
