@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -121,11 +121,10 @@ namespace PoorEngine.GameComponents
             if (bRefillGreen.IsRunning)
                 ScreenManager.SpriteBatch.Draw(greenBackground, bombPos, null, Color.White * (1 - (((float)bRefillGreen.ElapsedMilliseconds) / 3000f)), 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
+            Text.DrawText(ScreenManager.Cartoon14regular, ProjectileWeapon.AmmoCount.ToString(), mgCountColor, mgPos + new Vector2(40, 23), 1f);
+            Text.DrawText(ScreenManager.Cartoon14regular, BombWeapon.AmmoCount.ToString(), bombCountColor, bombPos + new Vector2(40, 23), 1f);
+
             ScreenManager.SpriteBatch.End();
-
-            Text.DrawText(ScreenManager.Cartoon14regular, ProjectileWeapon.AmmoCount.ToString(), mgCountColor,   mgPos   + new Vector2(40, 23), 1f);
-            Text.DrawText(ScreenManager.Cartoon14regular, BombWeapon.AmmoCount.ToString(),       bombCountColor, bombPos + new Vector2(40, 23), 1f);
-
         }
     }
 }

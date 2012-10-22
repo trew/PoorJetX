@@ -386,8 +386,15 @@ namespace PoorEngine.GameScreens
             SceneGraphManager.Draw(gameTime);
             ParticleManager.Draw(gameTime);
 
-            // Draw Score
 
+            foreach (Instrument inst in _instruments.Values)
+            {
+                inst.Draw(gameTime);
+            }
+            _ammoDisplay.Draw(gameTime);
+
+            // Draw Score
+            ScreenManager.SpriteBatch.Begin();
             Text.DrawText(
                         ScreenManager.Cartoon18, // Font
                         "Level: " + LevelManager.CurrentLevel.LevelNumber,   // Text
@@ -399,12 +406,6 @@ namespace PoorEngine.GameScreens
                         Color.White,    // Inner color
                         new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
                         1.3f);          // Outline thickness
-
-            foreach (Instrument inst in _instruments.Values)
-            {
-                inst.Draw(gameTime);
-            }
-            _ammoDisplay.Draw(gameTime);
 
             if (player1.IsCrashing || player1.IsDead)
             {
@@ -425,6 +426,7 @@ namespace PoorEngine.GameScreens
                     200,
                     1.3f);
             }
+            ScreenManager.SpriteBatch.End();
 
         }
 

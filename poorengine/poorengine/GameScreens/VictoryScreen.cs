@@ -42,19 +42,6 @@ namespace PoorJetX.GameScreens
             //TextureManager.RemoveTexture(background);
         }
 
-        /// <summary>
-        /// Updates the background screen. Unlike most screens, this should not
-        /// transition off even if it has been covered by another screen: it is
-        /// supposed to be covered, after all! This overload forces the
-        /// coveredByOtherScreen parameter to false in order to stop the base
-        /// Update method wanting to transition off.
-        /// </summary>
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
-                                                       bool coveredByOtherScreen)
-        {
-            base.Update(gameTime, otherScreenHasFocus, false);
-        }
-
         public override void HandleInput(Input input)
         {
             base.HandleInput(input);

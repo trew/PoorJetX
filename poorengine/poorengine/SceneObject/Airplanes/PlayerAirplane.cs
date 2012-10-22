@@ -327,6 +327,7 @@ namespace PoorEngine.SceneObject
             HandleDebugInput(input);
 
             if (IsCrashing) return;
+            if (LevelManager.CurrentLevel.Completed) return;
 
             double forceIncreaseAmount = MathHelper.Clamp((float)(0.1 / _linearVelocity), 0.002f, 0.4f);
             double maxForce = MathHelper.Clamp((float)(3 / _linearVelocity), 0.3f, 1.3f);

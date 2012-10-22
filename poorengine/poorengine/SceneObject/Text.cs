@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,7 +46,9 @@ namespace PoorEngine.SceneObject
 
         public void Draw(GameTime gameTime)
         {
+            ScreenManager.SpriteBatch.Begin();
             Text.DrawText(_textFont, _text, Color.Black, _color, outline, 1f, 0f, Position, Vector2.Zero, _centered);
+            ScreenManager.SpriteBatch.End();
         }
 
 
