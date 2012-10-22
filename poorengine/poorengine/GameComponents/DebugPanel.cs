@@ -50,7 +50,8 @@ namespace PoorEngine.GameComponents
 
         public void Print(string s)
         {
-            strings.Enqueue(s);
+            if (ViewDebug)
+                strings.Enqueue(s);
         }
 
         public override void  Draw(GameTime gameTime)
@@ -66,6 +67,7 @@ namespace PoorEngine.GameComponents
             strings.Enqueue("Sound volume: " + GameSettings.Default.SoundVolume);
             strings.Enqueue("Music volume: " + GameSettings.Default.MusicVolume);
             strings.Enqueue("SoundFXLoaded: " + SoundFxLibrary.SoundEffectsLoaded);
+            strings.Enqueue("TexturesLoaded: " + TextureManager.TexturesLoaded);
             strings.Enqueue("Screens loaded: " + string.Join(", ", ScreenManager.TraceScreens().ToArray()));
             while (strings.Count > 0)
             {
@@ -73,7 +75,7 @@ namespace PoorEngine.GameComponents
                 ScreenManager.SpriteBatch.DrawString(debugFont, s, new Vector2(50, 5+debugFont.LineSpacing * (count + 1)), Color.Black);
                 count++;
             }
-
+            strings.Clear();
             ScreenManager.SpriteBatch.End();
         }
     }
