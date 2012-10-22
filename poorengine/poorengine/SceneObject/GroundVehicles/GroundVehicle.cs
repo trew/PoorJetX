@@ -222,9 +222,20 @@ namespace PoorEngine.SceneObject
                 CalcHelper.RandomBetween(0f, 0.4f), 
                 CalcHelper.CalcPan(Position).X * 1.8f);
 
-            SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), new Vector2(Position.X, GameHelper.ScreenHeight) + new Vector2(190, -160), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
-            ParticleManager.GroundExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 30f, 50f);
-            ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 0f, 120f);
+            
+
+            if(SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)))
+            {
+                SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), new Vector2(Position.X, GameHelper.ScreenHeight) + new Vector2(490, -300), 0f, new Vector2(5f, 5f), 200, 20, false, 0.9f));
+                ParticleManager.GroundExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 30f, 50f);
+                ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 0f, 120f);
+            }
+            else
+            {
+                SceneGraphManager.AddObject(new AnimatedSprite("anim_groundcrash", new Point(300, 150), new Point(12, 10), new Vector2(Position.X, GameHelper.ScreenHeight) + new Vector2(190, -160), 0f, new Vector2(2f, 2f), 200, 100, false, 0.9f));
+                ParticleManager.GroundExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 30f, 50f);
+                ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X + 40f, GameHelper.ScreenHeight - 70), 0f, 120f);
+            }
         }
 
         public virtual void LoadContent()
@@ -242,7 +253,7 @@ namespace PoorEngine.SceneObject
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
             SoundFxManager.GetByID(_engineFX_id).Play();
 
-            if (_type == "battle")
+            if (_type.Equals("battle") || _type.Equals("bossantiair"))
             {
                 TextureManager.AddTexture(new PoorTexture("Textures/Enemies/" + TextureNameWeapon), TextureNameWeapon);
                 _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));

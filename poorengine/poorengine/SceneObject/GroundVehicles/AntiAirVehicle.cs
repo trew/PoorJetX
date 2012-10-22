@@ -91,8 +91,8 @@ namespace PoorEngine.SceneObject
 
         protected float GetAngleToTarget(GameTime gameTime)
         {
-            int distanceMod = (int)CalcHelper.DistanceBetween(Position, Target.Position) / 10;
-            double orientation = CalcHelper.getAngle(Position, CalcHelper.calculatePoint(Target.Position, Target.Orientation, (float)Target.LinearVelocity * distanceMod)) - 90f;
+            int distanceMod = (int)CalcHelper.DistanceBetween(Position + _weapon.Position, Target.Position) / 10;
+            double orientation = CalcHelper.getAngle(Position + _weapon.Position, CalcHelper.calculatePoint(Target.Position, Target.Orientation, (float)Target.LinearVelocity * distanceMod)) - 90f;
 
             return (float)CalcHelper.formatAngle(orientation);
         }

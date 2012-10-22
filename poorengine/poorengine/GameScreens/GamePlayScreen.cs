@@ -324,9 +324,21 @@ namespace PoorEngine.GameScreens
                 gbv.LoadContent();
 
                 SceneGraphManager.AddObject(gbv);
-
             }
 
+            if (input.IsNewKeyPress(Keys.B))
+            {
+                BossAntiAir boss = new BossAntiAir(50000);
+                boss.Position = new Vector2(
+                        CameraManager.Camera.Pos.X +
+                        GameHelper.ScreenWidth - 200f,
+                        GameHelper.GroundLevel - 170);
+
+                boss.Velocity = new Vector2(0f, 0f);
+                boss.LoadContent();
+
+                SceneGraphManager.AddObject(boss);
+            }
 
             if (input.IsNewKeyPress(Keys.W))
             {
