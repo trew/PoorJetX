@@ -17,7 +17,6 @@ namespace PoorEngine.SceneObject
         private Stopwatch bRefillTimer;
         private Stopwatch mgRefillTimer;
 
-
         public AmmoBase()
             :base("ammobase")
         {

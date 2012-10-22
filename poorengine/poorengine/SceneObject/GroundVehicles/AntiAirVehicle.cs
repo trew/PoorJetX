@@ -114,5 +114,32 @@ namespace PoorEngine.SceneObject
 
             return (float)CalcHelper.formatAngle(orientation);
         }
+
+        /// <summary>
+        /// The bounding box of this object, used for culling.
+        /// </summary>
+        public override Rectangle BoundingBox
+        {
+            get
+            {
+                IPoorTexture tex = TextureManager.GetTexture(TextureName);
+                if (tex == null)
+                {
+                    return new Rectangle(0, 0, 0, 0);
+                }
+                else
+                {
+                    Texture2D texture = tex.BaseTexture as Texture2D;
+                    int textureWidth = (int)(texture.Width * Scale.X);
+                    int textureHeight = (int)(texture.Height * Scale.Y);
+                    return new Rectangle(
+                            (int)Position.X,
+                            (int)(Position.Y + Scale.X * 45),
+                            textureWidth,
+                            textureHeight - (int)(Scale.X * 45)
+                        );
+                }
+            }
+        } 
     }
 }

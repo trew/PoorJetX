@@ -78,8 +78,8 @@ namespace PoorEngine.SceneObject
             {
                 if (_reloadTimer.ElapsedMilliseconds > 60000 / BULLETSPERMINUTE)
                 {
-                    SoundFxLibrary.GetFx("firebullet").Play(
-                                                            SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Owner.Position) * 0.1f),
+                    SoundFxLibrary.GetFx("bomb4").Play(
+                                                            SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Owner.Position) * 0.25f),
                                                             CalcHelper.RandomBetween(-0.6f, -0.3f),
                                                             CalcHelper.CalcPan(Owner.Position).X);
 

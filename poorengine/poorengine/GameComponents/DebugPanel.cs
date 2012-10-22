@@ -67,10 +67,12 @@ namespace PoorEngine.GameComponents
             strings.Enqueue("Elapsed GameTime: " + gameTime.ElapsedGameTime);
             strings.Enqueue("Running Slowly: " + gameTime.IsRunningSlowly);
             strings.Enqueue("GC.GetTotalMemory: " + GC.GetTotalMemory(false) / 1024 + " KB");
-            strings.Enqueue("==============================");
+            strings.Enqueue("Garbage collection every X frame: " + ScreenManager.getJanitorBreakLength());
+            strings.Enqueue("========== VOLUME ============");
             strings.Enqueue("Global volume: " + GameSettings.Default.GlobalSoundVolume);
             strings.Enqueue("Sound volume: " + GameSettings.Default.SoundVolume);
             strings.Enqueue("Music volume: " + GameSettings.Default.MusicVolume);
+            strings.Enqueue("==============================");
             strings.Enqueue("SoundFXLoaded: " + SoundFxLibrary.SoundEffectsLoaded);
             strings.Enqueue("TexturesLoaded: " + TextureManager.TexturesLoaded);
             strings.Enqueue("Screens loaded: " + string.Join(", ", ScreenManager.TraceScreens().ToArray()));

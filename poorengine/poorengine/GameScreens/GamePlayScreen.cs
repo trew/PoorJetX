@@ -136,9 +136,12 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/bomb1", "bomb1");
             SoundFxLibrary.AddToLibrary("SoundFX/bomb2", "bomb2");
             SoundFxLibrary.AddToLibrary("SoundFX/bomb3", "bomb3");
+            SoundFxLibrary.AddToLibrary("SoundFX/bomb4", "bomb4");
+            SoundFxLibrary.AddToLibrary("SoundFX/huge_explosion", "huge_explosion");
             SoundFxLibrary.AddToLibrary("SoundFX/bombdrop", "bombdrop");
             SoundFxLibrary.AddToLibrary("SoundFX/bombwhistle", "bombwhistle");
             SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
+            SoundFxLibrary.AddToLibrary("SoundFX/refill", "refill");
 
             // Add instruments
             throttleMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(150, ScreenHeight), 0f, 7.5f, 0.6f, "throttle", "Throttle", this);
@@ -304,6 +307,11 @@ namespace PoorEngine.GameScreens
             
             player1.HandleInput(input);
 
+
+            /*
+             *  DEBUG
+             */
+            #region
             if (input.IsNewKeyPress(Keys.E))
             {
                 GroundTransport gcv = new GroundTransport(3000, false);
@@ -359,6 +367,25 @@ namespace PoorEngine.GameScreens
             if (input.IsNewKeyPress(Keys.P)) {
                 LevelManager.CurrentLevel.Completed = true;
             }
+
+            if (input.IsNewKeyPress(Keys.F5))
+            {
+                SceneGraphManager.ToggleCollisionDetection();
+            }
+
+            if (input.IsNewKeyPress(Keys.PageUp))
+            {
+                ScreenManager.lengthenJanitorCoffeBreak();
+            }
+
+            if (input.IsNewKeyPress(Keys.PageDown))
+            {
+                ScreenManager.shortenJanitorCoffeBreak();
+            }
+            #endregion
+            /*
+             *  END DEBUG
+             */
 
             if (input.IsNewKeyPress(Keys.Escape))
             {
