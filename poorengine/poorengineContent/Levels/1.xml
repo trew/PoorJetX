@@ -226,7 +226,7 @@
   <Enemies>
     <LevelEnemy>
       <XAppear>500</XAppear>
-      <Y>50</Y>
+      <Y>0</Y>
       <type>Airplane</type>
 	    <health>2000</health>
     </LevelEnemy>
