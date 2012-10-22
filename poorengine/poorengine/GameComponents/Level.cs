@@ -168,6 +168,7 @@ namespace PoorEngine.GameComponents
             QueueObjects();
             // TODO QueueSounds();
             _loaded = true;
+            _completed = false;
         }
 
         /// <summary>

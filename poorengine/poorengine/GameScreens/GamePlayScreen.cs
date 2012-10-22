@@ -32,6 +32,9 @@ namespace PoorEngine.GameScreens
         AmmoDisplay _ammoDisplay;
 
         Stopwatch _deathTimer;
+        Stopwatch _completedTimer;
+
+        private int _currentLevelNumber;
 
         private Dictionary<string, Instrument> _instruments;
 
@@ -41,18 +44,10 @@ namespace PoorEngine.GameScreens
             CameraManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
             _deathTimer = new Stopwatch();
+            _completedTimer = new Stopwatch();
             EngineManager.Score = 0;
-        }
-
-        public void Reset()
-        {
-            janitorCoffeeBreak = 0;
-            CameraManager.Reset();
-            _instruments = new Dictionary<string, Instrument>();
-            _deathTimer = new Stopwatch();
-            EngineManager.Score = 0;
-
-            GC.Collect();
+            _currentLevelNumber = level;
+            SoundFxManager.Clear();
         }
 
         public int ScreenWidth
@@ -127,6 +122,7 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/bombwhistle", "bombwhistle");
             SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
 
+            LevelManager.Load(_currentLevelNumber);
             LevelManager.CurrentLevel.Load();
 
             SkyGradient skyGradient = new SkyGradient("skygradient");
@@ -232,7 +228,6 @@ namespace PoorEngine.GameScreens
             EngineManager.Debug.Print("Running Slowly: " + gameTime.IsRunningSlowly);
             EngineManager.Debug.Print("GC.GetTotalMemory: " + GC.GetTotalMemory(false)/1024 + " KB");
             EngineManager.Debug.Print("==============================");
-            EngineManager.Debug.Print("Score: " + EngineManager.Score);
             
 
             //AmmoManager.Update(gameTime);
@@ -256,9 +251,20 @@ namespace PoorEngine.GameScreens
                         ExitGame();
                     }
                 }
-            } else if (!LevelManager.CurrentLevel.HasEnemies())
+            } else if (LevelManager.CurrentLevel.Completed)
             {
-                //player1.Kill();
+                if (!_completedTimer.IsRunning)
+                {
+                    _completedTimer.Restart();
+                }
+                else
+                {
+                    if (_completedTimer.Elapsed > new TimeSpan(0, 0, 3))
+                    {
+                        ExitScreen();
+                        ScreenManager.AddScreen(new GamePlayScreen(LevelManager.CurrentLevel.LevelNumber + 1));
+                    }
+                }
             }
         }
          
@@ -358,6 +364,11 @@ namespace PoorEngine.GameScreens
 
             // Draw Score
             Text.DrawText("cartoon18", // Font
+                        "Level: " + LevelManager.CurrentLevel.LevelNumber,   // Text
+                        Color.White,    // Inner color
+                        new Vector2(GameHelper.ScreenWidth - 200f, 5f),      // Position
+                        1.3f);          // Outline thickness
+            Text.DrawText("cartoon18", // Font
                         "Score: " + EngineManager.Score,   // Text
                         Color.White,    // Inner color
                         new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
@@ -373,6 +384,15 @@ namespace PoorEngine.GameScreens
                 Text.DrawTextCentered("message",
                     "GAME OVER",
                     Color.Red,
+                    200,
+                    1.3f);
+            }
+
+            if (LevelManager.CurrentLevel.Completed)
+            {
+                Text.DrawTextCentered("message",
+                    "Level Completed!",
+                    Color.White,
                     200,
                     1.3f);
             }
