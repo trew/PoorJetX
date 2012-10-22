@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +11,18 @@ namespace PoorEngine.SceneObject
 {
     public class GroundTransport : GroundVehicle, IPoorEnemy
     {
+        private bool _requiredForVictory;
+        public bool RequiredForVictory { get { return _requiredForVictory; } }
+
         private string RndEnemyTex()
         {
             return "enemy_transport" + (int)CalcHelper.RandomBetween(1f, 3.99f);
         }
 
-        public GroundTransport(int maxHealth)
+        public GroundTransport(int maxHealth, bool requiredForVictory)
             :base(maxHealth, "", "")
         {
+            _requiredForVictory = requiredForVictory;
             TextureName = RndEnemyTex();
             TextureNameDestroyed = TextureName + "_destroyed";
 

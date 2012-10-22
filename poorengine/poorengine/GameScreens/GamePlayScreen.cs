@@ -257,6 +257,7 @@ namespace PoorEngine.GameScreens
             LevelManager.CurrentLevel.CheckCompleted();
             if (LevelManager.CurrentLevel.Completed)
             {
+                player1.UsedInBoundingBoxCheck = false;
                 if (!_completedTimer.IsRunning)
                 {
                     _completedTimer.Restart();
@@ -293,7 +294,7 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.E))
             {
-                GroundTransport gcv = new GroundTransport(3000);
+                GroundTransport gcv = new GroundTransport(3000, false);
                 gcv.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
                         GameHelper.ScreenWidth - 200f, 
@@ -305,7 +306,7 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.R))
             {
-                AntiAirVehicle gbv = new AntiAirVehicle(3000);
+                AntiAirVehicle gbv = new AntiAirVehicle(3000, false);
                 gbv.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
                         GameHelper.ScreenWidth - 200f,

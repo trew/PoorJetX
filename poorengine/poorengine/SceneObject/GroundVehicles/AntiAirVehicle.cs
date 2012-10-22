@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +13,9 @@ namespace PoorEngine.SceneObject
 {
     public class AntiAirVehicle : GroundVehicle, IPoorWeaponHolder, IPoorEnemy
     {
+        private bool _requiredForVictory;
+        public bool RequiredForVictory { get { return _requiredForVictory; } }
+
         private AntiAirCannon _weapon;
         private float _weaponOrientation;
         
@@ -21,9 +24,12 @@ namespace PoorEngine.SceneObject
         private Airplane _target;
         public Airplane Target { get { return _target; } }
 
-        public AntiAirVehicle(int maxHealth) // Add weapon parameter (obj/str)
+        public bool HasTarget { get { return _target != null; } }
+
+        public AntiAirVehicle(int maxHealth, bool requiredForVictory) // Add weapon parameter (obj/str)
             : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
         {
+            _requiredForVictory = requiredForVictory;
             _type = "battle";
             Scale = new Vector2(0.4f, 0.4f);
 
@@ -71,22 +77,22 @@ namespace PoorEngine.SceneObject
 
         private void UpdateAI(GameTime gameTime)
         {
-            SetTarget(gameTime);
-            _weapon.Angle = GetAngleToTarget(gameTime);
-            _weaponOrientation = _weapon.Angle;
-
-            if(CalcHelper.DistanceBetween(Position, Target.Position) < 800)
+            SetTarget();
+            if (HasTarget)
             {
+                _weapon.Angle = GetAngleToTarget(gameTime);
+                _weaponOrientation = _weapon.Angle;
                 _weapon.Fire();
             }
-
             
         }
 
-        void SetTarget(GameTime gameTime)
+        public void SetTarget()
         {
-            if (_target == null)
+            if (CalcHelper.DistanceBetween(Position, EngineManager.Player.Position) < 800)
                 _target = EngineManager.Player;
+            else
+                _target = null;
         }
 
         protected float GetAngleToTarget(GameTime gameTime)

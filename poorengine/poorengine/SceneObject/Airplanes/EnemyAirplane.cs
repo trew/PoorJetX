@@ -20,6 +20,11 @@ namespace PoorEngine.SceneObject
         private Airplane _target;
         public Airplane Target { get { return _target; } }
 
+        public bool HasTarget { get { return _target != null; } }
+
+        private bool _requiredForVictory;
+        public bool RequiredForVictory { get { return _requiredForVictory; } }
+
         private Cannon _weapon;
 
         private string RndEnemyTex()
@@ -27,9 +32,10 @@ namespace PoorEngine.SceneObject
             return "Enemies/airplane_enemy" + (int)CalcHelper.RandomBetween(1f, 5.99f);
         }
 
-        public EnemyAirplane(int maxHealth):
+        public EnemyAirplane(int maxHealth, bool requiredForVictory):
             base(maxHealth, "")
         {
+            _requiredForVictory = requiredForVictory;
             TextureName = RndEnemyTex();
             TextureNameDestroyed = TextureName + "_destroyed";
 
@@ -47,10 +53,12 @@ namespace PoorEngine.SceneObject
             HandleInput(EngineManager.Input);
         }
 
-        protected void SetTarget(GameTime gameTime)
+        public void SetTarget()
         {
-            if (_target == null)
+            if (CalcHelper.DistanceBetween(Position, EngineManager.Player.Position) < 800)
                 _target = EngineManager.Player;
+            else
+                _target = null;
         }
 
         protected void AdjustThrottle(GameTime gameTime)
@@ -90,7 +98,7 @@ namespace PoorEngine.SceneObject
 
         protected void UpdateAI(GameTime gameTime)
         {
-            SetTarget(gameTime);
+            SetTarget();
             AdjustThrottle(gameTime);
             FireBullets(gameTime);
         }

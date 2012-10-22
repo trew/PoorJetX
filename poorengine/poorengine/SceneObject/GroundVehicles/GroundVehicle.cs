@@ -103,9 +103,6 @@ namespace PoorEngine.SceneObject
                 SceneGraphManager.RemoveObject(this);
                 return;
             }
-
-            
-
         }
 
         private void UpdateSound()
