@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -13,18 +13,17 @@ using PoorEngine.SceneObject;
 
 namespace PoorJetX.GameScreens
 {
-    public class VictoryScreen : GameScreen
+    public class HighscoreScreen : GameScreen
     {
-        const string background = "victoryscreen";
         SpriteFont _font;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public VictoryScreen()
+        public HighscoreScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5f);
-            TransitionOffTime = TimeSpan.FromSeconds(0.5f);
+            TransitionOffTime = TimeSpan.FromSeconds(0.0f);
         }
 
         public override void LoadContent()
@@ -42,19 +41,6 @@ namespace PoorJetX.GameScreens
             //TextureManager.RemoveTexture(background);
         }
 
-        /// <summary>
-        /// Updates the background screen. Unlike most screens, this should not
-        /// transition off even if it has been covered by another screen: it is
-        /// supposed to be covered, after all! This overload forces the
-        /// coveredByOtherScreen parameter to false in order to stop the base
-        /// Update method wanting to transition off.
-        /// </summary>
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
-                                                       bool coveredByOtherScreen)
-        {
-            base.Update(gameTime, otherScreenHasFocus, false);
-        }
-
         public override void HandleInput(Input input)
         {
             base.HandleInput(input);
@@ -62,8 +48,6 @@ namespace PoorJetX.GameScreens
             if (input.IsNewKeyPress(Keys.Enter))
             {
                 ExitScreen();
-                ScreenManager.AddScreen(new BackgroundScreen());
-                ScreenManager.AddScreen(new MainMenuScreen());
             }
 
         }
@@ -95,14 +79,13 @@ namespace PoorJetX.GameScreens
 
             // Draw text, centered on the middle of each line.e
 
-            Vector2 origin = _font.MeasureString("VICTORY!") / 2;
+            Vector2 origin = _font.MeasureString("HIGHSCORES!") / 2;
 
             float x = GameHelper.HalfScreenWidth;
             float y = GameHelper.HalfScreenHeight;
-            Text.DrawText(_font, "VICTORY!", Color.Black, Color.White, 1f, scale, 0f, new Vector2(x, y), origin, false); 
+            Text.DrawText(_font, "HIGHSCORES!", Color.Black, Color.White, 1f, scale, 0f, new Vector2(x, y), origin, false);
 
             ScreenManager.SpriteBatch.End();
-
         }
     }
 }

@@ -175,13 +175,9 @@ namespace PoorJetX.GameScreens
 
             titlePosition.Y -= transitionOffset * 100;
 
-            //TextureManager.DrawRectangle(ScreenManager.SpriteBatch, _borders, 1, Color.Black);
+            Text.DrawText(_titleFont, _menuTitle, Color.Black, Color.Orange, 1f, titleScale, 0f, titlePosition, titleOrigin, false);
 
-           // ScreenManager.SpriteBatch.DrawString(ScreenManager.Cartoon18, _menuTitle, titlePosition, titleColor, 0,
-            //                       titleOrigin, titleScale, SpriteEffects.None, 0);
             ScreenManager.SpriteBatch.End();
-
-            Text.DrawText(ScreenManager.SpriteBatch, _titleFont, _menuTitle, Color.Black, Color.Orange, 1f, titleScale, 0f, titlePosition, titleOrigin, false);
         }
     }
 }

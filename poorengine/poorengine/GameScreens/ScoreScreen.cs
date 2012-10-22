@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -101,12 +101,9 @@ namespace PoorJetX.GameScreens
 
             float x = GameHelper.HalfScreenWidth;
             float y = GameHelper.HalfScreenHeight;
-            ScreenManager.SpriteBatch.DrawString(_font, _score, new Vector2(x, y), color, 0,
-                                   origin, scale, SpriteEffects.None, 0);
+            Text.DrawText(_font, _score, Color.Black, Color.White, 1f, scale, 0f, new Vector2(x,y), origin, false);
 
             ScreenManager.SpriteBatch.End();
-
-            Text.DrawText(ScreenManager.SpriteBatch, _font, _score, Color.Black, Color.White, 1f, scale, 0f, new Vector2(x,y), origin, false); 
         }
     }
 }

@@ -63,7 +63,7 @@ namespace PoorEngine.SceneObject
             if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Projectile)))
             {
                 Projectile proj = (Projectile)collidingWith;
-                //TakeDamage(proj.Damage);
+                TakeDamage(proj.Damage);
             }
             else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(EnemyAirplane)))
             {

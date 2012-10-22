@@ -60,7 +60,7 @@ namespace PoorJetX.GameScreens
         /// </summary>
         void HighScoresMenuEntrySelected(object sender, EventArgs e)
         {
-            //ScreenManager.AddScreen(new HighScoresScreen());
+            ScreenManager.AddScreen(new HighscoreScreen());
         }
 
         /// <summary>
