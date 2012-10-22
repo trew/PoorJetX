@@ -63,6 +63,11 @@ namespace PoorEngine.GameComponents
             ScreenManager.SpriteBatch.DrawString(debugFont, "Debug Panel", new Vector2(50, 5), Color.Black);
             int count = 0;
             string s;
+            strings.Enqueue("Total GameTime: " + gameTime.TotalGameTime);
+            strings.Enqueue("Elapsed GameTime: " + gameTime.ElapsedGameTime);
+            strings.Enqueue("Running Slowly: " + gameTime.IsRunningSlowly);
+            strings.Enqueue("GC.GetTotalMemory: " + GC.GetTotalMemory(false) / 1024 + " KB");
+            strings.Enqueue("==============================");
             strings.Enqueue("Global volume: " + GameSettings.Default.GlobalSoundVolume);
             strings.Enqueue("Sound volume: " + GameSettings.Default.SoundVolume);
             strings.Enqueue("Music volume: " + GameSettings.Default.MusicVolume);

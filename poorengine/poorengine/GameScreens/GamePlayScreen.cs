@@ -241,13 +241,6 @@ namespace PoorEngine.GameScreens
             if(janitorCoffeeBreak++ > tenMinutes)
                 GC.Collect();
 
-            EngineManager.Debug.Print("Total GameTime: " + gameTime.TotalGameTime);
-            EngineManager.Debug.Print("Elapsed GameTime: " + gameTime.ElapsedGameTime);
-            EngineManager.Debug.Print("Running Slowly: " + gameTime.IsRunningSlowly);
-            EngineManager.Debug.Print("GC.GetTotalMemory: " + GC.GetTotalMemory(false)/1024 + " KB");
-            EngineManager.Debug.Print("==============================");
-            
-
             //AmmoManager.Update(gameTime);
             CameraManager.Camera.Update(player1);
             SceneGraphManager.Update(gameTime);
