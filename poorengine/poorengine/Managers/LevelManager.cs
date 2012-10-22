@@ -22,6 +22,13 @@ namespace PoorEngine.Managers
             Load(1);
         }
 
+        public static bool HasNextLevel()
+        {
+            int nextLevel = CurrentLevel.LevelNumber + 1;
+            String filename = "Content" + _levelPathPrefix + nextLevel + ".xml";
+            return File.Exists(filename);
+        }
+
         private static Level _currentLevel;
         public static Level CurrentLevel
         {

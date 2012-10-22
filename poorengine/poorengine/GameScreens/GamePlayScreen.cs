@@ -50,6 +50,24 @@ namespace PoorEngine.GameScreens
             SoundFxManager.Clear();
         }
 
+        public void Reset()
+        {
+            CameraManager.Reset();
+            _deathTimer = new Stopwatch();
+            _completedTimer = new Stopwatch();
+            SceneGraphManager.Root.Nodes.Clear();
+            SoundFxManager.Clear();
+
+            LevelManager.Load(_currentLevelNumber);
+            LevelManager.CurrentLevel.Load();
+
+            SkyGradient skyGradient = new SkyGradient("skygradient");
+            SceneGraphManager.AddObject(skyGradient);
+
+            player1 = new PlayerAirplane();
+            SceneGraphManager.AddObject(player1);
+        }
+
         public int ScreenWidth
         {
             get { return EngineManager.Device.Viewport.Width; }
@@ -122,15 +140,6 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/bombwhistle", "bombwhistle");
             SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
 
-            LevelManager.Load(_currentLevelNumber);
-            LevelManager.CurrentLevel.Load();
-
-            SkyGradient skyGradient = new SkyGradient("skygradient");
-            SceneGraphManager.AddObject(skyGradient);
-
-            player1 = new PlayerAirplane();
-            SceneGraphManager.AddObject(player1);     
-
             // Add instruments
             throttleMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(150, ScreenHeight), 0f, 7.5f, 0.6f, "throttle", "Throttle", this);
             _instruments.Add("throttleMeter", throttleMeter);
@@ -143,6 +152,15 @@ namespace PoorEngine.GameScreens
                 inst.LoadContent();
             }
             // !Add instruments
+
+            LevelManager.Load(_currentLevelNumber);
+            LevelManager.CurrentLevel.Load();
+
+            SkyGradient skyGradient = new SkyGradient("skygradient");
+            SceneGraphManager.AddObject(skyGradient);
+
+            player1 = new PlayerAirplane();
+            SceneGraphManager.AddObject(player1);
 
             SceneGraphManager.LoadContent();
             _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
@@ -248,8 +266,7 @@ namespace PoorEngine.GameScreens
                 else
                 {
                     if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5)) {
-                        ExitScreen();
-                        ScreenManager.AddScreen(new GamePlayScreen(LevelManager.CurrentLevel.LevelNumber + 1));
+                        this.Reset();
                     }
                 }
             }
@@ -264,8 +281,16 @@ namespace PoorEngine.GameScreens
                 {
                     if (_completedTimer.Elapsed > new TimeSpan(0, 0, 10))
                     {
-                        ExitScreen();
-                        ScreenManager.AddScreen(new GamePlayScreen(LevelManager.CurrentLevel.LevelNumber + 1));
+                        if (LevelManager.HasNextLevel())
+                        {
+                            _currentLevelNumber += 1;
+                            this.Reset();
+                        }
+                        else
+                        {
+                            ExitScreen();
+                            ScreenManager.AddScreen(new ScoreScreen(EngineManager.Score));
+                        }
                     }
                 }
             }
