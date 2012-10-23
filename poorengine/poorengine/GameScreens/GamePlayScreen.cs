@@ -102,6 +102,7 @@ namespace PoorEngine.GameScreens
 
             // Other UI
             TextureManager.AddTexture(new PoorTexture("Textures/UI/1up"), "1up");
+            TextureManager.AddTexture(new PoorTexture("Textures/arrow"), "arrow");
 
             // Animations
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_groundcrash"), "anim_groundcrash");
@@ -393,6 +394,8 @@ namespace PoorEngine.GameScreens
             base.Draw(gameTime);
             SceneGraphManager.Draw(gameTime);
             ParticleManager.Draw(gameTime);
+
+            // Draw arrows to important stuff outside the screen
 
             foreach (Instrument inst in _instruments.Values)
             {
