@@ -60,6 +60,15 @@ namespace PoorEngine.Managers
         }
  
         // Standard fonts shared between Screens
+        private static SpriteFont _typewriter14;
+        public static SpriteFont Typewriter14 { get { return _typewriter14; } }
+
+        private static SpriteFont _typewriter18;
+        public static SpriteFont Typewriter18 { get { return _typewriter18; } }
+
+        private static SpriteFont _typewriter24;
+        public static SpriteFont Typewriter24 { get { return _typewriter24; } }
+
         private static SpriteFont _cartoon14;
         public static SpriteFont Cartoon14 { get { return _cartoon14; } }
 
@@ -105,6 +114,9 @@ namespace PoorEngine.Managers
             base.LoadContent();
             
             _spriteBatch = new SpriteBatch(EngineManager.Device);
+            _typewriter14 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/typewriter14");
+            _typewriter18 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/typewriter18");
+            _typewriter24 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/typewriter24");
             _cartoon14 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon14");
             _cartoon18 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon18");
             _cartoon24 = EngineManager.Game.Content.Load<SpriteFont>("Fonts/cartoon24");
