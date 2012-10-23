@@ -16,7 +16,7 @@ namespace PoorEngine.Managers
         private static List<GameScreen> _screensToUpdate = new List<GameScreen>();
 
         private int janitorCoffeeBreak;
-        private static int tenMinutes = 10;
+        private static int tenMinutes = 2;
         public static int getJanitorBreakLength() { return tenMinutes; }
         public static void lengthenJanitorCoffeBreak()
         {
