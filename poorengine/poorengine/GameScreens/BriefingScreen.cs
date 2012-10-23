@@ -99,32 +99,46 @@ namespace PoorJetX.GameScreens
 
             // Draw text, centered on the middle of each line.e
             Vector2 titleOrigin = _font.MeasureString(LevelManager.CurrentLevel.Briefing.Title) / 2;
-            Vector2 storyOrigin = _font.MeasureString(LevelManager.CurrentLevel.Briefing.Story) / 2;
+            
 
-            float rotation = (float)CalcHelper.DegreeToRadian(7);
+            float rotation = (float)CalcHelper.DegreeToRadian(7.3);
 
             float titleX = GameHelper.ScreenWidth / 2.95f;
             float titleY = GameHelper.ScreenHeight / 5f;
 
-            float storyX = GameHelper.ScreenWidth / 3f;
+            float storyX = GameHelper.ScreenWidth / 6f;
             float storyY = GameHelper.ScreenHeight / 4.1f;
 
-            float objX = GameHelper.ScreenWidth / 6.5f;
-            float objY = GameHelper.ScreenHeight / 3f;
+            float objX = 1f;
+            float objY = 1f;
 
             Text.DrawText(_font, LevelManager.CurrentLevel.Briefing.Title, Color.Black, color, 1f, 1f, rotation, new Vector2(titleX, titleY), titleOrigin, false);
-            Text.DrawText(_font, LevelManager.CurrentLevel.Briefing.Story, Color.Black, color, 1f, 1f, rotation, new Vector2(storyX, storyY), storyOrigin, false);
 
-            int i = 1;
+            // Split the briefing into lines
+            string briefing = Text.WordWrap(LevelManager.CurrentLevel.Briefing.Story, 30);
+            string[] briefingLines = briefing.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+            Vector2 storyOrigin;
+            int i = 0;
+            foreach (string line in briefingLines)
+            {
+                storyOrigin = Vector2.Zero;//_font.MeasureString(briefingLines[i]) / 2;
+                Text.DrawText(ScreenManager.Typewriter18, briefingLines[i], Color.Black, color, 1.2f, 1f, rotation, new Vector2(storyX - (i * 3.4f), storyY + (i * 25)), storyOrigin, false);
+                i++;
+
+                objX = storyX - ((i+2) * 3.4f);
+                objY = storyY + ((i+2) * 25);
+            }
+
+            Text.DrawText(ScreenManager.Typewriter24, "Mission objectives", Color.Black, color, 1f, 1f, rotation, new Vector2(objX, objY), Vector2.Zero, false);
+            i = 1;
             foreach (LevelObjective obj in LevelManager.CurrentLevel.Briefing.Objectives)
             {
+                Text.DrawText(ScreenManager.Typewriter18, " * " + obj.Description, Color.Black, color, 1f, 1f, rotation, new Vector2(objX - ((i+1) * 3.4f), objY + ((i+1) * 25)), Vector2.Zero, false);
                 i++;
-                //Text.DrawTextCentered(_font, obj.Description, color, titleY + i * 40, 1f);
-                Text.DrawText(ScreenManager.Typewriter18, obj.Description, Color.Black, color, 1f, 1f, rotation, new Vector2(objX, objY + i * 40), Vector2.Zero, false);
             }
 
             ScreenManager.SpriteBatch.End();
-
         }
     }
 }
