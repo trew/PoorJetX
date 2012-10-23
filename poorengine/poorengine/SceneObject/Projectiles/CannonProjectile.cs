@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,10 +24,21 @@ namespace PoorEngine.SceneObject
             Damage = 50;
         }
 
+        public override void Collide(PoorSceneObject collidingWith)
+        {
+            base.Collide(collidingWith);
+            if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane)))
+            {
+                ParticleManager.ProjectileHit.AddParticles(new Vector2(Position.X - 10, Position.Y));
+                SoundFxLibrary.GetFx("hitplane1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.05f),
+                                    CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (Position.Y > GameHelper.ScreenHeight)
+            if (Position.Y > GameHelper.GroundLevel + 10)
             {
                 SoundFxLibrary.GetFx("hitplane1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.05f), CalcHelper.RandomBetween(-1.0f, -0.4f), CalcHelper.CalcPan(Position).X * 1.5f);
                 SceneGraphManager.AddObject(new AnimatedSprite("anim_smoke1", new Point(100, 100), new Point(10, 1), Position - new Vector2(0, 15), 0f, new Vector2(0.2f, 0.2f), 200, 50, false, 0.9f));

@@ -336,7 +336,7 @@ namespace PoorEngine.SceneObject
                 float enginePitch = (float)(Math.Pow((_thrust / 9), 1.8) - 0.1f);
                 enginePitch += (float)(_linearVelocity / 15);
                 SoundFxManager.GetByID(_engineFX_id).Pitch = MathHelper.Clamp(enginePitch, -1f, 1f);
-                float volume = MathHelper.Clamp(enginePitch, 0.6f, 1f) * CalcHelper.CalcVolume(Position);
+                float volume = MathHelper.Clamp(enginePitch, 0.6f, 1.0f) * CalcHelper.CalcVolume(Position) * 0.2f;
                 SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", volume);
 
                 // Add dive-sound if speed is high enough

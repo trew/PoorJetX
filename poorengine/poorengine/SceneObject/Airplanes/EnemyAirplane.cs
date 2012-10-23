@@ -89,7 +89,7 @@ namespace PoorEngine.SceneObject
 
         protected void FireBullets(GameTime gameTime)
         {
-            if (_target == null) return;
+            if (_target == null || _target.IsCrashing || !_target.IsDead) return;
 
             _weapon.Angle = GetAngleToTarget(gameTime);
 
@@ -185,21 +185,6 @@ namespace PoorEngine.SceneObject
             {
                 Projectile p = (Projectile)collidingWith;
                 _health -= p.Damage;
-                
-                if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(BulletProjectile)))
-                {
-                    ParticleManager.ProjectileHit.AddParticles(new Vector2(Position.X - 10, Position.Y));
-                    SoundFxLibrary.GetFx("hitplane1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.1f),
-                                        CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
-                }
-
-                else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(BombProjectile)))
-                {
-                    ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X - 10, Position.Y), 0f, 360f);
-                    ParticleManager.Explosion.AddParticles(Position);
-                    SoundFxLibrary.GetFx("bomb4").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.7f),
-                                        CalcHelper.RandomBetween(-0.5f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
-                }
 
                 if (_health <= 0)
                 {
