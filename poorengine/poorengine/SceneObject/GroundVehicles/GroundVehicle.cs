@@ -122,12 +122,17 @@ namespace PoorEngine.SceneObject
             else
                 texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
 
+            float rotation = 0;
+            
+            if(Velocity.X > 0)
+                rotation = CalcHelper.RandomBetween(-0.01f, 0.005f);
+
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
                                            CameraManager.Camera.Normalize(Position),  // Position
                                            null,                // Source-Rectangle 
                                            Color.White,
-                                           0f,                 // Rotation
+                                           rotation,                 // Rotation
                                            Vector2.Zero,        // Origin 
                                            Scale, 
                                            SpriteEffects.None,
