@@ -229,7 +229,7 @@
       <Y>0</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
     
     <LevelEnemy>
@@ -237,7 +237,7 @@
       <Y>130</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -245,7 +245,7 @@
       <Y>500</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -253,7 +253,7 @@
       <Y>450</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -261,7 +261,7 @@
       <Y>400</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -269,7 +269,7 @@
       <Y>570</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>

@@ -186,13 +186,15 @@ namespace PoorEngine.GameScreens
 
             if (player1.IsDead)
             {
-
-                if (!_deathTimer.IsRunning) {
+                LevelManager.CurrentLevel.Completed = false;
+                if (!_deathTimer.IsRunning)
+                {
                     _deathTimer.Restart();
                 }
                 else
                 {
-                    if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5)) {
+                    if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5))
+                    {
                         if (_lives - 1 <= 0)
                         {
                             ExitScreen();
@@ -206,27 +208,34 @@ namespace PoorEngine.GameScreens
                     }
                 }
             }
-            LevelManager.CurrentLevel.CheckCompleted();
-            if (LevelManager.CurrentLevel.Completed)
+            else if (player1.IsCrashing)
             {
-                player1.UsedInBoundingBoxCheck = false;
-                if (!_completedTimer.IsRunning)
+                LevelManager.CurrentLevel.Completed = false;
+            }
+            else
+            {
+                LevelManager.CurrentLevel.CheckCompleted();
+                if (LevelManager.CurrentLevel.Completed)
                 {
-                    _completedTimer.Restart();
-                }
-                else
-                {
-                    if (_completedTimer.Elapsed > new TimeSpan(0, 0, 10))
+                    player1.UsedInBoundingBoxCheck = false;
+                    if (!_completedTimer.IsRunning)
                     {
-                        if (LevelManager.HasNextLevel())
+                        _completedTimer.Restart();
+                    }
+                    else
+                    {
+                        if (_completedTimer.Elapsed > new TimeSpan(0, 0, 10))
                         {
-                            BriefingScreen.Load(LevelManager.CurrentLevel.LevelNumber + 1);
-                            this.Reset();
-                        }
-                        else
-                        {
-                            ExitScreen();
-                            ScreenManager.AddScreen(new VictoryScreen());
+                            if (LevelManager.HasNextLevel())
+                            {
+                                BriefingScreen.Load(LevelManager.CurrentLevel.LevelNumber + 1);
+                                this.Reset();
+                            }
+                            else
+                            {
+                                ExitScreen();
+                                ScreenManager.AddScreen(new VictoryScreen());
+                            }
                         }
                     }
                 }
@@ -393,7 +402,7 @@ namespace PoorEngine.GameScreens
                     1.3f);
             }
 
-            if (LevelManager.CurrentLevel.Completed)
+            else if (LevelManager.CurrentLevel.Completed)
             {
                 Text.DrawTextCentered(
                     ScreenManager.Cartoon24,

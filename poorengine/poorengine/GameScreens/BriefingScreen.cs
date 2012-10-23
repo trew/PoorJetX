@@ -21,9 +21,12 @@ namespace PoorJetX.GameScreens
 
         public static void Load(int levelNumber, params GameScreen[] screensToLoad)
         {
-            foreach (GameScreen screen in ScreenManager.GetScreens())
+            if (screensToLoad.Length > 0)
             {
-                screen.ExitScreen();
+                foreach (GameScreen screen in ScreenManager.GetScreens())
+                {
+                    screen.ExitScreen();
+                }
             }
             BriefingScreen briefingscreen = new BriefingScreen(levelNumber, screensToLoad);
 
