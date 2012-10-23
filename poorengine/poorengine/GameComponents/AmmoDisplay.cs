@@ -25,6 +25,8 @@ namespace PoorEngine.GameComponents
         private Stopwatch soundTimer;
         private bool playSound;
 
+        public bool Visible { get; set; }
+
         public AmmoDisplay(Game game, ProjectileWeapon prwpn, BombWeapon bmwpn)
         {
             ProjectileWeapon = prwpn;
@@ -32,6 +34,7 @@ namespace PoorEngine.GameComponents
             Position = new Vector2(10, 10);
 
             playSound = false;
+            Visible = true;
 
             soundTimer = new Stopwatch();
             soundTimer.Start();
@@ -68,6 +71,15 @@ namespace PoorEngine.GameComponents
 
         public void Update(GameTime gameTime)
         {
+            if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
+            {
+                Visible = !Visible;
+            }
+            if (LevelManager.CurrentLevel.Completed)
+            {
+                Visible = false;
+            }
+
             if (bRefillGreen.ElapsedMilliseconds > 3000)
                 bRefillGreen.Stop();
 
@@ -99,6 +111,7 @@ namespace PoorEngine.GameComponents
 
         public void Draw(GameTime gameTime)
         {
+            if (!Visible) return;
             Vector2 mgPos = new Vector2(0, 100);
             Vector2 bombPos = new Vector2(0, 180);
 
