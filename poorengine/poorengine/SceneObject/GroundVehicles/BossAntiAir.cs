@@ -26,7 +26,7 @@ namespace PoorEngine.SceneObject
 
         public bool RequiredForVictory { get; set; }
 
-        public BossAntiAir(int maxHealth) // Add weapon parameter (obj/str)
+        public BossAntiAir(int maxHealth, bool requiredForVictory) // Add weapon parameter (obj/str)
             : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
         {
             _type = "bossantiair";
@@ -41,7 +41,7 @@ namespace PoorEngine.SceneObject
             _weapon2.Position = new Vector2(180, 65);
             _weapon2.setGunLength(100);
 
-            RequiredForVictory = true;
+            RequiredForVictory = requiredForVictory;
         }
 
         public override void Update(GameTime gameTime)

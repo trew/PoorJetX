@@ -128,6 +128,9 @@ namespace PoorEngine.GameScreens
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_none"), "ammo_mg_none");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_refill"), "ammo_refill");
 
+            // Other UI
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/1up"), "1up");
+
             // Animations
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_groundcrash"), "anim_groundcrash");
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_smoke1"), "anim_smoke1");
@@ -309,7 +312,7 @@ namespace PoorEngine.GameScreens
 
 
             /*
-             *  DEBUG
+             *  DEBUG INPUT
              */
             #region
             if (input.IsNewKeyPress(Keys.E))
@@ -340,7 +343,7 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.B))
             {
-                BossAntiAir boss = new BossAntiAir(50000);
+                BossAntiAir boss = new BossAntiAir(70000, false);
                 boss.Position = new Vector2(
                         CameraManager.Camera.Pos.X +
                         GameHelper.ScreenWidth - 200f,
@@ -384,7 +387,7 @@ namespace PoorEngine.GameScreens
             }
             #endregion
             /*
-             *  END DEBUG
+             *  END DEBUG INPUT
              */
 
             if (input.IsNewKeyPress(Keys.Escape))
@@ -465,6 +468,14 @@ namespace PoorEngine.GameScreens
                     200,
                     1.3f);
             }
+
+            for (int i = 0; i < _lives; i++)
+            {
+                Texture2D lifeTex = TextureManager.GetTexture("1up").BaseTexture as Texture2D;
+                Rectangle pos = new Rectangle(GameHelper.ScreenWidth - 500 + (50 * i), 10, 48, 31);
+                ScreenManager.SpriteBatch.Draw(lifeTex, pos, Color.White);
+            }
+
             ScreenManager.SpriteBatch.End();
 
         }

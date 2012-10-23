@@ -284,7 +284,7 @@
       <XAppear>1300</XAppear>
       <Y>0</Y>
       <type>Transport</type>
-      <health>5000</health>
+      <health>3000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
@@ -292,7 +292,7 @@
       <XAppear>1700</XAppear>
       <Y>0</Y>
       <type>Transport</type>
-      <health>5000</health>
+      <health>4000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
@@ -300,8 +300,16 @@
       <XAppear>1900</XAppear>
       <Y>0</Y>
       <type>Transport</type>
-      <health>5000</health>
+      <health>4000</health>
       <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>7000</XAppear>
+      <Y>0</Y>
+      <type>BossAntiAir</type>
+      <health>70000</health>
+      <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
   </Enemies>
 
