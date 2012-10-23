@@ -27,9 +27,8 @@ namespace PoorEngine.SceneObject
         public bool RequiredForVictory { get; set; }
 
         public BossAntiAir(int maxHealth, bool requiredForVictory) // Add weapon parameter (obj/str)
-            : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
+            : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed", "bossantiair")
         {
-            _type = "bossantiair";
             Scale = new Vector2(1.3f, 1.3f);
             WeaponScale = new Vector2(1f, 1f);
             TextureNameWeapon = "enemy_antiair_weapon";
@@ -109,12 +108,16 @@ namespace PoorEngine.SceneObject
             }
         }
 
+        public override void GetPoints()
+        {
+            EngineManager.Score += 30;
+        }
+
         void SetTarget(GameTime gameTime)
         {
             if (_target == null)
                 _target = EngineManager.Player;
         }
-
 
         /// <summary>
         /// The bounding box of this object, used for culling.

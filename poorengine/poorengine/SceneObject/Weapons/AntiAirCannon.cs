@@ -91,7 +91,7 @@ namespace PoorEngine.SceneObject
                         _muzzleFlashBig.AddParticles(CalcHelper.calculatePoint(Owner.Position + Position + gunOffset[bulletsThisBurst % 4], Angle, _gunLength), Angle, 10);
 
                     else
-                        _muzzleFlash.AddParticles(CalcHelper.calculatePoint(Owner.Position + Position + gunOffset[bulletsThisBurst % 4], Angle, _gunLength), Angle, 10);
+                        _muzzleFlash.AddParticles(CalcHelper.calculatePoint(Owner.Position + Position + gunOffset[bulletsThisBurst % 4], Angle, _gunLength), Angle, 20);
 
                     _reloadTimer.Restart();
                     bulletsThisBurst++;

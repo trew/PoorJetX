@@ -354,6 +354,19 @@ namespace PoorEngine.GameScreens
 
                 SceneGraphManager.AddObject(boss);
             }
+            if (input.IsNewKeyPress(Keys.N))
+            {
+                GroundTransport boss = new GroundTransport(40000, false, true);
+                boss.Position = new Vector2(
+                        CameraManager.Camera.Pos.X +
+                        GameHelper.ScreenWidth - 200f,
+                        GameHelper.GroundLevel - 130);
+
+                boss.Velocity = new Vector2(4f, 0f);
+                boss.LoadContent();
+
+                SceneGraphManager.AddObject(boss);
+            }
 
             if (input.IsNewKeyPress(Keys.W))
             {

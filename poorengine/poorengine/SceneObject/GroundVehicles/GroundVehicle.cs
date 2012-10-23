@@ -49,18 +49,20 @@ namespace PoorEngine.SceneObject
         // Other
         protected bool alternating;
 
-        public GroundVehicle(int maxHealth, string textureName, string textureNameDestroyed)
+        public GroundVehicle(int maxHealth, string textureName, string textureNameDestroyed, string type)
             :base(textureName, textureNameDestroyed)
         {
+            _type = type;
+
             UsedInBoundingBoxCheck = true;
             alternating = true;
-
+            
             Z = CalcHelper.RandomBetween(0.99801f, 0.9989f);
 
             _destroyed = false;
             _health = _maxHealth = maxHealth;
 
-            if (SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)))
+            if (SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)) || _type.Equals("burgerboss"))
             {
                 _hpRectOutline = new Rectangle(9999, 9999, 200, 12);
                 _healthMeterRect = new Rectangle(9999, 9999, 196, 10);
@@ -124,7 +126,7 @@ namespace PoorEngine.SceneObject
 
             float rotation = 0;
             
-            if(Velocity.X > 0)
+            if(Velocity.X > 0 && !IsDead)
                 rotation = CalcHelper.RandomBetween(-0.01f, 0.005f);
 
             ScreenManager.SpriteBatch.Begin();
@@ -148,6 +150,12 @@ namespace PoorEngine.SceneObject
                     offset = new Vector2(70, 175);
                     _healthMeterRect.Width = (int)(196 * ((float)_health / _maxHealth));
                 }
+                else if (_type.Equals("burgerboss"))
+                {
+                    offset = new Vector2(40, 135);
+                    _healthMeterRect.Width = (int)(196 * ((float)_health / _maxHealth));
+                }
+
                 else
                 {
                     offset = new Vector2(40, 40);
@@ -200,7 +208,7 @@ namespace PoorEngine.SceneObject
             }
 
             if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane))
-                && !SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)))
+                && !SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)) && _type != "burgerboss")
             {
                 TakeDamage(10000000);
                 EngineManager.Score += 2; // Bonus points for being killed by crashing airplane
@@ -215,15 +223,12 @@ namespace PoorEngine.SceneObject
             {
                 _health = 0;
                 _destroyed = true;
+                GetPoints();
                 GroundExplode();
-
-                if (_type.Equals("battle"))
-                    EngineManager.Score += 3;
-                else if (_type.Equals("civilian"))
-                    EngineManager.Score += 1;
-                    
             }
         }
+
+        public virtual void GetPoints() {}
 
         public void GroundExplode()
         {
@@ -232,11 +237,7 @@ namespace PoorEngine.SceneObject
             SoundFxManager.RemoveFx(_engineFX_id);
             SoundFxManager.RemoveFx(_fireBulletFX_id);
 
-            
-
-            
-
-            if(SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)))
+            if(SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)) || _type == "burgerboss")
             {
                 SoundFxLibrary.GetFx("huge_explosion").Play(
                 SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position)),
@@ -273,7 +274,7 @@ namespace PoorEngine.SceneObject
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
             SoundFxManager.GetByID(_engineFX_id).Play();
 
-            if (_type.Equals("battle") || _type.Equals("bossantiair"))
+            if (_type.Equals("antiair") || _type.Equals("bossantiair"))
             {
                 TextureManager.AddTexture(new PoorTexture("Textures/Enemies/" + TextureNameWeapon), TextureNameWeapon);
                 _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
@@ -285,7 +286,7 @@ namespace PoorEngine.SceneObject
             TextureManager.RemoveTexture(TextureName);
             TextureManager.RemoveTexture(TextureNameDestroyed);
 
-            if (_type == "battle")
+            if (_type == "antiair")
             {
                 TextureManager.RemoveTexture(TextureNameWeapon);
             }

@@ -27,11 +27,11 @@ namespace PoorEngine.SceneObject
         public bool HasTarget { get { return _target != null; } }
 
         public AntiAirVehicle(int maxHealth, bool requiredForVictory) // Add weapon parameter (obj/str)
-            : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed")
+            : base(maxHealth, "enemy_antiair_body", "enemy_antiair_destroyed", "antiair")
         {
             _requiredForVictory = requiredForVictory;
 
-            _type = "battle";
+            _type = "antiair";
             Scale = new Vector2(0.4f, 0.4f);
 
             TextureNameWeapon = "enemy_antiair_weapon";
@@ -113,6 +113,11 @@ namespace PoorEngine.SceneObject
             double orientation = CalcHelper.getAngle(Position + _weapon.Position, CalcHelper.calculatePoint(Target.Position, Target.Orientation, (float)Target.LinearVelocity * distanceMod)) - 90f;
 
             return (float)CalcHelper.formatAngle(orientation);
+        }
+
+        public override void GetPoints()
+        {
+            EngineManager.Score += 3;
         }
 
         /// <summary>

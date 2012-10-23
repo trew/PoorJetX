@@ -20,16 +20,34 @@ namespace PoorEngine.SceneObject
         }
 
         public GroundTransport(int maxHealth, bool requiredForVictory)
-            :base(maxHealth, "", "")
+            :base(maxHealth, "", "", "civilian")
         {
             _requiredForVictory = requiredForVictory;
             TextureName = RndEnemyTex();
             TextureNameDestroyed = TextureName + "_destroyed";
 
             Velocity = new Vector2(CalcHelper.RandomBetween(1, 3.5f), 0);
-
-            _type = "civilian";
             Scale = new Vector2(1f, 1f);
+        }
+
+        public GroundTransport(int maxHealth, bool requiredForVictory, bool boss)
+            : base(maxHealth, "", "", "burgerboss")
+        {
+            _requiredForVictory = requiredForVictory;
+            TextureName = "enemy_burgerboss_body";
+            TextureNameDestroyed = "enemy_burgerboss_destroyed";
+
+            Velocity = new Vector2(3.5f, 0);
+            Scale = new Vector2(1f, 1f);
+        }
+
+        public override void GetPoints()
+        {
+            if (_type.Equals("civilian"))
+                EngineManager.Score += 1;
+            else if (_type.Equals("burgerboss"))
+                EngineManager.Score += 30;
+
         }
 
         public override void Update(GameTime gameTime)

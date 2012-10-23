@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using PoorEngine.Managers;
 using PoorEngine.Helpers;
 using PoorEngine.Interfaces;
+using PoorEngine.Particles;
 
 namespace PoorEngine.SceneObject
 {
@@ -20,10 +21,13 @@ namespace PoorEngine.SceneObject
         public int AmmoCount { get { return _bulletCount; } }
 
         public bool Refilled;
-        
+        MuzzleFlashSmall _muzzleFlash;
+
         public ProjectileWeapon(IPoorWeaponHolder owner)
             :base(owner)
         {
+            _muzzleFlash = new MuzzleFlashSmall(EngineManager.Game, 4);
+            EngineManager.Game.Components.Add(_muzzleFlash);
         }
 
         public override bool Fire()
@@ -40,6 +44,9 @@ namespace PoorEngine.SceneObject
 
                 SceneGraphManager.AddObject(new BulletProjectile(CalcHelper.calculatePoint(Owner.Position, Owner.Orientation - 10, 30f),
                                                                  Owner.Velocity, 15f, Owner.Orientation, 3f, Owner));
+
+                _muzzleFlash.AddParticles(CalcHelper.calculatePoint(Owner.Position + Position, Owner.Orientation - 5f, 30f), Owner.Orientation, 0f);
+
                 _reloadTimer.Restart();
                 _bulletCount--;
                 return true;
