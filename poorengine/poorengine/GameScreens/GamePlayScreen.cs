@@ -234,7 +234,15 @@ namespace PoorEngine.GameScreens
                             else
                             {
                                 ExitScreen();
-                                ScreenManager.AddScreen(new VictoryScreen());
+                                if (LevelManager.CurrentLevel.LevelNumber == 0) //tutorial
+                                {
+                                    ScreenManager.AddScreen(new BackgroundScreen());
+                                    ScreenManager.AddScreen(new MainMenuScreen());
+                                }
+                                else
+                                {
+                                    ScreenManager.AddScreen(new VictoryScreen());
+                                }
                             }
                         }
                     }

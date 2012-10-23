@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Briefing>
-    <Title>First level</Title>
-    <Story>Mongo mongo</Story>
+    <Title>Tutorial</Title>
+    <Story>This is the introduction level</Story>
     <Objectives>
       <LevelObjective>
-        <Description>Kill the Boss</Description>
+        <Description>Learn the game controls</Description>
       </LevelObjective>
       <LevelObjective>
-        <Description>Be awesome</Description>
+        <Description>Defeat the final boss</Description>
       </LevelObjective>
     </Objectives>
   </Briefing>
@@ -207,121 +207,183 @@
   
   <Texts>
     <LevelText>
-	    <text>No! EnemyAirplane. What r u doin? EnemyAirplane!?</text>
-	    <fontName>cartoon18</fontName>
+	    <text>Welcome to the Tutorial.</text>
+	    <fontName>cartoon24</fontName>
 	    <R>255</R>
 	    <G>255</G>
 	    <B>255</B>
 	    <X>0</X>
-	    <Y>200</Y>
-	    <XAppear>500</XAppear>
+	    <Y>150</Y>
+	    <XAppear>0</XAppear>
 	    <center>true</center>
 	    <outline>1.3</outline>
-	    <secondsTTL>2</secondsTTL>
+	    <secondsTTL>5</secondsTTL>
 	  </LevelText>
 
 	  <LevelText>
-	    <text>STAHP!!</text>
+	    <text>Use Left and Right arrow key to steer.</text>
 	    <fontName>cartoon18</fontName>
 	    <R>255</R>
 	    <G>255</G>
 	    <B>255</B>
 	    <X>0</X>
-	    <Y>250</Y>
-	    <XAppear>900</XAppear>
+	    <Y>150</Y>
+	    <XAppear>1000</XAppear>
 	    <center>true</center>
 	    <outline>1.3</outline>
-	    <secondsTTL>2</secondsTTL>
+	    <secondsTTL>7</secondsTTL>
 	  </LevelText>
+
+    <LevelText>
+      <text>Control your throttle with Z and X</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>150</Y>
+      <XAppear>3000</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>7</secondsTTL>
+    </LevelText>
+
+    <LevelText>
+      <text>Make sharper turns by holding Shift while steering</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>150</Y>
+      <XAppear>5000</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>7</secondsTTL>
+    </LevelText>
+
+    <LevelText>
+      <text>Execute the cobra manouver by holding A</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>150</Y>
+      <XAppear>7000</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>7</secondsTTL>
+    </LevelText>
+
+    <LevelText>
+      <text>Take out the enemy airplane!</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>150</Y>
+      <XAppear>11000</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
+
+    <LevelText>
+      <text>Fire your gun using Ctrl</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>180</Y>
+      <XAppear>11000</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
+
+    <LevelText>
+      <text>Resupply ammuntion at the station on the</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>150</Y>
+      <XAppear>14500</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
+    <LevelText>
+      <text>ground by flying close to it.</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>180</Y>
+      <XAppear>14500</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
+
+    <LevelText>
+      <text>Take out the transport!</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>150</Y>
+      <XAppear>19500</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
+
+    <LevelText>
+      <text>Use Space to drop bombs</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>180</Y>
+      <XAppear>19800</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
   </Texts>
   
   <Enemies>
     <LevelEnemy>
-      <XAppear>500</XAppear>
-      <Y>0</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-    
-    <LevelEnemy>
-      <XAppear>1600</XAppear>
-      <Y>130</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	
-	  <LevelEnemy>
-      <XAppear>2900</XAppear>
-      <Y>500</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	
-	  <LevelEnemy>
-      <XAppear>1310</XAppear>
-      <Y>450</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	
-	  <LevelEnemy>
-      <XAppear>1070</XAppear>
+      <XAppear>10000</XAppear>
       <Y>400</Y>
       <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	
-	  <LevelEnemy>
-      <XAppear>900</XAppear>
-      <Y>570</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-
-    <LevelEnemy>
-      <XAppear>900</XAppear>
-      <Y>0</Y>
-      <type>AntiAir</type>
-      <health>9000</health>
+	    <health>1000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>1300</XAppear>
+      <XAppear>20000</XAppear>
       <Y>0</Y>
       <type>Transport</type>
       <health>5000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
-    <LevelEnemy>
-      <XAppear>1700</XAppear>
-      <Y>0</Y>
-      <type>Transport</type>
-      <health>5000</health>
-      <RequiredForVictory>1</RequiredForVictory>
-    </LevelEnemy>
-
-    <LevelEnemy>
-      <XAppear>1900</XAppear>
-      <Y>0</Y>
-      <type>Transport</type>
-      <health>5000</health>
-      <RequiredForVictory>1</RequiredForVictory>
-    </LevelEnemy>
   </Enemies>
 
   <!-- Various bases -->
   <Objects>
     <LevelObject>
       <type>ammobase</type>
-      <XAppear>1200</XAppear>
+      <XAppear>15000</XAppear>
     </LevelObject>
   </Objects>
 

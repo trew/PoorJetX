@@ -17,16 +17,19 @@ namespace PoorJetX.GameScreens
             : base("")
         {
             MenuEntry playGameManuEntry = new MenuEntry("Play Game");
+            MenuEntry tutorialMenuEntry = new MenuEntry("Play Tutorial");
             MenuEntry highScoresMenuEntry = new MenuEntry("Highscores");
             MenuEntry optionsMenuEntry = new MenuEntry("Options");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
 
             playGameManuEntry.Selected += PlayGameMenuEntrySelected;
+            tutorialMenuEntry.Selected += TutorialMenuEntrySelected;
             highScoresMenuEntry.Selected += HighScoresMenuEntrySelected;
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             MenuEntries.Add(playGameManuEntry);
+            MenuEntries.Add(tutorialMenuEntry);
             MenuEntries.Add(highScoresMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
@@ -43,6 +46,19 @@ namespace PoorJetX.GameScreens
             }
 
             BriefingScreen.Load(1, new GamePlayScreen());
+        }
+
+        /// <summary>
+        /// Event handler for when the Play Tutorial menu entry is selected.
+        /// </summary>
+        void TutorialMenuEntrySelected(object sender, EventArgs e)
+        {
+            foreach (GameScreen screen in ScreenManager.GetScreens())
+            {
+                screen.ExitScreen();
+            }
+
+            BriefingScreen.Load(0, new GamePlayScreen());
         }
 
         /// <summary>
