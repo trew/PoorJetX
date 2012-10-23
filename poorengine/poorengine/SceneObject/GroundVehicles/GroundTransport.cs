@@ -74,6 +74,8 @@ namespace PoorEngine.SceneObject
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            if (RequiredForVictory && !IsDead)
+                DrawArrow("arrow", true);
         }
 
     }

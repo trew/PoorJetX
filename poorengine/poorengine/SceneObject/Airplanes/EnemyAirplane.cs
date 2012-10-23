@@ -89,7 +89,7 @@ namespace PoorEngine.SceneObject
 
         protected void FireBullets(GameTime gameTime)
         {
-            if (_target == null || _target.IsCrashing || !_target.IsDead) return;
+            if (_target == null || _target.IsCrashing || _target.IsDead) return;
 
             _weapon.Angle = GetAngleToTarget(gameTime);
 
@@ -177,6 +177,13 @@ namespace PoorEngine.SceneObject
             else
                 _airSpeed = Math.Min(_airSpeed, 20);
 
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+            if (RequiredForVictory && !IsDead)
+                DrawArrow("arrow", true);
         }
 
         public override void Collide(PoorSceneObject collidingWith)

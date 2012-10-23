@@ -85,8 +85,9 @@ namespace PoorEngine.SceneObject
 
                 ScreenManager.SpriteBatch.End();
             }
-
             base.Draw(gameTime);
+            if (RequiredForVictory && !IsDead)
+                DrawArrow("arrow", true);
         }
 
         private void UpdateAI(GameTime gameTime)

@@ -75,6 +75,8 @@ namespace PoorEngine.SceneObject
                 0f);
 
             ScreenManager.SpriteBatch.End();
+            DrawArrow("arrow", false);
+
         }
 
         public void LoadContent()

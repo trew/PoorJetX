@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using PoorEngine.Managers;
 
 namespace PoorEngine.Helpers
@@ -16,6 +17,11 @@ namespace PoorEngine.Helpers
         public static int ScreenHeight
         {
             get { return EngineManager.Device.Viewport.Height; }
+        }
+
+        public static Vector2 HalfScreen
+        {
+            get { return new Vector2(HalfScreenWidth, HalfScreenHeight); }
         }
 
         public static float HalfScreenWidth
