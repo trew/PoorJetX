@@ -220,6 +220,24 @@ namespace PoorEngine.SceneObject
                 _health = 0;
                 AirExplode();
             }
+
+            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(BossAntiAir)))
+            {
+                ((GroundVehicle)collidingWith).TakeDamage(10000);
+                _health = 0;
+                AirExplode();
+            }
+
+            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(GroundVehicle)))
+            {
+
+                if (IsCrashing)
+                {
+                    EngineManager.Score += 2;
+                }
+                _health = 0;
+                AirExplode();
+            }
         }
     }
 }
