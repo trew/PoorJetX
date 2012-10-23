@@ -102,6 +102,7 @@ namespace PoorEngine.GameScreens
 
             // Other UI
             TextureManager.AddTexture(new PoorTexture("Textures/UI/1up"), "1up");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammobase_icon"), "ammobase_icon");
             TextureManager.AddTexture(new PoorTexture("Textures/arrow"), "arrow");
 
             // Animations

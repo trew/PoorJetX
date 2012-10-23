@@ -28,28 +28,32 @@ namespace PoorEngine.SceneObject
 
         public virtual void Collide(PoorSceneObject collidingWith) { }
 
-        public void DrawArrow(string textureName, bool isArrow)
+        public void DrawArrow(string textureName, float scale, bool isArrow)
         {
             Vector2 pos = Position;
             float orientation = 0;
-            float scale = 0.4f;
-            // to the right
-            Texture2D texture = TextureManager.GetTexture(textureName).BaseTexture as Texture2D;
+
+            
+            Texture2D iconTexture = TextureManager.GetTexture(textureName).BaseTexture as Texture2D;
             Texture2D targetTexture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
-            if (Position.X > CameraManager.Camera.Pos.X + GameHelper.ScreenWidth)
+
+
+            if (Position.X > CameraManager.Camera.Pos.X + GameHelper.ScreenWidth)  // to the right
             {
-                pos.X = CameraManager.Camera.Pos.X + GameHelper.ScreenWidth - texture.Width*scale / 2;
+                pos.X = CameraManager.Camera.Pos.X + GameHelper.ScreenWidth - iconTexture.Width*scale / 2;
                 orientation = 90;
             }
 
-            if (Position.X < CameraManager.Camera.Pos.X)                          // to the left
+            if (Position.X < CameraManager.Camera.Pos.X)                           // to the left
             {
-                pos.X = CameraManager.Camera.Pos.X + texture.Width * scale / 2;
+                pos.X = CameraManager.Camera.Pos.X + iconTexture.Width * scale / 2;
                 orientation = -90;
             }
+
             if (Position.Y > CameraManager.Camera.Pos.Y + GameHelper.ScreenHeight) // below
             {
-                pos.Y = CameraManager.Camera.Pos.Y + GameHelper.ScreenHeight - texture.Height*scale / 2;
+                pos.Y = CameraManager.Camera.Pos.Y + GameHelper.ScreenHeight - iconTexture.Height*scale / 2;
+                pos.X += targetTexture.Width * Scale.X / 2;
                 if (orientation == 0)
                 {
                     orientation = 180;
@@ -59,15 +63,20 @@ namespace PoorEngine.SceneObject
                     orientation = orientation > 0 ? 125 : -125;
                 }
             }
+
             if (Position.Y < CameraManager.Camera.Pos.Y)                             // above
             {
-                pos.Y = CameraManager.Camera.Pos.Y + texture.Height * scale / 2;
+                pos.Y = CameraManager.Camera.Pos.Y + iconTexture.Height * scale / 2;
+                pos.X += targetTexture.Width * Scale.X / 2;
                 if (orientation != 0)
                 {
                     orientation = orientation > 0 ? 45 : -45;
                 }
             }
-            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+
+
+            Vector2 clampedDrawPosition;
+            Vector2 origin = new Vector2(iconTexture.Width * scale / 2, iconTexture.Height *scale / 2);
             if (pos != Position)
             {
                 pos = CameraManager.Camera.Normalize(pos);
@@ -77,22 +86,24 @@ namespace PoorEngine.SceneObject
                     orientation = (float)CalcHelper.DegreeToRadian(orientation);
                 }
                 else
-                {
                     orientation = 0;
-                }
-                double distance = CalcHelper.DistanceBetween(CameraManager.Camera.Pos + GameHelper.HalfScreen, Position);
-                Color color = Color.White * MathHelper.Clamp((float)(1 - distance / 1000.0), 0.4f, 1.0f);
+
+                double distance = CalcHelper.DistanceBetween(CameraManager.Camera.Pos + GameHelper.ScreenMiddle, Position);
+                Color color = Color.White * MathHelper.Clamp((float)(1 - (distance) / 2000.0), 0.4f, 1.0f);
+
+                clampedDrawPosition = new Vector2(MathHelper.Clamp(pos.X, 0, GameHelper.ScreenWidth - iconTexture.Width * scale), MathHelper.Clamp(pos.Y, 0, GameHelper.ScreenHeight - iconTexture.Height * scale));
                 ScreenManager.SpriteBatch.Begin();
-                ScreenManager.SpriteBatch.Draw(texture, pos, null, color, orientation, origin, scale, SpriteEffects.None, 1.0f);
+                ScreenManager.SpriteBatch.Draw(iconTexture, clampedDrawPosition, null, color, orientation, origin, scale, SpriteEffects.None, 1.0f);
                 ScreenManager.SpriteBatch.End();
             }
             else
             {
                 pos += new Vector2(targetTexture.Width * Scale.X / 2, -70);
                 pos = CameraManager.Camera.Normalize(pos);
+                clampedDrawPosition = new Vector2(MathHelper.Clamp(pos.X, 0, GameHelper.ScreenWidth - iconTexture.Width * scale), MathHelper.Clamp(pos.Y, 0, GameHelper.ScreenHeight - iconTexture.Height * scale));
                 orientation = isArrow ? (float)CalcHelper.DegreeToRadian(180) : 0;
                 ScreenManager.SpriteBatch.Begin();
-                ScreenManager.SpriteBatch.Draw(texture, pos, null, Color.White, orientation, origin, scale, SpriteEffects.None, 1.0f);
+                ScreenManager.SpriteBatch.Draw(iconTexture, clampedDrawPosition, null, Color.White, orientation, origin, scale, SpriteEffects.None, 1.0f);
                 ScreenManager.SpriteBatch.End();
             }
         }

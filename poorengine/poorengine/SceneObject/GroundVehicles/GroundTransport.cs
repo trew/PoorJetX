@@ -75,7 +75,7 @@ namespace PoorEngine.SceneObject
         {
             base.Draw(gameTime);
             if (RequiredForVictory && !IsDead)
-                DrawArrow("arrow", true);
+                DrawArrow("arrow", 0.4f, true);
         }
 
     }

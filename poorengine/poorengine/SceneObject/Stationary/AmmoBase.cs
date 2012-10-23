@@ -21,6 +21,7 @@ namespace PoorEngine.SceneObject
             :base("ammobase")
         {
             Z = 0.99991f;
+            Scale = new Vector2(1, 1);
 
             bRefillTimer = new Stopwatch();
             bRefillTimer.Start();
@@ -75,13 +76,14 @@ namespace PoorEngine.SceneObject
                 0f);
 
             ScreenManager.SpriteBatch.End();
-            DrawArrow("arrow", false);
+
+            if (GameHelper.IsOutOfView(Position + new Vector2(0, -30)) != 0)
+                DrawArrow("ammobase_icon", 1.0f, false);
 
         }
 
         public void LoadContent()
         {
-            
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/" + TextureName), TextureName);
         }
 

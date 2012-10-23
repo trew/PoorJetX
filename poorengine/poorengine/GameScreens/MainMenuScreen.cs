@@ -20,18 +20,21 @@ namespace PoorJetX.GameScreens
             MenuEntry tutorialMenuEntry = new MenuEntry("Play Tutorial");
             MenuEntry highScoresMenuEntry = new MenuEntry("Highscores");
             MenuEntry optionsMenuEntry = new MenuEntry("Options");
+            MenuEntry aboutMenuEntry = new MenuEntry("About game");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
 
             playGameManuEntry.Selected += PlayGameMenuEntrySelected;
             tutorialMenuEntry.Selected += TutorialMenuEntrySelected;
             highScoresMenuEntry.Selected += HighScoresMenuEntrySelected;
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
+            aboutMenuEntry.Selected += AboutMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             MenuEntries.Add(playGameManuEntry);
             MenuEntries.Add(tutorialMenuEntry);
             MenuEntries.Add(highScoresMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
+            MenuEntries.Add(aboutMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
 
@@ -67,6 +70,14 @@ namespace PoorJetX.GameScreens
         void OptionsMenuEntrySelected(object sender, EventArgs e)
         {
             //ScreenManager.AddScreen(new OptionsMenuScreen());
+        }
+
+        /// <summary>
+        /// Event handler for when the About menu entry is selected.
+        /// </summary>
+        void AboutMenuEntrySelected(object sender, EventArgs e)
+        {
+            ScreenManager.AddScreen(new AboutScreen());
         }
 
         /// <summary>
