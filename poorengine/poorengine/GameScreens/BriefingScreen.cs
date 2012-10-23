@@ -53,15 +53,11 @@ namespace PoorJetX.GameScreens
 
             LevelManager.Load(_currentLevelNumber);
             LevelManager.CurrentLevel.Load();
-
-            //TextureManager.AddTexture(new PoorTexture("Textures/menu/"+ background), background);
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
-
-            //TextureManager.RemoveTexture(background);
         }
 
         public override void HandleInput(Input input)
@@ -104,12 +100,19 @@ namespace PoorJetX.GameScreens
             color = new Color(color.R, color.G, color.B, TransitionAlpha);
 
             // Draw text, centered on the middle of each line.e
-            Vector2 origin = _font.MeasureString("BRIEFING") / 2;
+            Vector2 origin = _font.MeasureString(LevelManager.CurrentLevel.Briefing.Title) / 2;
 
             float x = GameHelper.HalfScreenWidth;
             float y = GameHelper.HalfScreenHeight;
-            Text.DrawText(_font, "BRIEFING", Color.Black, Color.White, 1f, scale, 0f, new Vector2(x, y), origin, false);
-            Text.DrawTextCentered(_font, "Get ready to roll!", Color.White, y + 40, 1f);
+            Text.DrawText(_font, LevelManager.CurrentLevel.Briefing.Title, Color.Black, color, 1f, scale, 0f, new Vector2(x, y), origin, false);
+            Text.DrawTextCentered(_font, LevelManager.CurrentLevel.Briefing.Story, color, y + 40, 1f);
+
+            int i = 1;
+            foreach (LevelObjective obj in LevelManager.CurrentLevel.Briefing.Objectives)
+            {
+                i++;
+                Text.DrawTextCentered(_font, obj.Description, color, y + i * 40, 1f);
+            }
 
             ScreenManager.SpriteBatch.End();
 

@@ -15,15 +15,15 @@ namespace PoorEngine.GameComponents
     [Serializable]
     public class LevelBriefing
     {
-        public string title;
-        public string story;
-        public List<LevelObjective> objectives;
+        public string Title;
+        public string Story;
+        public List<LevelObjective> Objectives;
     }
 
     [Serializable]
     public class LevelObjective
     {
-        public string description;
+        public string Description;
     }
 
     [Serializable]
