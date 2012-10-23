@@ -20,12 +20,12 @@ using PoorEngine.Textures;
 
 namespace PoorEngine.Particles
 {
-    public class MuzzleFlash : ParticleSystem
+    public class MuzzleFlashSmall : ParticleSystem
     {
         float direction;
         float spread;
 
-        public MuzzleFlash(Game game, int howManyEffects)
+        public MuzzleFlashSmall(Game game, int howManyEffects)
             : base(game, howManyEffects)
         {
         }
@@ -40,8 +40,8 @@ namespace PoorEngine.Particles
 
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.
-            minInitialSpeed = 50f;
-            maxInitialSpeed = 170f;
+            minInitialSpeed = 350f;
+            maxInitialSpeed = 570f;
 
             // doesn't matter what these values are set to, acceleration is tweaked in
             // the override of InitializeParticle.
@@ -49,11 +49,11 @@ namespace PoorEngine.Particles
             maxAcceleration = 0;
 
             // explosions should be relatively short lived
-            minLifetime = .2f;
-            maxLifetime = .6f;
+            minLifetime = .05f;
+            maxLifetime = .2f;
 
-            minScale = 0.04f;
-            maxScale = 0.09f;
+            minScale = 0.01f;
+            maxScale = 0.03f;
 
             minNumParticles = 10;
             maxNumParticles = 20;

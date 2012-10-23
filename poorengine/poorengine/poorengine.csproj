@@ -128,6 +128,7 @@
     <Compile Include="Managers\LevelManager.cs" />
     <Compile Include="Particles\AirplaneExplosion.cs" />
     <Compile Include="Particles\BlackSmoke.cs" />
+    <Compile Include="Particles\MuzzleFlashSmall.cs" />
     <Compile Include="Particles\MuzzleFlashBig.cs" />
     <Compile Include="Particles\MuzzleFlash.cs" />
     <Compile Include="Particles\GroundDust.cs" />

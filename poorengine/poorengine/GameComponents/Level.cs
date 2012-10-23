@@ -251,6 +251,12 @@ namespace PoorEngine.GameComponents
                     e = new BossAntiAir(le.health, le.RequiredForVictory);
                     e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 170);
                 }
+                else if (le.type == "BurgerBoss")
+                {
+                    e = new BossAntiAir(le.health, le.RequiredForVictory);
+                    e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 270);
+                }
+
                 if (e != null)
                     _enemies.Enqueue(e);
             }
