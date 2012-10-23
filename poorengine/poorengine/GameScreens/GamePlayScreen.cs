@@ -124,6 +124,7 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/bombdrop", "bombdrop");
             SoundFxLibrary.AddToLibrary("SoundFX/bombwhistle", "bombwhistle");
             SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
+            SoundFxLibrary.AddToLibrary("SoundFX/hitplane2", "hitplane2");
             SoundFxLibrary.AddToLibrary("SoundFX/refill", "refill");
 
             player1 = new PlayerAirplane();

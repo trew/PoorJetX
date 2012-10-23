@@ -42,11 +42,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\menufont.spritefont">
-      <Name>menufont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
     <Compile Include="Textures\arrow.png">
       <Name>arrow</Name>
       <Importer>TextureImporter</Importer>
@@ -99,13 +94,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\score.spritefont">
-      <Name>score</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Fonts\debug.spritefont">
       <Name>debug</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -146,11 +134,6 @@
     <Compile Include="Fonts\cartoon18regular.spritefont">
       <SubType>Designer</SubType>
       <Name>cartoon18regular</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-    <Compile Include="Fonts\message.spritefont">
-      <Name>message</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
@@ -573,6 +556,24 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fonts\typewriter24.spritefont">
+      <SubType>Designer</SubType>
+      <Name>typewriter24</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="Fonts\typewriter18.spritefont">
+      <SubType>Designer</SubType>
+      <Name>typewriter18</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="Fonts\typewriter14.spritefont">
+      <SubType>Designer</SubType>
+      <Name>typewriter14</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="Levels\1.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -647,6 +648,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Textures\Menu\briefingscreen.png">
+      <Name>briefingscreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Levels\2.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -654,6 +662,13 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SoundFX\hitplane2.wav">
+      <Name>hitplane2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

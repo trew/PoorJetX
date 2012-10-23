@@ -42,6 +42,7 @@ namespace PoorEngine.SceneObject
                                     CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
             }
 
+
         }
 
         public override void Update(GameTime gameTime)

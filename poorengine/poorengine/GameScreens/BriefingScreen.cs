@@ -49,7 +49,8 @@ namespace PoorJetX.GameScreens
         public override void LoadContent()
         {
             base.LoadContent();
-            _font = ScreenManager.Cartoon24;
+            _font = ScreenManager.Typewriter24;
+            TextureManager.AddTexture(new PoorTexture("Textures/Menu/briefingscreen"), "briefingBG");
 
             LevelManager.Load(_currentLevelNumber);
             LevelManager.CurrentLevel.Load();
@@ -81,37 +82,45 @@ namespace PoorJetX.GameScreens
         public override void Draw(GameTime gameTime)
         {
             Viewport viewport = EngineManager.Device.Viewport;
+            Texture2D backgroundTexture = TextureManager.GetTexture("briefingBG").BaseTexture as Texture2D;
 
             Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
             byte fade = TransitionAlpha;
 
             ScreenManager.SpriteBatch.Begin();
-
+            ScreenManager.SpriteBatch.Draw(backgroundTexture, fullscreen, Color.White);
             // Pulsate the size of the selected menu entry.
             double time = gameTime.TotalGameTime.TotalSeconds;
-
-            float pulsate = (float)Math.Sin(time * 6) + 1;
-
-            float scale = 1 + pulsate * 0.05f;
-
+            
             // Modify the alpha to fade text out during transitions.
             Color color = Color.White;
             color = new Color(color.R, color.G, color.B, TransitionAlpha);
 
             // Draw text, centered on the middle of each line.e
-            Vector2 origin = _font.MeasureString(LevelManager.CurrentLevel.Briefing.Title) / 2;
+            Vector2 titleOrigin = _font.MeasureString(LevelManager.CurrentLevel.Briefing.Title) / 2;
+            Vector2 storyOrigin = _font.MeasureString(LevelManager.CurrentLevel.Briefing.Story) / 2;
 
-            float x = GameHelper.HalfScreenWidth;
-            float y = GameHelper.HalfScreenHeight;
-            Text.DrawText(_font, LevelManager.CurrentLevel.Briefing.Title, Color.Black, color, 1f, scale, 0f, new Vector2(x, y), origin, false);
-            Text.DrawTextCentered(_font, LevelManager.CurrentLevel.Briefing.Story, color, y + 40, 1f);
+            float rotation = (float)CalcHelper.DegreeToRadian(7);
+
+            float titleX = GameHelper.ScreenWidth / 2.95f;
+            float titleY = GameHelper.ScreenHeight / 5f;
+
+            float storyX = GameHelper.ScreenWidth / 3f;
+            float storyY = GameHelper.ScreenHeight / 4.1f;
+
+            float objX = GameHelper.ScreenWidth / 6.5f;
+            float objY = GameHelper.ScreenHeight / 3f;
+
+            Text.DrawText(_font, LevelManager.CurrentLevel.Briefing.Title, Color.Black, color, 1f, 1f, rotation, new Vector2(titleX, titleY), titleOrigin, false);
+            Text.DrawText(_font, LevelManager.CurrentLevel.Briefing.Story, Color.Black, color, 1f, 1f, rotation, new Vector2(storyX, storyY), storyOrigin, false);
 
             int i = 1;
             foreach (LevelObjective obj in LevelManager.CurrentLevel.Briefing.Objectives)
             {
                 i++;
-                Text.DrawTextCentered(_font, obj.Description, color, y + i * 40, 1f);
+                //Text.DrawTextCentered(_font, obj.Description, color, titleY + i * 40, 1f);
+                Text.DrawText(ScreenManager.Typewriter18, obj.Description, Color.Black, color, 1f, 1f, rotation, new Vector2(objX, objY + i * 40), Vector2.Zero, false);
             }
 
             ScreenManager.SpriteBatch.End();
