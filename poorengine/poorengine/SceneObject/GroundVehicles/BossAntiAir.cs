@@ -101,7 +101,7 @@ namespace PoorEngine.SceneObject
             _weapon2.Angle = (float)CalcHelper.getAngle(Position + _weapon2.Position, CalcHelper.calculatePoint(Target.Position, Target.Orientation, (float)Target.LinearVelocity * distanceMod)) - 90f;
             _weaponOrientation2 = _weapon2.Angle;
 
-            if(CalcHelper.DistanceBetween(Position, Target.Position) < 800)
+            if (CalcHelper.DistanceBetween(Position, Target.Position) < 800 && (!_target.IsCrashing || !_target.IsDead))
             {
                 _weapon1.Fire();
                 _weapon2.Fire();

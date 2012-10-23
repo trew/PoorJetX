@@ -24,6 +24,11 @@ namespace PoorEngine.SceneObject
             _reloadTimer.Start();
         }
 
+        public virtual void Reset()
+        {
+            _reloadTimer.Restart();
+        }
+
         public abstract bool Fire();
 
         public virtual void Update(GameTime gameTime)

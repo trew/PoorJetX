@@ -16,6 +16,9 @@ namespace PoorEngine.SceneObject
 {
     public class PlayerAirplane : Airplane
     {
+        private int _lives;
+        public int Lives { get { return _lives; } }
+
         private bool _bombPathTrigger;
 
         private Weapon _bombWeapon;
@@ -28,9 +31,18 @@ namespace PoorEngine.SceneObject
         public PlayerAirplane():
             base(2000, "Player/airplane_player")
         {
+            _lives = 3;
             _orientation = 85;
             _bombWeapon = new BombWeapon(this);
             _projectileWeapon = new ProjectileWeapon(this);
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            _orientation = 85;
+            _bombWeapon.Reset();
+            _projectileWeapon.Reset();
         }
 
         public override void HandleDebugInput(Input input)
@@ -65,26 +77,23 @@ namespace PoorEngine.SceneObject
                 Projectile proj = (Projectile)collidingWith;
                 TakeDamage(proj.Damage);
             }
-            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(EnemyAirplane)))
+            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(EnemyAirplane)) ||
+                     SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(GroundVehicle)))
             {
+                Kill();
                 IsDead = true;
-                IsCrashing = true;
-                _health = 0;
                 AirExplode();
             }
+        }
 
-            else if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(GroundVehicle)))
-            {
-                AirExplode();
-                IsDead = true;
-                IsCrashing = true;
-                _health = 0;
-            }
+        public override void Kill()
+        {
+            _lives--;
+            base.Kill();
         }
 
         public override void Update(GameTime gameTime)
         {
-            _health = 2000;
             base.Update(gameTime);
             if (IsDead && !CameraManager.Camera.Stopped)
                 CameraManager.Camera.Stop(Position);

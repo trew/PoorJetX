@@ -27,7 +27,7 @@ namespace PoorEngine.GameComponents
 
         public bool Visible { get; set; }
 
-        public AmmoDisplay(Game game, ProjectileWeapon prwpn, BombWeapon bmwpn)
+        public AmmoDisplay(ProjectileWeapon prwpn, BombWeapon bmwpn)
         {
             ProjectileWeapon = prwpn;
             BombWeapon = bmwpn;
@@ -124,7 +124,7 @@ namespace PoorEngine.GameComponents
             Texture2D greenBackground = TextureManager.GetTexture("ammo_refill").BaseTexture as Texture2D;
             
             if      (BombsPercentage() > 25f)   bombBackground = TextureManager.GetTexture("ammo_bombs").BaseTexture as Texture2D;
-            else if (BombsPercentage() == 0)    bombBackground = TextureManager.GetTexture("ammo_bombs_none").BaseTexture as Texture2D;
+            //else if (BombsPercentage() == 0)    bombBackground = TextureManager.GetTexture("ammo_bombs_none").BaseTexture as Texture2D;
             else
             {
                 bombBackground = TextureManager.GetTexture("ammo_bombs_low").BaseTexture as Texture2D;
@@ -133,7 +133,7 @@ namespace PoorEngine.GameComponents
 
 
             if      (MGPercentage() > 25f)      MGBackground = TextureManager.GetTexture("ammo_mg").BaseTexture as Texture2D;
-            else if (MGPercentage() == 0)       MGBackground = TextureManager.GetTexture("ammo_mg_none").BaseTexture as Texture2D;
+            //else if (MGPercentage() == 0)       MGBackground = TextureManager.GetTexture("ammo_mg_none").BaseTexture as Texture2D;
             else                              
             { 
                 MGBackground = TextureManager.GetTexture("ammo_mg_low").BaseTexture as Texture2D;

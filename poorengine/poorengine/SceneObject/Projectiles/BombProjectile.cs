@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +23,7 @@ namespace PoorEngine.SceneObject
             Damage = 10000;
 
         }
+        
 
         public override void Update(GameTime gameTime)
         {
@@ -58,9 +59,16 @@ namespace PoorEngine.SceneObject
         }
         public override void Collide(PoorSceneObject collidingWith)
         {
-                SoundFxManager.RemoveFx(_soundFX_id);
-                ParticleManager.GroundExplosion.AddParticles(Position, 0, 35);
-                base.Collide(collidingWith);
+            base.Collide(collidingWith);
+            if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane)))
+            {
+                ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X - 10, Position.Y), 0f, 360f);
+                ParticleManager.Explosion.AddParticles(Position);
+                SoundFxLibrary.GetFx("bomb4").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.7f),
+                                    CalcHelper.RandomBetween(-0.5f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
+            }
+            SoundFxManager.RemoveFx(_soundFX_id);
+            ParticleManager.GroundExplosion.AddParticles(Position, 0, 35);
         }
     }
 }

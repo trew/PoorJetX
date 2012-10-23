@@ -90,7 +90,7 @@ namespace PoorEngine.SceneObject
         private void UpdateAI(GameTime gameTime)
         {
             SetTarget();
-            if (HasTarget)
+            if (HasTarget && (!_target.IsCrashing || !_target.IsDead))
             {
                 _weapon.Angle = GetAngleToTarget(gameTime);
                 _weaponOrientation = _weapon.Angle;

@@ -91,6 +91,28 @@ namespace PoorEngine.SceneObject
 
         }
 
+        public virtual void Reset()
+        {
+            _thrust = 4;
+            _lift = 0;
+            _orientation = 90;
+            _airSpeed = 4;
+            _gravity = 3;
+            _linearVelocity = 0;
+            _velocityAngle = 90;
+            _weight = 1;
+            Position = new Vector2(200, 500);
+            Z = 0.997f;
+            UsedInBoundingBoxCheck = true;
+            IsDead = false;
+            IsCrashing = false;
+            _health = this._maxHealth;
+
+            _smokeTimer = 1;
+            _smokeTimerStartVal = 20;
+
+        }
+
         public override Rectangle BoundingBox
         { 
             get
@@ -257,8 +279,9 @@ namespace PoorEngine.SceneObject
 
             if (Position.Y > GameHelper.GroundLevel -10 && !IsDead)
             {
-                IsDead = true;
+                Kill();
                 GroundExplode();
+                IsDead = true;
                 return;
             }
 
@@ -313,7 +336,7 @@ namespace PoorEngine.SceneObject
                 float enginePitch = (float)(Math.Pow((_thrust / 9), 1.8) - 0.1f);
                 enginePitch += (float)(_linearVelocity / 15);
                 SoundFxManager.GetByID(_engineFX_id).Pitch = MathHelper.Clamp(enginePitch, -1f, 1f);
-                float volume = MathHelper.Clamp(enginePitch, 0.6f, 1f) * CalcHelper.CalcVolume(Position);
+                float volume = MathHelper.Clamp(enginePitch, 0.6f, 1.0f) * CalcHelper.CalcVolume(Position) * 0.2f;
                 SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", volume);
 
                 // Add dive-sound if speed is high enough

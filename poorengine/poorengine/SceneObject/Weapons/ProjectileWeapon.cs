@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +28,12 @@ namespace PoorEngine.SceneObject
         {
             _muzzleFlash = new MuzzleFlashSmall(EngineManager.Game, 4);
             EngineManager.Game.Components.Add(_muzzleFlash);
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            _bulletCount = MAXBULLETS;
         }
 
         public override bool Fire()
