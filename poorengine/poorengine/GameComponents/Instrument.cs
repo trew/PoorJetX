@@ -7,13 +7,14 @@ using PoorEngine.Managers;
 using PoorEngine.Textures;
 using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Interfaces;
-using PoorEngine.GameComponents;
 using PoorEngine.GameScreens;
 using PoorEngine.Helpers;
+using PoorEngine.SceneObject;
 
-namespace PoorEngine.SceneObject
+
+namespace PoorEngine.GameComponents
 {
-    public class Instrument: GameComponent
+    public class Instrument
     {
         private bool _visible;
         public bool Visible { get { return _visible; } set { _visible = value; } }
@@ -25,21 +26,20 @@ namespace PoorEngine.SceneObject
         Texture2D needleTexture;
         float texHeight;
         private string _sourceName;
-        GamePlayScreen currentScreen;
+        PlayerAirplane _player;
         private string _titleString;
         private string _texName;
         public string TextureName { get { return _texName; } }
 
-        public Instrument(Game game, string texName, Vector2 position, 
+        public Instrument(string texName, Vector2 position, 
             float minVal, float maxVal, float scaleVal, 
-            string sourceName, string titleString, GamePlayScreen gameScreen):
-            base(game)
+            string sourceName, string titleString, PlayerAirplane player)
         {
             _titleString = titleString;
             _texName = texName;
             minValue = minVal;
             maxValue = maxVal;
-            currentScreen = gameScreen;
+            _player = player;
             pos = position;
             _sourceName = sourceName;
             scale = scaleVal;
@@ -63,22 +63,21 @@ namespace PoorEngine.SceneObject
         }
 
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             if (_sourceName == "throttle")
             {
-                currentValue = (float)currentScreen.Airplane.Thrust;
+                currentValue = (float)_player.Thrust;
             }
             else if (_sourceName == "linearvelocity")
             {
-                currentValue = (float)currentScreen.Airplane.LinearVelocity;
+                currentValue = (float)_player.LinearVelocity;
             }
             if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
             {
                 Visible = !Visible;
             }
-            if (currentScreen.Airplane.IsCrashing)
+            if (_player.IsCrashing && !_player.IsDead)
             {
                 Visible = false;
             }

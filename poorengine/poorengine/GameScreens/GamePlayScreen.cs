@@ -31,8 +31,6 @@ namespace PoorEngine.GameScreens
         Stopwatch _deathTimer;
         Stopwatch _completedTimer;
 
-        private int _lives;
-
         private Dictionary<string, Instrument> _instruments;
 
         public GamePlayScreen()
@@ -43,7 +41,6 @@ namespace PoorEngine.GameScreens
             _completedTimer = new Stopwatch();
             EngineManager.Score = 0;
             SoundFxManager.Clear();
-            _lives = 3;
         }
 
         public void Reset()
@@ -59,10 +56,15 @@ namespace PoorEngine.GameScreens
 
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
+            foreach (Instrument inst in _instruments.Values)
+            {
+                inst.Visible = true;
+            }
 
-            player1 = new PlayerAirplane();
+            //player1 = new PlayerAirplane();
+            player1.Reset();
             SceneGraphManager.AddObject(player1);
-            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
+            //_ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
         }
 
         public int ScreenWidth
@@ -123,11 +125,12 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
             SoundFxLibrary.AddToLibrary("SoundFX/refill", "refill");
 
+            player1 = new PlayerAirplane();
             // Add instruments
-            throttleMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(150, ScreenHeight), 0f, 7.5f, 0.6f, "throttle", "Throttle", this);
+            throttleMeter = new Instrument("instrument", new Vector2(150, ScreenHeight), 0f, 7.5f, 0.6f, "throttle", "Throttle", player1);
             _instruments.Add("throttleMeter", throttleMeter);
 
-            airspeedMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(270, ScreenHeight), 0f, 13f, 0.6f, "linearvelocity", "Airspeed", this);
+            airspeedMeter = new Instrument("instrument", new Vector2(270, ScreenHeight), 0f, 13f, 0.6f, "linearvelocity", "Airspeed", player1);
             _instruments.Add("airspeedMeter", airspeedMeter);
 
             foreach (Instrument inst in _instruments.Values)
@@ -139,9 +142,8 @@ namespace PoorEngine.GameScreens
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
 
-            player1 = new PlayerAirplane();
             SceneGraphManager.AddObject(player1);
-            _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
+            _ammoDisplay = new AmmoDisplay((ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
             _ammoDisplay.LoadContent();
 
             SceneGraphManager.LoadContent();
@@ -195,14 +197,13 @@ namespace PoorEngine.GameScreens
                 {
                     if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5))
                     {
-                        if (_lives - 1 <= 0)
+                        if (player1.Lives <= 0)
                         {
                             ExitScreen();
                             ScreenManager.AddScreen(new ScoreScreen());
                         }
                         else
                         {
-                            _lives--;
                             this.Reset();
                         }
                     }
@@ -379,7 +380,6 @@ namespace PoorEngine.GameScreens
             SceneGraphManager.Draw(gameTime);
             ParticleManager.Draw(gameTime);
 
-
             foreach (Instrument inst in _instruments.Values)
             {
                 inst.Draw(gameTime);
@@ -400,7 +400,7 @@ namespace PoorEngine.GameScreens
                         new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
                         1.3f);          // Outline thickness
 
-            if ((player1.IsCrashing || player1.IsDead) && (_lives - 1 <= 0))
+            if ((player1.IsCrashing || player1.IsDead) && (player1.Lives <= 0))
             {
                 Text.DrawTextCentered(
                     ScreenManager.Cartoon24,
@@ -420,7 +420,7 @@ namespace PoorEngine.GameScreens
                     1.3f);
             }
 
-            for (int i = 0; i < _lives; i++)
+            for (int i = 0; i < player1.Lives; i++)
             {
                 Texture2D lifeTex = TextureManager.GetTexture("1up").BaseTexture as Texture2D;
                 Rectangle pos = new Rectangle(GameHelper.ScreenWidth - 500 + (50 * i), 10, 48, 31);

@@ -91,6 +91,28 @@ namespace PoorEngine.SceneObject
 
         }
 
+        public virtual void Reset()
+        {
+            _thrust = 4;
+            _lift = 0;
+            _orientation = 90;
+            _airSpeed = 4;
+            _gravity = 3;
+            _linearVelocity = 0;
+            _velocityAngle = 90;
+            _weight = 1;
+            Position = new Vector2(200, 500);
+            Z = 0.997f;
+            UsedInBoundingBoxCheck = true;
+            IsDead = false;
+            IsCrashing = false;
+            _health = this._maxHealth;
+
+            _smokeTimer = 1;
+            _smokeTimerStartVal = 20;
+
+        }
+
         public override Rectangle BoundingBox
         { 
             get
@@ -257,8 +279,9 @@ namespace PoorEngine.SceneObject
 
             if (Position.Y > GameHelper.GroundLevel -10 && !IsDead)
             {
-                IsDead = true;
+                Kill();
                 GroundExplode();
+                IsDead = true;
                 return;
             }
 

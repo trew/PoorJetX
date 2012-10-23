@@ -27,7 +27,7 @@ namespace PoorEngine.GameComponents
 
         public bool Visible { get; set; }
 
-        public AmmoDisplay(Game game, ProjectileWeapon prwpn, BombWeapon bmwpn)
+        public AmmoDisplay(ProjectileWeapon prwpn, BombWeapon bmwpn)
         {
             ProjectileWeapon = prwpn;
             BombWeapon = bmwpn;

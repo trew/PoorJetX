@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +24,12 @@ namespace PoorEngine.SceneObject
         public ProjectileWeapon(IPoorWeaponHolder owner)
             :base(owner)
         {
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            _bulletCount = MAXBULLETS;
         }
 
         public override bool Fire()
