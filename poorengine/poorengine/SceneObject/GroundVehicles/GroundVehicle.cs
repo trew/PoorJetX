@@ -194,7 +194,8 @@ namespace PoorEngine.SceneObject
                 TakeDamage(proj.Damage);
             }
 
-            if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane)))
+            if (SceneGraphManager.TypeMatch(collidingWith.GetType(), typeof(Airplane))
+                && !SceneGraphManager.TypeMatch(this.GetType(), typeof(BossAntiAir)))
             {
                 TakeDamage(10000000);
                 EngineManager.Score += 2; // Bonus points for being killed by crashing airplane
