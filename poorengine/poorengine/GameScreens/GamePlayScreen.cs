@@ -31,20 +31,17 @@ namespace PoorEngine.GameScreens
         Stopwatch _deathTimer;
         Stopwatch _completedTimer;
 
-        private int _currentLevelNumber;
-
         private int _lives;
 
         private Dictionary<string, Instrument> _instruments;
 
-        public GamePlayScreen(int level)
+        public GamePlayScreen()
         {
             CameraManager.Reset();
             _instruments = new Dictionary<string, Instrument>();
             _deathTimer = new Stopwatch();
             _completedTimer = new Stopwatch();
             EngineManager.Score = 0;
-            _currentLevelNumber = level;
             SoundFxManager.Clear();
             _lives = 3;
         }
@@ -57,7 +54,7 @@ namespace PoorEngine.GameScreens
             SceneGraphManager.Root.Nodes.Clear();
             SoundFxManager.Clear();
 
-            LevelManager.Load(_currentLevelNumber);
+            LevelManager.Load(LevelManager.CurrentLevel.LevelNumber);
             LevelManager.CurrentLevel.Load();
 
             SkyGradient skyGradient = new SkyGradient("skygradient");
@@ -88,45 +85,18 @@ namespace PoorEngine.GameScreens
             get { return player1; }
         }
 
-        public override void LoadContent()
+        public void LoadTextures()
         {
-            base.LoadContent();
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/bomb"), "bomb");
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/bomb2"), "bomb2");
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/bullet"), "bullet");
             TextureManager.AddTexture(new PoorTexture("Textures/Objects/aabullet"), "aabullet");
 
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud1"), "cloud1");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud2"), "cloud2");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud3"), "cloud3");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud4"), "cloud4");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud5"), "cloud5");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/cloud6"), "cloud6");
-
             TextureManager.AddTexture(new PoorTexture("Textures/Particles/smoke_black"), "smoke_black");
             TextureManager.AddTexture(new PoorTexture("Textures/Particles/smoke_white"), "smoke_white");
             TextureManager.AddTexture(new PoorTexture("Textures/Particles/fire"), "fire");
 
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/hill1"), "hill1");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/hill2"), "hill2");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/hill3"), "hill3");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain1"), "mountain1");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain2"), "mountain2");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain3"), "mountain3");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain4"), "mountain4");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain5"), "mountain5");
-            TextureManager.AddTexture(new PoorTexture("Textures/Objects/mountain6"), "mountain6");
-
             TextureManager.AddTexture(new PoorTexture("Textures/UI/bombtargetmarker"), "bombtargetmarker");
-
-            // For ammo-related UI
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs"), "ammo_bombs");
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_low"), "ammo_bombs_low");
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_none"), "ammo_bombs_none");
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg"), "ammo_mg");
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_low"), "ammo_mg_low");
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_none"), "ammo_mg_none");
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_refill"), "ammo_refill");
 
             // Other UI
             TextureManager.AddTexture(new PoorTexture("Textures/UI/1up"), "1up");
@@ -134,7 +104,14 @@ namespace PoorEngine.GameScreens
             // Animations
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_groundcrash"), "anim_groundcrash");
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_smoke1"), "anim_smoke1");
+        }
+
+        public override void LoadContent()
+        {
+            base.LoadContent();
             
+            LoadTextures();
+
             // Sounds
             SoundFxLibrary.AddToLibrary("SoundFX/bomb1", "bomb1");
             SoundFxLibrary.AddToLibrary("SoundFX/bomb2", "bomb2");
@@ -159,15 +136,13 @@ namespace PoorEngine.GameScreens
             }
             // !Add instruments
 
-            LevelManager.Load(_currentLevelNumber);
-            LevelManager.CurrentLevel.Load();
-
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
 
             player1 = new PlayerAirplane();
             SceneGraphManager.AddObject(player1);
             _ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
+            _ammoDisplay.LoadContent();
 
             SceneGraphManager.LoadContent();
             ParticleManager.LoadContent();
@@ -176,47 +151,6 @@ namespace PoorEngine.GameScreens
         public override void UnloadContent()
         {
             base.UnloadContent();
-            TextureManager.RemoveTexture("bomb");
-            TextureManager.RemoveTexture("bomb2");
-            TextureManager.RemoveTexture("bullet");
-            TextureManager.RemoveTexture("aabullet");
-
-            TextureManager.RemoveTexture("cloud1");
-            TextureManager.RemoveTexture("cloud2");
-            TextureManager.RemoveTexture("cloud3");
-            TextureManager.RemoveTexture("cloud4");
-            TextureManager.RemoveTexture("cloud5");
-            TextureManager.RemoveTexture("cloud6");
-
-            TextureManager.RemoveTexture("smoke_black");
-            TextureManager.RemoveTexture("smoke_white");
-            TextureManager.RemoveTexture("fire");
-
-            TextureManager.RemoveTexture("hill1");
-            TextureManager.RemoveTexture("hill2");
-            TextureManager.RemoveTexture("hill3");
-            TextureManager.RemoveTexture("mountain1");
-            TextureManager.RemoveTexture("mountain2");
-            TextureManager.RemoveTexture("mountain3");
-            TextureManager.RemoveTexture("mountain4");
-            TextureManager.RemoveTexture("mountain5");
-            TextureManager.RemoveTexture("mountain6");
-
-            TextureManager.RemoveTexture("bombtargetmarker");
-
-            // For ammo-related UI
-            TextureManager.RemoveTexture("ammo_bombs");
-            TextureManager.RemoveTexture("ammo_bombs_low");
-            TextureManager.RemoveTexture("ammo_bombs_none");
-            TextureManager.RemoveTexture("ammo_mg");
-            TextureManager.RemoveTexture("ammo_mg_low");
-            TextureManager.RemoveTexture("ammo_mg_none");
-            TextureManager.RemoveTexture("ammo_refill");
-
-            // Animations
-            TextureManager.RemoveTexture("anim_groundcrash");
-            TextureManager.RemoveTexture("anim_smoke1");
-
             SceneGraphManager.Root.Nodes.Clear();
             ParticleManager.UnloadContent();
             foreach (Instrument inst in _instruments.Values)
@@ -252,13 +186,15 @@ namespace PoorEngine.GameScreens
 
             if (player1.IsDead)
             {
-
-                if (!_deathTimer.IsRunning) {
+                LevelManager.CurrentLevel.Completed = false;
+                if (!_deathTimer.IsRunning)
+                {
                     _deathTimer.Restart();
                 }
                 else
                 {
-                    if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5)) {
+                    if (_deathTimer.Elapsed > new TimeSpan(0, 0, 5))
+                    {
                         if (_lives - 1 <= 0)
                         {
                             ExitScreen();
@@ -272,27 +208,42 @@ namespace PoorEngine.GameScreens
                     }
                 }
             }
-            LevelManager.CurrentLevel.CheckCompleted();
-            if (LevelManager.CurrentLevel.Completed)
+            else if (player1.IsCrashing)
             {
-                player1.UsedInBoundingBoxCheck = false;
-                if (!_completedTimer.IsRunning)
+                LevelManager.CurrentLevel.Completed = false;
+            }
+            else
+            {
+                LevelManager.CurrentLevel.CheckCompleted();
+                if (LevelManager.CurrentLevel.Completed)
                 {
-                    _completedTimer.Restart();
-                }
-                else
-                {
-                    if (_completedTimer.Elapsed > new TimeSpan(0, 0, 10))
+                    player1.UsedInBoundingBoxCheck = false;
+                    if (!_completedTimer.IsRunning)
                     {
-                        if (LevelManager.HasNextLevel())
+                        _completedTimer.Restart();
+                    }
+                    else
+                    {
+                        if (_completedTimer.Elapsed > new TimeSpan(0, 0, 10))
                         {
-                            _currentLevelNumber += 1;
-                            this.Reset();
-                        }
-                        else
-                        {
-                            ExitScreen();
-                            ScreenManager.AddScreen(new VictoryScreen());
+                            if (LevelManager.HasNextLevel())
+                            {
+                                BriefingScreen.Load(LevelManager.CurrentLevel.LevelNumber + 1);
+                                this.Reset();
+                            }
+                            else
+                            {
+                                ExitScreen();
+                                if (LevelManager.CurrentLevel.LevelNumber == 0) //tutorial
+                                {
+                                    ScreenManager.AddScreen(new BackgroundScreen());
+                                    ScreenManager.AddScreen(new MainMenuScreen());
+                                }
+                                else
+                                {
+                                    ScreenManager.AddScreen(new VictoryScreen());
+                                }
+                            }
                         }
                     }
                 }
@@ -462,7 +413,7 @@ namespace PoorEngine.GameScreens
                         new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
                         1.3f);          // Outline thickness
 
-            if (player1.IsCrashing || player1.IsDead)
+            if ((player1.IsCrashing || player1.IsDead) && (_lives - 1 <= 0))
             {
                 Text.DrawTextCentered(
                     ScreenManager.Cartoon24,
@@ -472,7 +423,7 @@ namespace PoorEngine.GameScreens
                     1.3f);
             }
 
-            if (LevelManager.CurrentLevel.Completed)
+            else if (LevelManager.CurrentLevel.Completed)
             {
                 Text.DrawTextCentered(
                     ScreenManager.Cartoon24,

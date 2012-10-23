@@ -80,7 +80,7 @@ namespace PoorEngine.SceneObject
 
         public void LoadContent()
         {
-            TextureManager.AddTexture(new PoorTexture("Textures/" + TextureName), TextureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/Objects/" + TextureName), TextureName);
         }
 
         public void UnloadContent()

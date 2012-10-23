@@ -9,10 +9,11 @@ using PoorEngine.Interfaces;
 using PoorEngine.Managers;
 using PoorEngine.SceneObject;
 using PoorEngine.Helpers;
+using PoorEngine.Textures;
 
 namespace PoorEngine.GameComponents
 {
-    public class AmmoDisplay : DrawableGameComponent
+    public class AmmoDisplay
     {
         public ProjectileWeapon ProjectileWeapon { get; set; }
         public BombWeapon BombWeapon { get; set; }
@@ -24,14 +25,16 @@ namespace PoorEngine.GameComponents
         private Stopwatch soundTimer;
         private bool playSound;
 
+        public bool Visible { get; set; }
+
         public AmmoDisplay(Game game, ProjectileWeapon prwpn, BombWeapon bmwpn)
-            : base(game)
         {
             ProjectileWeapon = prwpn;
             BombWeapon = bmwpn;
             Position = new Vector2(10, 10);
 
             playSound = false;
+            Visible = true;
 
             soundTimer = new Stopwatch();
             soundTimer.Start();
@@ -66,9 +69,16 @@ namespace PoorEngine.GameComponents
             return (BombWeapon.AmmoCount / (float)BombWeapon.MAX_BOMBS) * 100;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
+            if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
+            {
+                Visible = !Visible;
+            }
+            if (LevelManager.CurrentLevel.Completed)
+            {
+                Visible = false;
+            }
 
             if (bRefillGreen.ElapsedMilliseconds > 3000)
                 bRefillGreen.Stop();
@@ -84,19 +94,24 @@ namespace PoorEngine.GameComponents
             }
         }
 
-        protected override void LoadContent()
+        public void LoadContent()
         {
-            base.LoadContent();
+            // For ammo-related UI
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs"), "ammo_bombs");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_low"), "ammo_bombs_low");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_none"), "ammo_bombs_none");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg"), "ammo_mg");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_low"), "ammo_mg_low");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_none"), "ammo_mg_none");
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_refill"), "ammo_refill");
         }
-        protected override void UnloadContent()
+        public void UnloadContent()
         {
-            base.UnloadContent();
         }
 
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
-
+            if (!Visible) return;
             Vector2 mgPos = new Vector2(0, 100);
             Vector2 bombPos = new Vector2(0, 180);
 

@@ -113,6 +113,7 @@
     <Compile Include="GameComponents\AmmoDisplay.cs" />
     <Compile Include="GameComponents\DebugPanel.cs" />
     <Compile Include="GameComponents\Level.cs" />
+    <Compile Include="GameScreens\BriefingScreen.cs" />
     <Compile Include="GameScreens\HighscoreScreen.cs" />
     <Compile Include="GameScreens\VictoryScreen.cs" />
     <Compile Include="GameScreens\PauseMenuScreen.cs" />

@@ -82,6 +82,10 @@ namespace PoorEngine.SceneObject
             {
                 Visible = false;
             }
+            if (LevelManager.CurrentLevel.Completed)
+            {
+                Visible = false;
+            }
         }
 
         public void Draw(GameTime gameTime)

@@ -13,6 +13,20 @@ using PoorEngine.Interfaces;
 namespace PoorEngine.GameComponents
 {
     [Serializable]
+    public class LevelBriefing
+    {
+        public string Title;
+        public string Story;
+        public List<LevelObjective> Objectives;
+    }
+
+    [Serializable]
+    public class LevelObjective
+    {
+        public string Description;
+    }
+
+    [Serializable]
     public class LevelVisual
     {
         public bool Repeatable;
@@ -83,6 +97,13 @@ namespace PoorEngine.GameComponents
     {
 
         #region LevelData
+        private LevelBriefing _briefing;
+        public LevelBriefing Briefing
+        {
+            get { return _briefing; }
+            set { _briefing = value; }
+        }
+
         private List<LevelText> _texts;
         /// <summary>
         /// A list of text-objects
@@ -155,6 +176,8 @@ namespace PoorEngine.GameComponents
             _levelNumber = levelNumber;
         }
 
+        private LevelBriefing _briefing;
+        public LevelBriefing Briefing { get { return _briefing; } }
         private Queue<PoorSceneObject> _enemies;
         private Queue<Text> _texts;
         private Queue<LevelObject> _objects;
@@ -164,6 +187,7 @@ namespace PoorEngine.GameComponents
         public void Load()
         {
             _aliveEnemies = new List<IPoorEnemy>();
+            _briefing = _data.Briefing;
             LoadVisuals();
             QueueEnemies();
             QueueTexts();

@@ -1,5 +1,17 @@
 <?xml version="1.0"?>
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Briefing>
+    <Title>First level</Title>
+    <Story>Mongo mongo</Story>
+    <Objectives>
+      <LevelObjective>
+        <Description>Kill the Boss</Description>
+      </LevelObjective>
+      <LevelObjective>
+        <Description>Be awesome</Description>
+      </LevelObjective>
+    </Objectives>
+  </Briefing>
   <Visuals>
     <!-- MOUNTAINS -->
     <LevelVisual>
@@ -229,7 +241,7 @@
       <Y>0</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
     
     <LevelEnemy>
@@ -237,7 +249,7 @@
       <Y>130</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -245,7 +257,7 @@
       <Y>500</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -253,7 +265,7 @@
       <Y>450</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -261,7 +273,7 @@
       <Y>400</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	
 	  <LevelEnemy>
@@ -269,7 +281,7 @@
       <Y>570</Y>
       <type>Airplane</type>
 	    <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
@@ -277,38 +289,30 @@
       <Y>0</Y>
       <type>AntiAir</type>
       <health>9000</health>
-      <RequiredForVictory>0</RequiredForVictory>
+      <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
       <XAppear>1300</XAppear>
       <Y>0</Y>
       <type>Transport</type>
-      <health>3000</health>
-      <RequiredForVictory>0</RequiredForVictory>
+      <health>5000</health>
+      <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
       <XAppear>1700</XAppear>
       <Y>0</Y>
       <type>Transport</type>
-      <health>4000</health>
-      <RequiredForVictory>0</RequiredForVictory>
+      <health>5000</health>
+      <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
       <XAppear>1900</XAppear>
       <Y>0</Y>
       <type>Transport</type>
-      <health>4000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-
-    <LevelEnemy>
-      <XAppear>7000</XAppear>
-      <Y>0</Y>
-      <type>BossAntiAir</type>
-      <health>70000</health>
+      <health>5000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
   </Enemies>

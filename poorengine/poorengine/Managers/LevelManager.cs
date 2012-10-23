@@ -24,6 +24,10 @@ namespace PoorEngine.Managers
 
         public static bool HasNextLevel()
         {
+            if (CurrentLevel.LevelNumber == 0) // this is the tutorial
+            {
+                return false;
+            }
             int nextLevel = CurrentLevel.LevelNumber + 1;
             String filename = "Content" + _levelPathPrefix + nextLevel + ".xml";
             return File.Exists(filename);
