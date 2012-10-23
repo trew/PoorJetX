@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Briefing>
-    <Title>First level</Title>
-    <Story>Mongo mongo</Story>
+    <Title>Second level</Title>
+    <Story>We need your help! They're stealing our country's most valuable resources, our fastfood! You must stop them! They've stolen over 2 megatons of calories already. Will someone please think of the children!?</Story>
     <Objectives>
       <LevelObjective>
-        <Description>Kill the Boss</Description>
+        <Description>Destroy the convoy!</Description>
       </LevelObjective>
       <LevelObjective>
-        <Description>Be awesome</Description>
+        <Description>Find the world-record burger!</Description>
       </LevelObjective>
     </Objectives>
   </Briefing>

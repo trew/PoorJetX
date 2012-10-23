@@ -49,7 +49,7 @@ namespace PoorJetX.GameScreens
         public override void LoadContent()
         {
             base.LoadContent();
-            _font = ScreenManager.Typewriter24;
+            _font = ScreenManager.Cartoon24;
             TextureManager.AddTexture(new PoorTexture("Textures/Menu/briefingscreen"), "briefingBG");
 
             LevelManager.Load(_currentLevelNumber);
@@ -120,23 +120,28 @@ namespace PoorJetX.GameScreens
 
             Vector2 storyOrigin;
             int i = 0;
+
+            // Draw briefing
             foreach (string line in briefingLines)
             {
                 storyOrigin = Vector2.Zero;//_font.MeasureString(briefingLines[i]) / 2;
-                Text.DrawText(ScreenManager.Typewriter18, briefingLines[i], Color.Black, color, 1.2f, 1f, rotation, new Vector2(storyX - (i * 3.4f), storyY + (i * 25)), storyOrigin, false);
+                Text.DrawText(ScreenManager.Cartoon18regular, briefingLines[i], Color.Black, color, 1f, 1f, rotation, new Vector2(storyX - (i * 4.2f), storyY + (i * 25)), storyOrigin, false);
                 i++;
 
                 objX = storyX - ((i+2) * 3.4f);
                 objY = storyY + ((i+2) * 25);
             }
 
-            Text.DrawText(ScreenManager.Typewriter24, "Mission objectives", Color.Black, color, 1f, 1f, rotation, new Vector2(objX, objY), Vector2.Zero, false);
+            // Draw objectives
+            Text.DrawText(ScreenManager.Cartoon24, "Mission objectives", Color.Black, color, 1f, 1f, rotation, new Vector2(objX, objY), Vector2.Zero, false);
             i = 1;
             foreach (LevelObjective obj in LevelManager.CurrentLevel.Briefing.Objectives)
             {
-                Text.DrawText(ScreenManager.Typewriter18, " * " + obj.Description, Color.Black, color, 1f, 1f, rotation, new Vector2(objX - ((i+1) * 3.4f), objY + ((i+1) * 25)), Vector2.Zero, false);
+                Text.DrawText(ScreenManager.Cartoon18regular, " * " + obj.Description, Color.Black, color, 1f, 1f, rotation, new Vector2(objX - ((i + 1) * 4.2f), objY + ((i + 1) * 25)), Vector2.Zero, false);
                 i++;
             }
+
+            Text.DrawText(ScreenManager.Cartoon24, "Press Enter to continue", Color.Black, Color.White, 1f, 1f, 0f, new Vector2(GameHelper.ScreenWidth - 550, GameHelper.ScreenHeight - 70), Vector2.Zero, false);
 
             ScreenManager.SpriteBatch.End();
         }

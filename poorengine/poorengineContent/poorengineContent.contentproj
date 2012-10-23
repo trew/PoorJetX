@@ -556,24 +556,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\typewriter24.spritefont">
-      <SubType>Designer</SubType>
-      <Name>typewriter24</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-    <Compile Include="Fonts\typewriter18.spritefont">
-      <SubType>Designer</SubType>
-      <Name>typewriter18</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-    <Compile Include="Fonts\typewriter14.spritefont">
-      <SubType>Designer</SubType>
-      <Name>typewriter14</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
     <None Include="Levels\1.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
