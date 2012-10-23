@@ -47,8 +47,8 @@ namespace PoorJetX.GameScreens
             MenuEntries.Add(exitMenuEntry);
             MenuEntries.Add(exitGameEntry);
 
-            TransitionOnTime = TimeSpan.FromSeconds(0);
-            TransitionOffTime = TimeSpan.FromSeconds(0);
+            TransitionOnTime = TimeSpan.FromSeconds(0.0);
+            TransitionOffTime = TimeSpan.FromSeconds(0.0);
             IsPopup = true;
         }
 

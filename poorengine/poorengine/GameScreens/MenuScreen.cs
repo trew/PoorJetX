@@ -170,12 +170,16 @@ namespace PoorJetX.GameScreens
                                               0), 
                     _borders.Y + _titleFont.LineSpacing);
             Vector2 titleOrigin = _titleFont.MeasureString(_menuTitle) / 2;
-            Color titleColor = new Color(255, 255, 255, TransitionAlpha);
+            Color titleColor = Color.Orange;
+            titleColor.A = TransitionAlpha;
             float titleScale = 1.25f;
 
-            titlePosition.Y -= transitionOffset * 100;
+            if (ScreenState == ScreenState.TransitionOn && TransitionOnTime != TimeSpan.Zero)
+                titlePosition.Y -= transitionOffset * 255;
+            else if (ScreenState == ScreenState.TransitionOff && TransitionOffTime != TimeSpan.Zero)
+                titlePosition.Y -= transitionOffset * 255;
 
-            Text.DrawText(_titleFont, _menuTitle, Color.Black, Color.Orange, 1f, titleScale, 0f, titlePosition, titleOrigin, false);
+            Text.DrawText(_titleFont, _menuTitle, Color.Black, titleColor, 1f, titleScale, 0f, titlePosition, titleOrigin, false);
 
             ScreenManager.SpriteBatch.End();
         }
