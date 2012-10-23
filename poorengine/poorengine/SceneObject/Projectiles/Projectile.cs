@@ -84,7 +84,7 @@ namespace PoorEngine.SceneObject
             if (SpawnTime <= 0.0)
                 SpawnTime = (float)gameTime.TotalGameTime.TotalSeconds;
 
-            if (SpawnTime + 10.0 < gameTime.TotalGameTime.TotalSeconds) 
+            if (SpawnTime + 7.0 < gameTime.TotalGameTime.TotalSeconds) 
             {
                 SceneGraphManager.RemoveObject(this);
             }

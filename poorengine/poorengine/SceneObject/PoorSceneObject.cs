@@ -70,6 +70,7 @@ namespace PoorEngine.SceneObject
                 }
             }
         }
+
         private Vector2 _position = Vector2.Zero;
         /// <summary>
         /// The position of this object in 2D space.

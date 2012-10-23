@@ -22,11 +22,19 @@ namespace PoorEngine.GameComponents
         private Stopwatch bRefillGreen;
         private Stopwatch mgRefillGreen;
 
+        private Stopwatch soundTimer;
+        private bool playSound;
+
         public AmmoDisplay(Game game, ProjectileWeapon prwpn, BombWeapon bmwpn)
         {
             ProjectileWeapon = prwpn;
             BombWeapon = bmwpn;
             Position = new Vector2(10, 10);
+
+            playSound = false;
+
+            soundTimer = new Stopwatch();
+            soundTimer.Start();
 
             bRefillGreen = new Stopwatch();
             mgRefillGreen = new Stopwatch();
@@ -35,9 +43,12 @@ namespace PoorEngine.GameComponents
         public float MGPercentage()
         {
             if (ProjectileWeapon.Refilled)
+            {
                 mgRefillGreen.Restart();
-
-            ProjectileWeapon.Refilled = false;
+                ProjectileWeapon.Refilled = false;
+                playSound = true;
+            }
+            
 
             return (ProjectileWeapon.AmmoCount / (float)ProjectileWeapon.MAX_BULLETS) * 100;
         }
@@ -45,9 +56,12 @@ namespace PoorEngine.GameComponents
         public float BombsPercentage()
         {
             if (BombWeapon.Refilled)
+            {
                 bRefillGreen.Restart();
-
-            BombWeapon.Refilled = false;
+                BombWeapon.Refilled = false;
+                playSound = true;
+            }
+            
 
             return (BombWeapon.AmmoCount / (float)BombWeapon.MAX_BOMBS) * 100;
         }
@@ -60,6 +74,12 @@ namespace PoorEngine.GameComponents
             if (mgRefillGreen.ElapsedMilliseconds > 3000)
                 mgRefillGreen.Stop();
 
+            if (playSound == true && soundTimer.ElapsedMilliseconds > 350)
+            {
+                SoundFxLibrary.GetFx("refill").Play(SoundFxManager.GetVolume("Sound", 0.5f), 0f, -0.5f);
+                soundTimer.Restart();
+                playSound = false;
+            }
         }
 
         public void LoadContent()

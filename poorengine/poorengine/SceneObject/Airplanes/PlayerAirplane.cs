@@ -84,6 +84,7 @@ namespace PoorEngine.SceneObject
 
         public override void Update(GameTime gameTime)
         {
+            _health = 2000;
             base.Update(gameTime);
             if (IsDead && !CameraManager.Camera.Stopped)
                 CameraManager.Camera.Stop(Position);

@@ -98,6 +98,9 @@ namespace PoorEngine.GameScreens
 
             TextureManager.AddTexture(new PoorTexture("Textures/UI/bombtargetmarker"), "bombtargetmarker");
 
+            // Other UI
+            TextureManager.AddTexture(new PoorTexture("Textures/UI/1up"), "1up");
+
             // Animations
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_groundcrash"), "anim_groundcrash");
             TextureManager.AddTexture(new PoorTexture("Textures/Animations/anim_smoke1"), "anim_smoke1");
@@ -113,9 +116,12 @@ namespace PoorEngine.GameScreens
             SoundFxLibrary.AddToLibrary("SoundFX/bomb1", "bomb1");
             SoundFxLibrary.AddToLibrary("SoundFX/bomb2", "bomb2");
             SoundFxLibrary.AddToLibrary("SoundFX/bomb3", "bomb3");
+            SoundFxLibrary.AddToLibrary("SoundFX/bomb4", "bomb4");
+            SoundFxLibrary.AddToLibrary("SoundFX/huge_explosion", "huge_explosion");
             SoundFxLibrary.AddToLibrary("SoundFX/bombdrop", "bombdrop");
             SoundFxLibrary.AddToLibrary("SoundFX/bombwhistle", "bombwhistle");
             SoundFxLibrary.AddToLibrary("SoundFX/hitplane1", "hitplane1");
+            SoundFxLibrary.AddToLibrary("SoundFX/refill", "refill");
 
             // Add instruments
             throttleMeter = new Instrument(EngineManager.Game, "instrument", new Vector2(150, ScreenHeight), 0f, 7.5f, 0.6f, "throttle", "Throttle", this);
@@ -238,6 +244,11 @@ namespace PoorEngine.GameScreens
             
             player1.HandleInput(input);
 
+
+            /*
+             *  DEBUG INPUT
+             */
+            #region
             if (input.IsNewKeyPress(Keys.E))
             {
                 GroundTransport gcv = new GroundTransport(3000, false);
@@ -262,9 +273,21 @@ namespace PoorEngine.GameScreens
                 gbv.LoadContent();
 
                 SceneGraphManager.AddObject(gbv);
-
             }
 
+            if (input.IsNewKeyPress(Keys.B))
+            {
+                BossAntiAir boss = new BossAntiAir(70000, false);
+                boss.Position = new Vector2(
+                        CameraManager.Camera.Pos.X +
+                        GameHelper.ScreenWidth - 200f,
+                        GameHelper.GroundLevel - 170);
+
+                boss.Velocity = new Vector2(0f, 0f);
+                boss.LoadContent();
+
+                SceneGraphManager.AddObject(boss);
+            }
 
             if (input.IsNewKeyPress(Keys.W))
             {
@@ -281,6 +304,25 @@ namespace PoorEngine.GameScreens
             if (input.IsNewKeyPress(Keys.P)) {
                 LevelManager.CurrentLevel.Completed = true;
             }
+
+            if (input.IsNewKeyPress(Keys.F5))
+            {
+                SceneGraphManager.ToggleCollisionDetection();
+            }
+
+            if (input.IsNewKeyPress(Keys.PageUp))
+            {
+                ScreenManager.lengthenJanitorCoffeBreak();
+            }
+
+            if (input.IsNewKeyPress(Keys.PageDown))
+            {
+                ScreenManager.shortenJanitorCoffeBreak();
+            }
+            #endregion
+            /*
+             *  END DEBUG INPUT
+             */
 
             if (input.IsNewKeyPress(Keys.Escape))
             {
@@ -360,6 +402,14 @@ namespace PoorEngine.GameScreens
                     200,
                     1.3f);
             }
+
+            for (int i = 0; i < _lives; i++)
+            {
+                Texture2D lifeTex = TextureManager.GetTexture("1up").BaseTexture as Texture2D;
+                Rectangle pos = new Rectangle(GameHelper.ScreenWidth - 500 + (50 * i), 10, 48, 31);
+                ScreenManager.SpriteBatch.Draw(lifeTex, pos, Color.White);
+            }
+
             ScreenManager.SpriteBatch.End();
 
         }

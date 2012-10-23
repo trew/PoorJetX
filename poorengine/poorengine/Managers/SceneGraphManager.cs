@@ -25,6 +25,8 @@ namespace PoorEngine.Managers
         public static Queue<Node> removeQueue { get; set; }
         private static Queue<Node> _new;
         private static List<Pair<PoorSceneObject, PoorSceneObject>> _collidedObjects;
+        private static bool _useCollisionDetection;
+        public static void ToggleCollisionDetection() { _useCollisionDetection = !_useCollisionDetection; }
 
         /// <summary>
         /// Create the scenegraph Managers.
@@ -36,6 +38,8 @@ namespace PoorEngine.Managers
             _root = new Node();
             _new = new Queue<Node>();
             removeQueue = new Queue<Node>();
+
+            _useCollisionDetection = true;
 
             newObjectsAdded = false;
             _collidedObjects = new List<Pair<PoorSceneObject, PoorSceneObject>>();
@@ -71,61 +75,64 @@ namespace PoorEngine.Managers
             }
             _root.Update(gameTime);
 
-            Pair<PoorSceneObject, PoorSceneObject> pair;
-            for (int first = 0; first < _root.Nodes.Count; first++)
+            if (_useCollisionDetection)
             {
-                PoorSceneObject firstObject = ((SceneObjectNode)_root.Nodes[first]).SceneObject;
-                if (!firstObject.UsedInBoundingBoxCheck) continue;
-
-                for(int second = 0; second < _root.Nodes.Count; second++)
+                Pair<PoorSceneObject, PoorSceneObject> pair;
+                for (int first = 0; first < _root.Nodes.Count; first++)
                 {
-                    PoorSceneObject secondObject = ((SceneObjectNode)_root.Nodes[second]).SceneObject;
+                    PoorSceneObject firstObject = ((SceneObjectNode)_root.Nodes[first]).SceneObject;
+                    if (!firstObject.UsedInBoundingBoxCheck) continue;
 
-                    // If we're comparing the same object, continue
-                    if (firstObject.Equals(secondObject)) continue;
-
-                    // If both of the objects is Projectiles, skip detection
-                    if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(Projectile))) continue;
-
-                    // If the second object isn't used for bounding box check, continue
-                    if (!secondObject.UsedInBoundingBoxCheck) continue;
-
-                    // Do the objects collide?
-                    if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
+                    for (int second = 0; second < _root.Nodes.Count; second++)
                     {
-                        // Check whether this pair has already collided.
-                        pair = new Pair<PoorSceneObject, PoorSceneObject>(firstObject, secondObject);
+                        PoorSceneObject secondObject = ((SceneObjectNode)_root.Nodes[second]).SceneObject;
 
-                        if (_collidedObjects.Contains(pair))
-                        {
-                            pair = null;
-                            continue;
-                        }
-                        _collidedObjects.Add(pair);
+                        // If we're comparing the same object, continue
+                        if (firstObject.Equals(secondObject)) continue;
 
-                        if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(IPoorWeaponHolder)) ||
-                            TypeMatch(firstObject.GetType(), typeof(IPoorWeaponHolder)) && TypeMatch(secondObject.GetType(), typeof(Projectile)))
+                        // If both of the objects is Projectiles, skip detection
+                        if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(Projectile))) continue;
+
+                        // If the second object isn't used for bounding box check, continue
+                        if (!secondObject.UsedInBoundingBoxCheck) continue;
+
+                        // Do the objects collide?
+                        if (firstObject.BoundingBox.Intersects(secondObject.BoundingBox))
                         {
-                            // Separate projectile and the other object
-                            Projectile p = (Projectile)(TypeMatch(firstObject.GetType(), typeof(Projectile)) ? firstObject : secondObject);
-                            IPoorSceneObject obj = p == firstObject ? secondObject : firstObject;
-                            if (p.CanCollideWithObject(gameTime, obj))
+                            // Check whether this pair has already collided.
+                            pair = new Pair<PoorSceneObject, PoorSceneObject>(firstObject, secondObject);
+
+                            if (_collidedObjects.Contains(pair))
+                            {
+                                pair = null;
+                                continue;
+                            }
+                            _collidedObjects.Add(pair);
+
+                            if (TypeMatch(firstObject.GetType(), typeof(Projectile)) && TypeMatch(secondObject.GetType(), typeof(IPoorWeaponHolder)) ||
+                                TypeMatch(firstObject.GetType(), typeof(IPoorWeaponHolder)) && TypeMatch(secondObject.GetType(), typeof(Projectile)))
+                            {
+                                // Separate projectile and the other object
+                                Projectile p = (Projectile)(TypeMatch(firstObject.GetType(), typeof(Projectile)) ? firstObject : secondObject);
+                                IPoorSceneObject obj = p == firstObject ? secondObject : firstObject;
+                                if (p.CanCollideWithObject(gameTime, obj))
+                                {
+                                    firstObject.Collide(secondObject);
+                                    secondObject.Collide(firstObject);
+                                }
+                            }
+                            else
                             {
                                 firstObject.Collide(secondObject);
                                 secondObject.Collide(firstObject);
                             }
                         }
-                        else
-                        {
-                            firstObject.Collide(secondObject);
-                            secondObject.Collide(firstObject);
-                        }
                     }
                 }
+
+
+                _collidedObjects.Clear();
             }
-
-            _collidedObjects.Clear();
-
             // Remove all queued nodes
             while (removeQueue.Count > 0) {
                 _root.Nodes.Remove(removeQueue.Dequeue());

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.GameComponents;
 using PoorEngine.Textures;
 using System.Diagnostics;
+using PoorEngine.Helpers;
 
 namespace PoorEngine.Managers
 {
@@ -14,8 +15,20 @@ namespace PoorEngine.Managers
         private static List<GameScreen> _screens = new List<GameScreen>();
         private static List<GameScreen> _screensToUpdate = new List<GameScreen>();
 
-        int janitorCoffeeBreak;
-        const int tenMinutes = 10;
+        private int janitorCoffeeBreak;
+        private static int tenMinutes = 10;
+        public static int getJanitorBreakLength() { return tenMinutes; }
+        public static void lengthenJanitorCoffeBreak()
+        {
+            tenMinutes++;
+        }
+
+        public static void shortenJanitorCoffeBreak()
+        {
+            tenMinutes = CalcHelper.Clamp(--tenMinutes, 1, 99999999);
+        }
+
+       
 
         /// <summary>
         /// Expose an array holding all the screens. We return a copy rather

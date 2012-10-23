@@ -66,7 +66,7 @@ namespace PoorJetX.GameScreens
         /// </summary>
         protected override void OnCancel()
         {
-            const string message = "Are you sure you want to exit this sample?";
+            const string message = "Give up already?";
 
             MessageBoxScreen messageBox = new MessageBoxScreen(message);
             messageBox.Accepted += ExitMessageBoxAccepted;

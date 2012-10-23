@@ -246,6 +246,11 @@ namespace PoorEngine.GameComponents
                     e = new GroundTransport(le.health, le.RequiredForVictory);
                     e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 39);
                 }
+                else if (le.type == "BossAntiAir")
+                {
+                    e = new BossAntiAir(le.health, le.RequiredForVictory);
+                    e.Position = new Vector2(le.XAppear, GameHelper.GroundLevel - 170);
+                }
                 if (e != null)
                     _enemies.Enqueue(e);
             }

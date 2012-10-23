@@ -197,8 +197,8 @@ namespace PoorEngine.SceneObject
                 {
                     ParticleManager.ShrapnelExplosion.AddParticles(new Vector2(Position.X - 10, Position.Y), 0f, 360f);
                     ParticleManager.Explosion.AddParticles(Position);
-                    SoundFxLibrary.GetFx("bomb1").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.1f),
-                                        CalcHelper.RandomBetween(-0.5f, 0.1f), CalcHelper.CalcPan(Position).X * 1.8f);
+                    SoundFxLibrary.GetFx("bomb4").Play(SoundFxManager.GetVolume("Sound", CalcHelper.CalcVolume(Position) * 0.7f),
+                                        CalcHelper.RandomBetween(-0.5f, 0.2f), CalcHelper.CalcPan(Position).X * 1.8f);
                 }
 
                 if (_health <= 0)
