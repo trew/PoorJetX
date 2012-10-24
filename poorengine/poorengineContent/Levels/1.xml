@@ -2,7 +2,7 @@
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Briefing>
     <Title>First level</Title>
-    <Story>This is the description for the first level. But this i just a placeholder so i can check that wordwrapping works. I downloaded someone elses code for the word wrapping part. Please dont tell!</Story>
+    <Story>Enemy airplanes spotted! We need you to find those targets and tell em they're not welcome here. And by that I mean take them down to groundlevel, hard!</Story>
     <Objectives>
       <LevelObjective>
         <Description>Destroy the target fleet of enemy airplanes</Description>
