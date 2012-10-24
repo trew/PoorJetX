@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using PoorEngine.Textures;
 using Microsoft.Xna.Framework.Graphics;
 using PoorEngine.Helpers;
+using PoorEngine.Settings;
 
 namespace PoorEngine.SceneObject
 {
@@ -66,7 +67,7 @@ namespace PoorEngine.SceneObject
                                             CameraManager.Camera.Normalize(Position), null, SceneGraphManager.TODcolor,
                                             _orientation + (float)CalcHelper.DegreeToRadian(180), _origin, Scale, SpriteEffects.None, 0f);
 
-            if (EngineManager.Debug.ViewDebug) // Draw debug boundingbox
+            if (GameSettings.Default.Debug) // Draw debug boundingbox
                 TextureManager.DrawRectangle(ScreenManager.SpriteBatch, CameraManager.Camera.Normalize(BoundingBox), 1, Color.Black);
 
             ScreenManager.SpriteBatch.End();

@@ -119,6 +119,36 @@ namespace PoorEngine.Settings
                 _musicVolume = value;
             }
         }
+
+        private bool _showUI = true;
+        /// <summary>
+        /// Gets or sets visibility of the UI when playing.
+        /// </summary>
+        public bool ShowUI
+        {
+            get { return _showUI; }
+            set
+            {
+                if (_showUI != value)
+                    _needSave = true;
+                _showUI = value;
+            }
+        }
+
+        private bool _debug = false;
+        /// <summary>
+        /// Gets or sets visibility of the UI when playing.
+        /// </summary>
+        public bool Debug
+        {
+            get { return _debug; }
+            set
+            {
+                if (_debug != value)
+                    _needSave = true;
+                _debug = value;
+            }
+        }
         #endregion
 
         #region Default

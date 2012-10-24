@@ -15,6 +15,7 @@ using PoorEngine.GameScreens;
 using PoorJetX.GameScreens;
 using PoorEngine.Particles;
 using PoorEngine.Helpers;
+using PoorEngine.Settings;
 using System.Diagnostics;
 
 namespace PoorEngine.GameScreens
@@ -56,15 +57,9 @@ namespace PoorEngine.GameScreens
 
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
-            foreach (Instrument inst in _instruments.Values)
-            {
-                inst.Visible = true;
-            }
 
-            //player1 = new PlayerAirplane();
             player1.Reset();
             SceneGraphManager.AddObject(player1);
-            //_ammoDisplay = new AmmoDisplay(EngineManager.Game, (ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
         }
 
         public int ScreenWidth
@@ -366,7 +361,10 @@ namespace PoorEngine.GameScreens
                 pauseMenuScreen.RestartGameEvent += RestartGameEvent;
                 ScreenManager.AddScreen(pauseMenuScreen);
             }
-
+            if (input.IsNewKeyPress(Keys.V))
+            {
+                GameSettings.Default.ShowUI = !GameSettings.Default.ShowUI;
+            }
         }
 
         private void ExitGame()
@@ -406,17 +404,6 @@ namespace PoorEngine.GameScreens
 
             // Draw Score
             ScreenManager.SpriteBatch.Begin();
-            Text.DrawText(
-                        ScreenManager.Cartoon18, // Font
-                        "Level: " + LevelManager.CurrentLevel.LevelNumber,   // Text
-                        Color.White,    // Inner color
-                        new Vector2(GameHelper.ScreenWidth - 200f, 5f),      // Position
-                        1.3f);          // Outline thickness
-            Text.DrawText(ScreenManager.Cartoon18, // Font
-                        "Score: " + EngineManager.Score,   // Text
-                        Color.White,    // Inner color
-                        new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
-                        1.3f);          // Outline thickness
 
             if ((player1.IsCrashing || player1.IsDead) && (player1.Lives <= 0))
             {
@@ -438,11 +425,27 @@ namespace PoorEngine.GameScreens
                     1.3f);
             }
 
-            for (int i = 0; i < player1.Lives; i++)
+            if (GameSettings.Default.ShowUI)
             {
-                Texture2D lifeTex = TextureManager.GetTexture("1up").BaseTexture as Texture2D;
-                Rectangle pos = new Rectangle(GameHelper.ScreenWidth - 500 + (50 * i), 10, 48, 31);
-                ScreenManager.SpriteBatch.Draw(lifeTex, pos, Color.White);
+
+                Text.DrawText(
+                            ScreenManager.Cartoon18, // Font
+                            "Level: " + LevelManager.CurrentLevel.LevelNumber,   // Text
+                            Color.White,    // Inner color
+                            new Vector2(GameHelper.ScreenWidth - 200f, 5f),      // Position
+                            1.3f);          // Outline thickness
+                Text.DrawText(ScreenManager.Cartoon18, // Font
+                            "Score: " + EngineManager.Score,   // Text
+                            Color.White,    // Inner color
+                            new Vector2(GameHelper.ScreenWidth - 200f, 30f),      // Position
+                            1.3f);          // Outline thickness
+
+                for (int i = 0; i < player1.Lives; i++)
+                {
+                    Texture2D lifeTex = TextureManager.GetTexture("1up").BaseTexture as Texture2D;
+                    Rectangle pos = new Rectangle(GameHelper.ScreenWidth - 500 + (50 * i), 10, 48, 31);
+                    ScreenManager.SpriteBatch.Draw(lifeTex, pos, Color.White);
+                }
             }
 
             ScreenManager.SpriteBatch.End();

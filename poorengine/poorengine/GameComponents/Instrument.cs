@@ -10,14 +10,13 @@ using PoorEngine.Interfaces;
 using PoorEngine.GameScreens;
 using PoorEngine.Helpers;
 using PoorEngine.SceneObject;
+using PoorEngine.Settings;
 
 
 namespace PoorEngine.GameComponents
 {
     public class Instrument
     {
-        private bool _visible;
-        public bool Visible { get { return _visible; } set { _visible = value; } }
         float currentValue;
         float minValue;
         float maxValue;
@@ -73,51 +72,44 @@ namespace PoorEngine.GameComponents
             {
                 currentValue = (float)_player.LinearVelocity;
             }
-            if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
-            {
-                Visible = !Visible;
-            }
-            if (_player.IsCrashing && !_player.IsDead)
-            {
-                Visible = false;
-            }
-            if (LevelManager.CurrentLevel.Completed)
-            {
-                Visible = false;
-            }
         }
 
         public void Draw(GameTime gameTime)
         {
-            if (!Visible) return;
-            // Standardize input, calculate positions
-            float max_sd = maxValue - minValue;
-            float curr_sd = currentValue - minValue;
-            float offset180multiplier = max_sd / 180;
-            float curr_real = curr_sd / offset180multiplier;
-         
-            Texture2D tex = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+            // Don't show UI if ShowUI is false
+            // Don't show UI if player is crashing or is Dead.
+            // Don't show UI if level is completed.
+            if (GameSettings.Default.ShowUI || _player.IsDead || _player.IsCrashing || LevelManager.CurrentLevel.Completed)
+            {
+                // Standardize input, calculate positions
+                float max_sd = maxValue - minValue;
+                float curr_sd = currentValue - minValue;
+                float offset180multiplier = max_sd / 180;
+                float curr_real = curr_sd / offset180multiplier;
 
-            Vector2 scaledPos = pos - new Vector2(0, tex.Height*scale);
-            Vector2 needle_origin = scaledPos + new Vector2(tex.Width * scale / 2, tex.Height * scale);
+                Texture2D tex = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
 
-            ScreenManager.SpriteBatch.Begin();
-            // Draw instrument
-            ScreenManager.SpriteBatch.Draw(tex, scaledPos, null, Color.White, 0f, new Vector2(0, 0), scale, SpriteEffects.None, 0f);
-            // Draw needle
-            DrawLine(ScreenManager.SpriteBatch, needleTexture, 3, (texHeight - 15) * scale, curr_real - 90, Color.White, needle_origin);
-           
-            // Draw title-text
-            Text.DrawText(
-                        ScreenManager.Cartoon14, // Font
-                        _titleString,   // Text
-                        Color.White,    // Inner color
-                        scaledPos + new Vector2(TextureManager.GetCenterX(0f,
-                                                                tex.Width * scale,
-                                                                ScreenManager.Cartoon14.MeasureString(_titleString).X),-20f),      // Position
-                        1.3f);          // Outline thickness
+                Vector2 scaledPos = pos - new Vector2(0, tex.Height * scale);
+                Vector2 needle_origin = scaledPos + new Vector2(tex.Width * scale / 2, tex.Height * scale);
 
-            ScreenManager.SpriteBatch.End();
+                ScreenManager.SpriteBatch.Begin();
+                // Draw instrument
+                ScreenManager.SpriteBatch.Draw(tex, scaledPos, null, Color.White, 0f, new Vector2(0, 0), scale, SpriteEffects.None, 0f);
+                // Draw needle
+                DrawLine(ScreenManager.SpriteBatch, needleTexture, 3, (texHeight - 15) * scale, curr_real - 90, Color.White, needle_origin);
+
+                // Draw title-text
+                Text.DrawText(
+                            ScreenManager.Cartoon14, // Font
+                            _titleString,   // Text
+                            Color.White,    // Inner color
+                            scaledPos + new Vector2(TextureManager.GetCenterX(0f,
+                                                                    tex.Width * scale,
+                                                                    ScreenManager.Cartoon14.MeasureString(_titleString).X), -20f),      // Position
+                            1.3f);          // Outline thickness
+
+                ScreenManager.SpriteBatch.End();
+            }
         }
 
         public void LoadContent()
@@ -126,13 +118,11 @@ namespace PoorEngine.GameComponents
 
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
             texHeight = texture.Height;
-            Visible = true;
         }
 
         public void UnloadContent()
         {
             TextureManager.RemoveTexture(TextureName);
-            Visible = false;
         }
     }
 }

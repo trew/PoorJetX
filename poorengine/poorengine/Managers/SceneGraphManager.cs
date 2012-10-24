@@ -45,7 +45,7 @@ namespace PoorEngine.Managers
             _new = new Queue<Node>();
             removeQueue = new Queue<Node>();
             _timeOfDay = 100;
-            _TODspeed = 0.05f;
+            _TODspeed = 0.00f;
 
             _useCollisionDetection = true;
 

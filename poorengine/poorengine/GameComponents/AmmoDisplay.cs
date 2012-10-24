@@ -10,6 +10,7 @@ using PoorEngine.Managers;
 using PoorEngine.SceneObject;
 using PoorEngine.Helpers;
 using PoorEngine.Textures;
+using PoorEngine.Settings;
 
 namespace PoorEngine.GameComponents
 {
@@ -25,8 +26,6 @@ namespace PoorEngine.GameComponents
         private Stopwatch soundTimer;
         private bool playSound;
 
-        public bool Visible { get; set; }
-
         public AmmoDisplay(ProjectileWeapon prwpn, BombWeapon bmwpn)
         {
             ProjectileWeapon = prwpn;
@@ -34,7 +33,6 @@ namespace PoorEngine.GameComponents
             Position = new Vector2(10, 10);
 
             playSound = false;
-            Visible = true;
 
             soundTimer = new Stopwatch();
             soundTimer.Start();
@@ -71,15 +69,6 @@ namespace PoorEngine.GameComponents
 
         public void Update(GameTime gameTime)
         {
-            if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.V))
-            {
-                Visible = !Visible;
-            }
-            if (LevelManager.CurrentLevel.Completed)
-            {
-                Visible = false;
-            }
-
             if (bRefillGreen.ElapsedMilliseconds > 3000)
                 bRefillGreen.Stop();
 
@@ -111,55 +100,57 @@ namespace PoorEngine.GameComponents
 
         public void Draw(GameTime gameTime)
         {
-            if (!Visible) return;
-            Vector2 mgPos = new Vector2(0, 100);
-            Vector2 bombPos = new Vector2(0, 180);
-
-            Texture2D bombBackground;
-            Color bombCountColor = Color.White;
-
-            Texture2D MGBackground;
-            Color mgCountColor = Color.White;
-
-            Texture2D greenBackground = TextureManager.GetTexture("ammo_refill").BaseTexture as Texture2D;
-            
-            if      (BombsPercentage() > 25f)   bombBackground = TextureManager.GetTexture("ammo_bombs").BaseTexture as Texture2D;
-            //else if (BombsPercentage() == 0)    bombBackground = TextureManager.GetTexture("ammo_bombs_none").BaseTexture as Texture2D;
-            else
+            if (GameSettings.Default.ShowUI && !LevelManager.CurrentLevel.Completed)
             {
-                bombBackground = TextureManager.GetTexture("ammo_bombs_low").BaseTexture as Texture2D;
-                bombCountColor = Color.Red;
+                Vector2 mgPos = new Vector2(0, 100);
+                Vector2 bombPos = new Vector2(0, 180);
+
+                Texture2D bombBackground;
+                Color bombCountColor = Color.White;
+
+                Texture2D MGBackground;
+                Color mgCountColor = Color.White;
+
+                Texture2D greenBackground = TextureManager.GetTexture("ammo_refill").BaseTexture as Texture2D;
+
+                if (BombsPercentage() > 25f) bombBackground = TextureManager.GetTexture("ammo_bombs").BaseTexture as Texture2D;
+                //else if (BombsPercentage() == 0)    bombBackground = TextureManager.GetTexture("ammo_bombs_none").BaseTexture as Texture2D;
+                else
+                {
+                    bombBackground = TextureManager.GetTexture("ammo_bombs_low").BaseTexture as Texture2D;
+                    bombCountColor = Color.Red;
+                }
+
+
+                if (MGPercentage() > 25f) MGBackground = TextureManager.GetTexture("ammo_mg").BaseTexture as Texture2D;
+                //else if (MGPercentage() == 0)       MGBackground = TextureManager.GetTexture("ammo_mg_none").BaseTexture as Texture2D;
+                else
+                {
+                    MGBackground = TextureManager.GetTexture("ammo_mg_low").BaseTexture as Texture2D;
+                    mgCountColor = Color.Red;
+                }
+
+                float scale = 0.40f;
+
+                ScreenManager.SpriteBatch.Begin();
+
+                ScreenManager.SpriteBatch.Draw(MGBackground, mgPos, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                ScreenManager.SpriteBatch.Draw(bombBackground, bombPos, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+                ScreenManager.SpriteBatch.Draw(MGBackground, mgPos, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                ScreenManager.SpriteBatch.Draw(bombBackground, bombPos, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+                if (mgRefillGreen.IsRunning)
+                    ScreenManager.SpriteBatch.Draw(greenBackground, mgPos, null, Color.White * (1 - (((float)mgRefillGreen.ElapsedMilliseconds) / 3000f)), 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+                if (bRefillGreen.IsRunning)
+                    ScreenManager.SpriteBatch.Draw(greenBackground, bombPos, null, Color.White * (1 - (((float)bRefillGreen.ElapsedMilliseconds) / 3000f)), 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+                Text.DrawText(ScreenManager.Cartoon14regular, ProjectileWeapon.AmmoCount.ToString(), mgCountColor, mgPos + new Vector2(40, 23), 1f);
+                Text.DrawText(ScreenManager.Cartoon14regular, BombWeapon.AmmoCount.ToString(), bombCountColor, bombPos + new Vector2(40, 23), 1f);
+
+                ScreenManager.SpriteBatch.End();
             }
-
-
-            if      (MGPercentage() > 25f)      MGBackground = TextureManager.GetTexture("ammo_mg").BaseTexture as Texture2D;
-            //else if (MGPercentage() == 0)       MGBackground = TextureManager.GetTexture("ammo_mg_none").BaseTexture as Texture2D;
-            else                              
-            { 
-                MGBackground = TextureManager.GetTexture("ammo_mg_low").BaseTexture as Texture2D;
-                mgCountColor = Color.Red;
-            }
-
-            float scale = 0.40f;
-
-            ScreenManager.SpriteBatch.Begin();
-
-            ScreenManager.SpriteBatch.Draw(MGBackground,mgPos, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            ScreenManager.SpriteBatch.Draw(bombBackground, bombPos, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-
-            ScreenManager.SpriteBatch.Draw(MGBackground, mgPos, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            ScreenManager.SpriteBatch.Draw(bombBackground, bombPos, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-
-            if(mgRefillGreen.IsRunning)
-                ScreenManager.SpriteBatch.Draw(greenBackground, mgPos, null, Color.White * (1 - (((float)mgRefillGreen.ElapsedMilliseconds) / 3000f)), 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-
-            if (bRefillGreen.IsRunning)
-                ScreenManager.SpriteBatch.Draw(greenBackground, bombPos, null, Color.White * (1 - (((float)bRefillGreen.ElapsedMilliseconds) / 3000f)), 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-
-            Text.DrawText(ScreenManager.Cartoon14regular, ProjectileWeapon.AmmoCount.ToString(), mgCountColor, mgPos + new Vector2(40, 23), 1f);
-            Text.DrawText(ScreenManager.Cartoon14regular, BombWeapon.AmmoCount.ToString(), bombCountColor, bombPos + new Vector2(40, 23), 1f);
-
-            ScreenManager.SpriteBatch.End();
         }
     }
 }

@@ -13,6 +13,7 @@ using PoorEngine.Textures;
 using PoorEngine.GameComponents;
 using PoorEngine.Helpers;
 using PoorEngine.Particles;
+using PoorEngine.Settings;
 
 namespace PoorEngine.SceneObject
 {
@@ -267,7 +268,7 @@ namespace PoorEngine.SceneObject
                                                0f);
             }
 
-            if (EngineManager.Debug.ViewDebug) // Draw debug boundingbox
+            if (GameSettings.Default.Debug) // Draw debug boundingbox
                 TextureManager.DrawRectangle(ScreenManager.SpriteBatch, CameraManager.Camera.Normalize(BoundingBox), 1, Color.Black);
 
             ScreenManager.SpriteBatch.End();
