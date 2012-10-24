@@ -137,7 +137,7 @@ namespace PoorJetX.GameScreens
             i = 1;
             foreach (LevelObjective obj in LevelManager.CurrentLevel.Briefing.Objectives)
             {
-                Text.DrawText(ScreenManager.Cartoon18regular, " * " + obj.Description, Color.Black, color, 1f, 1f, rotation, new Vector2(objX - ((i + 1) * 4.2f), objY + ((i + 1) * 25)), Vector2.Zero, false);
+                Text.DrawText(ScreenManager.Cartoon14regular, " * " + obj.Description, Color.Black, color, 1f, 1f, rotation, new Vector2(objX - ((i + 1) * 4.2f), objY + ((i + 1) * 25)), Vector2.Zero, false);
                 i++;
             }
 
