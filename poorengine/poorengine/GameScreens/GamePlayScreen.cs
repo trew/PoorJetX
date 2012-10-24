@@ -275,6 +275,28 @@ namespace PoorEngine.GameScreens
              *  DEBUG INPUT
              */
             #region
+            if (input.IsNewKeyPress(Keys.D1))
+            {
+                SceneGraphManager.SetTimeOfDay24h = 0f;
+            }
+
+            if (input.IsNewKeyPress(Keys.D2))
+            {
+                SceneGraphManager.SetTimeOfDay24h = 8f;
+            }
+            if (input.IsNewKeyPress(Keys.D3))
+            {
+                SceneGraphManager.SetTimeOfDay24h = 12f;
+            }
+            if (input.IsNewKeyPress(Keys.D4))
+            {
+                SceneGraphManager.SetTimeOfDay24h = 17f;
+            }
+            if (input.IsNewKeyPress(Keys.D5))
+            {
+                SceneGraphManager.SetTimeOfDay24h = 20f;
+            }
+
             if (input.IsNewKeyPress(Keys.E))
             {
                 GroundTransport gcv = new GroundTransport(3000, false);

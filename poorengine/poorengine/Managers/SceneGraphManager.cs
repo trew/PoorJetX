@@ -23,9 +23,18 @@ namespace PoorEngine.Managers
 
         private static float _timeOfDay;
         private static float _TODspeed;
+        public static float SetTimeOfDay24h {
+            set {
+                _timeOfDay = ((value % 12) / 12f) * (float)MathHelper.Pi;
+                if (value >= 12f)
+                    _TODspeed = -Math.Abs(_TODspeed);
+                else
+                    _TODspeed = Math.Abs(_TODspeed);
+            }
+        }
         public static float TimeOfDay { get { return _timeOfDay; } set { _timeOfDay = value; } }
         public static float TImeOfDaySpeed { get { return _TODspeed; } set { _TODspeed = value; } }
-        public static Color TODcolor { get { return new Color((int)(50 + (_timeOfDay * 2.05f)), (int)(120 + (_timeOfDay * 1.35f)), (int)(120 + (_timeOfDay * 1.35f))); } }
+        public static Color TODcolor { get { return new Color((int)(50 + ((_timeOfDay / MathHelper.Pi) * 205f)), (int)(120 + ((_timeOfDay / MathHelper.Pi) * 135f)), (int)(120 + ((_timeOfDay / MathHelper.Pi) * 135f))); } }
 
         public static bool newObjectsAdded;
         public static Queue<Node> removeQueue { get; set; }
@@ -44,8 +53,9 @@ namespace PoorEngine.Managers
             _root = new Node();
             _new = new Queue<Node>();
             removeQueue = new Queue<Node>();
-            _timeOfDay = 100;
-            _TODspeed = 0.00f;
+
+            _timeOfDay = MathHelper.Pi;
+            _TODspeed = 0.0015f;
 
             _useCollisionDetection = true;
 
@@ -202,11 +212,11 @@ namespace PoorEngine.Managers
 
         private static void updateTimeOfDay()
         {
-            if (_timeOfDay >= 98)
+            if (_timeOfDay >= MathHelper.Pi)
                 _TODspeed = -Math.Abs(_TODspeed);
             
             
-            else if (_timeOfDay <= 2)
+            else if (_timeOfDay <= 0)
                 _TODspeed = Math.Abs(_TODspeed);
             
             _timeOfDay += _TODspeed;
