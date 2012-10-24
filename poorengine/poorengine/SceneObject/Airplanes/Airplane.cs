@@ -231,7 +231,7 @@ namespace PoorEngine.SceneObject
 
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
-                                           CameraManager.Camera.Normalize(Position), null, Color.AliceBlue,
+                                           CameraManager.Camera.Normalize(Position), null, SceneGraphManager.TODcolor,
                                            (float)CalcHelper.DegreeToRadian(_orientation - 90),
                                            origin, Scale, SpriteEffects.None, 0f);
 

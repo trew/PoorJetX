@@ -68,7 +68,7 @@ namespace PoorEngine.SceneObject
                 texture,
                 CameraManager.Camera.Normalize(Position),
                 null,
-                Color.White,
+                SceneGraphManager.TODcolor,
                 0f,
                 new Vector2(0, texture.Height),
                 1f,

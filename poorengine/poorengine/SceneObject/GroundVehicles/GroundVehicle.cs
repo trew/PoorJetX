@@ -133,7 +133,7 @@ namespace PoorEngine.SceneObject
             ScreenManager.SpriteBatch.Draw(texture,
                                            CameraManager.Camera.Normalize(Position),  // Position
                                            null,                // Source-Rectangle 
-                                           Color.White,
+                                           SceneGraphManager.TODcolor,
                                            rotation,                 // Rotation
                                            Vector2.Zero,        // Origin 
                                            Scale, 
@@ -279,6 +279,11 @@ namespace PoorEngine.SceneObject
                 TextureManager.AddTexture(new PoorTexture("Textures/Enemies/" + TextureNameWeapon), TextureNameWeapon);
                 _fireBulletFX_id = SoundFxManager.AddInstance(SoundFxLibrary.GenerateInstance("firebullet"));
             }
+
+            else if (_type.Equals("civilian"))
+            {
+                TextureManager.AddTexture(new PoorTexture("Textures/Enemies/enemy_transport_headlights"), "enemy_transport_headlights");
+            }
         }
 
         public virtual void UnloadContent()
@@ -286,9 +291,13 @@ namespace PoorEngine.SceneObject
             TextureManager.RemoveTexture(TextureName);
             TextureManager.RemoveTexture(TextureNameDestroyed);
 
-            if (_type == "antiair")
+            if (_type == "antiair" || _type.Equals("bossantiair"))
             {
                 TextureManager.RemoveTexture(TextureNameWeapon);
+            }
+            else if (_type.Equals("civilian"))
+            {
+                TextureManager.RemoveTexture("enemy_transport_headlights");
             }
         }
     }

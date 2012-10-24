@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using PoorEngine.Managers;
 using PoorEngine.Helpers;
 using PoorEngine.Interfaces;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace PoorEngine.SceneObject
 {
@@ -74,6 +75,20 @@ namespace PoorEngine.SceneObject
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+
+            if (SceneGraphManager.TimeOfDay < 60 && _type.Equals("civilian"))
+            {
+                Texture2D headlights = TextureManager.GetTexture("enemy_transport_headlights").BaseTexture as Texture2D;
+
+                Vector2 normalizedPosition = CameraManager.Camera.Normalize(Position + new Vector2(107, 15));
+
+                ScreenManager.SpriteBatch.Begin();
+                ScreenManager.SpriteBatch.Draw(headlights, new Rectangle((int)normalizedPosition.X, (int)normalizedPosition.Y, 116, 33), Color.White);
+                ScreenManager.SpriteBatch.End();
+
+            }
+
+
             if (RequiredForVictory && !IsDead)
                 DrawArrow("arrow", 0.4f, true);
         }

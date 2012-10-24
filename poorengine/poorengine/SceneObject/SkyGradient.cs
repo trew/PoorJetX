@@ -23,12 +23,14 @@ namespace PoorEngine.SceneObject
         public void Draw(GameTime gameTime)
         {
             Texture2D texture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
+            Texture2D textureNight = TextureManager.GetTexture("skygradient_night").BaseTexture as Texture2D;
             Rectangle rect = new Rectangle(0, 0, GameHelper.ScreenWidth, 2048);
 
             float y = Position.Y - (CameraManager.Camera.Pos.Y / (Z / 7) );
 
             ScreenManager.SpriteBatch.Begin();
-            ScreenManager.SpriteBatch.Draw(texture, new Vector2(0, y), rect,  Color.White, 0f, new Vector2(0,0), 1f, SpriteEffects.None, 0f);
+            ScreenManager.SpriteBatch.Draw(textureNight, new Vector2(0, y), rect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            ScreenManager.SpriteBatch.Draw(texture, new Vector2(0, y), rect, Color.White * (SceneGraphManager.TimeOfDay/100f), 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
             ScreenManager.SpriteBatch.End();
         }
 
@@ -40,6 +42,7 @@ namespace PoorEngine.SceneObject
         public void LoadContent()
         {
             TextureManager.AddTexture(new PoorTexture("Textures/Landscape/" + TextureName), TextureName);
+            TextureManager.AddTexture(new PoorTexture("Textures/Landscape/" + "skygradient_night"), "skygradient_night");
         }
 
         public void UnloadContent()

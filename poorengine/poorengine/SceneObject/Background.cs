@@ -41,7 +41,7 @@ namespace PoorEngine.SceneObject
             {
                 Position = new Vector2(i * texture.Width - (int)CameraManager.Camera.Pos.X % (texture.Width * Z) / Z,
                     GameHelper.ScreenHeight - texture.Height - _height - (CameraManager.Camera.Pos.Y / YZ));
-                ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
+                ScreenManager.SpriteBatch.Draw(texture, Position, SceneGraphManager.TODcolor);
             }
             
             ScreenManager.SpriteBatch.End();

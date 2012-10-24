@@ -63,7 +63,7 @@ namespace PoorEngine.SceneObject
 
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(texture,
-                                            CameraManager.Camera.Normalize(Position), null, Color.AliceBlue,
+                                            CameraManager.Camera.Normalize(Position), null, SceneGraphManager.TODcolor,
                                             _orientation + (float)CalcHelper.DegreeToRadian(180), _origin, Scale, SpriteEffects.None, 0f);
 
             if (EngineManager.Debug.ViewDebug) // Draw debug boundingbox

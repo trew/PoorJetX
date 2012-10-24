@@ -54,13 +54,13 @@ namespace PoorEngine.SceneObject
                 {
                     Position = new Vector2(xbloodyhell + appear.X + i * (texture.Width + repeatMargin) - (int)CameraManager.Camera.Pos.X % ((texture.Width + repeatMargin) * Z) / Z,
                                             y);
-                    ScreenManager.SpriteBatch.Draw(texture, Position, null, Color.White, 0f, new Vector2(), scale, SpriteEffects.None, 0f);
+                    ScreenManager.SpriteBatch.Draw(texture, Position, null, SceneGraphManager.TODcolor, 0f, new Vector2(), scale, SpriteEffects.None, 0f);
                 }
             }
             else
             {
                 Position = new Vector2(appear.X - (int)CameraManager.Camera.Pos.X % (texture.Width * Z) / Z, y);
-                ScreenManager.SpriteBatch.Draw(texture, Position, Color.White);
+                ScreenManager.SpriteBatch.Draw(texture, Position, SceneGraphManager.TODcolor);
             }
             ScreenManager.SpriteBatch.End();
         }

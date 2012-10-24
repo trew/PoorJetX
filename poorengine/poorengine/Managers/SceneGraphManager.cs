@@ -21,6 +21,12 @@ namespace PoorEngine.Managers
             get { return _root; }
         }
 
+        private static float _timeOfDay;
+        private static float _TODspeed;
+        public static float TimeOfDay { get { return _timeOfDay; } set { _timeOfDay = value; } }
+        public static float TImeOfDaySpeed { get { return _TODspeed; } set { _TODspeed = value; } }
+        public static Color TODcolor { get { return new Color((int)(50 + (_timeOfDay * 2.05f)), (int)(120 + (_timeOfDay * 1.35f)), (int)(120 + (_timeOfDay * 1.35f))); } }
+
         public static bool newObjectsAdded;
         public static Queue<Node> removeQueue { get; set; }
         private static Queue<Node> _new;
@@ -38,6 +44,8 @@ namespace PoorEngine.Managers
             _root = new Node();
             _new = new Queue<Node>();
             removeQueue = new Queue<Node>();
+            _timeOfDay = 100;
+            _TODspeed = 0.05f;
 
             _useCollisionDetection = true;
 
@@ -61,6 +69,8 @@ namespace PoorEngine.Managers
 
         public static new void Update(GameTime gameTime)
         {
+            updateTimeOfDay();
+
             // Add new nodes and sort the list
             if (newObjectsAdded)
             {
@@ -187,6 +197,19 @@ namespace PoorEngine.Managers
                     return;
                 }
             }
+        }
+
+
+        private static void updateTimeOfDay()
+        {
+            if (_timeOfDay >= 98)
+                _TODspeed = -Math.Abs(_TODspeed);
+            
+            
+            else if (_timeOfDay <= 2)
+                _TODspeed = Math.Abs(_TODspeed);
+            
+            _timeOfDay += _TODspeed;
         }
     }
 }
