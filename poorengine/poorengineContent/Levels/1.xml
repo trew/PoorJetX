@@ -207,32 +207,18 @@
   
   <Texts>
     <LevelText>
-	    <text>No! EnemyAirplane. What r u doin? EnemyAirplane!?</text>
-	    <fontName>cartoon18</fontName>
-	    <R>255</R>
-	    <G>255</G>
-	    <B>255</B>
-	    <X>0</X>
-	    <Y>200</Y>
-	    <XAppear>500</XAppear>
-	    <center>true</center>
-	    <outline>1.3</outline>
-	    <secondsTTL>2</secondsTTL>
-	  </LevelText>
-
-	  <LevelText>
-	    <text>STAHP!!</text>
-	    <fontName>cartoon18</fontName>
-	    <R>255</R>
-	    <G>255</G>
-	    <B>255</B>
-	    <X>0</X>
-	    <Y>250</Y>
-	    <XAppear>900</XAppear>
-	    <center>true</center>
-	    <outline>1.3</outline>
-	    <secondsTTL>2</secondsTTL>
-	  </LevelText>
+      <text></text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>250</Y>
+      <XAppear>0</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>0</secondsTTL>
+    </LevelText>
   </Texts>
   
   <Enemies>
