@@ -279,22 +279,34 @@ namespace PoorEngine.GameScreens
             {
                 SceneGraphManager.SetTimeOfDay24h = 0f;
             }
-
             if (input.IsNewKeyPress(Keys.D2))
             {
-                SceneGraphManager.SetTimeOfDay24h = 6f;
+                SceneGraphManager.SetTimeOfDay24h = 3f;
             }
             if (input.IsNewKeyPress(Keys.D3))
             {
-                SceneGraphManager.SetTimeOfDay24h = 12f;
+                SceneGraphManager.SetTimeOfDay24h = 6f;
             }
             if (input.IsNewKeyPress(Keys.D4))
             {
-                SceneGraphManager.SetTimeOfDay24h = 18f;
+                SceneGraphManager.SetTimeOfDay24h = 9f;
             }
             if (input.IsNewKeyPress(Keys.D5))
             {
-                SceneGraphManager.SetTimeOfDay24h = 24f;
+                SceneGraphManager.SetTimeOfDay24h = 12f;
+            }
+            if (input.IsNewKeyPress(Keys.D6))
+            {
+                SceneGraphManager.SetTimeOfDay24h = 15f;
+            }
+            if (input.IsNewKeyPress(Keys.D7))
+            {
+                SceneGraphManager.SetTimeOfDay24h = 18f;
+            }
+            if (input.IsNewKeyPress(Keys.D8
+                ))
+            {
+                SceneGraphManager.SetTimeOfDay24h = 21f;
             }
 
             if (input.IsNewKeyPress(Keys.E))
