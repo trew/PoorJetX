@@ -237,7 +237,7 @@ namespace PoorEngine.SceneObject
                                            origin, Scale, SpriteEffects.None, 0f);
 
             // Draw _health-bar, if plane still alive
-            if (!(IsCrashing || IsDead))
+            if (GameSettings.Default.ShowUI && !(IsCrashing || IsDead))
             {
                 // Update Healthbar draw-settings.
                 _healthMeterRect.Width = (int)(38 * ((float)_health / _maxHealth));

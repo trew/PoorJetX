@@ -11,6 +11,8 @@ using PoorEngine.Managers;
 using PoorEngine.Textures;
 using PoorEngine.GameComponents;
 using PoorEngine.Helpers;
+using PoorEngine.Settings;
+
 
 namespace PoorEngine.SceneObject
 {
@@ -235,8 +237,11 @@ namespace PoorEngine.SceneObject
 
         public override void Draw(GameTime gameTime)
         {
-            drawBulletPath();
-            if (_bombPathTrigger) drawBombPath();
+            if (GameSettings.Default.ShowUI)
+            {
+                drawBulletPath();
+                if (_bombPathTrigger) drawBombPath();
+            }
 
             base.Draw(gameTime);
         }

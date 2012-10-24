@@ -7,6 +7,7 @@ using PoorEngine.Interfaces;
 using PoorEngine.Managers;
 using PoorEngine.Textures;
 using PoorEngine.Helpers;
+using PoorEngine.Settings;
 
 namespace PoorEngine.SceneObject
 {
@@ -30,9 +31,10 @@ namespace PoorEngine.SceneObject
 
         public void DrawArrow(string textureName, float scale, bool isArrow)
         {
+            if (!GameSettings.Default.ShowUI) return;
+
             Vector2 pos = Position;
             float orientation = 0;
-
             
             Texture2D iconTexture = TextureManager.GetTexture(textureName).BaseTexture as Texture2D;
             Texture2D targetTexture = TextureManager.GetTexture(TextureName).BaseTexture as Texture2D;
