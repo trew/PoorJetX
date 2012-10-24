@@ -28,6 +28,7 @@ namespace PoorEngine.GameScreens
         Instrument throttleMeter;
         Instrument airspeedMeter;
         AmmoDisplay _ammoDisplay;
+        CobraMeter _cobraMeter;
 
         Stopwatch _deathTimer;
         Stopwatch _completedTimer;
@@ -143,6 +144,7 @@ namespace PoorEngine.GameScreens
             SceneGraphManager.AddObject(player1);
             _ammoDisplay = new AmmoDisplay((ProjectileWeapon)player1.ProjectileWeapon, (BombWeapon)player1.BombWeapon);
             _ammoDisplay.LoadContent();
+            _cobraMeter = new CobraMeter(player1);
 
             SceneGraphManager.LoadContent();
             ParticleManager.LoadContent();
@@ -183,6 +185,7 @@ namespace PoorEngine.GameScreens
                 inst.Update(gameTime);
             }
             _ammoDisplay.Update(gameTime);
+            _cobraMeter.Update(gameTime);
 
             if (player1.IsDead)
             {
@@ -401,6 +404,7 @@ namespace PoorEngine.GameScreens
                 inst.Draw(gameTime);
             }
             _ammoDisplay.Draw(gameTime);
+            _cobraMeter.Draw(gameTime);
 
             // Draw Score
             ScreenManager.SpriteBatch.Begin();

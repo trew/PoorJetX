@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameComponents\AmmoDisplay.cs" />
+    <Compile Include="GameComponents\CobraMeter.cs" />
     <Compile Include="GameComponents\DebugPanel.cs" />
     <Compile Include="GameComponents\Level.cs" />
     <Compile Include="GameScreens\BriefingScreen.cs" />

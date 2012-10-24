@@ -19,6 +19,8 @@ namespace PoorEngine.SceneObject
 {
     public abstract class Airplane : PoorSceneObject, IPoorDrawable, IPoorUpdateable, IPoorLoadable, IPoorWeaponHolder
     {
+        public const double MAXCOBRAFORCE = 4.0;
+
         protected double _thrust;
         protected double _airSpeed;
         protected Vector2 _oldPos;
@@ -142,6 +144,7 @@ namespace PoorEngine.SceneObject
         public double Thrust { get { return _thrust; } }
         public float Orientation { get { return (float)_orientation; } }
         public Vector2 Velocity { get { return _velocity; } }
+        public double CobraForce { get { return _cobraForce; } }
         public float HitPointsPercent { get { return ((float)_health / _maxHealth); } }
         public bool HeadingRight { get { return _velocity.X > 0; } }
         public bool HeadingDown { get { return _velocity.Y > 0; } }

@@ -401,7 +401,7 @@ namespace PoorEngine.SceneObject
             EngineManager.Debug.Print("COBRA FORCE: " + _cobraForce); 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.A))
             {
-                _cobraForce = MathHelper.Clamp((float)(_cobraForce -= 0.021f), 0f, 4f);
+                _cobraForce = CalcHelper.Clamp((float)(_cobraForce -= 0.021), 0, MAXCOBRAFORCE);
                 _orientation -= _cobraForce;
                 ParticleManager.WhiteSmoke.AddParticles(CalcHelper.calculatePoint(Position, (float)_orientation + 180f, 30f));
                 ParticleManager.WhiteSmoke.AddParticles(CalcHelper.calculatePoint(Position, (float)_orientation + 80f, 25f));
