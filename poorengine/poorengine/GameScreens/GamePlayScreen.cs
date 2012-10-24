@@ -373,13 +373,25 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.PageUp))
             {
-                ScreenManager.lengthenJanitorCoffeBreak();
+                ScreenManager.lengthenJanitorCoffeeBreak();
             }
 
             if (input.IsNewKeyPress(Keys.PageDown))
             {
-                ScreenManager.shortenJanitorCoffeBreak();
+                ScreenManager.shortenJanitorCoffeeBreak();
             }
+
+            if (input.IsNewKeyPress(Keys.Add))
+            {
+                SceneGraphManager.TImeOfDaySpeed += 0.01f;
+            }
+
+
+            if (input.IsNewKeyPress(Keys.Subtract))
+            {
+                SceneGraphManager.TImeOfDaySpeed -= 0.01f;
+            }
+
             #endregion
             /*
              *  END DEBUG INPUT

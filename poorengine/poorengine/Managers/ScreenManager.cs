@@ -18,12 +18,12 @@ namespace PoorEngine.Managers
         private int janitorCoffeeBreak;
         private static int tenMinutes = 2;
         public static int getJanitorBreakLength() { return tenMinutes; }
-        public static void lengthenJanitorCoffeBreak()
+        public static void lengthenJanitorCoffeeBreak()
         {
             tenMinutes++;
         }
 
-        public static void shortenJanitorCoffeBreak()
+        public static void shortenJanitorCoffeeBreak()
         {
             tenMinutes = CalcHelper.Clamp(--tenMinutes, 1, 99999999);
         }

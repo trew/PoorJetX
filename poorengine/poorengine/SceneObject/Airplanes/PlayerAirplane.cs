@@ -69,6 +69,7 @@ namespace PoorEngine.SceneObject
             if (input.IsNewKeyPress(Keys.O))
             {
                 ReadyToRender = !ReadyToRender;
+                CameraManager.Camera.Cruise();
             }
         }
 
