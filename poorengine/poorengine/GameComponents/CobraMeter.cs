@@ -39,7 +39,7 @@ namespace PoorEngine.GameComponents
 
         public void Draw(GameTime gameTime)
         {
-            if (GameSettings.Default.ShowUI)
+            if (GameSettings.Default.ShowUI && !LevelManager.CurrentLevel.Completed)
             {
                 // Update Healthbar draw-settings.
 
