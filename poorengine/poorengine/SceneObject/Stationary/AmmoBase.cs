@@ -36,13 +36,13 @@ namespace PoorEngine.SceneObject
 
             if(CalcHelper.DistanceBetween(EngineManager.Player.Position, this.Position) < 300f)
             {
-                if (bRefillTimer.ElapsedMilliseconds > 1000)
+                if (bRefillTimer.ElapsedMilliseconds > 700)
                 {
                     EngineManager.Player.RefillBombs(1);
                     bRefillTimer.Restart();
                 }
 
-                if (mgRefillTimer.ElapsedMilliseconds > 30)
+                if (mgRefillTimer.ElapsedMilliseconds > 5)
                 {
                     EngineManager.Player.RefillMG(1);
                     

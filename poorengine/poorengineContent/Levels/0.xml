@@ -315,10 +315,10 @@
       <XAppear>14500</XAppear>
       <center>true</center>
       <outline>1.3</outline>
-      <secondsTTL>5</secondsTTL>
+      <secondsTTL>8</secondsTTL>
     </LevelText>
     <LevelText>
-      <text>ground by flying close to it.</text>
+      <text>ground by flying close to the ammo station.</text>
       <fontName>cartoon18</fontName>
       <R>255</R>
       <G>255</G>
@@ -326,6 +326,19 @@
       <X>0</X>
       <Y>180</Y>
       <XAppear>14500</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>8</secondsTTL>
+    </LevelText>
+    <LevelText>
+      <text>Tip: Fly slowly to refill more ammo</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>150</Y>
+      <XAppear>16000</XAppear>
       <center>true</center>
       <outline>1.3</outline>
       <secondsTTL>5</secondsTTL>
@@ -339,7 +352,7 @@
       <B>255</B>
       <X>0</X>
       <Y>150</Y>
-      <XAppear>19500</XAppear>
+      <XAppear>21000</XAppear>
       <center>true</center>
       <outline>1.3</outline>
       <secondsTTL>5</secondsTTL>
@@ -353,7 +366,7 @@
       <B>255</B>
       <X>0</X>
       <Y>180</Y>
-      <XAppear>19800</XAppear>
+      <XAppear>21300</XAppear>
       <center>true</center>
       <outline>1.3</outline>
       <secondsTTL>5</secondsTTL>
@@ -370,7 +383,7 @@
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>21000</XAppear>
+      <XAppear>22500</XAppear>
       <Y>0</Y>
       <type>Transport</type>
       <health>5000</health>
@@ -383,7 +396,7 @@
   <Objects>
     <LevelObject>
       <type>ammobase</type>
-      <XAppear>15500</XAppear>
+      <XAppear>16500</XAppear>
     </LevelObject>
   </Objects>
 

@@ -210,39 +210,68 @@
   
   <Texts>
     <LevelText>
-      <text></text>
+      <text>Refill your ammunition at the base below!</text>
       <fontName>cartoon18</fontName>
       <R>255</R>
       <G>255</G>
       <B>255</B>
       <X>0</X>
       <Y>250</Y>
-      <XAppear>0</XAppear>
+      <XAppear>6000</XAppear>
       <center>true</center>
       <outline>1.3</outline>
-      <secondsTTL>0</secondsTTL>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
+    <LevelText>
+      <text>Enemy anti-air vehicle sighted! Prepare for bombing!</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>250</Y>
+      <XAppear>10500</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
+    <LevelText>
+      <text>We've found the fleet we're looking for! Get ready!</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>250</Y>
+      <XAppear>15000</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
     </LevelText>
   </Texts>
   
   <Enemies>
+    <!-- First wave -->
     <LevelEnemy>
-      <XAppear>500</XAppear>
-      <Y>0</Y>
+      <XAppear>1000</XAppear>
+      <Y>240</Y>
       <type>Airplane</type>
 	    <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
     
     <LevelEnemy>
-      <XAppear>1600</XAppear>
-      <Y>130</Y>
+      <XAppear>1300</XAppear>
+      <Y>100</Y>
       <type>Airplane</type>
 	    <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
+    <!-- /First wave -->
 	
+    <!-- Second wave -->
 	  <LevelEnemy>
-      <XAppear>2900</XAppear>
+      <XAppear>4000</XAppear>
       <Y>500</Y>
       <type>Airplane</type>
 	    <health>2000</health>
@@ -250,67 +279,146 @@
     </LevelEnemy>
 	
 	  <LevelEnemy>
-      <XAppear>1310</XAppear>
-      <Y>450</Y>
+      <XAppear>4100</XAppear>
+      <Y>420</Y>
       <type>Airplane</type>
 	    <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
-	
+	  <!-- /Second Wave -->
+
+    <!-- Ammobase here -->
+
+    <!-- Third wave -->
 	  <LevelEnemy>
-      <XAppear>1070</XAppear>
+      <XAppear>8000</XAppear>
+      <Y>300</Y>
+      <type>Airplane</type>
+	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>8000</XAppear>
       <Y>400</Y>
       <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	
-	  <LevelEnemy>
-      <XAppear>900</XAppear>
-      <Y>570</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
+      <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>900</XAppear>
+      <XAppear>8100</XAppear>
+      <Y>520</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>8150</XAppear>
+      <Y>135</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /Third wave -->
+
+    <!-- "Enemy anti-air vehicle sighted! Prepare for bombing!" 4500 -->
+
+    <!-- Antiair -->
+    <LevelEnemy>
+      <XAppear>12000</XAppear>
       <Y>0</Y>
       <type>AntiAir</type>
-      <health>9000</health>
+      <health>10000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /Antiair -->
+
+    <!-- Ammobase -->
+
+    <!-- "We've found the fleet we're looking for! Get ready!" 6000 -->
+
+    <!-- Final wave -->
+    <LevelEnemy>
+      <XAppear>16000</XAppear>
+      <Y>0</Y>
+      <type>Transport</type>
+      <health>5000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>16300</XAppear>
+      <Y>0</Y>
+      <type>Transport</type>
+      <health>5000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>16000</XAppear>
+      <Y>200</Y>
+      <type>Airplane</type>
+      <health>2000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>1300</XAppear>
-      <Y>0</Y>
-      <type>Transport</type>
-      <health>5000</health>
+      <XAppear>16050</XAppear>
+      <Y>100</Y>
+      <type>Airplane</type>
+      <health>2000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>1700</XAppear>
-      <Y>0</Y>
-      <type>Transport</type>
-      <health>5000</health>
+      <XAppear>16450</XAppear>
+      <Y>500</Y>
+      <type>Airplane</type>
+      <health>2000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>1900</XAppear>
-      <Y>0</Y>
-      <type>Transport</type>
-      <health>5000</health>
+      <XAppear>16750</XAppear>
+      <Y>300</Y>
+      <type>Airplane</type>
+      <health>2000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>17550</XAppear>
+      <Y>200</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>17550</XAppear>
+      <Y>400</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+    <!-- Final wave -->
   </Enemies>
 
   <!-- Various bases -->
   <Objects>
     <LevelObject>
       <type>ammobase</type>
-      <XAppear>1200</XAppear>
+      <XAppear>6000</XAppear>
+    </LevelObject>
+    <LevelObject>
+      <type>ammobase</type>
+      <XAppear>13000</XAppear>
+    </LevelObject>
+    <LevelObject>
+      <type>ammobase</type>
+      <XAppear>20000</XAppear>
     </LevelObject>
   </Objects>
 
