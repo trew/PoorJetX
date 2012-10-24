@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -69,7 +69,7 @@ namespace PoorJetX.GameScreens
         /// </summary>
         void OptionsMenuEntrySelected(object sender, EventArgs e)
         {
-            MessageBoxScreen messageBox = new MessageBoxScreen("No options available yet.", false);
+            MessageBoxScreen messageBox = new MessageBoxScreen("Options is not available in this version.", false);
             ScreenManager.AddScreen(messageBox);
         }
 
@@ -86,7 +86,9 @@ namespace PoorJetX.GameScreens
         /// </summary>
         void HighScoresMenuEntrySelected(object sender, EventArgs e)
         {
-            ScreenManager.AddScreen(new HighscoreScreen());
+            MessageBoxScreen messageBox = new MessageBoxScreen("Highscores is not available in this version.", false);
+            ScreenManager.AddScreen(messageBox);
+            //ScreenManager.AddScreen(new HighscoreScreen());
         }
 
         /// <summary>
