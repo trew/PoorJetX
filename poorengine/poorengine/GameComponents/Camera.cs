@@ -83,6 +83,7 @@ namespace PoorEngine.GameComponents
 
         public void Update(PlayerAirplane player1)
         {
+            if (!player1.ReadyToRender) return;
             if (!_stopped)
             {
                 UpdateX(player1);

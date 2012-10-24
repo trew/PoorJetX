@@ -37,6 +37,7 @@ namespace PoorEngine.SceneObject
             _orientation = 85;
             _bombWeapon = new BombWeapon(this);
             _projectileWeapon = new ProjectileWeapon(this);
+            ReadyToRender = true;
         }
 
         /// <summary>
@@ -50,6 +51,7 @@ namespace PoorEngine.SceneObject
             _orientation = 85;
             _bombWeapon.Reset();
             _projectileWeapon.Reset();
+            ReadyToRender = true;
         }
 
         public override void HandleDebugInput(Input input)
@@ -66,7 +68,7 @@ namespace PoorEngine.SceneObject
 
             if (input.IsNewKeyPress(Keys.O))
             {
-                ParticleManager.Explosion.AddParticles(CameraManager.Camera.Pos + new Vector2(GameHelper.HalfScreenWidth + 100, GameHelper.ScreenHeight - 30));
+                ReadyToRender = !ReadyToRender;
             }
         }
 
@@ -101,6 +103,7 @@ namespace PoorEngine.SceneObject
 
         public override void Update(GameTime gameTime)
         {
+            if (!ReadyToRender) return;
             base.Update(gameTime);
             if (IsDead && !CameraManager.Camera.Stopped)
                 CameraManager.Camera.Stop(Position);
@@ -242,6 +245,7 @@ namespace PoorEngine.SceneObject
 
         public override void Draw(GameTime gameTime)
         {
+            if (!ReadyToRender) return;
             if (GameSettings.Default.ShowUI)
             {
                 drawBulletPath();
@@ -403,7 +407,6 @@ namespace PoorEngine.SceneObject
                 _thrust = CalcHelper.Clamp(_thrust - 0.05, 0.0, _maxThrust);
             }
 
-            EngineManager.Debug.Print("COBRA FORCE: " + _cobraForce); 
             if (input.CurrentKeyboardState.IsKeyDown(Keys.A))
             {
                 _cobraForce = CalcHelper.Clamp((float)(_cobraForce -= 0.021), 0, MAXCOBRAFORCE);
