@@ -60,7 +60,7 @@ namespace PoorEngine.Managers
             removeQueue = new Queue<Node>();
 
             _timeOfDay = MathHelper.Pi;
-            _TODspeed = 0.000015f;
+            _TODspeed = 0.00015f;
 
             _useCollisionDetection = true;
 
@@ -220,11 +220,13 @@ namespace PoorEngine.Managers
             if (_timeOfDay >= MathHelper.Pi)
                 _TODspeed = -Math.Abs(_TODspeed);
             
-            
             else if (_timeOfDay <= 0)
                 _TODspeed = Math.Abs(_TODspeed);
             
             _timeOfDay += _TODspeed;
+
+            EngineManager.Debug.Print("TIME OF DAY: " + _timeOfDay);
+            EngineManager.Debug.Print("TIME OF DAYSPEED: " + _TODspeed);
         }
     }
 }

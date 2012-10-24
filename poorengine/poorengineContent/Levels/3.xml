@@ -2,7 +2,7 @@
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Briefing>
     <Title>Third level</Title>
-    <Story>This is the description for the first level. But this i just a placeholder so i can check that wordwrapping works. I downloaded someone elses code for the word wrapping part. Please dont tell!</Story>
+    <Story>They're hiding something, something big! We believe it's a weapon. If it's both big and a weapon.. dayum! Find out what it is and take it out! </Story>
     <Objectives>
       <LevelObjective>
         <Description>Kill the Boss</Description>
@@ -10,7 +10,7 @@
     </Objectives>
   </Briefing>
   <TimeOfDay>
-    <Hour>10</Hour>
+    <Hour>17</Hour>
   </TimeOfDay>
   <Visuals>
     <!-- MOUNTAINS -->
@@ -220,7 +220,7 @@
       <secondsTTL>5</secondsTTL>
     </LevelText>
     <LevelText>
-      <text>Awesome text before final boss! (so meta)</text>
+      <text>Oh my... It's a monster!</text>
       <fontName>cartoon24</fontName>
       <R>255</R>
       <G>255</G>
