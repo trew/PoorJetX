@@ -7,9 +7,6 @@
       <LevelObjective>
         <Description>Kill the Boss</Description>
       </LevelObjective>
-      <LevelObjective>
-        <Description>Be awesome</Description>
-      </LevelObjective>
     </Objectives>
   </Briefing>
   <TimeOfDay>
@@ -217,41 +214,37 @@
       <B>255</B>
       <X>0</X>
       <Y>250</Y>
-      <XAppear>6000</XAppear>
+      <XAppear>7500</XAppear>
       <center>true</center>
       <outline>1.3</outline>
       <secondsTTL>5</secondsTTL>
     </LevelText>
     <LevelText>
-      <text>Enemy anti-air vehicle sighted! Prepare for bombing!</text>
-      <fontName>cartoon18</fontName>
+      <text>Awesome text before final boss! (so meta)</text>
+      <fontName>cartoon24</fontName>
       <R>255</R>
       <G>255</G>
       <B>255</B>
       <X>0</X>
       <Y>250</Y>
-      <XAppear>10500</XAppear>
+      <XAppear>26000</XAppear>
       <center>true</center>
       <outline>1.3</outline>
-      <secondsTTL>5</secondsTTL>
-    </LevelText>
-    <LevelText>
-      <text>We've found the fleet we're looking for! Get ready!</text>
-      <fontName>cartoon18</fontName>
-      <R>255</R>
-      <G>255</G>
-      <B>255</B>
-      <X>0</X>
-      <Y>250</Y>
-      <XAppear>15000</XAppear>
-      <center>true</center>
-      <outline>1.3</outline>
-      <secondsTTL>5</secondsTTL>
+      <secondsTTL>7</secondsTTL>
     </LevelText>
   </Texts>
   
   <Enemies>
-    <!-- First wave -->
+    <!-- FIRST -->
+    <!-- 1 -->
+    <LevelEnemy>
+      <XAppear>1200</XAppear>
+      <Y>140</Y>
+      <type>Airplane</type>
+	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    
     <LevelEnemy>
       <XAppear>1000</XAppear>
       <Y>240</Y>
@@ -259,166 +252,296 @@
 	    <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
-    
-    <LevelEnemy>
-      <XAppear>1300</XAppear>
-      <Y>100</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-    <!-- /First wave -->
-	
-    <!-- Second wave -->
-	  <LevelEnemy>
-      <XAppear>4000</XAppear>
-      <Y>500</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	
-	  <LevelEnemy>
-      <XAppear>4100</XAppear>
-      <Y>420</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	  <!-- /Second Wave -->
-    
-    <!-- Ammobase here -->
-    
-    <!-- Third wave -->
-	  <LevelEnemy>
-      <XAppear>8000</XAppear>
-      <Y>300</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>8000</XAppear>
+      <XAppear>1400</XAppear>
       <Y>400</Y>
       <type>Airplane</type>
       <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
+    <!-- /1 -->
 
+    <!-- 2 -->
     <LevelEnemy>
-      <XAppear>8100</XAppear>
-      <Y>520</Y>
+      <XAppear>2200</XAppear>
+      <Y>120</Y>
       <type>Airplane</type>
       <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>8150</XAppear>
-      <Y>135</Y>
+      <XAppear>2600</XAppear>
+      <Y>300</Y>
       <type>Airplane</type>
       <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
-    <!-- /Third wave -->
 
-    <!-- "Enemy anti-air vehicle sighted! Prepare for bombing!" 4500 -->
-
-    <!-- Antiair -->
     <LevelEnemy>
-      <XAppear>12000</XAppear>
+      <XAppear>2300</XAppear>
+      <Y>500</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /2 -->
+    <!-- 3 -->
+    <LevelEnemy>
+      <XAppear>3000</XAppear>
       <Y>0</Y>
-      <type>AntiAir</type>
+      <type>Antiair</type>
       <health>10000</health>
-      <RequiredForVictory>1</RequiredForVictory>
-    </LevelEnemy>
-    <!-- /Antiair -->
-
-    <!-- Ammobase -->
-    
-    <!-- "We've found the fleet we're looking for! Get ready!" 6000 -->
-    
-    <!-- Final wave -->
-    <LevelEnemy>
-      <XAppear>16000</XAppear>
-      <Y>0</Y>
-      <type>Transport</type>
-      <health>5000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>16300</XAppear>
+      <XAppear>1000</XAppear>
       <Y>0</Y>
-      <type>Transport</type>
-      <health>5000</health>
+      <type>Antiair</type>
+      <health>10000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>16000</XAppear>
-      <Y>200</Y>
-      <type>Airplane</type>
-      <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <XAppear>1000</XAppear>
+      <Y>0</Y>
+      <type>Antiair</type>
+      <health>10000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
-
+    <!-- /3rd -->
+    <!-- 4th -->
     <LevelEnemy>
-      <XAppear>16050</XAppear>
+      <XAppear>4000</XAppear>
       <Y>100</Y>
       <type>Airplane</type>
       <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>16450</XAppear>
-      <Y>500</Y>
-      <type>Airplane</type>
-      <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
-    </LevelEnemy>
-
-    <LevelEnemy>
-      <XAppear>16750</XAppear>
+      <XAppear>4300</XAppear>
       <Y>300</Y>
       <type>Airplane</type>
       <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>17550</XAppear>
-      <Y>200</Y>
+      <XAppear>4700</XAppear>
+      <Y>500</Y>
       <type>Airplane</type>
       <health>2000</health>
-      <RequiredForVictory>1</RequiredForVictory>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /4th -->
+    <!-- /FIRST -->
+    
+    <!-- AmmoBase 8k-->
+    <!-- AmmoBase 8.5k-->
+
+    <!-- SECOND -->
+    <!-- 1 -->
+    <LevelEnemy>
+      <XAppear>11200</XAppear>
+      <Y>140</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>17550</XAppear>
+      <XAppear>11000</XAppear>
+      <Y>240</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>11400</XAppear>
       <Y>400</Y>
       <type>Airplane</type>
       <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /1 -->
+
+    <!-- 2 -->
+    <LevelEnemy>
+      <XAppear>12200</XAppear>
+      <Y>120</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>12600</XAppear>
+      <Y>300</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>12300</XAppear>
+      <Y>500</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /2 -->
+    <!-- 3 -->
+    <LevelEnemy>
+      <XAppear>13000</XAppear>
+      <Y>0</Y>
+      <type>Antiair</type>
+      <health>10000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>11000</XAppear>
+      <Y>0</Y>
+      <type>Antiair</type>
+      <health>10000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>11000</XAppear>
+      <Y>0</Y>
+      <type>Antiair</type>
+      <health>10000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /3rd -->
+    <!-- 4th -->
+    <LevelEnemy>
+      <XAppear>14000</XAppear>
+      <Y>100</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>14300</XAppear>
+      <Y>300</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>14700</XAppear>
+      <Y>500</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /4th -->
+    <!-- /SECOND -->
+
+    <!-- AmmoBase 18k-->
+    <!-- AmmoBase 18.5k-->
+
+    <!-- SECOND -->
+    <!-- 1 -->
+    <LevelEnemy>
+      <XAppear>21200</XAppear>
+      <Y>140</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>21000</XAppear>
+      <Y>240</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>21400</XAppear>
+      <Y>400</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /1 -->
+
+    <!-- 2 -->
+    <LevelEnemy>
+      <XAppear>23200</XAppear>
+      <Y>120</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>23600</XAppear>
+      <Y>300</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>23300</XAppear>
+      <Y>500</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /2 -->
+
+    <!-- "Boss sighted!" 26k-->
+    <LevelEnemy>
+      <XAppear>27000</XAppear>
+      <Y>0</Y>
+      <type>Antiair</type>
+      <health>20000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
-    <!-- Final wave -->
+    <LevelEnemy>
+      <XAppear>31500</XAppear>
+      <Y>0</Y>
+      <type>Antiair</type>
+      <health>20000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+    <LevelEnemy>
+      <XAppear>29000</XAppear>
+      <Y>0</Y>
+      <type>BossAntiAir</type>
+      <health>100000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+
+    <!-- /THIRD -->
+
   </Enemies>
 
   <!-- Various bases -->
   <Objects>
     <LevelObject>
       <type>ammobase</type>
-      <XAppear>6000</XAppear>
+      <XAppear>8000</XAppear>
     </LevelObject>
     <LevelObject>
       <type>ammobase</type>
-      <XAppear>13000</XAppear>
+      <XAppear>18000</XAppear>
     </LevelObject>
     <LevelObject>
       <type>ammobase</type>
-      <XAppear>20000</XAppear>
+      <XAppear>25000</XAppear>
     </LevelObject>
   </Objects>
 

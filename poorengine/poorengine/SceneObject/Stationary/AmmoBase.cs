@@ -44,7 +44,7 @@ namespace PoorEngine.SceneObject
 
                 if (mgRefillTimer.ElapsedMilliseconds > 5)
                 {
-                    EngineManager.Player.RefillMG(1);
+                    EngineManager.Player.RefillMG(2);
                     
                     mgRefillTimer.Restart();
                 }
