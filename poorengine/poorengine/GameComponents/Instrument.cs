@@ -79,7 +79,7 @@ namespace PoorEngine.GameComponents
             // Don't show UI if ShowUI is false
             // Don't show UI if player is crashing or is Dead.
             // Don't show UI if level is completed.
-            if (GameSettings.Default.ShowUI || _player.IsDead || _player.IsCrashing || LevelManager.CurrentLevel.Completed)
+            if (GameSettings.Default.ShowUI && !(_player.IsDead || _player.IsCrashing || LevelManager.CurrentLevel.Completed))
             {
                 // Standardize input, calculate positions
                 float max_sd = maxValue - minValue;
