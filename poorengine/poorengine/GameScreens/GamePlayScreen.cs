@@ -432,6 +432,8 @@ namespace PoorEngine.GameScreens
 
         private void RestartGameEvent(object sender, EventArgs e)
         {
+            SoundFxManager.Clear();
+            BriefingScreen.Load(1);
             this.Reset(true);
         }
 
