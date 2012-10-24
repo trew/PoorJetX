@@ -45,8 +45,14 @@ namespace PoorEngine.GameScreens
             SoundFxManager.Clear();
         }
 
-        public void Reset()
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fullReset">If true, reset score and player lives as well.</param>
+        public void Reset(bool fullReset)
         {
+            if (fullReset) { EngineManager.Score = 0; }
+
             CameraManager.Reset();
             _deathTimer = new Stopwatch();
             _completedTimer = new Stopwatch();
@@ -59,7 +65,7 @@ namespace PoorEngine.GameScreens
             SkyGradient skyGradient = new SkyGradient("skygradient");
             SceneGraphManager.AddObject(skyGradient);
 
-            player1.Reset();
+            player1.Reset(fullReset);
             SceneGraphManager.AddObject(player1);
         }
 
@@ -205,7 +211,7 @@ namespace PoorEngine.GameScreens
                         }
                         else
                         {
-                            this.Reset();
+                            this.Reset(false);
                         }
                     }
                 }
@@ -230,8 +236,9 @@ namespace PoorEngine.GameScreens
                         {
                             if (LevelManager.HasNextLevel())
                             {
+                                SoundFxManager.Clear();
                                 BriefingScreen.Load(LevelManager.CurrentLevel.LevelNumber + 1);
-                                this.Reset();
+                                this.Reset(false);
                             }
                             else
                             {
@@ -378,7 +385,7 @@ namespace PoorEngine.GameScreens
 
         private void RestartGameEvent(object sender, EventArgs e)
         {
-            this.Reset();
+            this.Reset(true);
         }
 
         private void ExitGameEvent(object sender, EventArgs e)

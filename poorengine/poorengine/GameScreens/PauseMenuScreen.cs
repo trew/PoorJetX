@@ -33,7 +33,7 @@ namespace PoorJetX.GameScreens
             MenuEntry restartMenuEntry = new MenuEntry("Restart");
             MenuEntry optionsMenuEntry = new MenuEntry("Options");
             MenuEntry exitMenuEntry = new MenuEntry("Exit to Menu");
-            MenuEntry exitGameEntry = new MenuEntry("ABORT EVERYTHING");
+            MenuEntry exitGameEntry = new MenuEntry("Exit to Windows");
 
             returnMenuEntry.Selected += OnCancel;
             restartMenuEntry.Selected += RestartGame;
@@ -59,6 +59,13 @@ namespace PoorJetX.GameScreens
         }
 
         void RestartGame(object sender, EventArgs e)
+        {
+            MessageBoxScreen message = new MessageBoxScreen("Are you sure you want to restart?");
+            message.Accepted += RestartGameAccepted;
+            ScreenManager.AddScreen(message);
+        }
+
+        void RestartGameAccepted(object sender, EventArgs e)
         {
             SoundFxManager.Clear();
             base.OnCancel();

@@ -69,7 +69,8 @@ namespace PoorJetX.GameScreens
         /// </summary>
         void OptionsMenuEntrySelected(object sender, EventArgs e)
         {
-            //ScreenManager.AddScreen(new OptionsMenuScreen());
+            MessageBoxScreen messageBox = new MessageBoxScreen("No options available yet.", false);
+            ScreenManager.AddScreen(messageBox);
         }
 
         /// <summary>

@@ -39,9 +39,14 @@ namespace PoorEngine.SceneObject
             _projectileWeapon = new ProjectileWeapon(this);
         }
 
-        public override void Reset()
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fullReset">If true, reset Lives as well</param>
+        public void Reset(bool fullReset)
         {
             base.Reset();
+            if (fullReset) _lives = 3;
             _orientation = 85;
             _bombWeapon.Reset();
             _projectileWeapon.Reset();
