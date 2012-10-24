@@ -13,6 +13,12 @@ using PoorEngine.Interfaces;
 namespace PoorEngine.GameComponents
 {
     [Serializable]
+    public class TimeOfDay
+    {
+        public int Hour;
+    }
+
+    [Serializable]
     public class LevelBriefing
     {
         public string Title;
@@ -104,6 +110,13 @@ namespace PoorEngine.GameComponents
             set { _briefing = value; }
         }
 
+        private TimeOfDay _timeOfDay;
+        public TimeOfDay TimeOfDay
+        {
+            get { return _timeOfDay; }
+            set { _timeOfDay = value; }
+        }
+
         private List<LevelText> _texts;
         /// <summary>
         /// A list of text-objects
@@ -193,6 +206,7 @@ namespace PoorEngine.GameComponents
             QueueTexts();
             QueueObjects();
             // TODO QueueSounds();
+            SceneGraphManager.SetTimeOfDay24h = (float)_data.TimeOfDay.Hour;
             _loaded = true;
             _completed = false;
         }
