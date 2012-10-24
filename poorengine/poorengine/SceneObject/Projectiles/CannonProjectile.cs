@@ -17,11 +17,11 @@ namespace PoorEngine.SceneObject
             _orientation = orientation;
             float xFactor = (float)Math.Sin(CalcHelper.DegreeToRadian(_orientation));
             float yFactor = (float)-Math.Cos(CalcHelper.DegreeToRadian(_orientation));
-            Vector2 boostFactor = new Vector2(xFactor*3, yFactor*3);
+            Vector2 boostFactor = new Vector2(xFactor*4, yFactor*4);
 
             _velocity = velocity + boostFactor;
             _invulnerableTime = 0.8f;
-            Damage = 50;
+            Damage = 100;
         }
 
         public override void Collide(PoorSceneObject collidingWith)

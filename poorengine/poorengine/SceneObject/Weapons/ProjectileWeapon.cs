@@ -12,7 +12,7 @@ namespace PoorEngine.SceneObject
 {
     public class ProjectileWeapon : Weapon
     {
-        public const int BULLETSPERSECOND = 30;
+        public const int BULLETSPERSECOND = 25;
         public const int MAXBULLETS = 200;
         public int MAX_BULLETS { get { return MAXBULLETS; } }
 

@@ -38,7 +38,7 @@ namespace PoorEngine.SceneObject
             TextureName = "enemy_burgerboss_body";
             TextureNameDestroyed = "enemy_burgerboss_destroyed";
 
-            Velocity = new Vector2(3.5f, 0);
+            Velocity = new Vector2(1.5f, 0);
             Scale = new Vector2(1f, 1f);
         }
 

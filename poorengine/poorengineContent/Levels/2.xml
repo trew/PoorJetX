@@ -19,55 +19,33 @@
     <!-- MOUNTAINS -->
     <LevelVisual>
       <Repeatable>1</Repeatable>
-      <RepeatMargin>8300</RepeatMargin>
-      <X>-1630</X>
+      <RepeatMargin>5300</RepeatMargin>
+      <X>630</X>
       <Y>-50</Y>
       <Scale>1</Scale>
       <FileName>mountain6</FileName>
-      <Z>5.6</Z>
+      <Z>8.6</Z>
       <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
 
     <LevelVisual>
       <Repeatable>1</Repeatable>
       <RepeatMargin>4800</RepeatMargin>
-      <X>6230</X>
+      <X>1230</X>
       <Y>-50</Y>
       <Scale>1</Scale>
       <FileName>mountain3</FileName>
-      <Z>6.2</Z>
+      <Z>7.2</Z>
       <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
 
     <LevelVisual>
       <Repeatable>1</Repeatable>
-      <RepeatMargin>4800</RepeatMargin>
-      <X>1130</X>
+      <RepeatMargin>5800</RepeatMargin>
+      <X>2130</X>
       <Y>0</Y>
-      <Scale>0.7</Scale>
+      <Scale>0.4</Scale>
       <FileName>mountain2</FileName>
-      <Z>8.7</Z>
-      <ConstantSpeed>0</ConstantSpeed>
-    </LevelVisual>
-
-    <LevelVisual>
-      <Repeatable>1</Repeatable>
-      <RepeatMargin>3500</RepeatMargin>
-      <X>2130</X>
-      <Y>0</Y>
-      <Scale>0.7</Scale>
-      <FileName>mountain5</FileName>
-      <Z>9.7</Z>
-      <ConstantSpeed>0</ConstantSpeed>
-    </LevelVisual>
-
-    <LevelVisual>
-      <Repeatable>1</Repeatable>
-      <RepeatMargin>7100</RepeatMargin>
-      <X>2130</X>
-      <Y>-50</Y>
-      <Scale>0.9</Scale>
-      <FileName>mountain4</FileName>
       <Z>10.7</Z>
       <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
@@ -75,7 +53,29 @@
     <LevelVisual>
       <Repeatable>1</Repeatable>
       <RepeatMargin>3500</RepeatMargin>
-      <X>5130</X>
+      <X>4130</X>
+      <Y>0</Y>
+      <Scale>0.7</Scale>
+      <FileName>mountain5</FileName>
+      <Z>5.7</Z>
+      <ConstantSpeed>0</ConstantSpeed>
+    </LevelVisual>
+
+    <LevelVisual>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>4100</RepeatMargin>
+      <X>4130</X>
+      <Y>-50</Y>
+      <Scale>0.8</Scale>
+      <FileName>mountain4</FileName>
+      <Z>7.7</Z>
+      <ConstantSpeed>0</ConstantSpeed>
+    </LevelVisual>
+
+    <LevelVisual>
+      <Repeatable>1</Repeatable>
+      <RepeatMargin>7500</RepeatMargin>
+      <X>4130</X>
       <Y>-40</Y>
       <Scale>0.7</Scale>
       <FileName>mountain1</FileName>
@@ -209,40 +209,72 @@
   </Backgrounds>
   
   <Texts>
-	  <LevelText>
-	    <text></text>
-	    <fontName>cartoon18</fontName>
-	    <R>255</R>
-	    <G>255</G>
-	    <B>255</B>
-	    <X>0</X>
-	    <Y>250</Y>
-	    <XAppear>0</XAppear>
-	    <center>true</center>
-	    <outline>1.3</outline>
-	    <secondsTTL>0</secondsTTL>
-	  </LevelText>
+    <LevelText>
+      <text>Refill your ammunition at the base below!</text>
+      <fontName>cartoon18</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>250</Y>
+      <XAppear>8000</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>5</secondsTTL>
+    </LevelText>
+    <LevelText>
+      <text>Monsterburger sighted!</text>
+      <fontName>cartoon24</fontName>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+      <X>0</X>
+      <Y>250</Y>
+      <XAppear>16500</XAppear>
+      <center>true</center>
+      <outline>1.3</outline>
+      <secondsTTL>7</secondsTTL>
+    </LevelText>
   </Texts>
   
   <Enemies>
+    <!-- First wave -->
     <LevelEnemy>
-      <XAppear>500</XAppear>
-      <Y>0</Y>
+      <XAppear>1000</XAppear>
+      <Y>240</Y>
       <type>Airplane</type>
 	    <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
     
     <LevelEnemy>
-      <XAppear>1600</XAppear>
-      <Y>130</Y>
+      <XAppear>1300</XAppear>
+      <Y>400</Y>
       <type>Airplane</type>
 	    <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>1500</XAppear>
+      <Y>200</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>1600</XAppear>
+      <Y>500</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /First wave -->
 	
+    <!-- Second wave -->
 	  <LevelEnemy>
-      <XAppear>2900</XAppear>
+      <XAppear>4000</XAppear>
       <Y>500</Y>
       <type>Airplane</type>
 	    <health>2000</health>
@@ -250,39 +282,122 @@
     </LevelEnemy>
 	
 	  <LevelEnemy>
-      <XAppear>1310</XAppear>
-      <Y>450</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	
-	  <LevelEnemy>
-      <XAppear>1070</XAppear>
-      <Y>400</Y>
-      <type>Airplane</type>
-	    <health>2000</health>
-      <RequiredForVictory>0</RequiredForVictory>
-    </LevelEnemy>
-	
-	  <LevelEnemy>
-      <XAppear>900</XAppear>
-      <Y>570</Y>
+      <XAppear>4100</XAppear>
+      <Y>420</Y>
       <type>Airplane</type>
 	    <health>2000</health>
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>900</XAppear>
+      <XAppear>4500</XAppear>
+      <Y>120</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>4700</XAppear>
+      <Y>320</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /Second Wave -->
+
+    <!-- Antiair -->
+    <LevelEnemy>
+      <XAppear>7000</XAppear>
       <Y>0</Y>
       <type>AntiAir</type>
-      <health>9000</health>
+      <health>10000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+    <LevelEnemy>
+      <XAppear>7700</XAppear>
+      <Y>0</Y>
+      <type>AntiAir</type>
+      <health>10000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /Antiair -->
+
+    <!-- Ammobase 9000 -->
+
+    <!-- Third wave -->
+    <LevelEnemy>
+      <XAppear>12000</XAppear>
+      <Y>0</Y>
+      <type>AntiAir</type>
+      <health>10000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>1300</XAppear>
+      <XAppear>10000</XAppear>
+      <Y>300</Y>
+      <type>Airplane</type>
+	    <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>11000</XAppear>
+      <Y>400</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>11500</XAppear>
+      <Y>520</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>11600</XAppear>
+      <Y>155</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>11600</XAppear>
+      <Y>155</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>11800</XAppear>
+      <Y>355</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>12300</XAppear>
+      <Y>455</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <!-- /Third wave -->
+
+    <!-- Ammobase -->
+
+    <!-- "Monsterburger sighted!" 16000 -->
+
+    <!-- Final wave -->
+    <LevelEnemy>
+      <XAppear>18000</XAppear>
       <Y>0</Y>
       <type>Transport</type>
       <health>5000</health>
@@ -290,7 +405,7 @@
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>1700</XAppear>
+      <XAppear>18300</XAppear>
       <Y>0</Y>
       <type>Transport</type>
       <health>5000</health>
@@ -298,11 +413,114 @@
     </LevelEnemy>
 
     <LevelEnemy>
-      <XAppear>1900</XAppear>
+      <XAppear>19300</XAppear>
       <Y>0</Y>
       <type>Transport</type>
       <health>5000</health>
       <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>20300</XAppear>
+      <Y>0</Y>
+      <type>Transport</type>
+      <health>5000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>22300</XAppear>
+      <Y>0</Y>
+      <type>Transport</type>
+      <health>5000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>24300</XAppear>
+      <Y>0</Y>
+      <type>BurgerBoss</type>
+      <health>30000</health>
+      <RequiredForVictory>1</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>18400</XAppear>
+      <Y>200</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>18200</XAppear>
+      <Y>300</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>18300</XAppear>
+      <Y>500</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>19500</XAppear>
+      <Y>200</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>19400</XAppear>
+      <Y>300</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+    <LevelEnemy>
+      <XAppear>19200</XAppear>
+      <Y>500</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>21700</XAppear>
+      <Y>250</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>21300</XAppear>
+      <Y>330</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>21000</XAppear>
+      <Y>400</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
+    </LevelEnemy>
+
+    <LevelEnemy>
+      <XAppear>22000</XAppear>
+      <Y>550</Y>
+      <type>Airplane</type>
+      <health>2000</health>
+      <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
   </Enemies>
 
@@ -310,7 +528,15 @@
   <Objects>
     <LevelObject>
       <type>ammobase</type>
-      <XAppear>1200</XAppear>
+      <XAppear>9000</XAppear>
+    </LevelObject>
+    <LevelObject>
+      <type>ammobase</type>
+      <XAppear>15000</XAppear>
+    </LevelObject>
+    <LevelObject>
+      <type>ammobase</type>
+      <XAppear>23000</XAppear>
     </LevelObject>
   </Objects>
 

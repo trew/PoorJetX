@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Briefing>
-    <Title>First level</Title>
+    <Title>Third level</Title>
     <Story>This is the description for the first level. But this i just a placeholder so i can check that wordwrapping works. I downloaded someone elses code for the word wrapping part. Please dont tell!</Story>
     <Objectives>
       <LevelObjective>
-        <Description>Destroy the target fleet of enemy airplanes</Description>
+        <Description>Kill the Boss</Description>
+      </LevelObjective>
+      <LevelObjective>
+        <Description>Be awesome</Description>
       </LevelObjective>
     </Objectives>
   </Briefing>
@@ -283,9 +286,9 @@
       <RequiredForVictory>0</RequiredForVictory>
     </LevelEnemy>
 	  <!-- /Second Wave -->
-
+    
     <!-- Ammobase here -->
-
+    
     <!-- Third wave -->
 	  <LevelEnemy>
       <XAppear>8000</XAppear>
@@ -333,9 +336,9 @@
     <!-- /Antiair -->
 
     <!-- Ammobase -->
-
+    
     <!-- "We've found the fleet we're looking for! Get ready!" 6000 -->
-
+    
     <!-- Final wave -->
     <LevelEnemy>
       <XAppear>16000</XAppear>

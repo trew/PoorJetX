@@ -29,7 +29,7 @@ namespace PoorEngine.SceneObject
 
             _velocity = velocity + boostFactor;
             _invulnerableTime = 0.5f;
-            Damage = 100;
+            Damage = 200;
         }
 
         public override void Collide(PoorSceneObject collidingWith)
