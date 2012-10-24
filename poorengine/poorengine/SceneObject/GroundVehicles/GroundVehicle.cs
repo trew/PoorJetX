@@ -142,7 +142,7 @@ namespace PoorEngine.SceneObject
                                            0f);                 // Layer-depth
 
             // Draw _health-bar, if vehicle not destroyed
-            if (!_destroyed)
+            if (GameSettings.Default.ShowUI && !_destroyed)
             {
                 // Update Healthbar draw-settings.
                 Vector2 offset;
