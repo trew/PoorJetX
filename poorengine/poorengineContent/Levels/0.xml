@@ -2,13 +2,10 @@
 <LevelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Briefing>
     <Title>Tutorial</Title>
-    <Story>This is the introduction level</Story>
+    <Story>This is the briefing room for the tutorial level. Here you can read about the mission objectives.</Story>
     <Objectives>
       <LevelObjective>
         <Description>Learn the game controls</Description>
-      </LevelObjective>
-      <LevelObjective>
-        <Description>Defeat the final boss</Description>
       </LevelObjective>
     </Objectives>
   </Briefing>
