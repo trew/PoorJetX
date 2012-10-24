@@ -395,13 +395,13 @@ namespace PoorEngine.GameScreens
 
             if (input.IsNewKeyPress(Keys.Add))
             {
-                SceneGraphManager.TImeOfDaySpeed += 0.001f;
+                SceneGraphManager.TImeOfDaySpeed += 0.00001f;
             }
 
 
             if (input.IsNewKeyPress(Keys.Subtract))
             {
-                SceneGraphManager.TImeOfDaySpeed -= 0.001f;
+                SceneGraphManager.TImeOfDaySpeed -= 0.00001f;
             }
 
             #endregion

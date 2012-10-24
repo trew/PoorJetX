@@ -60,7 +60,7 @@ namespace PoorEngine.Managers
             removeQueue = new Queue<Node>();
 
             _timeOfDay = MathHelper.Pi;
-            _TODspeed = 0.00015f;
+            _TODspeed = 0.00025f;
 
             _useCollisionDetection = true;
 
