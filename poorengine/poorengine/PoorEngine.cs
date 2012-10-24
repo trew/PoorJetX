@@ -132,7 +132,7 @@ namespace PoorEngine
         /// <summary>
         /// Create Poor Engine
         /// </summary>
-        protected PoorEngine() : this("Game")
+        protected PoorEngine() : this("PoorJetX")
         {
         }
 

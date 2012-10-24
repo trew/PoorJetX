@@ -108,6 +108,11 @@ namespace PoorEngine.Managers
 
         public static void Clear()
         {
+            foreach (SoundEffectInstance i in _soundEffects.Values)
+            {
+                if (i.State != SoundState.Stopped)
+                    i.Stop();
+            }
             _soundEffects.Clear();
             _soundInstancesLoaded = 0;
         }
