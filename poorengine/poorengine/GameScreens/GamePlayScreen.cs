@@ -380,7 +380,8 @@ namespace PoorEngine.GameScreens
         private void ExitGame()
         {
             ExitScreen();
-            ScreenManager.AddScreen(new ScoreScreen());
+            ScreenManager.AddScreen(new BackgroundScreen());
+            ScreenManager.AddScreen(new MainMenuScreen());
         }
 
         private void RestartGameEvent(object sender, EventArgs e)

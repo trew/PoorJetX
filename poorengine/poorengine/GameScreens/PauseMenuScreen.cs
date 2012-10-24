@@ -31,19 +31,16 @@ namespace PoorJetX.GameScreens
         {
             MenuEntry returnMenuEntry = new MenuEntry("Return");
             MenuEntry restartMenuEntry = new MenuEntry("Restart");
-            MenuEntry optionsMenuEntry = new MenuEntry("Options");
             MenuEntry exitMenuEntry = new MenuEntry("Exit to Menu");
             MenuEntry exitGameEntry = new MenuEntry("Exit to Windows");
 
             returnMenuEntry.Selected += OnCancel;
             restartMenuEntry.Selected += RestartGame;
-            optionsMenuEntry.Selected += OptionsMenuEntrySelected;
             exitMenuEntry.Selected += ExitToMenu;
             exitGameEntry.Selected += ExitGame;
 
             MenuEntries.Add(returnMenuEntry);
             MenuEntries.Add(restartMenuEntry);
-            MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
             MenuEntries.Add(exitGameEntry);
 
@@ -70,10 +67,6 @@ namespace PoorJetX.GameScreens
             SoundFxManager.Clear();
             base.OnCancel();
             RestartGameEvent.Invoke(sender, e);
-        }
-
-        void OptionsMenuEntrySelected(object sender, EventArgs e)
-        {
         }
 
         void ExitToMenu(object sender, EventArgs e)
