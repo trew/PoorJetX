@@ -507,14 +507,14 @@
       <XAppear>27000</XAppear>
       <Y>0</Y>
       <type>Antiair</type>
-      <health>20000</health>
+      <health>10000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
     <LevelEnemy>
       <XAppear>31500</XAppear>
       <Y>0</Y>
       <type>Antiair</type>
-      <health>20000</health>
+      <health>10000</health>
       <RequiredForVictory>1</RequiredForVictory>
     </LevelEnemy>
     <LevelEnemy>

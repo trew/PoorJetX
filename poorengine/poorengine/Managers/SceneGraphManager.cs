@@ -25,7 +25,12 @@ namespace PoorEngine.Managers
         private static float _TODspeed;
         public static float SetTimeOfDay24h {
             set {
-                _timeOfDay = (value <= 12 ? value / 12 : (value - 12 * (float)((int)value / 12)) / 12.0f) * MathHelper.Pi;
+                float _value;
+                if (value <= 12)
+                    _value = value / 12f;
+                else
+                    _value = 1 - (value - 12) / 12f;
+                _timeOfDay = _value * MathHelper.Pi;
                 if (value >= 12)
                     _TODspeed = -Math.Abs(_TODspeed);
                 else
