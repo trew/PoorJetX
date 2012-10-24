@@ -337,6 +337,12 @@ namespace PoorEngine.SceneObject
         {
             if (!IsDead)
             {
+                if (SoundFxManager.GetByID(_engineFX_id).State != SoundState.Playing)
+                    SoundFxManager.GetByID(_engineFX_id).Play();
+
+                if (SoundFxManager.GetByID(_diveFX_id).State != SoundState.Playing)
+                    SoundFxManager.GetByID(_diveFX_id).Play();
+
                 float enginePitch = (float)(Math.Pow((_thrust / 9), 1.8) - 0.1f);
                 enginePitch += (float)(_linearVelocity / 15);
                 SoundFxManager.GetByID(_engineFX_id).Pitch = MathHelper.Clamp(enginePitch, -1f, 1f);
@@ -375,11 +381,9 @@ namespace PoorEngine.SceneObject
 
             SoundFxManager.GetByID(_engineFX_id).Volume = SoundFxManager.GetVolume("Sound", 0.3f);
             SoundFxManager.GetByID(_engineFX_id).IsLooped = true;
-            SoundFxManager.GetByID(_engineFX_id).Play();
 
             SoundFxManager.GetByID(_diveFX_id).IsLooped = true;
             SoundFxManager.GetByID(_diveFX_id).Volume = 0f;
-            SoundFxManager.GetByID(_diveFX_id).Play();
         }
 
         public virtual void UnloadContent()
