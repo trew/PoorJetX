@@ -12,6 +12,9 @@
       </LevelObjective>
     </Objectives>
   </Briefing>
+  <TimeOfDay>
+    <Hour>10</Hour>
+  </TimeOfDay>
   <Visuals>
     <!-- MOUNTAINS -->
     <LevelVisual>
