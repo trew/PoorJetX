@@ -31,8 +31,6 @@ namespace PoorEngine.SceneObject
 
             float y = Position.Y - (CameraManager.Camera.Pos.Y / (Z / 7) );
 
-            EngineManager.Debug.Print("TIME OF DAY------------------------ : " + SceneGraphManager.TimeOfDay);
-
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(textureNight, new Vector2(0, y), rect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
             ScreenManager.SpriteBatch.Draw(texture, new Vector2(0, y), rect, Color.White * (SceneGraphManager.TimeOfDay/MathHelper.Pi), 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
