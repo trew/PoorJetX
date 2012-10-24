@@ -76,7 +76,7 @@ namespace PoorEngine.SceneObject
         {
             base.Draw(gameTime);
 
-            if (SceneGraphManager.TimeOfDay < 60 && _type.Equals("civilian"))
+            if (SceneGraphManager.TimeOfDay < MathHelper.Pi/2f && _type.Equals("civilian"))
             {
                 Texture2D headlights = TextureManager.GetTexture("enemy_transport_headlights").BaseTexture as Texture2D;
 

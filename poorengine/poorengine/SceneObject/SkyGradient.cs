@@ -31,17 +31,16 @@ namespace PoorEngine.SceneObject
 
             float y = Position.Y - (CameraManager.Camera.Pos.Y / (Z / 7) );
 
+            EngineManager.Debug.Print("TIME OF DAY------------------------ : " + SceneGraphManager.TimeOfDay);
+
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(textureNight, new Vector2(0, y), rect, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            ScreenManager.SpriteBatch.Draw(texture, new Vector2(0, y), rect, Color.White * (SceneGraphManager.TimeOfDay/100f), 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            ScreenManager.SpriteBatch.Draw(texture, new Vector2(0, y), rect, Color.White * (SceneGraphManager.TimeOfDay/MathHelper.Pi), 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
 
             float pulsate = (float)Math.Cos(SceneGraphManager.TimeOfDay) +1 ;
 
-            EngineManager.Debug.Print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSIN: " + pulsate);
-            EngineManager.Debug.Print("TIME OOOF DAAAAAAAAAAY: " + SceneGraphManager.TimeOfDay);
-
-            float moonY = GameHelper.ScreenHeight - 80 - pulsate * GameHelper.ScreenHeight / 2.5f;
-            float sunY = 50 + pulsate * GameHelper.ScreenHeight / 2.5f;
+            float moonY = GameHelper.ScreenHeight + 50 - pulsate * GameHelper.ScreenHeight / 2f;
+            float sunY = 50 + pulsate * GameHelper.ScreenHeight / 2f;
 
             ScreenManager.SpriteBatch.Draw(textureMoon, new Vector2(GameHelper.ScreenWidth / 10f, moonY), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
             ScreenManager.SpriteBatch.Draw(textureSun, new Vector2(GameHelper.ScreenWidth * 0.9f - textureSun.Width, sunY), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f); // sol rödaktig?
