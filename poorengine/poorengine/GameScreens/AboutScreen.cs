@@ -114,7 +114,7 @@ namespace PoorJetX.GameScreens
 
             // Draw thanks to
             Text.DrawText(ScreenManager.Cartoon24, "Thanks to..", Color.Black, color, 1f, 1f, rotation, new Vector2(objX, objY), Vector2.Zero, false);
-            string[] thanksTos = new string[] { "- Samuel, for his awesome codingskills", "- Bjorn, for spending hours in photoshop", "- Murphy's law, for making game-development", "  hillarious at times.", "- Mr Berglund, for hopefully giving us the", "  highest possible grade in this course"};
+            string[] thanksTos = new string[] { "- Samuel, for his awesome codingskills", "- Bjorn, for spending hours in photoshop", "- Murphy's law, for making game-development", "  hilarious at times.", "- Mr Berglund, for hopefully giving us the", "  highest possible grade in this course"};
 
             i = 1;
             foreach (string thanksTo in thanksTos)
