@@ -44,8 +44,8 @@ namespace PoorEngine.Managers
             _root = new Node();
             _new = new Queue<Node>();
             removeQueue = new Queue<Node>();
-            _timeOfDay = 100;
-            _TODspeed = 0.05f;
+            _timeOfDay = MathHelper.Pi;
+            _TODspeed = 0.01f;
 
             _useCollisionDetection = true;
 
@@ -202,11 +202,11 @@ namespace PoorEngine.Managers
 
         private static void updateTimeOfDay()
         {
-            if (_timeOfDay >= 98)
+            if (_timeOfDay >= MathHelper.TwoPi)
                 _TODspeed = -Math.Abs(_TODspeed);
             
             
-            else if (_timeOfDay <= 2)
+            else if (_timeOfDay <= 0)
                 _TODspeed = Math.Abs(_TODspeed);
             
             _timeOfDay += _TODspeed;
