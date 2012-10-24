@@ -42,7 +42,7 @@ namespace PoorJetX.GameScreens
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5f);
             TransitionOffTime = TimeSpan.FromSeconds(0.5f);
-            _currentLevelNumber = 3;
+            _currentLevelNumber = levelNumber;
             _screensToLoad = screensToLoad;
         }
 
