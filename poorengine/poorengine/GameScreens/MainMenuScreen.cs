@@ -20,6 +20,7 @@ namespace PoorJetX.GameScreens
             MenuEntry tutorialMenuEntry = new MenuEntry("Play Tutorial");
             MenuEntry highScoresMenuEntry = new MenuEntry("Highscores");
             MenuEntry optionsMenuEntry = new MenuEntry("Options");
+            MenuEntry controlsMenuEntry = new MenuEntry("Controls");
             MenuEntry aboutMenuEntry = new MenuEntry("About game");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
 
@@ -27,6 +28,7 @@ namespace PoorJetX.GameScreens
             tutorialMenuEntry.Selected += TutorialMenuEntrySelected;
             highScoresMenuEntry.Selected += HighScoresMenuEntrySelected;
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
+            controlsMenuEntry.Selected += ControlsMenuEntrySelected;
             aboutMenuEntry.Selected += AboutMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
@@ -34,6 +36,7 @@ namespace PoorJetX.GameScreens
             MenuEntries.Add(tutorialMenuEntry);
             MenuEntries.Add(highScoresMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
+            MenuEntries.Add(controlsMenuEntry);
             MenuEntries.Add(aboutMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
@@ -71,6 +74,14 @@ namespace PoorJetX.GameScreens
         {
             MessageBoxScreen messageBox = new MessageBoxScreen("Options is not available in this version.", false);
             ScreenManager.AddScreen(messageBox);
+        }
+
+        /// <summary>
+        /// Event handler for when the Controls menu entry is selected.
+        /// </summary>
+        void ControlsMenuEntrySelected(object sender, EventArgs e)
+        {
+            ScreenManager.AddScreen(new ControlsScreen());
         }
 
         /// <summary>

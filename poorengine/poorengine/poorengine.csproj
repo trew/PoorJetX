@@ -116,6 +116,7 @@
     <Compile Include="GameComponents\Level.cs" />
     <Compile Include="GameScreens\BriefingScreen.cs" />
     <Compile Include="GameScreens\AboutScreen.cs" />
+    <Compile Include="GameScreens\ControlsScreen.cs" />
     <Compile Include="GameScreens\HighscoreScreen.cs" />
     <Compile Include="GameScreens\VictoryScreen.cs" />
     <Compile Include="GameScreens\PauseMenuScreen.cs" />

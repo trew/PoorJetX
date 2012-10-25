@@ -20,7 +20,7 @@
     <LevelVisual>
       <Repeatable>1</Repeatable>
       <RepeatMargin>5300</RepeatMargin>
-      <X>630</X>
+      <X>-1430</X>
       <Y>-50</Y>
       <Scale>1</Scale>
       <FileName>mountain6</FileName>
@@ -31,7 +31,7 @@
     <LevelVisual>
       <Repeatable>1</Repeatable>
       <RepeatMargin>4800</RepeatMargin>
-      <X>1230</X>
+      <X>3230</X>
       <Y>-50</Y>
       <Scale>1</Scale>
       <FileName>mountain3</FileName>
@@ -42,7 +42,7 @@
     <LevelVisual>
       <Repeatable>1</Repeatable>
       <RepeatMargin>5800</RepeatMargin>
-      <X>2130</X>
+      <X>130</X>
       <Y>0</Y>
       <Scale>0.4</Scale>
       <FileName>mountain2</FileName>
@@ -53,7 +53,7 @@
     <LevelVisual>
       <Repeatable>1</Repeatable>
       <RepeatMargin>3500</RepeatMargin>
-      <X>4130</X>
+      <X>2130</X>
       <Y>0</Y>
       <Scale>0.7</Scale>
       <FileName>mountain5</FileName>
@@ -64,18 +64,18 @@
     <LevelVisual>
       <Repeatable>1</Repeatable>
       <RepeatMargin>4100</RepeatMargin>
-      <X>4130</X>
+      <X>6130</X>
       <Y>-50</Y>
       <Scale>0.8</Scale>
       <FileName>mountain4</FileName>
-      <Z>7.7</Z>
+      <Z>9.7</Z>
       <ConstantSpeed>0</ConstantSpeed>
     </LevelVisual>
 
     <LevelVisual>
       <Repeatable>1</Repeatable>
       <RepeatMargin>7500</RepeatMargin>
-      <X>4130</X>
+      <X>1130</X>
       <Y>-40</Y>
       <Scale>0.7</Scale>
       <FileName>mountain1</FileName>
