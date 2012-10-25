@@ -56,20 +56,23 @@ namespace PoorEngine.SceneObject
 
         public override void HandleDebugInput(Input input)
         {
-            if (input.IsNewKeyPress(Keys.Y))
+            if (EngineManager.DebugKeysEnabled)
             {
-                TakeDamage(200);
-            }
+                if (input.IsNewKeyPress(Keys.Y))
+                {
+                    TakeDamage(200);
+                }
 
-            if (input.CurrentKeyboardState.IsKeyDown(Keys.S))
-            {
-                _thrust = 0;
-            }
+                if (input.CurrentKeyboardState.IsKeyDown(Keys.S))
+                {
+                    _thrust = 0;
+                }
 
-            if (input.IsNewKeyPress(Keys.O))
-            {
-                ReadyToRender = !ReadyToRender;
-                CameraManager.Camera.Cruise();
+                if (input.IsNewKeyPress(Keys.O))
+                {
+                    ReadyToRender = !ReadyToRender;
+                    CameraManager.Camera.Cruise();
+                }
             }
         }
 

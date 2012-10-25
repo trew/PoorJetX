@@ -40,7 +40,7 @@ namespace PoorEngine.GameComponents
         public override void  Update(GameTime gameTime)
         {
  	        base.Update(gameTime);
-            if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.D))
+            if (EngineManager.Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.F3))
             {
                 GameSettings.Default.Debug = !GameSettings.Default.Debug;
             }

@@ -71,6 +71,8 @@ namespace PoorEngine
         private static ParticleManager _particleManagers = null;
         public static int Score = 0;
 
+        public static bool DebugKeysEnabled { get; set; }
+
         /// <summary>
         /// Create Poor Engine
         /// </summary>
@@ -235,6 +237,20 @@ namespace PoorEngine
             } else if (Input.CurrentKeyboardState.IsKeyDown(Keys.F12)) {
                 SoundFxManager.SetVolume("Music", GameSettings.Default.MusicVolume + 0.01f);
             }
+
+
+            // Enable debug keys
+            if (Input.CurrentKeyboardState.IsKeyDown(Keys.LeftControl) || Input.CurrentKeyboardState.IsKeyDown(Keys.RightControl))
+            {
+                if (Input.CurrentKeyboardState.IsKeyDown(Keys.LeftShift) || Input.CurrentKeyboardState.IsKeyDown(Keys.RightShift))
+                {
+                    if (Input.IsNewKeyPress(Keys.D))
+                    {
+                        DebugKeysEnabled = !DebugKeysEnabled;
+                    }
+                }
+            }
+
         }
 
         /// <summary>

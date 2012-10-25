@@ -275,135 +275,138 @@ namespace PoorEngine.GameScreens
              *  DEBUG INPUT
              */
             #region
-            if (input.IsNewKeyPress(Keys.D1))
+            if (EngineManager.DebugKeysEnabled)
             {
-                SceneGraphManager.SetTimeOfDay24h = 0f;
+                if (input.IsNewKeyPress(Keys.D1))
+                {
+                    SceneGraphManager.SetTimeOfDay24h = 0f;
+                }
+                if (input.IsNewKeyPress(Keys.D2))
+                {
+                    SceneGraphManager.SetTimeOfDay24h = 3f;
+                }
+                if (input.IsNewKeyPress(Keys.D3))
+                {
+                    SceneGraphManager.SetTimeOfDay24h = 6f;
+                }
+                if (input.IsNewKeyPress(Keys.D4))
+                {
+                    SceneGraphManager.SetTimeOfDay24h = 9f;
+                }
+                if (input.IsNewKeyPress(Keys.D5))
+                {
+                    SceneGraphManager.SetTimeOfDay24h = 12f;
+                }
+                if (input.IsNewKeyPress(Keys.D6))
+                {
+                    SceneGraphManager.SetTimeOfDay24h = 15f;
+                }
+                if (input.IsNewKeyPress(Keys.D7))
+                {
+                    SceneGraphManager.SetTimeOfDay24h = 18f;
+                }
+                if (input.IsNewKeyPress(Keys.D8
+                    ))
+                {
+                    SceneGraphManager.SetTimeOfDay24h = 21f;
+                }
+
+                if (input.IsNewKeyPress(Keys.E))
+                {
+                    GroundTransport gcv = new GroundTransport(3000, false);
+                    gcv.Position = new Vector2(
+                            CameraManager.Camera.Pos.X +
+                            GameHelper.ScreenWidth - 200f,
+                            GameHelper.GroundLevel - 38);
+                    gcv.LoadContent();
+
+                    SceneGraphManager.AddObject(gcv);
+                }
+
+                if (input.IsNewKeyPress(Keys.R))
+                {
+                    AntiAirVehicle gbv = new AntiAirVehicle(3000, false);
+                    gbv.Position = new Vector2(
+                            CameraManager.Camera.Pos.X +
+                            GameHelper.ScreenWidth - 200f,
+                            GameHelper.GroundLevel - 47);
+
+                    gbv.Velocity = new Vector2(0f, 0f);
+                    gbv.LoadContent();
+
+                    SceneGraphManager.AddObject(gbv);
+                }
+
+                if (input.IsNewKeyPress(Keys.B))
+                {
+                    BossAntiAir boss = new BossAntiAir(70000, false);
+                    boss.Position = new Vector2(
+                            CameraManager.Camera.Pos.X +
+                            GameHelper.ScreenWidth - 200f,
+                            GameHelper.GroundLevel - 170);
+
+                    boss.Velocity = new Vector2(0f, 0f);
+                    boss.LoadContent();
+
+                    SceneGraphManager.AddObject(boss);
+                }
+                if (input.IsNewKeyPress(Keys.N))
+                {
+                    GroundTransport boss = new GroundTransport(40000, false, true);
+                    boss.Position = new Vector2(
+                            CameraManager.Camera.Pos.X +
+                            GameHelper.ScreenWidth - 200f,
+                            GameHelper.GroundLevel - 130);
+
+                    boss.Velocity = new Vector2(4f, 0f);
+                    boss.LoadContent();
+
+                    SceneGraphManager.AddObject(boss);
+                }
+
+                if (input.IsNewKeyPress(Keys.W))
+                {
+                    AmmoBase ab = new AmmoBase();
+                    ab.Position = new Vector2(
+                            CameraManager.Camera.Pos.X +
+                            GameHelper.ScreenWidth - 250f,
+                            GameHelper.GroundLevel + 10);
+                    ab.LoadContent();
+
+                    SceneGraphManager.AddObject(ab);
+                }
+
+                if (input.IsNewKeyPress(Keys.P))
+                {
+                    LevelManager.CurrentLevel.Completed = true;
+                }
+
+                if (input.IsNewKeyPress(Keys.F5))
+                {
+                    SceneGraphManager.ToggleCollisionDetection();
+                }
+
+                if (input.IsNewKeyPress(Keys.PageUp))
+                {
+                    ScreenManager.lengthenJanitorCoffeeBreak();
+                }
+
+                if (input.IsNewKeyPress(Keys.PageDown))
+                {
+                    ScreenManager.shortenJanitorCoffeeBreak();
+                }
+
+                if (input.IsNewKeyPress(Keys.Add))
+                {
+                    SceneGraphManager.TImeOfDaySpeed += 0.00001f;
+                }
+
+
+                if (input.IsNewKeyPress(Keys.Subtract))
+                {
+                    SceneGraphManager.TImeOfDaySpeed -= 0.00001f;
+                }
             }
-            if (input.IsNewKeyPress(Keys.D2))
-            {
-                SceneGraphManager.SetTimeOfDay24h = 3f;
-            }
-            if (input.IsNewKeyPress(Keys.D3))
-            {
-                SceneGraphManager.SetTimeOfDay24h = 6f;
-            }
-            if (input.IsNewKeyPress(Keys.D4))
-            {
-                SceneGraphManager.SetTimeOfDay24h = 9f;
-            }
-            if (input.IsNewKeyPress(Keys.D5))
-            {
-                SceneGraphManager.SetTimeOfDay24h = 12f;
-            }
-            if (input.IsNewKeyPress(Keys.D6))
-            {
-                SceneGraphManager.SetTimeOfDay24h = 15f;
-            }
-            if (input.IsNewKeyPress(Keys.D7))
-            {
-                SceneGraphManager.SetTimeOfDay24h = 18f;
-            }
-            if (input.IsNewKeyPress(Keys.D8
-                ))
-            {
-                SceneGraphManager.SetTimeOfDay24h = 21f;
-            }
-
-            if (input.IsNewKeyPress(Keys.E))
-            {
-                GroundTransport gcv = new GroundTransport(3000, false);
-                gcv.Position = new Vector2(
-                        CameraManager.Camera.Pos.X +
-                        GameHelper.ScreenWidth - 200f, 
-                        GameHelper.GroundLevel -38 );
-                gcv.LoadContent();
-
-                SceneGraphManager.AddObject(gcv);
-            }
-
-            if (input.IsNewKeyPress(Keys.R))
-            {
-                AntiAirVehicle gbv = new AntiAirVehicle(3000, false);
-                gbv.Position = new Vector2(
-                        CameraManager.Camera.Pos.X +
-                        GameHelper.ScreenWidth - 200f,
-                        GameHelper.GroundLevel - 47);
-
-                gbv.Velocity = new Vector2(0f, 0f);
-                gbv.LoadContent();
-
-                SceneGraphManager.AddObject(gbv);
-            }
-
-            if (input.IsNewKeyPress(Keys.B))
-            {
-                BossAntiAir boss = new BossAntiAir(70000, false);
-                boss.Position = new Vector2(
-                        CameraManager.Camera.Pos.X +
-                        GameHelper.ScreenWidth - 200f,
-                        GameHelper.GroundLevel - 170);
-
-                boss.Velocity = new Vector2(0f, 0f);
-                boss.LoadContent();
-
-                SceneGraphManager.AddObject(boss);
-            }
-            if (input.IsNewKeyPress(Keys.N))
-            {
-                GroundTransport boss = new GroundTransport(40000, false, true);
-                boss.Position = new Vector2(
-                        CameraManager.Camera.Pos.X +
-                        GameHelper.ScreenWidth - 200f,
-                        GameHelper.GroundLevel - 130);
-
-                boss.Velocity = new Vector2(4f, 0f);
-                boss.LoadContent();
-
-                SceneGraphManager.AddObject(boss);
-            }
-
-            if (input.IsNewKeyPress(Keys.W))
-            {
-                AmmoBase ab = new AmmoBase();
-                ab.Position = new Vector2(
-                        CameraManager.Camera.Pos.X +
-                        GameHelper.ScreenWidth - 250f,
-                        GameHelper.GroundLevel + 10);
-                ab.LoadContent();
-
-                SceneGraphManager.AddObject(ab);
-            }
-
-            if (input.IsNewKeyPress(Keys.P)) {
-                LevelManager.CurrentLevel.Completed = true;
-            }
-
-            if (input.IsNewKeyPress(Keys.F5))
-            {
-                SceneGraphManager.ToggleCollisionDetection();
-            }
-
-            if (input.IsNewKeyPress(Keys.PageUp))
-            {
-                ScreenManager.lengthenJanitorCoffeeBreak();
-            }
-
-            if (input.IsNewKeyPress(Keys.PageDown))
-            {
-                ScreenManager.shortenJanitorCoffeeBreak();
-            }
-
-            if (input.IsNewKeyPress(Keys.Add))
-            {
-                SceneGraphManager.TImeOfDaySpeed += 0.00001f;
-            }
-
-
-            if (input.IsNewKeyPress(Keys.Subtract))
-            {
-                SceneGraphManager.TImeOfDaySpeed -= 0.00001f;
-            }
-
             #endregion
             /*
              *  END DEBUG INPUT
