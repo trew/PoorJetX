@@ -31,7 +31,7 @@ namespace PoorEngine.Settings
 
         public const int MinimumResolutionWidth = 640;
 
-        private int _resolutionWidth = 0;
+        private int _resolutionWidth = 1280;
         /// <summary>
         /// Resolution Width
         /// </summary>
@@ -48,7 +48,7 @@ namespace PoorEngine.Settings
 
         public const int MinimumResolutionHeight = 480;
 
-        private int _resolutionHeight = 0;
+        private int _resolutionHeight = 720;
         /// <summary>
         /// Resolution Height
         /// </summary>
@@ -105,7 +105,7 @@ namespace PoorEngine.Settings
             }
         }
 
-        private float _musicVolume = 0.8f;
+        private float _musicVolume = 0.22f;
         /// <summary>
         /// Music volume
         /// </summary>
