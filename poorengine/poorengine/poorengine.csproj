@@ -129,7 +129,6 @@
     <Compile Include="Managers\AIManager.cs" />
     <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\LevelManager.cs" />
-    <Compile Include="Particles\AirplaneExplosion.cs" />
     <Compile Include="Particles\BlackSmoke.cs" />
     <Compile Include="Particles\MuzzleFlashSmall.cs" />
     <Compile Include="Particles\MuzzleFlashBig.cs" />

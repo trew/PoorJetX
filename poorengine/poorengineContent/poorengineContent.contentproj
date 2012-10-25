@@ -47,11 +47,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\background.png">
-      <Name>background</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Textures\Landscape\trees_bg.png">
       <Name>trees_bg</Name>
       <Importer>TextureImporter</Importer>
@@ -64,16 +59,6 @@
     </Compile>
     <Compile Include="Textures\Landscape\trees_silhouette.png">
       <Name>trees_silhouette</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Objects\hill1.png">
-      <Name>hill1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Objects\hill2.png">
-      <Name>hill2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -299,11 +284,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\UI\ammo_bombs_none.png">
-      <Name>ammo_bombs_none</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Textures\UI\ammo_mg.png">
       <Name>ammo_mg</Name>
       <Importer>TextureImporter</Importer>
@@ -314,11 +294,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\UI\ammo_mg_none.png">
-      <Name>ammo_mg_none</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Textures\UI\bombtargetmarker.png">
       <Name>bombtargetmarker</Name>
       <Importer>TextureImporter</Importer>
@@ -326,13 +301,6 @@
     </Compile>
     <Compile Include="Textures\UI\instrument.png">
       <Name>instrument</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\Objects\flygplan.png">
-      <Name>flygplan</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -352,11 +320,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Objects\flygplan_destroyed.png">
-      <Name>flygplan_destroyed</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="DST-FlyingCobra.mp3">
       <Name>DST-FlyingCobra</Name>
       <Importer>Mp3Importer</Importer>
@@ -367,11 +330,6 @@
   <ItemGroup>
     <Compile Include="Textures\Landscape\ground.png">
       <Name>ground</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Objects\hill3.png">
-      <Name>hill3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
