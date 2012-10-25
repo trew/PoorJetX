@@ -32,9 +32,6 @@ namespace PoorEngine.Managers
         private static ProjectileHit _projectileHit = null;
         public static ProjectileHit ProjectileHit { get { return _projectileHit; } }
 
-        private static AirplaneExplosion _airplaneExplosion = null;
-        public static AirplaneExplosion AirplaneExplosion { get { return _airplaneExplosion; } }
-
         private static ShrapnelExplosion _shrapnelExplosion = null;
         public static ShrapnelExplosion ShrapnelExplosion { get { return _shrapnelExplosion; } }
 
@@ -67,7 +64,6 @@ namespace PoorEngine.Managers
             _explosionParticles = new ExplosionParticleSystem(EngineManager.Game, 3);
             _groundExplosion = new GroundExplosion(EngineManager.Game, 8);
             _projectileHit = new ProjectileHit(EngineManager.Game, 5);
-            _airplaneExplosion = new AirplaneExplosion(EngineManager.Game, 1);
             _shrapnelExplosion = new ShrapnelExplosion(EngineManager.Game, 3);
             _blackSmoke = new BlackSmoke(EngineManager.Game, 3);
             _whiteSmoke = new WhiteSmoke(EngineManager.Game, 3);
@@ -77,7 +73,6 @@ namespace PoorEngine.Managers
             _explosionParticles.Initialize();
             _groundExplosion.Initialize();
             _projectileHit.Initialize();
-            _airplaneExplosion.Initialize();
             _shrapnelExplosion.Initialize();
             _blackSmoke.Initialize();
             _whiteSmoke.Initialize();
@@ -91,7 +86,6 @@ namespace PoorEngine.Managers
             _systems.Add(_explosionParticles);
             _systems.Add(_groundExplosion);
             _systems.Add(_projectileHit);
-            _systems.Add(_airplaneExplosion);
             _systems.Add(_shrapnelExplosion);
             _systems.Add(_blackSmoke);
             _systems.Add(_whiteSmoke);

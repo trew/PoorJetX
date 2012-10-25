@@ -88,10 +88,8 @@ namespace PoorEngine.GameComponents
             // For ammo-related UI
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs"), "ammo_bombs");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_low"), "ammo_bombs_low");
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_bombs_none"), "ammo_bombs_none");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg"), "ammo_mg");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_low"), "ammo_mg_low");
-            TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_mg_none"), "ammo_mg_none");
             TextureManager.AddTexture(new PoorTexture("Textures/UI/ammo_refill"), "ammo_refill");
         }
         public void UnloadContent()
@@ -114,7 +112,6 @@ namespace PoorEngine.GameComponents
                 Texture2D greenBackground = TextureManager.GetTexture("ammo_refill").BaseTexture as Texture2D;
 
                 if (BombsPercentage() > 25f) bombBackground = TextureManager.GetTexture("ammo_bombs").BaseTexture as Texture2D;
-                //else if (BombsPercentage() == 0)    bombBackground = TextureManager.GetTexture("ammo_bombs_none").BaseTexture as Texture2D;
                 else
                 {
                     bombBackground = TextureManager.GetTexture("ammo_bombs_low").BaseTexture as Texture2D;
@@ -123,7 +120,6 @@ namespace PoorEngine.GameComponents
 
 
                 if (MGPercentage() > 25f) MGBackground = TextureManager.GetTexture("ammo_mg").BaseTexture as Texture2D;
-                //else if (MGPercentage() == 0)       MGBackground = TextureManager.GetTexture("ammo_mg_none").BaseTexture as Texture2D;
                 else
                 {
                     MGBackground = TextureManager.GetTexture("ammo_mg_low").BaseTexture as Texture2D;
